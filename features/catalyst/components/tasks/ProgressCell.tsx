@@ -11,10 +11,8 @@ export function ProgressCell({ value }: ProgressCellProps): JSX.Element {
   const pct = Math.max(0, Math.min(100, value))
   const done = pct >= 100
   const none = pct <= 0
-
-  let color = BRAND
-  if (done) color = GREEN
-  else if (none) color = '#D4D4D4'
+  // The "not started" ring renders only the track, so `color` is the arc hue.
+  const color = done ? GREEN : BRAND
 
   let label = `${pct}% Completed`
   if (done) label = 'Done'

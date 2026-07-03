@@ -19,7 +19,7 @@ function Trailing({ active, badge }: { active: boolean; badge?: number }): JSX.E
   if (badge) {
     return (
       <span
-        className="ml-auto grid h-[18px] min-w-[18px] place-items-center rounded px-1 text-[10px] font-semibold text-white"
+        className="ml-auto grid h-[18px] min-w-[18px] place-items-center rounded-sm px-1 text-[10px] font-semibold text-white"
         style={{ background: BRAND }}
       >
         {badge}

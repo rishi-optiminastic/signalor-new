@@ -16,7 +16,7 @@ export function TaskStatusTabs(): JSX.Element {
         >
           {tab.label}
           <span
-            className="grid h-[18px] min-w-[18px] place-items-center rounded px-1 text-[10px] font-semibold"
+            className="grid h-[18px] min-w-[18px] place-items-center rounded-sm px-1 text-[10px] font-semibold"
             style={
               tab.active
                 ? { background: BRAND, color: '#fff' }

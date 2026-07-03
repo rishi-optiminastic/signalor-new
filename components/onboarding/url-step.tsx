@@ -3,6 +3,7 @@
 import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 
+import { useSession } from '@/lib/auth-client'
 import { createOrganization } from '@/services/onboarding.service'
 import { useOnboardingWizardStore } from '@/stores/useOnboardingWizardStore'
 
@@ -40,6 +41,7 @@ const PLATFORM_COPY: Record<string, { title: string; sub: string; placeholder: s
 /** Step 3: capture the site URL and create the organization. */
 export function UrlStep(): JSX.Element {
   const { platform, siteUrl, setSiteUrl, setStep, companyName } = useOnboardingWizardStore()
+  const { data: session } = useSession()
   const [value, setValue] = useState(siteUrl)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -52,7 +54,11 @@ export function UrlStep(): JSX.Element {
     setLoading(true)
     setError('')
     try {
-      const result = await createOrganization({ name: companyName, url: value.trim(), email: '' })
+      const result = await createOrganization({
+        name: companyName,
+        url: value.trim(),
+        email: session?.user?.email ?? '',
+      })
       if (!result.ok) {
         setError(result.error ?? 'Failed. Please try again.')
         return

@@ -29,7 +29,17 @@ function Series({ vals, color }: { vals: number[]; color: string }): JSX.Element
       />
       {vals.map((v, i) => {
         const [x, y] = pt(i, v)
-        return <circle key={i} cx={x} cy={y} r={3} fill="#fff" stroke={color} strokeWidth={2} />
+        return (
+          <circle
+            key={i}
+            cx={x}
+            cy={y}
+            r={3}
+            fill="var(--cat-card)"
+            stroke={color}
+            strokeWidth={2}
+          />
+        )
       })}
     </>
   )

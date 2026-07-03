@@ -23,7 +23,7 @@ export function TotalVisitorsCard(): JSX.Element {
             <div className="mb-[7px]">
               <Delta positive={v.positive}>{v.change}</Delta>
             </div>
-            <div className="h-[5px] rounded-[3px]" style={{ background: v.color }} />
+            <div className="h-[5px] rounded-sm" style={{ background: v.color }} />
           </div>
         ))}
       </div>

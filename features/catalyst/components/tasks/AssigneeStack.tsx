@@ -7,7 +7,7 @@ export function AssigneeStack({ ids }: AssigneeStackProps): JSX.Element {
   const extra = ids.length - shown.length
 
   return (
-    <span className="flex items-center">
+    <span className="flex items-center" aria-label={`${ids.length} assignees`}>
       {shown.map((id, i) => (
         // eslint-disable-next-line @next/next/no-img-element
         <img

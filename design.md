@@ -45,12 +45,13 @@ Products" CTA literally reuses the global `.auth-cta-btn` class.
 | Data purple    | `#8B5CF6`                | Mobile, Direct, Instagram row                             |
 | Data yellow    | `#F6B93B`                | Desktop bar                                               |
 | Data green     | `#2FBE7E`                | Radar "Returning visitors" series                         |
-| Canvas         | `#F1F1F0`                | Page background                                           |
-| Surface        | `#FFFFFF`                | Sidebar, main panel, cards                                |
-| Ink            | `neutral-900`            | Primary text / values                                     |
-| Ink-2          | `neutral-500`            | Labels, secondary text                                    |
-| Ink-3          | `neutral-400`            | Section headers, axis ticks, meta                         |
-| Hairline       | `neutral-100`            | Card borders, dividers                                    |
+| Canvas         | `var(--cat-canvas)`      | Page background behind the two panels                     |
+| Surface        | `var(--cat-card)`        | Sidebar + cards (main panel = `var(--cat-content)`)       |
+| Ink / -2 / -3  | `var(--cat-ink[-2/-3])`  | Text tiers: value / label / meta                          |
+| Border         | `var(--cat-border)`      | Panel + card borders (dividers = `--cat-border-soft`)     |
+
+All neutrals are **theme tokens** that flip in dark mode — see §8b. The brand + data hues below are
+fixed hex constants (identical in both themes).
 
 **Rule:** the brand warm-red (`--primary`) is the only hue allowed in navigation, buttons and
 active states. Blue/purple/yellow/green are reserved for data marks and their inline legends.
@@ -83,14 +84,15 @@ shadow.**
 - **Radius — single scale:** everything box-like uses Tailwind `rounded-md` (`--radius-md` =
   `0.625rem − 2px` ≈ **8px**): the two panels, all cards, buttons, chips, segmented-control tracks,
   the logo tile, the % badges and radar labels. Inner segmented chips step down to `rounded-sm`
-  (≈6px) so the nested pill still reads inside its track. Only genuinely circular marks stay round
-  (`rounded-full`): avatars, legend dots, radar vertex dots.
+  (≈6px) so the nested pill still reads inside its track. Small **data marks** (heatmap cells,
+  legend/split bars, checkboxes, view-toggle buttons) also use `rounded-sm`. Only genuinely circular
+  marks stay round (`rounded-full`): avatars, legend dots, radar vertex dots.
 - **Gaps (tight):** `8px` between the two panels **and** between cards; `8px` outer app padding;
   `10px` above the card grid. One consistent, snug rhythm.
-- **Padding:** cards `12px`, sidebar `14px`, main panel `14px`.
-- **Borders:** every surface is outlined with a `1px neutral-200` border — the two outer panels
-  **and** each card — for crisp definition against the canvas. Internal dividers (topbar underline,
-  sidebar user separator) stay a step lighter at `neutral-100` to preserve hierarchy.
+- **Padding:** cards `12px` and sidebar `12px` (`p-3`); main panel `14px` (`p-3.5`).
+- **Borders:** every surface is outlined with a `1px var(--cat-border)` border — the two outer
+  panels **and** each card — for crisp definition against the canvas. Internal dividers (topbar
+  underline, sidebar user separator) stay a step lighter at `var(--cat-border-soft)`.
 - **Elevation (minimal):** on top of the border, only the two outer panels carry a single soft
   shadow (`0 1px 2px rgba(16,24,40,.05)`). Cards are **border-only, no shadow**. The primary button
   inherits `.auth-cta-btn`'s inset highlight only.
@@ -105,11 +107,12 @@ not per-card shadows. Keep cards flat and spacing tight and even.
 ```
 ┌───────────── app (flex, gap 8, full-width w-full) ─────────────┐
 │ ┌ sidebar 240px ┐  ┌────────────── main (flex-1) ────────────┐ │
-│ │ brand          │  │ topbar (identity · tools · CTA)          │ │
-│ │ MAIN nav       │  │ ────────────────────────────────────    │ │
-│ │ SALES CHANNELS │  │ grid: 3 cols × 2 rows, gap 8             │ │
-│ │ (spacer)       │  │   Sales · Visitors · Conversion          │ │
-│ │ Settings/Supp. │  │   Channels · Retention · Weekly          │ │
+│ │ Signalor logo  │  │ topbar (identity · tools · CTA)          │ │
+│ │ workspace ⇅    │  │ ────────────────────────────────────    │ │
+│ │ MAIN menu      │  │ grid: 3 cols × 2 rows, gap 8             │ │
+│ │ SALES CHANNELS │  │   Sales · Visitors · Conversion          │ │
+│ │ (spacer)       │  │   Channels · Retention · Weekly          │ │
+│ │ theme·settings │  │                                          │ │
 │ │ user footer    │  │                                          │ │
 │ └────────────────┘  └──────────────────────────────────────────┘ │
 └────────────────────────────────────────────────────────────────┘
@@ -121,9 +124,9 @@ not per-card shadows. Keep cards flat and spacing tight and even.
   never scrolls** (`flex-none`, footer pinned by a `flex-1` spacer) and the **topbar is pinned**
   (`shrink-0`). Only the **card grid scrolls** — it's the single `overflow-y-auto` region
   (`flex-1 min-h-0`) inside the `overflow-hidden` main panel. Never let the page body scroll.
-- **Surfaces / gray:** the canvas is `#F1F1F0`, the **sidebar stays white**, and the **main
-  content panel is light gray (`neutral-100`)** so the white (`neutral-200`-bordered) cards read
-  as raised tiles. Gray also carries the segmented-control tracks and the retention info box.
+- **Surfaces / gray:** `var(--cat-canvas)` behind everything, the **sidebar on `--cat-card`**, and
+  the **main content panel on `--cat-content`** (a step darker) so the `--cat-card` cards read as
+  raised tiles. The same track/hover tokens carry the segmented controls and the retention info box.
 - **Responsive:**
   - Card grid reflows `xl:grid-cols-3` → `sm:grid-cols-2` → `grid-cols-1`.
   - **Sidebar** is `hidden lg:flex` — it drops out below `1024px` and the main panel takes the
@@ -183,14 +186,14 @@ Used for time range (`1D…1Y`) and the radar series toggle.
 
 ## 7. Charts (all inline SVG, no chart lib)
 
-| Chart          | Card              | Technique                                                                                                                                    |
-| -------------- | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| Line           | Total Sales       | `<polyline>` from a normalized dummy series, brand stroke 2px, no axes                                                                       |
-| Split bars     | Total Visitors    | three flat rounded bars (yellow/blue/purple) + device %                                                                                      |
-| Area           | Conversion Rate   | two stacked `<path>` fills with brand→transparent gradients + stroke line, month ticks                                                       |
-| Stacked bar    | Visitors Channels | flex-weighted segments (`flex:5/4/2`) + dot legend                                                                                           |
-| Heatmap        | User Retention    | 7×12 grid of brand squares, opacity = `1 − col·0.075 − row·0.03` (dense bottom-left cohort fade)                                             |
-| Radar / spider | Weekly Visitors   | 8-axis octagon, 4 grid rings + spokes, two overlaid polygons (brand + green) with white-filled vertex dots, pill labels positioned at 1.28×R |
+| Chart          | Card              | Technique                                                                                                                                                   |
+| -------------- | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Line           | Total Sales       | `<polyline>` from a normalized dummy series, brand stroke 2px, no axes                                                                                      |
+| Split bars     | Total Visitors    | three flat rounded bars (yellow/blue/purple) + device %                                                                                                     |
+| Area           | Conversion Rate   | data-driven from `CONV_SERIES` — two stacked area layers (brand→transparent gradients) + stroke line, aligned to the 6 month ticks                          |
+| Stacked bar    | Visitors Channels | flex-weighted segments (`flex:5/4/2`) + dot legend                                                                                                          |
+| Heatmap        | User Retention    | 7×12 grid of brand squares, opacity = `1 − col·0.075 − row·0.03` (dense bottom-left cohort fade)                                                            |
+| Radar / spider | Weekly Visitors   | 7 axes = days of week (`RADAR_AXES`), grid rings + spokes, two overlaid polygons (New vs Returning), vertex dots filled with `--cat-card`, labels at 1.28×R |
 
 **Chart rules**
 
@@ -224,6 +227,58 @@ scrollable content panel). Each page supplies its own **pinned header + scroll b
 
 ---
 
+## 7c. The Visibility page (`/catalyst/visibility`)
+
+"Brand presence" — how AI engines surface the brand. Same shell (pinned header + scroll body).
+
+- **Metric design — radial gauges (the signature viz here).** Each platform score is a **270°
+  `GaugeRing`** (arc fills clockwise, gap centered at bottom, rounded caps) with the number centered,
+  a small platform icon badge, and a status pill (`scoreStatus`: Strong / Moderate / Low / None).
+  Arc + status color come from `scoreColor` (≥70 green, ≥40 amber, else red). The **Overall** card
+  uses a **full `ScoreRing`** (not a gauge) so the headline reads distinct from the sub-scores. A
+  0-value gauge draws only its track (no cap dot).
+- **AI Engine & Platform Signals:** a `Share of Voice` bar chart (gridlines + per-engine bars),
+  a `Mention Split` donut (`ScoreRing`), and a `Platform Reach` list — split by `lg:border-l`.
+- **Platform Analysis:** `Google` / `Web` / `Reddit` cards sharing `AnalysisHeader` (icon badge +
+  name + green "AI Analysis" pill + `scoreColor` score). Reusable parts: `StatTile` (mini metric),
+  `BreakdownBar` (labelled meter), `VisChip` (on/off flags + count chips), `WebTopLinks`. Reddit is
+  an empty state.
+
+---
+
+## 7d. The Sitemap page (`/catalyst/sitemap`)
+
+"Sitemap Audit" — crawl + score every URL. Pinned tabs (`Sitemap` / `Agent log · SOON`) + scroll
+body: the sitemap URL bar (`Re-run audit` CTA), a 4-up **Core Web Vitals** row, then the audit table.
+
+- **Vitals cards:** `IndexedCard` (a completion bar, 36/36) + three `WebVitalCard`s (LCP/FCP/TTFB).
+  Each web vital renders a **threshold bar** (`ThresholdBar` — green→amber→red gradient) with a
+  marker dot at the value; "no data" dims the bar and shows an em-dash. Icons sit in tinted badges;
+  the status caption is tinted (green "Good").
+- **The audit table (the showcase):** one horizontally-scrollable table (`min-w-[1160px]`), columns
+  URL · Status · Content · LCP · FCP · TTFB · Server · Resources · Links · AI · severity · Crawled.
+  Rows are built by mapping a `cells[]` array (keeps `AuditRow` small) through reusable cell
+  helpers: `TwoLine` (value + sub), `Dash`, `StatusPill` (green 200), `Ttfb` (colored by latency via
+  `ttfbColor`), `AiCell` (score + amber mini-bar), `Warn`. **Interaction polish:** rows are
+  `group cursor-pointer` — on hover the row tints, the path underlines, and the chevron nudges right.
+
+---
+
+## 7e. The Competitors page (`/catalyst/competitors`)
+
+"Benchmark rival brands across AI surfaces." Deliberately **not a table** — a responsive **card
+grid** (`3 → md:2 → 1`, `cat-stagger`) reads more premium than rows.
+
+- **`CompetitorCard`:** brand monogram tile + name + clickable domain (brand-red link) + `⋯`; a
+  reused **`GaugeRing`** for the AI score (colored via `scoreColor`, label via `scoreStatus`); a
+  footer with a `RelationPill` and a dashed **"+ Add tags"** affordance. Cards lift on hover
+  (subtle shadow — these are interactive list items, unlike the flat dashboard metric cards).
+- **"My brand"** (Signalor) card is highlighted with `BRAND_SOFT` + a solid brand `My brand` pill;
+  competitors show a `Direct` (amber) / `Indirect` (neutral) relation dropdown pill.
+- Header toolbar: search + `All confidence` / `All scores` dropdowns + a square brand `+` CTA.
+
+---
+
 ## 8. Iconography
 
 - Library: **lucide-react**, default `strokeWidth 1.8` for nav / UI, `2.2–2.4` for delta arrows.
@@ -252,6 +307,21 @@ routes are unaffected.
   `localStorage('catalyst-theme')`, and renders a `.dark` wrapper. It starts light on the server /
   first client render (hydration-safe) then syncs the saved preference on mount. `ThemeToggle` in
   the sidebar footer flips it (sun/moon).
+
+---
+
+## 8c. Motion
+
+Intentionally minimal — a single **rise + fade** on mount so content settles in on load / refresh /
+route change, then never moves again.
+
+- One keyframe `cat-rise` (opacity 0→1, `translateY(8px)→0`, `0.42s`, ease-out). Two utilities:
+  `.cat-rise` for a single element and `.cat-stagger` which animates its direct children with a
+  `+0.05s` cascade (via `nth-child`).
+- Applied to: the topbar / tasks toolbar (`.cat-rise`), the dashboard card grid and the tasks stat
+  row (`.cat-stagger`), and the tasks table (`.cat-rise`). Metrics ride in with their card.
+- **Respects `prefers-reduced-motion: reduce`** — the animation is disabled entirely.
+- No hover/scroll animation and no per-number count-ups; motion is an entrance only, never ambient.
 
 ---
 

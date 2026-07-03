@@ -26,7 +26,7 @@ export function GoogleButton({ callbackUrl }: GoogleButtonProps): JSX.Element {
       className="shadow-input text-foreground flex h-10 w-full items-center justify-center gap-2 rounded-md border border-neutral-200 bg-white text-[13px] font-medium transition hover:bg-neutral-50 disabled:cursor-not-allowed disabled:opacity-60"
     >
       <GoogleIcon />
-      {loading ? 'Redirecting…' : 'Continue with Google'}
+      {loading ? 'Redirecting…' : 'Google'}
     </button>
   )
 }

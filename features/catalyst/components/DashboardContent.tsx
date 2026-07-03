@@ -10,7 +10,7 @@ export function DashboardContent(): JSX.Element {
   return (
     <>
       <Topbar />
-      <section className="mt-2.5 grid min-h-0 flex-1 auto-rows-min grid-cols-1 gap-2 overflow-y-auto pr-0.5 sm:grid-cols-2 xl:grid-cols-3">
+      <section className="cat-stagger mt-2.5 grid min-h-0 flex-1 auto-rows-min grid-cols-1 gap-2 overflow-y-auto pr-0.5 sm:grid-cols-2 xl:grid-cols-3">
         <TotalSalesCard />
         <TotalVisitorsCard />
         <ConversionRateCard />

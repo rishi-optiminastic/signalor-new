@@ -32,10 +32,12 @@ function stepHeader(step: OnboardingStep, mode: AuthMode): { title: string; desc
     case 'auth-method':
       return {
         title: isSignUp ? 'Create your account' : 'Welcome back',
-        description: 'Continue with Google or your email.',
+        description: isSignUp
+          ? "Start tracking your brand's AI-search visibility."
+          : 'Sign in to continue to Signalor.',
       }
     case 'otp-verify':
-      return { title: 'Verify your email', description: 'Enter the 6-digit code we sent you.' }
+      return { title: 'Verify your email', description: 'Almost there — check your inbox.' }
     default:
       return { title: '', description: '' }
   }

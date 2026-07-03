@@ -1,8 +1,26 @@
-import { BRAND } from '@/features/catalyst/constants'
+import { BRAND, CONV_SERIES } from '@/features/catalyst/constants'
+
+const W = 340
+const H = 90
+const PAD = 8
+const MAX = Math.max(...CONV_SERIES)
+const MIN = Math.min(...CONV_SERIES)
+
+/** Build the `<polyline>` points and the closed area `<path>` for one layer. */
+function toLayer(scale: number): { poly: string; path: string } {
+  const pts = CONV_SERIES.map((v, i) => {
+    const x = (i / (CONV_SERIES.length - 1)) * W
+    const y = H - PAD - ((v - MIN) / (MAX - MIN || 1)) * scale * (H - PAD * 2)
+    return `${x.toFixed(1)},${y.toFixed(1)}`
+  })
+  return { poly: pts.join(' '), path: `M${pts.join(' L')} L${W},${H} L0,${H} Z` }
+}
 
 export function AreaChart(): JSX.Element {
+  const band = toLayer(1.25)
+  const main = toLayer(1)
   return (
-    <svg viewBox="0 0 340 90" preserveAspectRatio="none" className="h-20 w-full">
+    <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="h-20 w-full">
       <defs>
         <linearGradient id="cv" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor={BRAND} stopOpacity="0.35" />
@@ -13,20 +31,9 @@ export function AreaChart(): JSX.Element {
           <stop offset="1" stopColor={BRAND} stopOpacity="0" />
         </linearGradient>
       </defs>
-      <path
-        d="M0,72 L57,60 L113,66 L170,44 L226,74 L283,18 L340,40 L340,90 L0,90 Z"
-        fill="url(#cv2)"
-      />
-      <path
-        d="M0,80 L57,70 L113,74 L170,58 L226,80 L283,40 L340,58 L340,90 L0,90 Z"
-        fill="url(#cv)"
-      />
-      <polyline
-        points="0,80 57,70 113,74 170,58 226,80 283,40 340,58"
-        fill="none"
-        stroke={BRAND}
-        strokeWidth={2}
-      />
+      <path d={band.path} fill="url(#cv2)" />
+      <path d={main.path} fill="url(#cv)" />
+      <polyline points={main.poly} fill="none" stroke={BRAND} strokeWidth={2} />
     </svg>
   )
 }

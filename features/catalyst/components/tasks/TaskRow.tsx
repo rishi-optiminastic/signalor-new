@@ -16,7 +16,7 @@ export function TaskRow({ row }: TaskRowProps): JSX.Element {
       <td className="py-2.5 pr-3 pl-1">
         <span className="flex items-center gap-1.5" style={{ paddingLeft: row.child ? 22 : 0 }}>
           <GripVertical size={14} className="shrink-0 text-[var(--cat-ink-3)]" />
-          <span className="h-[15px] w-[15px] shrink-0 rounded-[4px] border border-[var(--cat-border)]" />
+          <span className="h-[15px] w-[15px] shrink-0 rounded-sm border border-[var(--cat-border)]" />
           <span
             className={`truncate ${row.child ? 'text-[var(--cat-ink)]' : 'font-semibold text-[var(--cat-ink)]'}`}
           >

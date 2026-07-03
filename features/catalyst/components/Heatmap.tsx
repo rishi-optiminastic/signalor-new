@@ -15,7 +15,7 @@ export function Heatmap(): JSX.Element {
     return (
       <span
         key={idx}
-        className="aspect-square rounded"
+        className="aspect-square rounded-sm"
         style={{ background: BRAND, opacity: cellOpacity(row, col) }}
       />
     )

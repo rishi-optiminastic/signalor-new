@@ -14,6 +14,11 @@ export const env = createEnv({
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().url(),
+    // Existing signalor (Django) backend for org/account/analyzer endpoints.
+    NEXT_PUBLIC_API_URL: z.string().url().default('http://localhost:8000'),
+    // When 'true', the onboarding service returns mocked data instead of calling
+    // the backend/OTP — lets the full UI be clicked through without infra.
+    NEXT_PUBLIC_USE_STUBS: z.enum(['true', 'false']).default('false'),
   },
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
@@ -24,6 +29,8 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+    NEXT_PUBLIC_USE_STUBS: process.env.NEXT_PUBLIC_USE_STUBS,
   },
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,
   emptyStringAsUndefined: true,

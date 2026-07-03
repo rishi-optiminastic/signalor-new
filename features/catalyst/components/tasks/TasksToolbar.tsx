@@ -5,7 +5,7 @@ import { TaskToolbarActions } from '@/features/catalyst/components/tasks/TaskToo
 
 export function TasksToolbar(): JSX.Element {
   return (
-    <div className="flex shrink-0 flex-wrap items-center gap-2 border-b border-[var(--cat-border)] pb-3">
+    <div className="cat-rise flex shrink-0 flex-wrap items-center gap-2 border-b border-[var(--cat-border)] pb-3">
       <div className="relative">
         <Search
           size={16}
@@ -13,14 +13,14 @@ export function TasksToolbar(): JSX.Element {
         />
         <input
           placeholder="Search..."
-          className="h-[36px] w-[200px] rounded-md border border-[var(--cat-border)] bg-[var(--cat-card)] pr-3 pl-9 text-[13px] text-[var(--cat-ink)] placeholder:text-[var(--cat-ink-3)] focus:border-[#e6a99f] focus:outline-none"
+          className="h-[36px] w-[200px] rounded-md border border-[var(--cat-border)] bg-[var(--cat-card)] pr-3 pl-9 text-[13px] text-[var(--cat-ink)] placeholder:text-[var(--cat-ink-3)] focus:border-[#e04a3d] focus:outline-none"
         />
       </div>
       <div className="hidden items-center gap-0.5 rounded-md border border-[var(--cat-border)] bg-[var(--cat-card)] p-0.5 sm:flex">
-        <button className="grid h-[28px] w-[28px] place-items-center rounded-[6px] bg-[var(--cat-track)] text-[var(--cat-ink)]">
+        <button className="grid h-[28px] w-[28px] place-items-center rounded-sm bg-[var(--cat-track)] text-[var(--cat-ink)]">
           <List size={16} />
         </button>
-        <button className="grid h-[28px] w-[28px] place-items-center rounded-[6px] text-[var(--cat-ink-3)]">
+        <button className="grid h-[28px] w-[28px] place-items-center rounded-sm text-[var(--cat-ink-3)]">
           <LayoutGrid size={16} />
         </button>
       </div>

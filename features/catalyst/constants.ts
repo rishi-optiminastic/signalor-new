@@ -3,13 +3,16 @@ import {
   BarChart3,
   Boxes,
   Clock,
+  Eye,
   Facebook,
   Instagram,
   LayoutGrid,
   ListChecks,
+  Network,
   Search,
   Store,
   Tag,
+  Users,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
@@ -71,6 +74,9 @@ export interface TableRow {
 export const MAIN_NAV: NavEntry[] = [
   { icon: LayoutGrid, label: 'Overview', href: '/catalyst' },
   { icon: ListChecks, label: 'Tasks', href: '/catalyst/tasks', badge: 7 },
+  { icon: Eye, label: 'Visibility', href: '/catalyst/visibility' },
+  { icon: Network, label: 'Sitemap', href: '/catalyst/sitemap' },
+  { icon: Users, label: 'Competitors', href: '/catalyst/competitors' },
   { icon: BarChart3, label: 'Analytics', href: '#' },
   { icon: Boxes, label: 'Products', href: '#' },
   { icon: Clock, label: 'Orders', href: '#' },
@@ -112,15 +118,16 @@ export const CHANNEL_TABLE: TableRow[] = [
   { name: 'Google', icon: Search, color: BRAND, percent: '32%', total: '7,952' },
 ]
 
-export const RADAR_AXES: string[] = [
-  'Happiness',
-  'Sadness',
-  'Anger',
-  'Fear',
-  'Surprise',
-  'Disgust',
-  'Love',
-  'Excitement',
-]
-export const RADAR_NEW: number[] = [0.85, 0.55, 0.7, 0.5, 0.75, 0.45, 0.65, 0.6]
-export const RADAR_RETURNING: number[] = [0.6, 0.7, 0.5, 0.65, 0.5, 0.6, 0.8, 0.45]
+// Weekly Visitors radar: New vs Returning visitors across the days of the week.
+export const RADAR_AXES: string[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+export const RADAR_NEW: number[] = [0.7, 0.85, 0.6, 0.78, 0.92, 0.5, 0.45]
+export const RADAR_RETURNING: number[] = [0.5, 0.6, 0.72, 0.55, 0.68, 0.82, 0.6]
+
+// Conversion Rate area chart — one value per month tick (FEB…JUL).
+export const CONV_SERIES: number[] = [26, 34, 30, 40, 72, 52]
+
+export const CURRENT_USER = {
+  name: 'James Brown',
+  email: 'james@signalor.com',
+  avatar: 'https://i.pravatar.cc/80?img=12',
+}

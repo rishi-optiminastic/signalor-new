@@ -1,8 +1,12 @@
 import { betterAuth } from 'better-auth'
 import { prismaAdapter } from 'better-auth/adapters/prisma'
+import { emailOTP } from 'better-auth/plugins'
 
 import { env } from '@/lib/env'
+import { createLogger } from '@/lib/logger'
 import { prisma } from '@/lib/prisma'
+
+const log = createLogger('auth')
 
 // Google OAuth is wired only when both credentials are present, so the app
 // still boots (and email/password still works) without them configured.
@@ -28,6 +32,20 @@ export const auth = betterAuth({
     minPasswordLength: 8,
   },
   socialProviders,
+  plugins: [
+    emailOTP({
+      otpLength: 6,
+      expiresIn: 10 * 60, // 10 minutes
+      // Delivery: TODO(prod) — send `otp` via your email provider or the Django
+      // backend. In development we log it so the flow is testable end-to-end
+      // (read the code from the dev server terminal).
+      async sendVerificationOTP({ email, otp }) {
+        if (env.NODE_ENV === 'development') {
+          log.info({ email, otp }, 'Email OTP (dev — wire real delivery for prod)')
+        }
+      },
+    }),
+  ],
   // Rate limiting protects auth endpoints from brute-force / credential-stuffing.
   // Default storage is in-memory; for multi-instance deployments swap to a
   // distributed store (Redis/Upstash) via `rateLimit.storage = 'secondary-storage'`
