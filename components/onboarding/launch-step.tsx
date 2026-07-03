@@ -1,0 +1,120 @@
+'use client'
+
+import { ArrowLeft, Loader2, Rocket } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+
+import { routes } from '@/lib/routes'
+import { launchAnalysis } from '@/services/onboarding.service'
+import { useOnboardingWizardStore } from '@/stores/useOnboardingWizardStore'
+
+const PILLARS = ['Content', 'Schema', 'E-E-A-T', 'Technical', 'Entity', 'AI Visibility']
+
+/** Step 7: review summary and launch the first analysis. */
+export function LaunchStep(): JSX.Element {
+  const router = useRouter()
+  const { companyName, platform, siteUrl, prompts, appInstalled, analyticsConnected, setStep } =
+    useOnboardingWizardStore()
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  const summary: Array<{ k: string; v: string; warn?: boolean }> = [
+    { k: 'Brand', v: companyName || '—' },
+    { k: 'Platform', v: platform.charAt(0).toUpperCase() + platform.slice(1) },
+    { k: 'App installed', v: appInstalled ? 'Yes' : 'Not yet', warn: !appInstalled },
+    { k: 'Analytics', v: analyticsConnected ? 'Connected' : 'Skipped' },
+    { k: 'Prompts', v: `${prompts.filter(Boolean).length} tracked` },
+  ]
+
+  const handleLaunch = async (): Promise<void> => {
+    setLoading(true)
+    setError('')
+    try {
+      const result = await launchAnalysis()
+      if (!result.ok) {
+        setError(result.error ?? 'Failed to launch. Please try again.')
+        return
+      }
+      router.push(routes.dashboard)
+    } catch {
+      setError('Failed to launch. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="space-y-3">
+      {siteUrl && (
+        <p className="text-center text-xs font-light text-neutral-400">
+          Site{' '}
+          <span className="text-foreground font-medium">
+            {siteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')}
+          </span>
+        </p>
+      )}
+
+      <div className="shadow-input overflow-hidden rounded-xl border border-neutral-200 bg-white">
+        {summary.map((r, i) => (
+          <div
+            key={r.k}
+            className={`flex items-center justify-between px-4 py-3 ${i > 0 ? 'border-t border-neutral-200' : ''}`}
+          >
+            <span className="text-xs text-neutral-500">{r.k}</span>
+            <span
+              className={`text-xs font-medium ${r.warn ? 'text-[#b45309]' : 'text-foreground'}`}
+            >
+              {r.v}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex flex-wrap justify-center gap-2">
+        {PILLARS.map(n => (
+          <span
+            key={n}
+            className="rounded-md border border-black/8 bg-white px-3 py-1.5 text-[11px] font-medium tracking-tight text-neutral-500"
+          >
+            {n}
+          </span>
+        ))}
+      </div>
+
+      {error && (
+        <p className="border-destructive/20 bg-destructive/5 text-destructive rounded-md border px-3 py-2 text-center text-xs font-medium">
+          {error}
+        </p>
+      )}
+
+      <button
+        type="button"
+        onClick={handleLaunch}
+        disabled={loading}
+        className="auth-cta-btn flex h-10 w-full items-center justify-center gap-1.5 rounded-md text-[15px] font-medium text-white disabled:cursor-not-allowed disabled:opacity-60"
+      >
+        {loading ? (
+          <>
+            <Loader2 className="h-4 w-4 animate-spin" />
+            Analyzing…
+          </>
+        ) : (
+          <>
+            <Rocket className="h-4 w-4" />
+            Launch analysis
+          </>
+        )}
+      </button>
+
+      <button
+        type="button"
+        onClick={() => setStep('analytics')}
+        disabled={loading}
+        className="hover:text-foreground flex h-9 w-full items-center justify-center gap-1.5 text-[13px] text-neutral-500 transition disabled:opacity-60"
+      >
+        <ArrowLeft className="h-3.5 w-3.5" />
+        Back
+      </button>
+    </div>
+  )
+}
