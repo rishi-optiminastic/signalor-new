@@ -3,17 +3,29 @@ import { Card } from '@/features/catalyst/components/Card'
 import { CardHead } from '@/features/catalyst/components/CardHead'
 import { Delta } from '@/features/catalyst/components/Delta'
 import { Metric } from '@/features/catalyst/components/Metric'
-import { FUNNEL } from '@/features/catalyst/constants'
 
 const MONTHS = ['FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL']
+
+interface FunnelRow {
+  name: string
+  num: string
+  change: string
+  positive: boolean
+}
+
+const SOV_FUNNEL: FunnelRow[] = [
+  { name: 'Prompts tracked', num: '248', change: '+8%', positive: true },
+  { name: 'Cited in answers', num: '156', change: '+12%', positive: true },
+  { name: 'Ranked #1', num: '62', change: '+4%', positive: true },
+]
 
 export function ConversionRateCard(): JSX.Element {
   return (
     <Card>
-      <CardHead title="Conversion Rate" action="Details" />
-      <Metric value="16.9%" positive badge="+2.1%" />
+      <CardHead title="Share of Voice" action="Details" />
+      <Metric value="62%" positive badge="+6.1%" />
       <div className="my-2.5 flex flex-col gap-2">
-        {FUNNEL.map(f => (
+        {SOV_FUNNEL.map(f => (
           <div key={f.name} className="flex items-center text-[13px]">
             <span className="text-[var(--cat-ink-2)]">{f.name}</span>
             <span className="mr-3 ml-auto font-semibold text-[var(--cat-ink)]">{f.num}</span>

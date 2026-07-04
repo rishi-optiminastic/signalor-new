@@ -13,7 +13,7 @@ const ICON_BTN =
 /** App-level top bar shown on every page: universal ⌘K search + quick actions. */
 export function GlobalBar(): JSX.Element {
   return (
-    <div className="cat-rise flex shrink-0 items-center gap-3 border-b border-[var(--cat-border)] pb-3">
+    <div className="cat-rise relative z-40 flex shrink-0 items-center gap-3 border-b border-[var(--cat-border)] pb-3">
       <MobileMenuButton />
       <SidebarToggle />
       <GlobalSearch />

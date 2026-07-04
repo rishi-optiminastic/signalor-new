@@ -1,5 +1,6 @@
-import { Settings, User, X } from 'lucide-react'
+import { Share2, Sparkles, X } from 'lucide-react'
 
+import { NavGroup } from '@/features/catalyst/components/NavGroup'
 import { NavItem } from '@/features/catalyst/components/NavItem'
 import { SidebarLogo } from '@/features/catalyst/components/SidebarLogo'
 import { SidebarUser } from '@/features/catalyst/components/SidebarUser'
@@ -8,6 +9,7 @@ import {
   MAIN_NAV,
   MONITORING_NAV,
   OPTIMIZATION_NAV,
+  SOCIALS_NAV,
   type NavEntry,
 } from '@/features/catalyst/constants'
 
@@ -65,14 +67,22 @@ export function SidebarContent({ collapsed, onClose }: SidebarContentProps): JSX
 
       <div className="mt-1 -mr-1 flex min-h-0 flex-1 flex-col overflow-x-hidden overflow-y-auto pr-1">
         <NavSection title="Main" items={MAIN_NAV} collapsed={collapsed} />
+        {collapsed && <div className="mx-1 my-2 h-px bg-[var(--cat-border-soft)]" />}
+        <div className={collapsed ? '' : 'mt-1'}>
+          <NavItem
+            icon={Sparkles}
+            label="Growth Agent"
+            href="/dashboard/agent"
+            collapsed={collapsed}
+          />
+        </div>
         <NavSection title="Monitoring" items={MONITORING_NAV} collapsed={collapsed} />
         <NavSection title="Optimization" items={OPTIMIZATION_NAV} collapsed={collapsed} />
+        {collapsed && <div className="mx-1 my-2 h-px bg-[var(--cat-border-soft)]" />}
+        <div className={collapsed ? '' : 'mt-1'}>
+          <NavGroup icon={Share2} label="Socials" items={SOCIALS_NAV} collapsed={collapsed} />
+        </div>
       </div>
-
-      <nav className="mt-2 flex flex-col gap-0.5 border-t border-[var(--cat-border-soft)] pt-2">
-        <NavItem icon={User} label="Profile" href="/profile" collapsed={collapsed} />
-        <NavItem icon={Settings} label="Settings" href="#" collapsed={collapsed} />
-      </nav>
 
       <SidebarUser collapsed={collapsed} />
     </>

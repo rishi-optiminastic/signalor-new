@@ -55,7 +55,7 @@ export function SearchResults({
   onHover,
 }: SearchResultsProps): JSX.Element {
   return (
-    <div className="absolute top-[calc(100%+6px)] left-0 z-40 w-[360px] max-w-[80vw] overflow-hidden rounded-md border border-[var(--cat-border)] bg-[var(--cat-card)] p-1 shadow-lg">
+    <div className="absolute top-[calc(100%+6px)] left-0 z-50 w-[360px] max-w-[80vw] overflow-hidden rounded-md border border-[var(--cat-border)] bg-[var(--cat-card)] p-1 shadow-xl">
       {results.map((item, i) => (
         <ResultRow
           key={`${item.type}-${item.label}`}

@@ -1,6 +1,7 @@
-import { LayoutGrid, List, Search } from 'lucide-react'
+import { Search } from 'lucide-react'
 
 import { TaskStatusTabs } from '@/features/catalyst/components/tasks/TaskStatusTabs'
+import { TasksViewToggle } from '@/features/catalyst/components/tasks/TasksViewToggle'
 import { TaskToolbarActions } from '@/features/catalyst/components/tasks/TaskToolbarActions'
 
 export function TasksToolbar(): JSX.Element {
@@ -16,14 +17,7 @@ export function TasksToolbar(): JSX.Element {
           className="h-[36px] w-[200px] rounded-md border border-[var(--cat-border)] bg-[var(--cat-card)] pr-3 pl-9 text-[13px] text-[var(--cat-ink)] placeholder:text-[var(--cat-ink-3)] focus:border-[#e04a3d] focus:outline-none"
         />
       </div>
-      <div className="hidden items-center gap-0.5 rounded-md border border-[var(--cat-border)] bg-[var(--cat-card)] p-0.5 sm:flex">
-        <button className="grid h-[28px] w-[28px] place-items-center rounded-sm bg-[var(--cat-track)] text-[var(--cat-ink)]">
-          <List size={16} />
-        </button>
-        <button className="grid h-[28px] w-[28px] place-items-center rounded-sm text-[var(--cat-ink-3)]">
-          <LayoutGrid size={16} />
-        </button>
-      </div>
+      <TasksViewToggle />
       <div className="hidden lg:block">
         <TaskStatusTabs />
       </div>

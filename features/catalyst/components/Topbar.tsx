@@ -12,7 +12,7 @@ export function Topbar(): JSX.Element {
             {CURRENT_USER.name}
           </div>
           <div className="truncate text-[13px] text-[var(--cat-ink-2)]">
-            Welcome back to Catalyst 👋
+            Here&apos;s your AI visibility snapshot 👋
           </div>
         </div>
       </div>

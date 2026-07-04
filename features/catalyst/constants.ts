@@ -8,6 +8,7 @@ import {
   LayoutGrid,
   Link2,
   ListChecks,
+  MessageCircle,
   MessageSquareText,
   Network,
   Search,
@@ -88,6 +89,10 @@ export const OPTIMIZATION_NAV: NavEntry[] = [
   { icon: ListChecks, label: 'Tasks', href: '/dashboard/tasks', badge: 7 },
   { icon: Link2, label: 'Backlinks', href: '/dashboard/backlinks' },
   { icon: Blocks, label: 'Integrations', href: '/dashboard/integrations' },
+]
+
+export const SOCIALS_NAV: NavEntry[] = [
+  { icon: MessageCircle, label: 'Reddit', href: '/dashboard/socials/reddit' },
 ]
 
 export const SALES_LINE: number[] = [
