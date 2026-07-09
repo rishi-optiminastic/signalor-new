@@ -26,7 +26,7 @@ function FooterLinkRow({ href, label, external }: FooterLink): JSX.Element {
 
 function BrandPanel(): JSX.Element {
   return (
-    <div className="min-w-0 border-b border-black/[0.06] bg-white px-6 py-10 sm:px-8 lg:w-[340px] lg:shrink-0 lg:border-r lg:border-b-0 lg:px-10 lg:py-14">
+    <div className="min-w-0 border-b border-black/[0.06] bg-[#f7f7f6] px-6 py-10 sm:px-8 lg:w-[340px] lg:shrink-0 lg:border-r lg:border-b-0 lg:px-10 lg:py-14">
       <Link href="/" className="flex items-center gap-2">
         <SignalorMark className="h-7 w-7 text-[#e04a3d]" />
         <span className="text-[18px] font-semibold tracking-tight text-[#171717]">Signalor</span>
@@ -43,7 +43,7 @@ function BrandPanel(): JSX.Element {
               target="_blank"
               rel="noreferrer"
               aria-label={label}
-              className="flex h-9 w-9 items-center justify-center rounded-md border border-black/[0.08] bg-[#f7f7f6] text-[#6b6b6b] transition-colors hover:border-black/15 hover:bg-white hover:text-[#171717]"
+              className="flex h-9 w-9 items-center justify-center rounded-md border border-black/[0.08] bg-white text-[#6b6b6b] transition-colors hover:border-black/15 hover:bg-[#f0f0ef] hover:text-[#171717]"
             >
               <Icon className="h-4 w-4" strokeWidth={1.75} aria-hidden />
             </a>

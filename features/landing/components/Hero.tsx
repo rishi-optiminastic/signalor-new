@@ -6,8 +6,8 @@ import { IntegrationBeams } from './LandingHeroIllstration'
 
 function SparkleBadge(): JSX.Element {
   return (
-    <span className="mx-1.5 inline-flex h-[42px] w-[42px] translate-y-[6px] items-center justify-center rounded-2xl bg-white shadow-[0_6px_20px_rgba(16,24,40,0.1)] ring-1 ring-black/[0.06] sm:h-[56px] sm:w-[56px]">
-      <Sparkle size={26} className="text-[#e04a3d]" />
+    <span className="mx-1 inline-flex items-center justify-center align-middle">
+      <Sparkle size={34} className="text-[#e04a3d] sm:size-[46px]" />
     </span>
   )
 }

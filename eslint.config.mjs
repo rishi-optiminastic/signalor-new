@@ -107,6 +107,8 @@ const config = [
     files: [
       'components/**/*.tsx',
       'components/**/*.ts',
+      'features/landing/**/*.tsx',
+      'features/landing/**/*.ts',
       'hooks/**/*.ts',
       'hooks/**/*.tsx',
       'app/page.tsx',
