@@ -1,8 +1,22 @@
-"use client";
+'use client'
 
-import { Suspense, useCallback, useEffect, useRef, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useSession } from "@fe/lib/auth-client";
+import NumberFlow from '@number-flow/react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
+
+import { MarketingShell } from '@/features/landing/components/MarketingShell'
+
+import { track } from '@fe/amplitude'
+import { Check, Clock, Crown, Rocket, Zap } from '@fe/components/icons'
+import { LandingFaq } from '@fe/components/landing/landing-faq'
+import { AudienceToggle, type PricingAudience } from '@fe/components/pricing/audience-toggle'
+import { CurrencyToggle } from '@fe/components/pricing/currency-toggle'
+import { PricingHero } from '@fe/components/pricing/pricing-hero'
+import { PricingStatsSection } from '@fe/components/pricing/pricing-stats-section'
+import { ScreenHR } from '@fe/components/ui/intersection-diamonds'
+import { SignalorLoader } from '@fe/components/ui/signalor-loader'
+import { setAccountType as persistAccountType } from '@fe/lib/api/account'
+import { pingCheckoutStarted, pingPricingViewed } from '@fe/lib/api/drip'
 import {
   CheckoutSessionError,
   createCheckoutSession,
@@ -10,177 +24,165 @@ import {
   getSubscriptionStatus,
   type DodoMode,
   type DodoPlanPrice,
-} from "@fe/lib/api/payments";
-import { setAccountType as persistAccountType } from "@fe/lib/api/account";
-import { POST_CHECKOUT_REDIRECT_KEY, safeInternalReturnPath } from "@fe/lib/internal-nav";
-import { routes } from "@fe/lib/config";
-import { Check, Clock, Crown, Rocket, Zap } from "@fe/components/icons";
-import { useCurrency, formatPrice } from "@fe/lib/hooks/use-currency";
-import { useOrgStore } from "@fe/lib/stores/org-store";
-import { track } from "@fe/amplitude";
-import { pingCheckoutStarted, pingPricingViewed } from "@fe/lib/api/drip";
-import { SignalorLoader } from "@fe/components/ui/signalor-loader";
-import { LandingFaq } from "@fe/components/landing/landing-faq";
-import { MarketingShell } from "@/features/landing/components/MarketingShell";
-import { ScreenHR } from "@fe/components/ui/intersection-diamonds";
-import { PricingHero } from "@fe/components/pricing/pricing-hero";
-import { PricingStatsSection } from "@fe/components/pricing/pricing-stats-section";
-import { CurrencyToggle } from "@fe/components/pricing/currency-toggle";
-import { AudienceToggle, type PricingAudience } from "@fe/components/pricing/audience-toggle";
-import { PRICING_FAQ_ITEMS } from "@fe/lib/pricing-marketing-content";
-import { cn } from "@fe/lib/utils";
-import NumberFlow from "@number-flow/react";
+} from '@fe/lib/api/payments'
+import { useSession } from '@fe/lib/auth-client'
+import { routes } from '@fe/lib/config'
+import { useCurrency, formatPrice } from '@fe/lib/hooks/use-currency'
+import { POST_CHECKOUT_REDIRECT_KEY, safeInternalReturnPath } from '@fe/lib/internal-nav'
+import { PRICING_FAQ_ITEMS } from '@fe/lib/pricing-marketing-content'
+import { useOrgStore } from '@fe/lib/stores/org-store'
+import { cn } from '@fe/lib/utils'
 
 const CURRENCY_SYMBOLS: Record<string, string> = {
-  USD: "$",
-  EUR: "€",
-  GBP: "£",
-  INR: "₹",
-  AUD: "A$",
-  CAD: "C$",
-  JPY: "¥",
-  SGD: "S$",
-  AED: "AED ",
-  BRL: "R$",
-  MXN: "MX$",
-  ZAR: "R",
-};
+  USD: '$',
+  EUR: '€',
+  GBP: '£',
+  INR: '₹',
+  AUD: 'A$',
+  CAD: 'C$',
+  JPY: '¥',
+  SGD: 'S$',
+  AED: 'AED ',
+  BRL: 'R$',
+  MXN: 'MX$',
+  ZAR: 'R',
+}
 
-type PlanCta = "checkout" | "contact";
+type PlanCta = 'checkout' | 'contact'
 
 interface PlanConfig {
-  id: string;
-  label: string;
+  id: string
+  label: string
   /** Base monthly price in GBP. `null` renders as "Custom" (Enterprise). */
-  price: number | null;
+  price: number | null
   /** Extra qualifier under the price, e.g. "per brand". */
-  priceNote?: string;
-  period: string;
-  description: string;
-  icon: typeof Zap;
-  popular?: boolean;
-  features: string[];
-  comingSoonFeatures?: string[];
+  priceNote?: string
+  period: string
+  description: string
+  icon: typeof Zap
+  popular?: boolean
+  features: string[]
+  comingSoonFeatures?: string[]
   /** "checkout" → Dodo checkout (starter/pro only); "contact" → Contact Sales. */
-  cta: PlanCta;
-  ctaLabel?: string;
+  cta: PlanCta
+  ctaLabel?: string
 }
 
 // Only these plan ids may start a Dodo checkout. Everything else (Enterprise,
 // every Agency card) routes to Contact Sales — no public checkout exists.
-const CHECKOUTABLE = new Set(["starter", "pro"]);
+const CHECKOUTABLE = new Set(['starter', 'pro'])
 
 // ── Individual flow ────────────────────────────────────────────────────────
 const PLANS: PlanConfig[] = [
   {
-    id: "starter",
-    label: "Self-Serve Brand",
+    id: 'starter',
+    label: 'Self-Serve Brand',
     price: 69.99,
-    period: "/month",
-    description: "Run it yourself — onboard, track, and improve your AI visibility.",
+    period: '/month',
+    description: 'Run it yourself — onboard, track, and improve your AI visibility.',
     icon: Zap,
-    cta: "checkout",
+    cta: 'checkout',
     features: [
-      "1 brand / domain",
-      "10 prompts to rank & track",
-      "AI visibility score",
-      "Prompt ranking across AI engines",
-      "Competitor visibility tracking",
-      "Recommendations & improvement guidance",
+      '1 brand / domain',
+      '10 prompts to rank & track',
+      'AI visibility score',
+      'Prompt ranking across AI engines',
+      'Competitor visibility tracking',
+      'Recommendations & improvement guidance',
     ],
   },
   {
-    id: "pro",
-    label: "Managed Growth Brand",
+    id: 'pro',
+    label: 'Managed Growth Brand',
     price: 99.69,
-    period: "/month",
-    description: "Move faster with daily agency-style support from our team.",
+    period: '/month',
+    description: 'Move faster with daily agency-style support from our team.',
     icon: Crown,
     popular: true,
-    cta: "checkout",
+    cta: 'checkout',
     features: [
-      "1 brand / domain",
-      "25 prompts to rank & track",
-      "Everything in Self-Serve",
-      "Daily agency-style support from our team",
-      "Guidance on recommendations, fixes & actions",
+      '1 brand / domain',
+      '25 prompts to rank & track',
+      'Everything in Self-Serve',
+      'Daily agency-style support from our team',
+      'Guidance on recommendations, fixes & actions',
     ],
   },
   {
-    id: "enterprise",
-    label: "Enterprise",
+    id: 'enterprise',
+    label: 'Enterprise',
     price: null,
-    period: "",
-    description: "For larger brands with higher prompt, multi-domain, or support needs.",
+    period: '',
+    description: 'For larger brands with higher prompt, multi-domain, or support needs.',
     icon: Rocket,
-    cta: "contact",
-    ctaLabel: "Contact sales",
+    cta: 'contact',
+    ctaLabel: 'Contact sales',
     features: [
-      "Custom prompt volume",
-      "Multiple brands / domains",
-      "Advanced & dedicated support",
-      "Choose the AI engines you track",
-      "Preferred currency & billing terms",
+      'Custom prompt volume',
+      'Multiple brands / domains',
+      'Advanced & dedicated support',
+      'Choose the AI engines you track',
+      'Preferred currency & billing terms',
     ],
   },
-];
+]
 
 // ── Agency flow (display only this phase — every CTA goes to Contact Sales) ──
 const AGENCY_PLANS: PlanConfig[] = [
   {
-    id: "agency-account",
-    label: "Agency Account",
+    id: 'agency-account',
+    label: 'Agency Account',
     price: 99.69,
-    period: "/month",
-    description: "Manage multiple client brands from one Signalor workspace.",
+    period: '/month',
+    description: 'Manage multiple client brands from one Signalor workspace.',
     icon: Crown,
     popular: true,
-    cta: "contact",
-    ctaLabel: "Talk to us",
+    cta: 'contact',
+    ctaLabel: 'Talk to us',
     features: [
-      "One workspace for all your clients",
-      "Add & manage multiple client brands",
-      "15% off every brand you onboard",
-      "Consolidated visibility across clients",
+      'One workspace for all your clients',
+      'Add & manage multiple client brands',
+      '15% off every brand you onboard',
+      'Consolidated visibility across clients',
     ],
   },
   {
-    id: "agency-brand-10",
-    label: "Per Brand · 10 prompts",
+    id: 'agency-brand-10',
+    label: 'Per Brand · 10 prompts',
     price: 69.99,
-    priceNote: "per brand",
-    period: "/month",
-    description: "Each client brand you onboard, billed per brand.",
+    priceNote: 'per brand',
+    period: '/month',
+    description: 'Each client brand you onboard, billed per brand.',
     icon: Zap,
-    cta: "contact",
-    ctaLabel: "Talk to us",
+    cta: 'contact',
+    ctaLabel: 'Talk to us',
     features: [
-      "1 brand / domain",
-      "10 prompts to rank & track",
-      "AI visibility score & prompt ranking",
-      "Competitor visibility tracking",
-      "15% agency discount applied",
+      '1 brand / domain',
+      '10 prompts to rank & track',
+      'AI visibility score & prompt ranking',
+      'Competitor visibility tracking',
+      '15% agency discount applied',
     ],
   },
   {
-    id: "agency-brand-25",
-    label: "Per Brand · 25 prompts",
+    id: 'agency-brand-25',
+    label: 'Per Brand · 25 prompts',
     price: 99.69,
-    priceNote: "per brand",
-    period: "/month",
-    description: "More prompt coverage per client brand.",
+    priceNote: 'per brand',
+    period: '/month',
+    description: 'More prompt coverage per client brand.',
     icon: Rocket,
-    cta: "contact",
-    ctaLabel: "Talk to us",
+    cta: 'contact',
+    ctaLabel: 'Talk to us',
     features: [
-      "1 brand / domain",
-      "25 prompts to rank & track",
-      "Everything in the 10-prompt brand",
-      "Recommendations & improvement guidance",
-      "15% agency discount applied",
+      '1 brand / domain',
+      '25 prompts to rank & track',
+      'Everything in the 10-prompt brand',
+      'Recommendations & improvement guidance',
+      '15% agency discount applied',
     ],
   },
-];
+]
 
 function PricingPageFallback() {
   return (
@@ -189,51 +191,46 @@ function PricingPageFallback() {
         <SignalorLoader size="lg" />
       </div>
     </MarketingShell>
-  );
+  )
 }
 
 function PricingPageInner() {
-  const { data: session, isPending } = useSession();
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const returnTo = safeInternalReturnPath(searchParams.get("returnTo"));
-  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
-  const [error, setError] = useState("");
-  const [checkoutDodoMode, setCheckoutDodoMode] = useState<DodoMode | null>(null);
-  const [currentPlanId, setCurrentPlanId] = useState<string | null>(null);
-  const [livePrices, setLivePrices] = useState<Record<string, DodoPlanPrice | null> | null>(null);
-  const [audience, setAudience] = useState<PricingAudience>("individual");
-  const {
-    currency,
-    ready: currencyReady,
-    country: detectedCountry,
-    selectCurrency,
-  } = useCurrency();
+  const { data: session, isPending } = useSession()
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const returnTo = safeInternalReturnPath(searchParams.get('returnTo'))
+  const [loadingPlan, setLoadingPlan] = useState<string | null>(null)
+  const [error, setError] = useState('')
+  const [checkoutDodoMode, setCheckoutDodoMode] = useState<DodoMode | null>(null)
+  const [currentPlanId, setCurrentPlanId] = useState<string | null>(null)
+  const [livePrices, setLivePrices] = useState<Record<string, DodoPlanPrice | null> | null>(null)
+  const [audience, setAudience] = useState<PricingAudience>('individual')
+  const { currency, ready: currencyReady, country: detectedCountry, selectCurrency } = useCurrency()
 
   useEffect(() => {
     getPlanPrices()
-      .then((res) => {
-        if (res.source === "dodo") {
-          setLivePrices({ starter: res.starter, pro: res.pro, business: res.business });
+      .then(res => {
+        if (res.source === 'dodo') {
+          setLivePrices({ starter: res.starter, pro: res.pro, business: res.business })
         }
       })
       .catch(() => {
         /* graceful: keep static fallback */
-      });
-  }, []);
+      })
+  }, [])
 
   // Amplitude: pricing_page_viewed. `geo_score` lives on the user (set during
   // audit_completed); this marketing-tier page can't read it.
   useEffect(() => {
-    const activeOrg = useOrgStore.getState().activeOrg;
-    track("pricing_page_viewed", { domain: activeOrg?.url ?? undefined });
+    const activeOrg = useOrgStore.getState().activeOrg
+    track('pricing_page_viewed', { domain: activeOrg?.url ?? undefined })
 
     // Drip: enrol authenticated visitors. Anonymous marketing traffic skips
     // this — the drip is for signed-in users who already have an audit.
-    const email = session?.user?.email;
+    const email = session?.user?.email
     if (email) {
-      const fullName = session.user.name ?? "";
-      const firstName = fullName.trim().split(/\s+/)[0] ?? "";
+      const fullName = session.user.name ?? ''
+      const firstName = fullName.trim().split(/\s+/)[0] ?? ''
       void pingPricingViewed({
         email,
         amplitude_user_id: session.user.id,
@@ -241,76 +238,76 @@ function PricingPageInner() {
         domain: activeOrg?.url ?? undefined,
       }).catch(() => {
         /* swallow — analytics pings never break UX */
-      });
+      })
     }
-  }, [session?.user?.email, session?.user?.id, session?.user?.name]);
+  }, [session?.user?.email, session?.user?.id, session?.user?.name])
 
   useEffect(() => {
-    const email = session?.user?.email;
+    const email = session?.user?.email
     if (isPending || !email) {
-      setCurrentPlanId(null);
-      return;
+      setCurrentPlanId(null)
+      return
     }
     getSubscriptionStatus(email)
-      .then((s) => {
+      .then(s => {
         // Default the toggle to the user's stored account type so an agency
         // lands on agency plans.
         if (s.account_type) {
-          setAudience(s.account_type);
+          setAudience(s.account_type)
         }
         if (s.is_active) {
-          setCurrentPlanId(s.plan);
+          setCurrentPlanId(s.plan)
           // Preserve onboarding/setup flows: if the user landed here with a
           // returnTo, send them onward. Guarded with a session flag so we
           // never re-redirect to the same path twice in the same tab — that
           // prevented an /pricing ↔ /onboarding/company-info bounce loop for
           // paid users at their project limit.
           if (returnTo) {
-            const flagKey = `signalor:pricing-bounce:${returnTo}`;
-            if (typeof window !== "undefined" && sessionStorage.getItem(flagKey)) return;
+            const flagKey = `signalor:pricing-bounce:${returnTo}`
+            if (typeof window !== 'undefined' && sessionStorage.getItem(flagKey)) return
             try {
-              sessionStorage.setItem(flagKey, "1");
+              sessionStorage.setItem(flagKey, '1')
             } catch {
               /* ignore */
             }
-            router.replace(returnTo);
+            router.replace(returnTo)
           }
         } else {
-          setCurrentPlanId(null);
+          setCurrentPlanId(null)
         }
       })
-      .catch(() => setCurrentPlanId(null));
-  }, [isPending, session?.user?.email, router, returnTo]);
+      .catch(() => setCurrentPlanId(null))
+  }, [isPending, session?.user?.email, router, returnTo])
 
   const handleSubscribe = useCallback(
     async (planId: string) => {
-      if (loadingPlan) return;
+      if (loadingPlan) return
       // Only the Individual self-serve plans are checkout-able; anything else
       // (Enterprise, Agency cards) is a sales conversation.
       if (!CHECKOUTABLE.has(planId)) {
-        router.push(routes.contactSales);
-        return;
+        router.push(routes.contactSales)
+        return
       }
       // Amplitude: checkout_started — fire before the auth gate / API call so
       // we capture intent even if checkout creation fails or the user is
       // redirected to sign-in first.
-      const activeOrg = useOrgStore.getState().activeOrg;
-      track("checkout_started", { plan: planId, domain: activeOrg?.url ?? undefined });
+      const activeOrg = useOrgStore.getState().activeOrg
+      track('checkout_started', { plan: planId, domain: activeOrg?.url ?? undefined })
       // Drip: permanently exclude this user from the drip sequence.
       if (session?.user?.email) {
-        void pingCheckoutStarted(session.user.email).catch(() => {});
+        void pingCheckoutStarted(session.user.email).catch(() => {})
       }
       if (!session) {
-        router.push(`${routes.signIn}?returnTo=${encodeURIComponent("/pricing")}`);
-        return;
+        router.push(`${routes.signIn}?returnTo=${encodeURIComponent('/pricing')}`)
+        return
       }
-      setLoadingPlan(planId);
-      setError("");
-      setCheckoutDodoMode(null);
+      setLoadingPlan(planId)
+      setError('')
+      setCheckoutDodoMode(null)
       try {
         if (returnTo) {
           try {
-            sessionStorage.setItem(POST_CHECKOUT_REDIRECT_KEY, returnTo);
+            sessionStorage.setItem(POST_CHECKOUT_REDIRECT_KEY, returnTo)
           } catch {
             /* ignore */
           }
@@ -318,11 +315,11 @@ function PricingPageInner() {
         // Read partner code from localStorage (set by AffiliateCapture when
         // the visitor lands with ?aff=CODE). Expired codes are ignored so a
         // stale cookie never silently applies a discount.
-        let partnerCode: string | undefined;
+        let partnerCode: string | undefined
         try {
-          const code = localStorage.getItem("signalor.partner.code");
-          const expires = Number(localStorage.getItem("signalor.partner.expiresAt") || 0);
-          if (code && (!expires || expires > Date.now())) partnerCode = code;
+          const code = localStorage.getItem('signalor.partner.code')
+          const expires = Number(localStorage.getItem('signalor.partner.expiresAt') || 0)
+          if (code && (!expires || expires > Date.now())) partnerCode = code
         } catch {
           /* ignore */
         }
@@ -330,48 +327,48 @@ function PricingPageInner() {
           country: detectedCountry ?? undefined,
           currency: currency.code,
           partnerCode,
-        });
-        window.location.href = checkout_url;
+        })
+        window.location.href = checkout_url
       } catch (e) {
         if (e instanceof CheckoutSessionError) {
-          setError(e.message);
-          setCheckoutDodoMode(e.dodoMode ?? null);
+          setError(e.message)
+          setCheckoutDodoMode(e.dodoMode ?? null)
         } else {
-          setError(e instanceof Error ? e.message : "Failed to start checkout. Please try again.");
-          setCheckoutDodoMode(null);
+          setError(e instanceof Error ? e.message : 'Failed to start checkout. Please try again.')
+          setCheckoutDodoMode(null)
         }
-        setLoadingPlan(null);
+        setLoadingPlan(null)
       }
     },
     [session, loadingPlan, router, returnTo, detectedCountry, currency.code],
-  );
+  )
 
   // Direct checkout from the landing pricing teaser: a ?checkout=<planId> param
   // auto-starts checkout for that plan. Anonymous visitors are sent to sign-in
   // with a returnTo that preserves the intent so checkout resumes afterwards.
-  const autoCheckoutDone = useRef(false);
+  const autoCheckoutDone = useRef(false)
   useEffect(() => {
-    if (autoCheckoutDone.current || isPending) return;
-    const planParam = searchParams.get("checkout");
+    if (autoCheckoutDone.current || isPending) return
+    const planParam = searchParams.get('checkout')
     // Only auto-start checkout for genuinely checkout-able plans. A stale
     // ?checkout=business / agency / enterprise link must no-op, not 400.
-    if (!planParam || !CHECKOUTABLE.has(planParam)) return;
-    autoCheckoutDone.current = true;
+    if (!planParam || !CHECKOUTABLE.has(planParam)) return
+    autoCheckoutDone.current = true
     if (!session) {
-      const back = `/pricing?checkout=${planParam}`;
-      router.push(`${routes.signIn}?returnTo=${encodeURIComponent(back)}`);
-      return;
+      const back = `/pricing?checkout=${planParam}`
+      router.push(`${routes.signIn}?returnTo=${encodeURIComponent(back)}`)
+      return
     }
-    void handleSubscribe(planParam);
-  }, [isPending, session, searchParams, router, handleSubscribe]);
+    void handleSubscribe(planParam)
+  }, [isPending, session, searchParams, router, handleSubscribe])
 
   if (isPending) {
-    return <PricingPageFallback />;
+    return <PricingPageFallback />
   }
 
-  const showBackLink = !!(returnTo || session);
-  const backHref = returnTo || routes.dashboard;
-  const backLabel = returnTo ? "Back to setup" : "Back to dashboard";
+  const showBackLink = !!(returnTo || session)
+  const backHref = returnTo || routes.dashboard
+  const backLabel = returnTo ? 'Back to setup' : 'Back to dashboard'
 
   return (
     <MarketingShell>
@@ -383,22 +380,22 @@ function PricingPageInner() {
       />
 
       <ScreenHR />
-      <section className="relative bg-background px-6 py-14 lg:px-12 lg:py-16">
+      <section className="bg-background relative px-6 py-14 lg:px-12 lg:py-16">
         <div className="mx-auto max-w-7xl">
-          <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
+          <p className="text-muted-foreground text-[11px] font-medium tracking-[0.22em] uppercase">
             [ plans ]
           </p>
-          <h2 className="mt-4 max-w-4xl text-3xl font-bold leading-[1.12] tracking-tight text-foreground sm:text-4xl lg:text-[2.65rem]">
-            Pick the plan that{" "}
-            <span className="relative whitespace-nowrap text-primary">
+          <h2 className="text-foreground mt-4 max-w-4xl text-3xl leading-[1.12] font-bold tracking-tight sm:text-4xl lg:text-[2.65rem]">
+            Pick the plan that{' '}
+            <span className="text-primary relative whitespace-nowrap">
               matches your team
               <span
-                className="absolute -bottom-1 left-0 right-0 border-b-2 border-dashed border-primary/45"
+                className="border-primary/45 absolute right-0 -bottom-1 left-0 border-b-2 border-dashed"
                 aria-hidden
               />
             </span>
           </h2>
-          <p className="mt-5 max-w-2xl text-base font-light leading-relaxed text-accent-foreground lg:text-lg">
+          <p className="text-accent-foreground mt-5 max-w-2xl text-base leading-relaxed font-light lg:text-lg">
             See whether AI engines recommend you, ignore you, or recommend your competitors — and
             fix it. Pick a single-brand plan, or manage every client brand as an agency.
           </p>
@@ -415,13 +412,13 @@ function PricingPageInner() {
           <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
             <AudienceToggle
               audience={audience}
-              onSelect={(value) => {
-                setAudience(value);
+              onSelect={value => {
+                setAudience(value)
                 // Let a signed-in user switch their account type straight from
                 // the pricing toggle (best-effort; UI updates regardless).
-                const email = session?.user?.email;
+                const email = session?.user?.email
                 if (email) {
-                  persistAccountType(email, value).catch(() => {});
+                  persistAccountType(email, value).catch(() => {})
                 }
               }}
             />
@@ -430,22 +427,22 @@ function PricingPageInner() {
 
           <div className="mt-8">
             {error ? (
-              <div className="mb-10 max-w-lg mx-auto space-y-2">
-                <p className="rounded-none border border-destructive/25 bg-destructive/5 px-4 py-3 text-center text-sm text-destructive">
+              <div className="mx-auto mb-10 max-w-lg space-y-2">
+                <p className="border-destructive/25 bg-destructive/5 text-destructive rounded-none border px-4 py-3 text-center text-sm">
                   {error}
                 </p>
-                {checkoutDodoMode === "test" && (
-                  <p className="text-center text-xs leading-relaxed text-muted-foreground px-2">
-                    Test mode: in <code className="text-[11px]">ranking-be/.env</code> use{" "}
+                {checkoutDodoMode === 'test' && (
+                  <p className="text-muted-foreground px-2 text-center text-xs leading-relaxed">
+                    Test mode: in <code className="text-[11px]">ranking-be/.env</code> use{' '}
                     <code className="text-[11px]">DODO_LIVE_MODE=false</code>, a secret key from the
                     Dodo dashboard <strong>Test</strong> tab, and a product id created in Test (live
                     product ids will not work).
                   </p>
                 )}
-                {checkoutDodoMode === "live" && (
-                  <p className="text-center text-xs leading-relaxed text-muted-foreground px-2">
-                    Live mode: use <code className="text-[11px]">DODO_LIVE_MODE=true</code>, a{" "}
-                    <strong>Live</strong> secret key, and a Live product id in{" "}
+                {checkoutDodoMode === 'live' && (
+                  <p className="text-muted-foreground px-2 text-center text-xs leading-relaxed">
+                    Live mode: use <code className="text-[11px]">DODO_LIVE_MODE=true</code>, a{' '}
+                    <strong>Live</strong> secret key, and a Live product id in{' '}
                     <code className="text-[11px]">DODO_PRODUCT_ID_STARTER</code>.
                   </p>
                 )}
@@ -453,70 +450,70 @@ function PricingPageInner() {
             ) : null}
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-              {(audience === "individual" ? PLANS : AGENCY_PLANS).map((plan) => {
-                const isContact = plan.cta === "contact";
-                const isCustom = plan.price === null;
-                const isLoading = loadingPlan === plan.id;
+              {(audience === 'individual' ? PLANS : AGENCY_PLANS).map(plan => {
+                const isContact = plan.cta === 'contact'
+                const isCustom = plan.price === null
+                const isLoading = loadingPlan === plan.id
                 // "Current plan" only makes sense for the checkout-able tiers.
-                const isCurrent = !isContact && currentPlanId === plan.id;
+                const isCurrent = !isContact && currentPlanId === plan.id
 
                 // Live Dodo prices only exist for checkout-able plans; agency /
                 // enterprise cards use the static GBP price (or "Custom").
-                const live = livePrices?.[plan.id] ?? null;
-                let displaySymbol: string;
-                let displayCurrencyCode: string | null;
-                let numericAmount: number;
-                let isApprox: boolean;
+                const live = livePrices?.[plan.id] ?? null
+                let displaySymbol: string
+                let displayCurrencyCode: string | null
+                let numericAmount: number
+                let isApprox: boolean
 
                 if (live) {
-                  const userCcy = currencyReady ? currency.code : null;
+                  const userCcy = currencyReady ? currency.code : null
                   const localized =
                     userCcy && live.prices_by_currency
                       ? live.prices_by_currency[userCcy]
-                      : undefined;
+                      : undefined
                   const useLocal =
-                    localized !== undefined && userCcy && userCcy !== live.currency.toUpperCase();
-                  const ccy = useLocal ? userCcy! : live.currency.toUpperCase();
-                  const amount = useLocal ? localized! : live.amount;
-                  numericAmount = amount;
-                  displaySymbol = CURRENCY_SYMBOLS[ccy] ?? ccy + " ";
-                  displayCurrencyCode = ccy;
-                  isApprox = !!useLocal;
+                    localized !== undefined && userCcy && userCcy !== live.currency.toUpperCase()
+                  const ccy = useLocal && userCcy ? userCcy : live.currency.toUpperCase()
+                  const amount = useLocal && localized !== undefined ? localized : live.amount
+                  numericAmount = amount
+                  displaySymbol = CURRENCY_SYMBOLS[ccy] ?? ccy + ' '
+                  displayCurrencyCode = ccy
+                  isApprox = !!useLocal
                 } else {
-                  displaySymbol = currency.symbol;
-                  displayCurrencyCode = currency.code;
-                  numericAmount = isCustom ? 0 : (plan.price as number) * currency.rate;
-                  isApprox = !isCustom && currencyReady && currency.code !== "GBP";
+                  displaySymbol = currency.symbol
+                  displayCurrencyCode = currency.code
+                  numericAmount = isCustom ? 0 : (plan.price as number) * currency.rate
+                  isApprox = !isCustom && currencyReady && currency.code !== 'GBP'
                 }
 
                 const priceDecimals =
-                  displayCurrencyCode === "INR" || displayCurrencyCode === "JPY" ? 0 : 2;
+                  displayCurrencyCode === 'INR' || displayCurrencyCode === 'JPY' ? 0 : 2
 
                 return (
                   <div
                     key={plan.id}
                     className={cn(
-                      "relative flex flex-col rounded-none border p-8",
+                      'relative flex flex-col rounded-none border p-8',
                       isCurrent
-                        ? "border-success/30 bg-gradient-to-br from-success via-white to-success/40 ring-2 ring-success/50 shadow-[0_12px_40px_-12px_rgba(16,185,129,0.2)]"
+                        ? 'border-success/30 from-success to-success/40 ring-success/50 bg-gradient-to-br via-white shadow-[0_12px_40px_-12px_rgba(16,185,129,0.2)] ring-2'
                         : plan.popular
-                          ? "border-primary/20 bg-gradient-to-br from-primary/5 via-white to-primary/5 ring-2 ring-primary/40 shadow-[0_12px_40px_-12px_rgba(224,74,61,0.2)]"
-                          : "border-border bg-white",
+                          ? 'border-primary/20 from-primary/5 to-primary/5 ring-primary/40 bg-gradient-to-br via-white shadow-[0_12px_40px_-12px_rgba(224,74,61,0.2)] ring-2'
+                          : 'border-border bg-white',
                     )}
                   >
                     {/* Plan name + badge. Reserve two lines of title height so
                         the price row lines up across every card even when a
                         label (e.g. "Managed Growth Brand") wraps to two lines. */}
                     <div className="mb-3 flex min-h-[4.5rem] items-start justify-between">
-                      <h3 className="text-3xl font-semibold tracking-tight text-foreground">
+                      <h3 className="text-foreground text-3xl font-semibold tracking-tight">
                         {plan.label}
                       </h3>
                       {isCurrent ? (
-                        <span className="rounded-full bg-success px-3 py-1 text-[11px] font-semibold text-white">
+                        <span className="bg-success rounded-full px-3 py-1 text-[11px] font-semibold text-white">
                           Current Plan
                         </span>
                       ) : plan.popular ? (
-                        <span className="rounded-full bg-success/10 px-3 py-1 text-[11px] font-semibold text-success">
+                        <span className="bg-success/10 text-success rounded-full px-3 py-1 text-[11px] font-semibold">
                           Most Popular
                         </span>
                       ) : null}
@@ -526,18 +523,18 @@ function PricingPageInner() {
                     {isCustom ? (
                       <>
                         <div className="mb-1 flex items-baseline">
-                          <span className="text-5xl font-bold tracking-tight text-foreground">
+                          <span className="text-foreground text-5xl font-bold tracking-tight">
                             Custom
                           </span>
                         </div>
-                        <p className="mb-6 text-sm text-muted-foreground">
+                        <p className="text-muted-foreground mb-6 text-sm">
                           Tailored to your prompt & domain needs
                         </p>
                       </>
                     ) : (
                       <>
                         <div className="mb-1 flex items-baseline gap-0.5">
-                          <span className="text-2xl font-semibold text-foreground">
+                          <span className="text-foreground text-2xl font-semibold">
                             {displaySymbol}
                           </span>
                           <NumberFlow
@@ -547,25 +544,25 @@ function PricingPageInner() {
                               maximumFractionDigits: priceDecimals,
                             }}
                             className={cn(
-                              "text-5xl font-bold tabular-nums tracking-tight",
-                              live || currencyReady ? "text-foreground" : "text-foreground/40",
+                              'text-5xl font-bold tracking-tight tabular-nums',
+                              live || currencyReady ? 'text-foreground' : 'text-foreground/40',
                             )}
                           />
                         </div>
-                        <p className="mb-6 text-sm text-muted-foreground">
+                        <p className="text-muted-foreground mb-6 text-sm">
                           /month
-                          {plan.priceNote ? ` \u00B7 ${plan.priceNote}` : ""}
+                          {plan.priceNote ? ` \u00B7 ${plan.priceNote}` : ''}
                           {live && isApprox
                             ? ` \u00B7 approx. \u2014 billed in ${live.currency.toUpperCase()}`
                             : isApprox && displayCurrencyCode
                               ? ` \u00B7 approx. in ${displayCurrencyCode}`
-                              : ""}
+                              : ''}
                         </p>
                       </>
                     )}
 
                     {/* Description */}
-                    <p className="mb-6 text-[13px] font-light leading-relaxed text-muted-foreground">
+                    <p className="text-muted-foreground mb-6 text-[13px] leading-relaxed font-light">
                       {plan.description}
                     </p>
 
@@ -577,81 +574,81 @@ function PricingPageInner() {
                       }
                       disabled={(!!loadingPlan && !isContact) || isCurrent}
                       className={cn(
-                        "mb-6 w-full rounded-none py-4 text-base font-semibold transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70",
+                        'mb-6 w-full rounded-none py-4 text-base font-semibold transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70',
                         isCurrent
-                          ? "border border-success bg-gradient-to-t from-success to-success text-white shadow-lg shadow-emerald-500/25"
+                          ? 'border-success from-success to-success border bg-gradient-to-t text-white shadow-lg shadow-emerald-500/25'
                           : plan.popular
-                            ? "border border-primary/50 bg-gradient-to-t from-primary to-primary/80 text-white shadow-lg shadow-primary/30"
-                            : "border border-foreground bg-gradient-to-t from-foreground to-foreground/85 text-white shadow-lg shadow-neutral-900/20",
+                            ? 'border-primary/50 from-primary to-primary/80 shadow-primary/30 border bg-gradient-to-t text-white shadow-lg'
+                            : 'border-foreground from-foreground to-foreground/85 border bg-gradient-to-t text-white shadow-lg shadow-neutral-900/20',
                       )}
                     >
                       {isLoading ? (
                         <SignalorLoader size="sm" />
                       ) : isCurrent ? (
-                        "Current Plan"
+                        'Current Plan'
                       ) : isContact ? (
-                        (plan.ctaLabel ?? "Contact sales")
+                        (plan.ctaLabel ?? 'Contact sales')
                       ) : session ? (
-                        "Subscribe now"
+                        'Subscribe now'
                       ) : (
-                        "Get started"
+                        'Get started'
                       )}
                     </button>
 
                     {/* Features */}
-                    <div className="space-y-2.5 border-t border-border pt-5">
-                      {plan.features.map((f) => (
+                    <div className="border-border space-y-2.5 border-t pt-5">
+                      {plan.features.map(f => (
                         <div key={f} className="flex items-center gap-3">
                           <span
                             className={cn(
-                              "grid h-5 w-5 shrink-0 place-content-center rounded-full border bg-white",
+                              'grid h-5 w-5 shrink-0 place-content-center rounded-full border bg-white',
                               isCurrent
-                                ? "border-success"
+                                ? 'border-success'
                                 : plan.popular
-                                  ? "border-primary"
-                                  : "border-border",
+                                  ? 'border-primary'
+                                  : 'border-border',
                             )}
                           >
                             <Check
                               className={cn(
-                                "h-3 w-3",
+                                'h-3 w-3',
                                 isCurrent
-                                  ? "text-success"
+                                  ? 'text-success'
                                   : plan.popular
-                                    ? "text-primary"
-                                    : "text-muted-foreground",
+                                    ? 'text-primary'
+                                    : 'text-muted-foreground',
                               )}
                               strokeWidth={2.5}
                               aria-hidden
                             />
                           </span>
-                          <span className="text-sm text-foreground/80">{f}</span>
+                          <span className="text-foreground/80 text-sm">{f}</span>
                         </div>
                       ))}
 
                       {plan.comingSoonFeatures && plan.comingSoonFeatures.length > 0 && (
                         <div className="mt-2 space-y-2.5">
-                          {plan.comingSoonFeatures.map((f) => (
+                          {plan.comingSoonFeatures.map(f => (
                             <div key={f} className="flex items-center gap-3">
-                              <span className="grid h-5 w-5 shrink-0 place-content-center rounded-full border border-border bg-white">
-                                <Clock className="h-3 w-3 text-muted-foreground" aria-hidden />
+                              <span className="border-border grid h-5 w-5 shrink-0 place-content-center rounded-full border bg-white">
+                                <Clock className="text-muted-foreground h-3 w-3" aria-hidden />
                               </span>
-                              <span className="text-sm text-muted-foreground">{f}</span>
+                              <span className="text-muted-foreground text-sm">{f}</span>
                             </div>
                           ))}
                         </div>
                       )}
                     </div>
                   </div>
-                );
+                )
               })}
             </div>
 
-            <p className="mt-10 text-center text-[11px] font-medium text-muted-foreground">
-              {audience === "agency"
-                ? "Agency account is billed monthly; client brands are billed per brand with a 15% discount. Talk to us to get set up."
-                : currency.code === "GBP"
-                  ? "All prices in GBP. Secure payment. Cancel anytime."
+            <p className="text-muted-foreground mt-10 text-center text-[11px] font-medium">
+              {audience === 'agency'
+                ? 'Agency account is billed monthly; client brands are billed per brand with a 15% discount. Talk to us to get set up.'
+                : currency.code === 'GBP'
+                  ? 'All prices in GBP. Secure payment. Cancel anytime.'
                   : `Prices shown in ${currency.code}, indicative only. Charged in GBP at checkout. Cancel anytime.`}
             </p>
           </div>
@@ -668,9 +665,8 @@ function PricingPageInner() {
         description="Plans, billing, and what happens after you subscribe."
         items={[...PRICING_FAQ_ITEMS]}
       />
-
     </MarketingShell>
-  );
+  )
 }
 
 /**
@@ -692,23 +688,23 @@ function PricingSeoContent() {
         hands-on support, or contact sales for Enterprise. Agencies manage multiple client brands
         from one workspace.
       </p>
-      {[...PLANS, ...AGENCY_PLANS].map((plan) => (
+      {[...PLANS, ...AGENCY_PLANS].map(plan => (
         <section key={plan.id}>
           <h2>
-            {plan.label}: {plan.price === null ? "Custom pricing" : `${plan.price.toFixed(2)} GBP`}{" "}
+            {plan.label}: {plan.price === null ? 'Custom pricing' : `${plan.price.toFixed(2)} GBP`}{' '}
             {plan.period}
-            {plan.priceNote ? ` (${plan.priceNote})` : ""}
+            {plan.priceNote ? ` (${plan.priceNote})` : ''}
           </h2>
           <p>{plan.description}</p>
           <ul>
-            {plan.features.map((f) => (
+            {plan.features.map(f => (
               <li key={f}>{f}</li>
             ))}
           </ul>
         </section>
       ))}
     </div>
-  );
+  )
 }
 
 export default function PricingPage() {
@@ -719,5 +715,5 @@ export default function PricingPage() {
         <PricingPageInner />
       </Suspense>
     </>
-  );
+  )
 }

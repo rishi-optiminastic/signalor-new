@@ -1,16 +1,13 @@
-import type { Metadata } from "next";
-import { buildMetadata } from "@fe/lib/seo";
+import type { Metadata } from 'next'
+
+import { buildMetadata } from '@fe/lib/seo'
 
 export const metadata: Metadata = buildMetadata({
-  title: "Payments",
-  description: "Signalor checkout and billing pages.",
+  title: 'Payments',
+  description: 'Signalor checkout and billing pages.',
   noindex: true,
-});
+})
 
-export default function PaymentsLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return children;
+export default function PaymentsLayout({ children }: { children: React.ReactNode }) {
+  return children
 }

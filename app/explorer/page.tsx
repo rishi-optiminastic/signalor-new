@@ -1,10 +1,11 @@
-"use client";
+'use client'
 
-import { LandingFaq } from "@fe/components/landing/landing-faq";
-import { MarketingShell } from "@/features/landing/components/MarketingShell";
-import { PromptTrackingFeaturesGrid } from "@fe/components/landing/prompt-tracking-features-grid";
-import { PromptTrackingHero } from "@fe/components/landing/prompt-tracking-hero";
-import { PromptTrackingWhySection } from "@fe/components/landing/prompt-tracking-why-section";
+import { MarketingShell } from '@/features/landing/components/MarketingShell'
+
+import { LandingFaq } from '@fe/components/landing/landing-faq'
+import { PromptTrackingFeaturesGrid } from '@fe/components/landing/prompt-tracking-features-grid'
+import { PromptTrackingHero } from '@fe/components/landing/prompt-tracking-hero'
+import { PromptTrackingWhySection } from '@fe/components/landing/prompt-tracking-why-section'
 import {
   REPORTING_CAPABILITY_ROWS,
   REPORTING_FAQ,
@@ -16,7 +17,7 @@ import {
   REPORTING_PILLAR_ROWS,
   REPORTING_PROOF_METRICS,
   REPORTING_WHY,
-} from "@fe/lib/landing-reporting-content";
+} from '@fe/lib/landing-reporting-content'
 
 export default function ExplorerPage() {
   return (
@@ -60,5 +61,5 @@ export default function ExplorerPage() {
         items={[...REPORTING_FAQ]}
       />
     </MarketingShell>
-  );
+  )
 }

@@ -1,36 +1,37 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
-import { IntegrationDetailCta } from "@fe/components/landing/integration-detail-cta";
-import { IntegrationPlatformHero } from "@fe/components/landing/integration-platform-hero";
-import { LandingFaq } from "@fe/components/landing/landing-faq";
-import { RelatedLinks } from "@fe/components/seo/related-links";
-import { MarketingShell } from "@/features/landing/components/MarketingShell";
+import { MarketingShell } from '@/features/landing/components/MarketingShell'
+
+import { IntegrationDetailCta } from '@fe/components/landing/integration-detail-cta'
+import { IntegrationPlatformHero } from '@fe/components/landing/integration-platform-hero'
+import { LandingFaq } from '@fe/components/landing/landing-faq'
+import { JsonLd } from '@fe/components/seo/json-ld'
+import { RelatedLinks } from '@fe/components/seo/related-links'
 import {
   INTEGRATION_DETAIL_FAQ,
   WORDPRESS_INTEGRATION_PAGE,
-} from "@fe/lib/landing-integration-content";
-import { JsonLd } from "@fe/components/seo/json-ld";
-import { AGGREGATE_RATING, breadcrumbJsonLd, buildMetadata, faqJsonLd, SITE_URL } from "@fe/lib/seo";
+} from '@fe/lib/landing-integration-content'
+import { AGGREGATE_RATING, breadcrumbJsonLd, buildMetadata, faqJsonLd, SITE_URL } from '@fe/lib/seo'
 
 export const metadata: Metadata = buildMetadata({
-  title: "WordPress plugin, GEO scoring & schema fixes",
+  title: 'WordPress plugin, GEO scoring & schema fixes',
   description: WORDPRESS_INTEGRATION_PAGE.subhead,
-  path: "/integration/wordpress",
-});
+  path: '/integration/wordpress',
+})
 
 const wordpressPluginJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: "Signalor GEO for WordPress",
-  applicationCategory: "BrowserApplication",
-  operatingSystem: "WordPress",
-  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Signalor GEO for WordPress',
+  applicationCategory: 'BrowserApplication',
+  operatingSystem: 'WordPress',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
   aggregateRating: AGGREGATE_RATING,
   url: `${SITE_URL}/integration/wordpress`,
   downloadUrl: `${SITE_URL}/downloads/signalor-geo.zip`,
   description:
-    "Self-hosted WordPress plugin that surfaces Signalor GEO recommendations and applies one-click schema fixes inside the WordPress admin.",
-};
+    'Self-hosted WordPress plugin that surfaces Signalor GEO recommendations and applies one-click schema fixes inside the WordPress admin.',
+}
 
 export default function WordPressIntegrationPage() {
   return (
@@ -46,9 +47,9 @@ export default function WordPressIntegrationPage() {
       <JsonLd
         id="ld-wordpress-breadcrumb"
         data={breadcrumbJsonLd([
-          { name: "Home", path: "/" },
-          { name: "Integrations", path: "/integration" },
-          { name: "WordPress", path: "/integration/wordpress" },
+          { name: 'Home', path: '/' },
+          { name: 'Integrations', path: '/integration' },
+          { name: 'WordPress', path: '/integration/wordpress' },
         ])}
       />
       <JsonLd id="ld-wordpress-plugin" data={wordpressPluginJsonLd} />
@@ -64,5 +65,5 @@ export default function WordPressIntegrationPage() {
       />
       <RelatedLinks page="/integration/wordpress" />
     </MarketingShell>
-  );
+  )
 }

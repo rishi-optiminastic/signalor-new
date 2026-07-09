@@ -1,14 +1,14 @@
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function PrivacyPolicyPage() {
   return (
     <main className="mx-auto min-h-screen w-full max-w-4xl px-6 py-10 md:px-10">
-      <header className="mb-8 border-b border-border pb-4">
+      <header className="border-border mb-8 border-b pb-4">
         <h1 className="text-3xl font-bold tracking-tight">Privacy Policy</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Last updated: May 8, 2026</p>
+        <p className="text-muted-foreground mt-2 text-sm">Last updated: May 8, 2026</p>
       </header>
 
-      <section className="space-y-6 text-sm leading-7 text-foreground/90">
+      <section className="text-foreground/90 space-y-6 text-sm leading-7">
         <div>
           <p>
             This Privacy Policy explains how Signalor GEO (&ldquo;Signalor&rdquo;, &ldquo;we&rdquo;,
@@ -184,8 +184,8 @@ export default function PrivacyPolicyPage() {
         <div>
           <h2 className="text-base font-semibold">12. Contact</h2>
           <p className="mt-2">
-            For privacy-related questions, requests, or complaints, contact us at{" "}
-            <a href="mailto:tech3@optiminastic.com" className="underline hover:text-foreground">
+            For privacy-related questions, requests, or complaints, contact us at{' '}
+            <a href="mailto:tech3@optiminastic.com" className="hover:text-foreground underline">
               tech3@optiminastic.com
             </a>
             .
@@ -193,11 +193,11 @@ export default function PrivacyPolicyPage() {
         </div>
       </section>
 
-      <footer className="mt-10 border-t border-border pt-4 text-sm text-muted-foreground">
+      <footer className="border-border text-muted-foreground mt-10 border-t pt-4 text-sm">
         <Link href="/" className="hover:text-foreground">
           Back to Home
         </Link>
       </footer>
     </main>
-  );
+  )
 }

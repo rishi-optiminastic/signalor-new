@@ -79,7 +79,7 @@ export const MONITORING_NAV: NavEntry[] = [
 ]
 
 export const OPTIMIZATION_NAV: NavEntry[] = [
-  { icon: ListChecks, label: 'Tasks', href: 'tasks', badge: 7 },
+  { icon: ListChecks, label: 'Tasks', href: 'tasks' },
   { icon: PenLine, label: 'Content', href: 'optimisation' },
   { icon: Link2, label: 'Backlinks', href: 'backlinks' },
   { icon: Blocks, label: 'Integrations', href: 'integrations' },

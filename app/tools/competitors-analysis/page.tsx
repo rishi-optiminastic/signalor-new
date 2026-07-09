@@ -1,9 +1,10 @@
-"use client";
+'use client'
 
-import { RelatedLinks } from "@fe/components/seo/related-links";
-import { MarketingShell } from "@/features/landing/components/MarketingShell";
-import { ToolPage } from "@fe/components/tools/tool-page";
-import { CompetitorsInline } from "@fe/components/tools/competitors-inline";
+import { MarketingShell } from '@/features/landing/components/MarketingShell'
+
+import { RelatedLinks } from '@fe/components/seo/related-links'
+import { CompetitorsInline } from '@fe/components/tools/competitors-inline'
+import { ToolPage } from '@fe/components/tools/tool-page'
 
 export default function CompetitorsAnalysisToolPage() {
   return (
@@ -30,22 +31,22 @@ export default function CompetitorsAnalysisToolPage() {
         form={<CompetitorsInline />}
         features={[
           {
-            title: "Real buyer queries",
+            title: 'Real buyer queries',
             description:
               "Competitors pulled from live 'vs', 'alternatives', and 'compared to' autocomplete, the queries your buyers type.",
           },
           {
-            title: "Co-mention ranking",
-            description: "Ranked by how often each rival surfaces next to you in real searches.",
+            title: 'Co-mention ranking',
+            description: 'Ranked by how often each rival surfaces next to you in real searches.',
           },
           {
-            title: "Expandable",
+            title: 'Expandable',
             description:
-              "Sign up to benchmark against live AI citations across ChatGPT, Claude, Gemini, and Perplexity.",
+              'Sign up to benchmark against live AI citations across ChatGPT, Claude, Gemini, and Perplexity.',
           },
           {
-            title: "Free forever",
-            description: "Run unlimited checks on public brands without an account.",
+            title: 'Free forever',
+            description: 'Run unlimited checks on public brands without an account.',
           },
         ]}
         previewEyebrow="[ what's inside the full report ]"
@@ -59,28 +60,28 @@ export default function CompetitorsAnalysisToolPage() {
       />
       <RelatedLinks page="/tools/competitors-analysis" />
     </MarketingShell>
-  );
+  )
 }
 
 function PreviewEngineSplit() {
   return (
     <div>
-      <p className="text-sm font-semibold text-foreground">Per-engine breakdown</p>
-      <p className="mt-1 text-xs text-muted-foreground">
+      <p className="text-foreground text-sm font-semibold">Per-engine breakdown</p>
+      <p className="text-muted-foreground mt-1 text-xs">
         See who wins on ChatGPT, Claude, Gemini, and Perplexity separately, the engines rarely
         agree.
       </p>
     </div>
-  );
+  )
 }
 
 function PreviewPromptGaps() {
   return (
     <div>
-      <p className="text-sm font-semibold text-foreground">Prompt-level gaps</p>
-      <p className="mt-1 text-xs text-muted-foreground">
+      <p className="text-foreground text-sm font-semibold">Prompt-level gaps</p>
+      <p className="text-muted-foreground mt-1 text-xs">
         Prompts where competitors are cited and you are not, ready to drop into a content brief.
       </p>
     </div>
-  );
+  )
 }

@@ -1,22 +1,23 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
-import { IntegrationDetailCta } from "@fe/components/landing/integration-detail-cta";
-import { IntegrationPlatformHero } from "@fe/components/landing/integration-platform-hero";
-import { LandingFaq } from "@fe/components/landing/landing-faq";
-import { RelatedLinks } from "@fe/components/seo/related-links";
-import { MarketingShell } from "@/features/landing/components/MarketingShell";
+import { MarketingShell } from '@/features/landing/components/MarketingShell'
+
+import { IntegrationDetailCta } from '@fe/components/landing/integration-detail-cta'
+import { IntegrationPlatformHero } from '@fe/components/landing/integration-platform-hero'
+import { LandingFaq } from '@fe/components/landing/landing-faq'
+import { JsonLd } from '@fe/components/seo/json-ld'
+import { RelatedLinks } from '@fe/components/seo/related-links'
 import {
   INTEGRATION_DETAIL_FAQ,
   SHOPIFY_INTEGRATION_PAGE,
-} from "@fe/lib/landing-integration-content";
-import { JsonLd } from "@fe/components/seo/json-ld";
-import { breadcrumbJsonLd, buildMetadata, faqJsonLd } from "@fe/lib/seo";
+} from '@fe/lib/landing-integration-content'
+import { breadcrumbJsonLd, buildMetadata, faqJsonLd } from '@fe/lib/seo'
 
 export const metadata: Metadata = buildMetadata({
-  title: "Shopify integration, GEO scoring for Shopify",
+  title: 'Shopify integration, GEO scoring for Shopify',
   description: SHOPIFY_INTEGRATION_PAGE.subhead,
-  path: "/integration/shopify",
-});
+  path: '/integration/shopify',
+})
 
 export default function ShopifyIntegrationPage() {
   return (
@@ -32,9 +33,9 @@ export default function ShopifyIntegrationPage() {
       <JsonLd
         id="ld-shopify-breadcrumb"
         data={breadcrumbJsonLd([
-          { name: "Home", path: "/" },
-          { name: "Integrations", path: "/integration" },
-          { name: "Shopify", path: "/integration/shopify" },
+          { name: 'Home', path: '/' },
+          { name: 'Integrations', path: '/integration' },
+          { name: 'Shopify', path: '/integration/shopify' },
         ])}
       />
       <JsonLd id="ld-shopify-faq" data={faqJsonLd([...INTEGRATION_DETAIL_FAQ])} />
@@ -49,5 +50,5 @@ export default function ShopifyIntegrationPage() {
       />
       <RelatedLinks page="/integration/shopify" />
     </MarketingShell>
-  );
+  )
 }

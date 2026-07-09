@@ -1,22 +1,23 @@
-import type { Metadata } from "next";
-import { LayoutGrid } from "@fe/components/icons";
+import type { Metadata } from 'next'
 
-import { FeatureDetailHero } from "@fe/components/landing/feature-detail-hero";
-import { IntegrationDetailCta } from "@fe/components/landing/integration-detail-cta";
-import { LandingFaq } from "@fe/components/landing/landing-faq";
-import { MarketingShell } from "@/features/landing/components/MarketingShell";
+import { MarketingShell } from '@/features/landing/components/MarketingShell'
+
+import { LayoutGrid } from '@fe/components/icons'
+import { FeatureDetailHero } from '@fe/components/landing/feature-detail-hero'
+import { IntegrationDetailCta } from '@fe/components/landing/integration-detail-cta'
+import { LandingFaq } from '@fe/components/landing/landing-faq'
+import { JsonLd } from '@fe/components/seo/json-ld'
 import {
   AI_SURFACES_PAGE,
   PROMPT_TRACKING_SURFACES_FAQ,
-} from "@fe/lib/landing-prompt-tracking-content";
-import { JsonLd } from "@fe/components/seo/json-ld";
-import { breadcrumbJsonLd, buildMetadata, faqJsonLd } from "@fe/lib/seo";
+} from '@fe/lib/landing-prompt-tracking-content'
+import { breadcrumbJsonLd, buildMetadata, faqJsonLd } from '@fe/lib/seo'
 
 export const metadata: Metadata = buildMetadata({
-  title: "AI surfaces, prompt tracking",
+  title: 'AI surfaces, prompt tracking',
   description: AI_SURFACES_PAGE.subhead,
-  path: "/prompt-tracking/ai-surfaces",
-});
+  path: '/prompt-tracking/ai-surfaces',
+})
 
 export default function AiSurfacesPromptTrackingPage() {
   return (
@@ -24,9 +25,9 @@ export default function AiSurfacesPromptTrackingPage() {
       <JsonLd
         id="ld-ai-surfaces-breadcrumb"
         data={breadcrumbJsonLd([
-          { name: "Home", path: "/" },
-          { name: "Prompt tracking", path: "/prompt-tracking" },
-          { name: "AI surfaces", path: "/prompt-tracking/ai-surfaces" },
+          { name: 'Home', path: '/' },
+          { name: 'Prompt tracking', path: '/prompt-tracking' },
+          { name: 'AI surfaces', path: '/prompt-tracking/ai-surfaces' },
         ])}
       />
       <JsonLd id="ld-ai-surfaces-faq" data={faqJsonLd([...PROMPT_TRACKING_SURFACES_FAQ])} />
@@ -46,5 +47,5 @@ export default function AiSurfacesPromptTrackingPage() {
         items={[...PROMPT_TRACKING_SURFACES_FAQ]}
       />
     </MarketingShell>
-  );
+  )
 }

@@ -1,11 +1,12 @@
-"use client";
+'use client'
 
-import { LandingFaq } from "@fe/components/landing/landing-faq";
-import { RelatedLinks } from "@fe/components/seo/related-links";
-import { MarketingShell } from "@/features/landing/components/MarketingShell";
-import { PromptTrackingFeaturesGrid } from "@fe/components/landing/prompt-tracking-features-grid";
-import { PromptTrackingHero } from "@fe/components/landing/prompt-tracking-hero";
-import { PromptTrackingWhySection } from "@fe/components/landing/prompt-tracking-why-section";
+import { MarketingShell } from '@/features/landing/components/MarketingShell'
+
+import { LandingFaq } from '@fe/components/landing/landing-faq'
+import { PromptTrackingFeaturesGrid } from '@fe/components/landing/prompt-tracking-features-grid'
+import { PromptTrackingHero } from '@fe/components/landing/prompt-tracking-hero'
+import { PromptTrackingWhySection } from '@fe/components/landing/prompt-tracking-why-section'
+import { RelatedLinks } from '@fe/components/seo/related-links'
 import {
   INTEGRATIONS_CAPABILITY_ROWS,
   INTEGRATIONS_FAQ,
@@ -17,7 +18,7 @@ import {
   INTEGRATIONS_PILLAR_ROWS,
   INTEGRATIONS_PROOF_METRICS,
   INTEGRATIONS_WHY,
-} from "@fe/lib/landing-integrations-feature-content";
+} from '@fe/lib/landing-integrations-feature-content'
 
 export default function IntegrationsFeaturePage() {
   return (
@@ -62,5 +63,5 @@ export default function IntegrationsFeaturePage() {
       />
       <RelatedLinks page="/recommendations" />
     </MarketingShell>
-  );
+  )
 }

@@ -1,29 +1,30 @@
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function TermsAndConditionsPage() {
   return (
     <main className="mx-auto min-h-screen w-full max-w-4xl px-6 py-10 md:px-10">
-      <header className="mb-8 border-b border-border pb-4">
+      <header className="border-border mb-8 border-b pb-4">
         <h1 className="text-3xl font-bold tracking-tight">Terms and Conditions</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Last updated: May 8, 2026</p>
+        <p className="text-muted-foreground mt-2 text-sm">Last updated: May 8, 2026</p>
       </header>
 
-      <section className="space-y-6 text-sm leading-7 text-foreground/90">
+      <section className="text-foreground/90 space-y-6 text-sm leading-7">
         <div>
           <p>
             These Terms and Conditions (&ldquo;Terms&rdquo;) govern your access to and use of the
-            Signalor GEO website, applications, and services (collectively, the &ldquo;Service&rdquo;)
-            provided by Signalor GEO (&ldquo;Signalor&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;).
-            By creating an account or using the Service, you agree to these Terms.
+            Signalor GEO website, applications, and services (collectively, the
+            &ldquo;Service&rdquo;) provided by Signalor GEO (&ldquo;Signalor&rdquo;,
+            &ldquo;we&rdquo;, &ldquo;us&rdquo;). By creating an account or using the Service, you
+            agree to these Terms.
           </p>
         </div>
 
         <div>
           <h2 className="text-base font-semibold">1. Eligibility and Acceptance</h2>
           <p className="mt-2">
-            You must be at least 16 years old and capable of entering a binding agreement to use
-            the Service. If you use the Service on behalf of an organization, you represent that
-            you have authority to bind that organization to these Terms.
+            You must be at least 16 years old and capable of entering a binding agreement to use the
+            Service. If you use the Service on behalf of an organization, you represent that you
+            have authority to bind that organization to these Terms.
           </p>
         </div>
 
@@ -50,8 +51,8 @@ export default function TermsAndConditionsPage() {
         <div>
           <h2 className="text-base font-semibold">4. Subscriptions, Billing, and Refunds</h2>
           <p className="mt-2">
-            Paid plans are billed in advance on a recurring basis through our payment provider,
-            Dodo Payments. By subscribing, you authorize recurring charges until cancellation.
+            Paid plans are billed in advance on a recurring basis through our payment provider, Dodo
+            Payments. By subscribing, you authorize recurring charges until cancellation.
           </p>
           <ul className="mt-2 list-disc space-y-1 pl-6">
             <li>
@@ -87,8 +88,8 @@ export default function TermsAndConditionsPage() {
               Service or related systems;
             </li>
             <li>
-              Use the Service to send spam, malware, or to scrape, mirror, or resell platform
-              output without permission;
+              Use the Service to send spam, malware, or to scrape, mirror, or resell platform output
+              without permission;
             </li>
             <li>
               Bypass usage limits, rate limits, or security features, or share account credentials.
@@ -100,9 +101,9 @@ export default function TermsAndConditionsPage() {
           <h2 className="text-base font-semibold">6. User Content</h2>
           <p className="mt-2">
             You retain ownership of the content you submit to the Service (URLs, brand inputs,
-            prompts, and similar). You grant Signalor a limited, worldwide, non-exclusive license
-            to host, process, and use that content solely to operate, secure, and improve the
-            Service. You are responsible for ensuring you have the rights to submit that content.
+            prompts, and similar). You grant Signalor a limited, worldwide, non-exclusive license to
+            host, process, and use that content solely to operate, secure, and improve the Service.
+            You are responsible for ensuring you have the rights to submit that content.
           </p>
         </div>
 
@@ -120,9 +121,9 @@ export default function TermsAndConditionsPage() {
         <div>
           <h2 className="text-base font-semibold">8. Intellectual Property</h2>
           <p className="mt-2">
-            The Service, including its software, designs, trademarks, and documentation, is owned
-            by Signalor and its licensors and is protected by intellectual property laws. We grant
-            you a limited, non-exclusive, non-transferable right to access and use the Service in
+            The Service, including its software, designs, trademarks, and documentation, is owned by
+            Signalor and its licensors and is protected by intellectual property laws. We grant you
+            a limited, non-exclusive, non-transferable right to access and use the Service in
             accordance with these Terms. No other rights are granted, expressly or by implication.
           </p>
         </div>
@@ -130,8 +131,8 @@ export default function TermsAndConditionsPage() {
         <div>
           <h2 className="text-base font-semibold">9. AI-Generated Output</h2>
           <p className="mt-2">
-            Portions of the Service produce AI-generated reports, scores, and recommendations.
-            These are provided for informational purposes and may contain inaccuracies. You should
+            Portions of the Service produce AI-generated reports, scores, and recommendations. These
+            are provided for informational purposes and may contain inaccuracies. You should
             independently verify important results before relying on them, and you are responsible
             for decisions made based on Service output.
           </p>
@@ -154,8 +155,8 @@ export default function TermsAndConditionsPage() {
             TO THE MAXIMUM EXTENT PERMITTED BY LAW, SIGNALOR WILL NOT BE LIABLE FOR ANY INDIRECT,
             INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR FOR LOST PROFITS, REVENUE,
             DATA, OR GOODWILL, ARISING OUT OF OR RELATING TO THE SERVICE. OUR TOTAL LIABILITY FOR
-            ANY CLAIM ARISING FROM THESE TERMS OR THE SERVICE WILL NOT EXCEED THE AMOUNT YOU PAID
-            TO US IN THE TWELVE MONTHS PRECEDING THE EVENT GIVING RISE TO THE CLAIM.
+            ANY CLAIM ARISING FROM THESE TERMS OR THE SERVICE WILL NOT EXCEED THE AMOUNT YOU PAID TO
+            US IN THE TWELVE MONTHS PRECEDING THE EVENT GIVING RISE TO THE CLAIM.
           </p>
         </div>
 
@@ -163,9 +164,9 @@ export default function TermsAndConditionsPage() {
           <h2 className="text-base font-semibold">12. Indemnification</h2>
           <p className="mt-2">
             You agree to defend, indemnify, and hold harmless Signalor and its officers, employees,
-            and affiliates from any claims, damages, liabilities, and expenses (including
-            reasonable legal fees) arising out of your use of the Service, your content, or your
-            violation of these Terms.
+            and affiliates from any claims, damages, liabilities, and expenses (including reasonable
+            legal fees) arising out of your use of the Service, your content, or your violation of
+            these Terms.
           </p>
         </div>
 
@@ -201,12 +202,8 @@ export default function TermsAndConditionsPage() {
         <div>
           <h2 className="text-base font-semibold">16. Contact</h2>
           <p className="mt-2">
-            Questions about these Terms? Contact us at
-            {" "}
-            <a
-              href="mailto:tech3@optiminastic.com"
-              className="underline hover:text-foreground"
-            >
+            Questions about these Terms? Contact us at{' '}
+            <a href="mailto:tech3@optiminastic.com" className="hover:text-foreground underline">
               tech3@optiminastic.com
             </a>
             .
@@ -214,11 +211,11 @@ export default function TermsAndConditionsPage() {
         </div>
       </section>
 
-      <footer className="mt-10 border-t border-border pt-4 text-sm text-muted-foreground">
+      <footer className="border-border text-muted-foreground mt-10 border-t pt-4 text-sm">
         <Link href="/" className="hover:text-foreground">
           Back to Home
         </Link>
       </footer>
     </main>
-  );
+  )
 }

@@ -11,13 +11,10 @@ import { useCompetitors, type MineBrand } from '@/hooks/useCompetitors'
 export function CompetitorsView(): JSX.Element {
   const { slug, activeOrg, run, isLoading: projectLoading } = useActiveProject()
 
-  const mine = useMemo<MineBrand | undefined>(
-    () =>
-      activeOrg
-        ? { name: activeOrg.name, url: activeOrg.url, score: run?.composite_score ?? 0 }
-        : undefined,
-    [activeOrg?.name, activeOrg?.url, run?.composite_score],
-  )
+  const mine = useMemo<MineBrand | undefined>(() => {
+    if (!activeOrg) return undefined
+    return { name: activeOrg.name, url: activeOrg.url, score: run?.composite_score ?? 0 }
+  }, [activeOrg, run?.composite_score])
 
   const { data, isLoading, isError } = useCompetitors({ slug, mine })
 

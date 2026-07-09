@@ -1,20 +1,21 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
-import { IntegrationHero } from "@fe/components/landing/integration-hero";
-import { IntegrationMidSection } from "@fe/components/landing/integration-mid-section";
-import { LandingFaq } from "@fe/components/landing/landing-faq";
-import { RelatedLinks } from "@fe/components/seo/related-links";
-import { MarketingShell } from "@/features/landing/components/MarketingShell";
-import { INTEGRATION_HUB_FAQ } from "@fe/lib/landing-integration-content";
-import { JsonLd } from "@fe/components/seo/json-ld";
-import { breadcrumbJsonLd, buildMetadata, faqJsonLd } from "@fe/lib/seo";
+import { MarketingShell } from '@/features/landing/components/MarketingShell'
+
+import { IntegrationHero } from '@fe/components/landing/integration-hero'
+import { IntegrationMidSection } from '@fe/components/landing/integration-mid-section'
+import { LandingFaq } from '@fe/components/landing/landing-faq'
+import { JsonLd } from '@fe/components/seo/json-ld'
+import { RelatedLinks } from '@fe/components/seo/related-links'
+import { INTEGRATION_HUB_FAQ } from '@fe/lib/landing-integration-content'
+import { breadcrumbJsonLd, buildMetadata, faqJsonLd } from '@fe/lib/seo'
 
 export const metadata: Metadata = buildMetadata({
-  title: "Integrations, Shopify & WordPress",
+  title: 'Integrations, Shopify & WordPress',
   description:
-    "Connect Shopify and WordPress to Signalor so GEO audits and AI visibility scores reflect your live catalog and CMS. One-click schema fixes from inside the admin.",
-  path: "/integration",
-});
+    'Connect Shopify and WordPress to Signalor so GEO audits and AI visibility scores reflect your live catalog and CMS. One-click schema fixes from inside the admin.',
+  path: '/integration',
+})
 
 export default function IntegrationPage() {
   return (
@@ -30,8 +31,8 @@ export default function IntegrationPage() {
       <JsonLd
         id="ld-integration-breadcrumb"
         data={breadcrumbJsonLd([
-          { name: "Home", path: "/" },
-          { name: "Integrations", path: "/integration" },
+          { name: 'Home', path: '/' },
+          { name: 'Integrations', path: '/integration' },
         ])}
       />
       <JsonLd id="ld-integration-faq" data={faqJsonLd([...INTEGRATION_HUB_FAQ])} />
@@ -46,5 +47,5 @@ export default function IntegrationPage() {
       />
       <RelatedLinks page="/integration" />
     </MarketingShell>
-  );
+  )
 }

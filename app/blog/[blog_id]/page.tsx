@@ -264,7 +264,7 @@ function PortableTextContent({ value }: { value: PTValue[] }) {
       if (src) {
         nodes.push(
           <figure key={img._key ?? i} className="my-8">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
+            {}
             <img
               src={src}
               alt={img.alt ?? ''}
@@ -376,7 +376,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ blog_
         <div className="mx-auto max-w-7xl">
           {post.coverImage?.url && (
             <figure className="mb-10">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
+              {}
               <img
                 src={post.coverImage.url}
                 alt={post.coverImage.alt ?? post.title}

@@ -1,80 +1,81 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
-import { LandingFaq } from "@fe/components/landing/landing-faq";
-import { RelatedLinks } from "@fe/components/seo/related-links";
-import { MarketingShell } from "@/features/landing/components/MarketingShell";
-import { PromptTrackingFeaturesGrid } from "@fe/components/landing/prompt-tracking-features-grid";
-import { PromptTrackingHero } from "@fe/components/landing/prompt-tracking-hero";
-import { PromptTrackingWhySection } from "@fe/components/landing/prompt-tracking-why-section";
-import { PROMPT_TRACKING_HUB_FAQ } from "@fe/lib/landing-prompt-tracking-content";
-import { JsonLd } from "@fe/components/seo/json-ld";
-import { breadcrumbJsonLd, buildMetadata, faqJsonLd, SITE_URL } from "@fe/lib/seo";
+import { MarketingShell } from '@/features/landing/components/MarketingShell'
+
+import { LandingFaq } from '@fe/components/landing/landing-faq'
+import { PromptTrackingFeaturesGrid } from '@fe/components/landing/prompt-tracking-features-grid'
+import { PromptTrackingHero } from '@fe/components/landing/prompt-tracking-hero'
+import { PromptTrackingWhySection } from '@fe/components/landing/prompt-tracking-why-section'
+import { JsonLd } from '@fe/components/seo/json-ld'
+import { RelatedLinks } from '@fe/components/seo/related-links'
+import { PROMPT_TRACKING_HUB_FAQ } from '@fe/lib/landing-prompt-tracking-content'
+import { breadcrumbJsonLd, buildMetadata, faqJsonLd, SITE_URL } from '@fe/lib/seo'
 
 export const metadata: Metadata = buildMetadata({
-  title: "AI Prompt Monitoring: Track Brand Mentions in ChatGPT & Gemini",
+  title: 'AI Prompt Monitoring: Track Brand Mentions in ChatGPT & Gemini',
   description:
-    "Monitor the AI prompts buyers ask ChatGPT, Claude, Gemini, and Perplexity about your category. Signalor tracks every citation, paraphrase, and omission, then ties it to your GEO score and prioritized fixes.",
-  path: "/prompt-tracking",
+    'Monitor the AI prompts buyers ask ChatGPT, Claude, Gemini, and Perplexity about your category. Signalor tracks every citation, paraphrase, and omission, then ties it to your GEO score and prioritized fixes.',
+  path: '/prompt-tracking',
   keywords: [
-    "AI prompt monitoring",
-    "AI prompt tracking",
-    "prompt tracking tool",
-    "ChatGPT brand monitoring",
-    "AI mention tracking",
-    "answer engine monitoring",
-    "AI citation tracking",
-    "AI answer monitoring",
-    "Generative Engine Optimization",
-    "AEO monitoring",
-    "brand visibility AI",
-    "Perplexity brand tracking",
-    "Gemini brand monitoring",
-    "AI search monitoring",
-    "share of AI voice",
+    'AI prompt monitoring',
+    'AI prompt tracking',
+    'prompt tracking tool',
+    'ChatGPT brand monitoring',
+    'AI mention tracking',
+    'answer engine monitoring',
+    'AI citation tracking',
+    'AI answer monitoring',
+    'Generative Engine Optimization',
+    'AEO monitoring',
+    'brand visibility AI',
+    'Perplexity brand tracking',
+    'Gemini brand monitoring',
+    'AI search monitoring',
+    'share of AI voice',
   ],
-});
+})
 
 const promptTrackingWebPageJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "@id": `${SITE_URL}/prompt-tracking`,
-  name: "AI Prompt Monitoring: Track Brand Mentions in ChatGPT & Gemini",
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': `${SITE_URL}/prompt-tracking`,
+  name: 'AI Prompt Monitoring: Track Brand Mentions in ChatGPT & Gemini',
   description:
-    "Monitor the AI prompts buyers ask ChatGPT, Claude, Gemini, and Perplexity, then tie every citation, paraphrase, and omission to your Signalor GEO score and prioritized fixes.",
+    'Monitor the AI prompts buyers ask ChatGPT, Claude, Gemini, and Perplexity, then tie every citation, paraphrase, and omission to your Signalor GEO score and prioritized fixes.',
   url: `${SITE_URL}/prompt-tracking`,
   breadcrumb: {
-    "@type": "BreadcrumbList",
+    '@type': 'BreadcrumbList',
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
       {
-        "@type": "ListItem",
+        '@type': 'ListItem',
         position: 2,
-        name: "Prompt tracking",
+        name: 'Prompt tracking',
         item: `${SITE_URL}/prompt-tracking`,
       },
     ],
   },
   mainEntity: {
-    "@type": "SoftwareApplication",
-    name: "Signalor Prompt Monitoring",
-    applicationCategory: "BusinessApplication",
-    operatingSystem: "Web",
+    '@type': 'SoftwareApplication',
+    name: 'Signalor Prompt Monitoring',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
     offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
-      description: "Free GEO audit available",
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+      description: 'Free GEO audit available',
     },
     featureList: [
-      "AI prompt monitoring across ChatGPT, Claude, Gemini, and Perplexity",
-      "Branded, category, and head-to-head prompt libraries",
-      "Per-surface citation, paraphrase, and omission tracking",
-      "Drift alerts when AI answers change after a launch",
-      "Competitor share-of-voice benchmarking",
-      "Prompt-level deltas linked to the Signalor GEO fix queue",
+      'AI prompt monitoring across ChatGPT, Claude, Gemini, and Perplexity',
+      'Branded, category, and head-to-head prompt libraries',
+      'Per-surface citation, paraphrase, and omission tracking',
+      'Drift alerts when AI answers change after a launch',
+      'Competitor share-of-voice benchmarking',
+      'Prompt-level deltas linked to the Signalor GEO fix queue',
     ],
   },
-};
+}
 
 export default function PromptTrackingPage() {
   return (
@@ -97,8 +98,8 @@ export default function PromptTrackingPage() {
       <JsonLd
         id="ld-prompt-tracking-breadcrumb"
         data={breadcrumbJsonLd([
-          { name: "Home", path: "/" },
-          { name: "Prompt tracking", path: "/prompt-tracking" },
+          { name: 'Home', path: '/' },
+          { name: 'Prompt tracking', path: '/prompt-tracking' },
         ])}
       />
       <JsonLd id="ld-prompt-tracking-webpage" data={promptTrackingWebPageJsonLd} />
@@ -115,5 +116,5 @@ export default function PromptTrackingPage() {
       />
       <RelatedLinks page="/prompt-tracking" />
     </MarketingShell>
-  );
+  )
 }

@@ -1,6 +1,8 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
+import { logger } from '@/lib/logger'
+
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY ?? ''
 const FROM_EMAIL = process.env.FROM_EMAIL ?? 'no-reply@signalor.ai'
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://signalor.ai'
@@ -212,7 +214,7 @@ export async function POST(req: NextRequest) {
 
   if (!sgRes.ok) {
     const errText = await sgRes.text()
-    console.error('[welcome-email] SendGrid error:', errText)
+    logger.error({ errText }, '[welcome-email] SendGrid error')
     return NextResponse.json({ error: 'Failed to send email' }, { status: 502 })
   }
 
