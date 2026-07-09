@@ -1,0 +1,85 @@
+/**
+ * Public env vars (NEXT_PUBLIC_*), runtime-validated via Zod.
+ *
+ * Why Zod here:
+ *   - Catches typos (`NEXT_PUBLI_API_URL`) at module load instead of "why
+ *     is the dashboard fetching from undefined?" deep in a useEffect.
+ *   - Strips trailing slashes / coerces shapes consistently so callers
+ *     don't each reinvent the cleanup.
+ *   - Single source of truth — drops the `process.env.X || "fallback"`
+ *     littering across the codebase.
+ *
+ * Note on Next.js inlining: `process.env.NEXT_PUBLIC_X` must be referenced
+ * *statically* (no bracket access, no dynamic key) so the bundler can
+ * substitute the literal value at build time. The schema below names each
+ * key explicitly — don't refactor to a loop.
+ */
+import { z } from 'zod'
+
+const trimTrailingSlash = (value: string): string => value.replace(/\/+$/, '')
+
+const publicEnvSchema = z.object({
+  NEXT_PUBLIC_API_URL: z
+    .string()
+    .url('NEXT_PUBLIC_API_URL must be a valid URL')
+    .default('http://localhost:8000')
+    .transform(trimTrailingSlash),
+  NEXT_PUBLIC_BETTER_AUTH_URL: z
+    .string()
+    .url('NEXT_PUBLIC_BETTER_AUTH_URL must be a valid URL')
+    .default('http://localhost:3000')
+    .transform(trimTrailingSlash),
+  NEXT_PUBLIC_SITE_URL: z
+    .string()
+    .url('NEXT_PUBLIC_SITE_URL must be a valid URL')
+    .default('https://signalor.ai')
+    .transform(trimTrailingSlash),
+  NEXT_PUBLIC_CLARITY_PROJECT_ID: z.string().min(1).optional(),
+  NEXT_PUBLIC_SANITY_PROJECT_ID: z.string().min(1).optional(),
+  NEXT_PUBLIC_SANITY_DATASET: z.string().min(1).optional(),
+  NEXT_PUBLIC_SANITY_API_VERSION: z.string().min(1).default('2026-05-02'),
+  // The dev URL the Signalor plugin serves from. Users paste this into
+  // Framer's "Open Development Plugin" dialog (Framer doesn't expose a
+  // deep-link to open a dev plugin from an external URL). Override with
+  // the marketplace listing once published.
+  NEXT_PUBLIC_FRAMER_PLUGIN_URL: z
+    .string()
+    .url()
+    .default('https://localhost:5176/')
+    .transform(trimTrailingSlash),
+  // Cloudflare Turnstile site key. When unset, the onboarding bot-check is
+  // skipped; the backend matches by leaving TURNSTILE_SECRET unset.
+  // Set BOTH (FE site key + BE secret) in prod to enable end-to-end.
+  NEXT_PUBLIC_TURNSTILE_SITE_KEY: z.string().min(1).optional(),
+})
+
+// Treat blank env values ("" or whitespace) as unset. An env var written as
+// `NEXT_PUBLIC_FOO=` is a present-but-empty string, which would otherwise fail
+// `.min(1)` / `.url()` and throw below — crashing the whole app (and, in dev,
+// looping the error boundary). Coercing to undefined lets defaults/optionals
+// apply. Keys are still referenced statically above so Next can inline them.
+const blankToUndefined = (v: string | undefined): string | undefined => {
+  const t = v?.trim()
+  return t ? t : undefined
+}
+
+const parsed = publicEnvSchema.safeParse({
+  NEXT_PUBLIC_API_URL: blankToUndefined(process.env.NEXT_PUBLIC_API_URL),
+  NEXT_PUBLIC_BETTER_AUTH_URL: blankToUndefined(process.env.NEXT_PUBLIC_BETTER_AUTH_URL),
+  NEXT_PUBLIC_SITE_URL: blankToUndefined(process.env.NEXT_PUBLIC_SITE_URL),
+  NEXT_PUBLIC_CLARITY_PROJECT_ID: blankToUndefined(process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID),
+  NEXT_PUBLIC_SANITY_PROJECT_ID: blankToUndefined(process.env.NEXT_PUBLIC_SANITY_PROJECT_ID),
+  NEXT_PUBLIC_SANITY_DATASET: blankToUndefined(process.env.NEXT_PUBLIC_SANITY_DATASET),
+  NEXT_PUBLIC_SANITY_API_VERSION: blankToUndefined(process.env.NEXT_PUBLIC_SANITY_API_VERSION),
+  NEXT_PUBLIC_FRAMER_PLUGIN_URL: blankToUndefined(process.env.NEXT_PUBLIC_FRAMER_PLUGIN_URL),
+  NEXT_PUBLIC_TURNSTILE_SITE_KEY: blankToUndefined(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY),
+})
+
+if (!parsed.success) {
+  // Make the failure loud — silent fallbacks let bad config reach prod.
+  console.error('Invalid NEXT_PUBLIC_* environment variables:', parsed.error.flatten().fieldErrors)
+  throw new Error('Invalid public environment variables — see console for details')
+}
+
+export const env = parsed.data
+export type PublicEnv = z.infer<typeof publicEnvSchema>

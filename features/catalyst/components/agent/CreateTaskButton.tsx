@@ -4,6 +4,7 @@ import { Check } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import Link from 'next/link'
 
+import { useBrandPath } from '@/hooks/useBrandPath'
 import { useMounted } from '@/hooks/useMounted'
 import { useTaskStore } from '@/stores/useTaskStore'
 
@@ -29,13 +30,14 @@ export function CreateTaskButton({
   brand = false,
 }: CreateTaskButtonProps): JSX.Element {
   const mounted = useMounted()
+  const brandPath = useBrandPath()
   const added = useTaskStore(s => s.tasks.some(t => t.id === task.id))
   const addTask = useTaskStore(s => s.addTask)
 
   if (mounted && added) {
     return (
       <Link
-        href="/dashboard/tasks"
+        href={brandPath('tasks')}
         className="inline-flex h-8 items-center gap-1 rounded-md px-2.5 text-[12px] font-medium text-[#2FBE7E]"
       >
         <Check size={14} />

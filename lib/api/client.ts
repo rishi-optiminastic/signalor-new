@@ -3,11 +3,14 @@ import { config } from '@/lib/config'
 /** Error thrown for any non-2xx response from the backend, with the parsed message. */
 export class ApiError extends Error {
   status: number
+  /** The parsed JSON error body, when the response had one (else undefined). */
+  data?: unknown
 
-  constructor(message: string, status: number) {
+  constructor(message: string, status: number, data?: unknown) {
     super(message)
     this.name = 'ApiError'
     this.status = status
+    this.data = data
   }
 }
 
@@ -49,12 +52,14 @@ function messageFromBody(data: unknown): string | null {
   return firstStringValue(obj)
 }
 
-async function parseError(res: Response): Promise<string> {
+/** Parse the error response once, returning both a human message and the raw body. */
+async function parseError(res: Response): Promise<{ message: string; body: unknown }> {
   const fallback = res.statusText || 'Request failed. Please try again.'
   try {
-    return messageFromBody(await res.json()) ?? fallback
+    const body = await res.json()
+    return { message: messageFromBody(body) ?? fallback, body }
   } catch {
-    return fallback
+    return { message: fallback, body: undefined }
   }
 }
 
@@ -75,7 +80,8 @@ async function request<T>(method: string, path: string, cfg: RequestConfig = {})
     throw new ApiError('Cannot reach the server. Please try again.', 0)
   }
   if (!res.ok) {
-    throw new ApiError(await parseError(res), res.status)
+    const { message, body } = await parseError(res)
+    throw new ApiError(message, res.status, body)
   }
   if (res.status === 204) return undefined as T
   return res.json() as Promise<T>
@@ -87,4 +93,8 @@ export function apiGet<T>(path: string, opts: RequestOptions = {}): Promise<T> {
 
 export function apiPost<T>(path: string, body?: unknown, opts: RequestOptions = {}): Promise<T> {
   return request<T>('POST', path, { ...opts, body })
+}
+
+export function apiDelete<T>(path: string, body?: unknown, opts: RequestOptions = {}): Promise<T> {
+  return request<T>('DELETE', path, { ...opts, body })
 }

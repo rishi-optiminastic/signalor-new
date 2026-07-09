@@ -1,10 +1,12 @@
 import { z } from 'zod'
 
-import { apiGet, apiPost } from './client'
+import { apiDelete, apiGet, apiPost } from './client'
 
 const organizationSchema = z.object({
   id: z.number(),
   name: z.string(),
+  // Unguessable public slug used in the dashboard URL (/dashboard/<slug>).
+  slug: z.string().optional().default(''),
   url: z.string(),
   owner_email: z.string(),
   created_at: z.string(),
@@ -38,6 +40,11 @@ export async function getOrganizations(email: string): Promise<Organization[]> {
     params: { email: normalizeEmail(email) },
   })
   return z.array(organizationSchema).parse(data)
+}
+
+/** DELETE /api/organizations/<id>/ → permanently delete a brand/project + its runs. */
+export async function deleteOrganization(id: number): Promise<void> {
+  await apiDelete<unknown>(`/api/organizations/${id}/`)
 }
 
 /** POST /api/organizations/onboard/ → create the org (single-use onboarding token). */

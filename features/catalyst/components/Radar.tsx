@@ -1,22 +1,25 @@
-import { BRAND, GREEN, RADAR_AXES, RADAR_NEW, RADAR_RETURNING } from '@/features/catalyst/constants'
-
 const CX = 130
 const CY = 120
 const R = 74
 const RINGS = [0.25, 0.5, 0.75, 1]
 
+export interface RadarSeries {
+  vals: number[]
+  color: string
+}
+
 type Point = readonly [number, number]
 
-function pt(i: number, frac: number): Point {
-  const a = (Math.PI * 2 * i) / RADAR_AXES.length - Math.PI / 2
+function pt(i: number, frac: number, count: number): Point {
+  const a = (Math.PI * 2 * i) / count - Math.PI / 2
   return [CX + Math.cos(a) * R * frac, CY + Math.sin(a) * R * frac]
 }
 
 function poly(vals: number[]): string {
-  return vals.map((v, i) => pt(i, v).join(',')).join(' ')
+  return vals.map((v, i) => pt(i, v, vals.length).join(',')).join(' ')
 }
 
-function Series({ vals, color }: { vals: number[]; color: string }): JSX.Element {
+function Series({ vals, color }: RadarSeries): JSX.Element {
   return (
     <>
       <polygon
@@ -28,7 +31,7 @@ function Series({ vals, color }: { vals: number[]; color: string }): JSX.Element
         strokeLinejoin="round"
       />
       {vals.map((v, i) => {
-        const [x, y] = pt(i, v)
+        const [x, y] = pt(i, v, vals.length)
         return (
           <circle
             key={i}
@@ -45,11 +48,11 @@ function Series({ vals, color }: { vals: number[]; color: string }): JSX.Element
   )
 }
 
-function Labels(): JSX.Element {
+function Labels({ axes }: { axes: string[] }): JSX.Element {
   return (
     <>
-      {RADAR_AXES.map((name, i) => {
-        const [x, y] = pt(i, 1.28)
+      {axes.map((name, i) => {
+        const [x, y] = pt(i, 1.28, axes.length)
         return (
           <span
             key={name}
@@ -64,26 +67,27 @@ function Labels(): JSX.Element {
   )
 }
 
-export function Radar(): JSX.Element {
+export function Radar({ axes, series }: { axes: string[]; series: RadarSeries[] }): JSX.Element {
   return (
     <div className="relative mx-auto mt-1 h-[240px] w-[260px]">
       <svg viewBox="0 0 260 240" className="h-[240px] w-full">
         {RINGS.map(f => (
           <polygon
             key={f}
-            points={RADAR_AXES.map((_, i) => pt(i, f).join(',')).join(' ')}
+            points={axes.map((_, i) => pt(i, f, axes.length).join(',')).join(' ')}
             fill="none"
             stroke="var(--cat-grid)"
           />
         ))}
-        {RADAR_AXES.map((_, i) => {
-          const [x, y] = pt(i, 1)
+        {axes.map((_, i) => {
+          const [x, y] = pt(i, 1, axes.length)
           return <line key={i} x1={CX} y1={CY} x2={x} y2={y} stroke="var(--cat-grid)" />
         })}
-        <Series vals={RADAR_NEW} color={BRAND} />
-        <Series vals={RADAR_RETURNING} color={GREEN} />
+        {series.map(s => (
+          <Series key={s.color} vals={s.vals} color={s.color} />
+        ))}
       </svg>
-      <Labels />
+      <Labels axes={axes} />
     </div>
   )
 }

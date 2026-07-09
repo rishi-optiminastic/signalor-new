@@ -116,11 +116,10 @@ function FloatingIcon({ icon }: { icon: IconSpec }): JSX.Element {
       }}
     >
       <div
-        className={`border-border bg-card shadow-foreground/5 flex items-center justify-center rounded-2xl border shadow-lg ${
+        className={`bg-card shadow-foreground/5 flex items-center justify-center rounded-lg shadow-lg ${
           lg ? 'h-14 w-14 md:h-16 md:w-16' : 'h-11 w-11 md:h-13 md:w-13'
         }`}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={icon.src}
           alt={icon.name}
@@ -137,10 +136,9 @@ function CentralHub(): JSX.Element {
       className="absolute -translate-x-1/2 -translate-y-1/2"
       style={{ left: `${(HUB.x / VIEW_W) * 100}%`, top: `${(HUB.y / VIEW_H) * 100}%` }}
     >
-      <div className="border-border bg-card shadow-primary/20 relative flex h-14 w-14 items-center justify-center rounded-2xl border shadow-xl md:h-16 md:w-16">
-        <span className="bg-primary animate-hub-pulse absolute inset-0 rounded-2xl opacity-20" />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/icon%20copy.svg" alt="Signalor" className="relative h-7 w-7 md:h-8 md:w-8" />
+      <div className="bg-card shadow-primary/20 relative flex h-14 w-14 items-center justify-center rounded-lg shadow-xl md:h-16 md:w-16">
+        <span className="bg-primary animate-hub-pulse absolute inset-0 rounded-lg opacity-20" />
+        <img src="/icon%20copy.svg" alt="Signalor" className="relative h-10 w-10 md:h-12 md:w-12" />
       </div>
     </div>
   )

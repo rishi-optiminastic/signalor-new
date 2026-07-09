@@ -23,6 +23,13 @@ const config = [
       '*.config.mjs',
       '*.config.js',
       '*.config.ts',
+      // Vendored ranking-fe mirror (used via the @fe/* alias) — it follows the
+      // old app's conventions, not this project's strict lint rules. Still
+      // type-checked by tsc; just not linted here.
+      'fe/**',
+      // Sanity Studio config/schemas (generated/tool-owned, default exports etc.)
+      'sanity.cli.ts',
+      'sanity/**',
     ],
   },
 
@@ -69,7 +76,10 @@ const config = [
         'error',
         {
           groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
-          pathGroups: [{ pattern: '@/**', group: 'internal', position: 'before' }],
+          pathGroups: [
+            { pattern: '@/**', group: 'internal', position: 'before' },
+            { pattern: '@fe/**', group: 'internal', position: 'after' },
+          ],
           pathGroupsExcludedImportTypes: ['builtin'],
           'newlines-between': 'always',
           alphabetize: { order: 'asc', caseInsensitive: true },
@@ -107,13 +117,15 @@ const config = [
     files: [
       'components/**/*.tsx',
       'components/**/*.ts',
+      'features/landing/**/*.tsx',
+      'features/landing/**/*.ts',
       'hooks/**/*.ts',
       'hooks/**/*.tsx',
-      'app/page.tsx',
-      'app/dashboard/**/*.tsx',
-      'app/early-access/**/*.tsx',
-      'app/api/dodo/**/*.ts',
-      'app/api/early-access/**/*.ts',
+      // Ported ranking-fe marketing/tools/blog/creator pages live in the App
+      // Router tree; they predate the strict ruleset (long compositions, lots of
+      // copy with apostrophes/quotes). Correctness rules still apply everywhere.
+      'app/**/*.tsx',
+      'app/**/*.ts',
     ],
     rules: {
       'max-lines': 'off',
@@ -128,6 +140,17 @@ const config = [
       'react-hooks/set-state-in-effect': 'off',
       'react-hooks/purity': 'off',
       '@next/next/no-img-element': 'off',
+    },
+  },
+
+  // Ported marketing/tools pages import heavily from the @fe/* mirror; multi-line
+  // @fe imports trigger import/order false-positives ("empty line within group")
+  // that --fix can't resolve. Import ordering there is cosmetic — the core app
+  // (features/**, lib/**, services/**) keeps strict import/order.
+  {
+    files: ['app/**/*.tsx', 'app/**/*.ts'],
+    rules: {
+      'import/order': 'off',
     },
   },
 

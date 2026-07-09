@@ -41,12 +41,20 @@ function MenuCol({ col }: { col: MenuColumn }): JSX.Element {
   )
 }
 
-function MenuFooter({ label, action }: { label: string; action: string }): JSX.Element {
+function MenuFooter({
+  label,
+  action,
+  href,
+}: {
+  label: string
+  action: string
+  href: string
+}): JSX.Element {
   return (
     <div className="mt-3 flex items-center justify-between border-t border-[#f0f0f0] px-3 pt-3">
       <span className="text-[12.5px] text-[#71717a]">{label}</span>
       <Link
-        href="#"
+        href={href}
         className="text-[12.5px] font-semibold text-[#171717] transition-colors hover:text-[#e04a3d]"
       >
         {action}
@@ -58,7 +66,7 @@ function MenuFooter({ label, action }: { label: string; action: string }): JSX.E
 function FeaturedCard(): JSX.Element {
   return (
     <Link
-      href="#"
+      href="/api"
       className="flex w-[336px] flex-col rounded-md bg-gradient-to-b from-[#faf2f1] to-[#f6f6f7] p-4 transition-shadow hover:shadow-sm"
     >
       <div className="px-1">
@@ -82,7 +90,7 @@ export function ProductPanel(): JSX.Element {
         </div>
         <FeaturedCard />
       </div>
-      <MenuFooter label="What's new in Signalor" action="Changelog" />
+      <MenuFooter label="What's new in Signalor" action="Changelog" href="/changelog" />
     </div>
   )
 }
@@ -95,7 +103,11 @@ export function ResourcesPanel(): JSX.Element {
           <MenuCol key={c.title} col={c} />
         ))}
       </div>
-      <MenuFooter label="New research: How AI search reshapes B2B discovery" action="Read report" />
+      <MenuFooter
+        label="New research: How AI search reshapes B2B discovery"
+        action="Read report"
+        href="/blog"
+      />
     </div>
   )
 }
@@ -109,7 +121,7 @@ export function PricingPanel(): JSX.Element {
       {PRICING_LINKS.map(l => (
         <MenuLinkRow key={l.label} link={l} />
       ))}
-      <MenuFooter label="Not sure which is right?" action="Talk to us" />
+      <MenuFooter label="Not sure which is right?" action="Talk to us" href="/contact-sales" />
     </div>
   )
 }

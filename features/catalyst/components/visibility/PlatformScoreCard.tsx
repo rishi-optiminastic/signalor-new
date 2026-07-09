@@ -3,9 +3,9 @@ import { MoreHorizontal } from 'lucide-react'
 import { BarMeter } from '@/features/catalyst/components/visibility/BarMeter'
 import { MetricDelta } from '@/features/catalyst/components/visibility/MetricDelta'
 import { scoreColor } from '@/features/catalyst/visibility-data'
-import type { PlatformScore, SubStat } from '@/features/catalyst/visibility-data'
+import type { PlatformVis, SubStat } from '@/hooks/useVisibility'
 
-function Head({ platform }: { platform: PlatformScore }): JSX.Element {
+function Head({ platform }: { platform: PlatformVis }): JSX.Element {
   const { icon: Icon, name, score, badge } = platform
   return (
     <div className="flex items-center justify-between">
@@ -41,7 +41,7 @@ function SubStats({ stats }: { stats: SubStat[] }): JSX.Element {
   )
 }
 
-export function PlatformScoreCard({ platform }: { platform: PlatformScore }): JSX.Element {
+export function PlatformScoreCard({ platform }: { platform: PlatformVis }): JSX.Element {
   return (
     <div className="flex flex-col gap-3 rounded-md border border-[var(--cat-border)] bg-[var(--cat-card)] p-4">
       <Head platform={platform} />

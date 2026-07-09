@@ -16,8 +16,8 @@ const TRIGGERS: Array<{ label: string; key?: MenuKey; href?: string }> = [
   { label: 'Product', key: 'product' },
   { label: 'Pricing', key: 'pricing' },
   { label: 'Resources', key: 'resources' },
-  { label: 'Partnerships', href: '#' },
-  { label: 'Careers', href: '#' },
+  { label: 'Partnerships', href: '/creators-program' },
+  { label: 'Free Tools', href: '/tools' },
 ]
 
 const PANELS: Array<{ key: MenuKey; node: JSX.Element }> = [
@@ -122,7 +122,7 @@ export function LandingNavMenu(): JSX.Element {
     pricing: null,
     resources: null,
   })
-  const timer = useRef<ReturnType<typeof setTimeout>>()
+  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
   useLayoutEffect(() => {
     if (!active) return

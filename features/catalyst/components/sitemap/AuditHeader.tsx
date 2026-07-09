@@ -1,5 +1,4 @@
 import { BRAND, BRAND_STRONG } from '@/features/catalyst/constants'
-import { AUDIT_FILTERS } from '@/features/catalyst/sitemap-data'
 import type { AuditFilter } from '@/features/catalyst/sitemap-data'
 
 function FilterPill({ filter }: { filter: AuditFilter }): JSX.Element {
@@ -26,7 +25,7 @@ function FilterPill({ filter }: { filter: AuditFilter }): JSX.Element {
   )
 }
 
-export function AuditHeader(): JSX.Element {
+export function AuditHeader({ filters }: { filters: AuditFilter[] }): JSX.Element {
   return (
     <div className="flex flex-wrap items-start justify-between gap-3">
       <div>
@@ -39,7 +38,7 @@ export function AuditHeader(): JSX.Element {
         </p>
       </div>
       <div className="flex flex-wrap items-center gap-2">
-        {AUDIT_FILTERS.map(filter => (
+        {filters.map(filter => (
           <FilterPill key={filter.label} filter={filter} />
         ))}
       </div>

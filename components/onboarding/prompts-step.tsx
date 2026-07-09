@@ -10,7 +10,7 @@ const MAX_PROMPTS = 15
 
 /** Step 5: review/edit the prompts we'll track across AI engines. */
 export function PromptsStep(): JSX.Element {
-  const { companyName, prompts, setPrompts, setStep } = useOnboardingWizardStore()
+  const { companyName, siteUrl, prompts, setPrompts, setStep } = useOnboardingWizardStore()
   const [loading, setLoading] = useState(prompts.length === 0)
   const [editingIdx, setEditingIdx] = useState<number | null>(null)
   const [editText, setEditText] = useState('')
@@ -18,7 +18,7 @@ export function PromptsStep(): JSX.Element {
   useEffect(() => {
     if (prompts.length > 0) return
     let active = true
-    void suggestPrompts(companyName).then(suggested => {
+    void suggestPrompts({ brandName: companyName, brandUrl: siteUrl }).then(suggested => {
       if (active) {
         setPrompts(suggested)
         setLoading(false)

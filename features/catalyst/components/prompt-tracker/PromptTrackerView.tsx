@@ -1,9 +1,15 @@
+'use client'
+
 import { Plus, TrendingDown, TrendingUp } from 'lucide-react'
 
 import { TickBar } from '@/features/catalyst/components/brands/BrandBits'
 import { DashHeader, DashStatRow } from '@/features/catalyst/components/dash/DashStat'
-import { PROMPTS, TRACKER_STATS, type TrackedPrompt } from '@/features/catalyst/prompt-tracker-data'
+import { DataState } from '@/features/catalyst/components/DataState'
+import { engineLogo } from '@/features/catalyst/engine-logos'
+import type { TrackedPrompt } from '@/features/catalyst/prompt-tracker-data'
 import { scoreColor } from '@/features/catalyst/visibility-data'
+import { useActiveProject } from '@/hooks/useActiveProject'
+import { usePrompts, type PromptTrackerData } from '@/hooks/usePrompts'
 
 function TrendIcon({ trend }: { trend: TrackedPrompt['trend'] }): JSX.Element | null {
   if (trend === 'up') return <TrendingUp size={14} className="text-[#2FBE7E]" />
@@ -23,17 +29,32 @@ function CitedChip({ cited }: { cited: boolean }): JSX.Element {
   )
 }
 
+function EngineChip({ engine }: { engine: string }): JSX.Element {
+  const logo = engineLogo(engine)
+  if (logo) {
+    return (
+      <span
+        title={engine}
+        className="grid h-6 w-6 place-items-center rounded-md border border-[var(--cat-border)] bg-[var(--cat-card)]"
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={logo} alt={engine} className="h-3.5 w-3.5" />
+      </span>
+    )
+  }
+  return (
+    <span className="rounded-sm border border-[var(--cat-border)] px-1.5 py-0.5 text-[10px] text-[var(--cat-ink-2)]">
+      {engine}
+    </span>
+  )
+}
+
 function EngineChips({ engines }: { engines: string[] }): JSX.Element {
   return (
-    <div className="hidden w-40 shrink-0 flex-wrap gap-1 sm:flex">
+    <div className="hidden w-40 shrink-0 flex-wrap items-center gap-1.5 sm:flex">
       {engines.length === 0 && <span className="text-[11px] text-[var(--cat-ink-3)]">—</span>}
       {engines.map(e => (
-        <span
-          key={e}
-          className="rounded-sm border border-[var(--cat-border)] px-1.5 py-0.5 text-[10px] text-[var(--cat-ink-2)]"
-        >
-          {e}
-        </span>
+        <EngineChip key={e} engine={e} />
       ))}
     </div>
   )
@@ -66,31 +87,54 @@ function PromptRow({ item }: { item: TrackedPrompt }): JSX.Element {
   )
 }
 
+function NewPromptButton(): JSX.Element {
+  return (
+    <button
+      type="button"
+      className="flex h-9 items-center gap-1.5 rounded-md px-3.5 text-[13px] font-medium text-white"
+      style={{ background: '#e04a3d' }}
+    >
+      <Plus size={15} />
+      New prompt
+    </button>
+  )
+}
+
+function PromptResults({ data }: { data: PromptTrackerData }): JSX.Element {
+  return (
+    <>
+      <div className="mb-5">
+        <DashStatRow stats={data.stats} />
+      </div>
+      <div className="divide-y divide-[var(--cat-border)] overflow-hidden rounded-lg border border-[var(--cat-border)] bg-[var(--cat-card)]">
+        {data.prompts.map(p => (
+          <PromptRow key={p.id} item={p} />
+        ))}
+      </div>
+    </>
+  )
+}
+
 export function PromptTrackerView(): JSX.Element {
+  const { slug, isLoading: projectLoading } = useActiveProject()
+  const { data, isLoading, isError } = usePrompts(slug)
+
   return (
     <div className="w-full">
       <DashHeader
         title="Prompt Tracker"
         subtitle="Watch how AI engines answer the prompts that matter to your category."
-        action={
-          <button
-            type="button"
-            className="flex h-9 items-center gap-1.5 rounded-md px-3.5 text-[13px] font-medium text-white"
-            style={{ background: '#e04a3d' }}
-          >
-            <Plus size={15} />
-            New prompt
-          </button>
-        }
+        action={<NewPromptButton />}
       />
-      <div className="mb-5">
-        <DashStatRow stats={TRACKER_STATS} />
-      </div>
-      <div className="divide-y divide-[var(--cat-border)] overflow-hidden rounded-lg border border-[var(--cat-border)] bg-[var(--cat-card)]">
-        {PROMPTS.map(p => (
-          <PromptRow key={p.id} item={p} />
-        ))}
-      </div>
+      <DataState
+        isLoading={projectLoading || isLoading}
+        isError={isError}
+        isEmpty={!slug || !data || data.prompts.length === 0}
+        emptyTitle="No prompts tracked yet"
+        emptyHint="Generate or add prompts for this project to see how AI engines answer them."
+      >
+        {data && <PromptResults data={data} />}
+      </DataState>
     </div>
   )
 }

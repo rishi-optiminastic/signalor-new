@@ -4,24 +4,24 @@ import { MetricDelta } from '@/features/catalyst/components/visibility/MetricDel
 import { Sparkline } from '@/features/catalyst/components/visibility/Sparkline'
 import { VisCardHead } from '@/features/catalyst/components/visibility/VisCardHead'
 import { BRAND } from '@/features/catalyst/constants'
-import { MENTIONS } from '@/features/catalyst/visibility-data'
+import type { MentionsVis } from '@/hooks/useVisibility'
 
-export function MentionsCard(): JSX.Element {
+export function MentionsCard({ data }: { data: MentionsVis }): JSX.Element {
   return (
     <div className="flex flex-col gap-3 rounded-md border border-[var(--cat-border)] bg-[var(--cat-card)] p-4">
       <VisCardHead icon={MessageSquare} title="Mentions" iconColor={BRAND} />
       <div className="flex items-end gap-2.5">
         <span className="text-[32px] leading-none font-bold tracking-tight text-[var(--cat-ink)]">
-          {MENTIONS.count}
+          {data.count}
           <span className="ml-1 text-[14px] font-medium text-[var(--cat-ink-3)]">mentions</span>
         </span>
         <span className="mb-0.5">
-          <MetricDelta value={MENTIONS.delta} positive={MENTIONS.positive} />
+          <MetricDelta value={data.delta} positive={data.positive} />
         </span>
       </div>
-      <Sparkline points={MENTIONS.trend} color={BRAND} className="h-11" />
+      <Sparkline points={data.trend} color={BRAND} className="h-11" />
       <div className="text-[12px] text-[var(--cat-ink-3)]">
-        Surfaced across {MENTIONS.platforms} platforms this week
+        Surfaced across {data.platforms} platforms this week
       </div>
     </div>
   )

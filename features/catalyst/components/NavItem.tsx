@@ -3,16 +3,25 @@
 import { ChevronRight } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 
 import { BRAND, BRAND_SOFT, BRAND_STRONG } from '@/features/catalyst/constants'
 
 interface NavItemProps {
   icon: LucideIcon
-  label: string
+  /** Brand-relative sub-path (e.g. 'tasks', '' for overview) or an absolute
+   *  path starting with '/' for account-level pages (e.g. '/dashboard/team'). */
   href: string
+  label: string
   badge?: number
   collapsed?: boolean
+}
+
+/** Resolve a nav entry's href against the active brand slug in the URL. */
+function resolveHref(href: string, slug: string | undefined): string {
+  if (href.startsWith('/')) return href
+  if (!slug) return '/dashboard'
+  return href ? `/dashboard/${slug}/${href}` : `/dashboard/${slug}`
 }
 
 function Trailing({ active, badge }: { active: boolean; badge?: number }): JSX.Element | null {
@@ -30,9 +39,11 @@ function Trailing({ active, badge }: { active: boolean; badge?: number }): JSX.E
   return null
 }
 
-function isActive(pathname: string, href: string): boolean {
+function isActive(pathname: string, href: string, isIndex: boolean): boolean {
   if (href === '#') return false
-  return pathname === href || (href !== '/dashboard' && pathname.startsWith(href))
+  if (pathname === href) return true
+  // The brand index (/dashboard/<slug>) must not stay active on every sub-page.
+  return !isIndex && pathname.startsWith(`${href}/`)
 }
 
 function NavRight({
@@ -56,14 +67,17 @@ function NavRight({
 
 export function NavItem({ icon: Icon, label, href, badge, collapsed }: NavItemProps): JSX.Element {
   const pathname = usePathname()
-  const active = isActive(pathname, href)
+  const params = useParams()
+  const slug = typeof params?.slug === 'string' ? params.slug : undefined
+  const fullHref = resolveHref(href, slug)
+  const active = isActive(pathname, fullHref, href === '')
   const style = active
     ? { background: BRAND_SOFT, color: BRAND_STRONG }
     : { color: 'var(--cat-ink-2)' }
 
   return (
     <Link
-      href={href}
+      href={fullHref}
       title={collapsed ? label : undefined}
       className={`relative flex items-center rounded-md py-2 text-[14px] font-medium transition-colors hover:bg-[var(--cat-hover)] ${collapsed ? 'justify-center px-0' : 'gap-3 px-2.5'}`}
       style={style}

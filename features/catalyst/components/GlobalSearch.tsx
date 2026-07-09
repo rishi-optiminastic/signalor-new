@@ -13,11 +13,12 @@ import type {
 import { SearchResults } from '@/features/catalyst/components/SearchResults'
 import { searchIndex } from '@/features/catalyst/search-data'
 import type { SearchItem } from '@/features/catalyst/search-data'
+import { useBrandPath } from '@/hooks/useBrandPath'
 
 /** ⌘K to focus, Esc + outside-click to close. */
 function useSearchShortcuts(
-  input: RefObject<HTMLInputElement>,
-  wrap: RefObject<HTMLDivElement>,
+  input: RefObject<HTMLInputElement | null>,
+  wrap: RefObject<HTMLDivElement | null>,
   setOpen: Dispatch<SetStateAction<boolean>>,
 ): void {
   useEffect(() => {
@@ -62,7 +63,7 @@ function handleNav(e: ReactKeyboardEvent, ctx: NavContext): void {
 }
 
 interface SearchInputProps {
-  inputRef: RefObject<HTMLInputElement>
+  inputRef: RefObject<HTMLInputElement | null>
   query: string
   onChange: (value: string) => void
   onFocus: () => void
@@ -100,6 +101,7 @@ function SearchInput({
 
 export function GlobalSearch(): JSX.Element {
   const router = useRouter()
+  const brandPath = useBrandPath()
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState(0)
@@ -111,7 +113,8 @@ export function GlobalSearch(): JSX.Element {
   const go = (href: string): void => {
     setOpen(false)
     setQuery('')
-    router.push(href)
+    // Absolute paths (account pages) go as-is; bare sub-paths are brand-scoped.
+    router.push(href.startsWith('/') ? href : brandPath(href))
   }
 
   return (

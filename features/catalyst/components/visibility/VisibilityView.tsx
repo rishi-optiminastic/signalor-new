@@ -1,23 +1,40 @@
+'use client'
+
+import { DataState } from '@/features/catalyst/components/DataState'
 import { MentionsCard } from '@/features/catalyst/components/visibility/MentionsCard'
 import { OverallVisibilityCard } from '@/features/catalyst/components/visibility/OverallVisibilityCard'
 import { PlatformScoreCard } from '@/features/catalyst/components/visibility/PlatformScoreCard'
 import { ShareOfVoiceCard } from '@/features/catalyst/components/visibility/ShareOfVoiceCard'
 import { VisibilityHeader } from '@/features/catalyst/components/visibility/VisibilityHeader'
-import { PLATFORM_SCORES } from '@/features/catalyst/visibility-data'
+import { useActiveProject } from '@/hooks/useActiveProject'
+import { useVisibility } from '@/hooks/useVisibility'
 
 export function VisibilityView(): JSX.Element {
+  const { slug, isLoading: projectLoading } = useActiveProject()
+  const { data, isLoading, isError } = useVisibility(slug)
+
   return (
     <>
       <VisibilityHeader />
       <div className="mt-3 min-h-0 flex-1 overflow-y-auto pr-0.5">
-        <div className="cat-stagger grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-3">
-          <OverallVisibilityCard />
-          <ShareOfVoiceCard />
-          <MentionsCard />
-          {PLATFORM_SCORES.map(platform => (
-            <PlatformScoreCard key={platform.key} platform={platform} />
-          ))}
-        </div>
+        <DataState
+          isLoading={projectLoading || isLoading}
+          isError={isError}
+          isEmpty={!slug || !data}
+          emptyTitle="No visibility data yet"
+          emptyHint="Select a project with a completed analysis to see AI visibility across engines."
+        >
+          {data && (
+            <div className="cat-stagger grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-3">
+              <OverallVisibilityCard data={data.overall} />
+              <ShareOfVoiceCard sov={data.sov} meta={data.sovMeta} />
+              <MentionsCard data={data.mentions} />
+              {data.platforms.map(platform => (
+                <PlatformScoreCard key={platform.key} platform={platform} />
+              ))}
+            </div>
+          )}
+        </DataState>
       </div>
     </>
   )

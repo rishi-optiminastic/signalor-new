@@ -4,8 +4,9 @@ import { ArrowLeft, Loader2, Rocket } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
+import { useSession } from '@/lib/auth-client'
 import { routes } from '@/lib/routes'
-import { launchAnalysis } from '@/services/onboarding.service'
+import { hasActiveSubscription, launchAnalysis } from '@/services/onboarding.service'
 import { useOnboardingWizardStore } from '@/stores/useOnboardingWizardStore'
 
 const PILLARS = ['Content', 'Schema', 'E-E-A-T', 'Technical', 'Entity', 'AI Visibility']
@@ -13,8 +14,17 @@ const PILLARS = ['Content', 'Schema', 'E-E-A-T', 'Technical', 'Entity', 'AI Visi
 /** Step 7: review summary and launch the first analysis. */
 export function LaunchStep(): JSX.Element {
   const router = useRouter()
-  const { companyName, platform, siteUrl, prompts, appInstalled, analyticsConnected, setStep } =
-    useOnboardingWizardStore()
+  const { data: session } = useSession()
+  const {
+    companyName,
+    platform,
+    siteUrl,
+    orgId,
+    prompts,
+    appInstalled,
+    analyticsConnected,
+    setStep,
+  } = useOnboardingWizardStore()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
@@ -30,12 +40,27 @@ export function LaunchStep(): JSX.Element {
     setLoading(true)
     setError('')
     try {
-      const result = await launchAnalysis()
+      const email = session?.user?.email ?? ''
+      // Non-subscribers pick a plan first; subscribers (and internal emails)
+      // go straight into the analysis.
+      if (!(await hasActiveSubscription(email))) {
+        router.push(routes.pricing)
+        return
+      }
+      const result = await launchAnalysis({
+        url: siteUrl,
+        email,
+        orgId: orgId ?? undefined,
+        brandName: companyName,
+        prompts: prompts.filter(Boolean),
+      })
       if (!result.ok) {
         setError(result.error ?? 'Failed to launch. Please try again.')
         return
       }
-      router.push(routes.dashboard)
+      // Hand off to the analysing screen, which polls the run and lands on the
+      // dashboard when the first analysis completes.
+      router.push(routes.loading)
     } catch {
       setError('Failed to launch. Please try again.')
     } finally {

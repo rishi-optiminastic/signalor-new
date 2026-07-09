@@ -3,75 +3,46 @@
 import { Trash2, UserPlus } from 'lucide-react'
 import { useState } from 'react'
 
-import {
-  MEMBERS,
-  ROLES,
-  ROLE_STYLES,
-  type Member,
-  type Role,
-} from '@/features/catalyst/brands-data'
+import { ROLES, ROLE_STYLES } from '@/features/catalyst/brands-data'
+import { useAgencyMembers } from '@/hooks/useAgencyMembers'
+import { useAgencyRole } from '@/hooks/useAgencyRole'
+import { ApiError } from '@/lib/api/client'
 
-const ASSIGNABLE: Role[] = ['Admin', 'Editor', 'Viewer']
+interface DisplayRow {
+  id: number | null // null = the owner (no membership row)
+  email: string
+  roleLabel: 'Owner' | 'Member'
+  locked: boolean
+}
 
-function RoleControl({
-  member,
-  onRole,
-}: {
-  member: Member
-  onRole: (email: string, role: Role) => void
-}): JSX.Element {
-  if (member.role === 'Owner') {
-    return (
-      <span className={`rounded-md px-2.5 py-1 text-[12px] font-semibold ${ROLE_STYLES.Owner}`}>
-        Owner
-      </span>
-    )
-  }
+function RoleBadge({ roleLabel }: { roleLabel: 'Owner' | 'Member' }): JSX.Element {
   return (
-    <select
-      value={member.role}
-      onChange={e => onRole(member.email, e.target.value as Role)}
-      className="h-8 rounded-md border border-[var(--cat-border)] bg-[var(--cat-card)] px-2 text-[12px] font-medium text-[var(--cat-ink-2)] outline-none"
-    >
-      {ASSIGNABLE.map(r => (
-        <option key={r} value={r}>
-          {r}
-        </option>
-      ))}
-    </select>
+    <span className={`rounded-md px-2.5 py-1 text-[12px] font-semibold ${ROLE_STYLES[roleLabel]}`}>
+      {roleLabel}
+    </span>
   )
 }
 
 function MemberRow({
-  member,
-  onRole,
+  row,
   onRemove,
 }: {
-  member: Member
-  onRole: (email: string, role: Role) => void
-  onRemove: (email: string) => void
+  row: DisplayRow
+  onRemove: (id: number) => void
 }): JSX.Element {
   return (
     <div className="flex items-center gap-3 px-4 py-3">
       <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[rgba(224,74,61,0.12)] text-[12px] font-semibold text-[#e04a3d] uppercase">
-        {member.name[0]}
+        {row.email[0]}
       </span>
       <div className="min-w-0 flex-1">
-        <p className="flex items-center gap-2 truncate text-[13px] font-medium text-[var(--cat-ink)]">
-          {member.name}
-          {member.status === 'invited' && (
-            <span className="rounded-sm bg-[var(--cat-hover)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--cat-ink-3)]">
-              Invited
-            </span>
-          )}
-        </p>
-        <p className="truncate text-[12px] text-[var(--cat-ink-3)]">{member.email}</p>
+        <p className="truncate text-[13px] font-medium text-[var(--cat-ink)]">{row.email}</p>
       </div>
-      <RoleControl member={member} onRole={onRole} />
+      <RoleBadge roleLabel={row.roleLabel} />
       <button
         type="button"
-        onClick={() => onRemove(member.email)}
-        disabled={member.role === 'Owner'}
+        onClick={() => row.id !== null && onRemove(row.id)}
+        disabled={row.locked}
         className="grid h-8 w-8 place-items-center rounded-md text-[var(--cat-ink-3)] transition-colors hover:bg-[var(--cat-hover)] hover:text-[#E5484D] disabled:opacity-30"
         aria-label="Remove member"
       >
@@ -85,10 +56,12 @@ function InviteRow({
   value,
   setValue,
   onInvite,
+  busy,
 }: {
   value: string
   setValue: (v: string) => void
   onInvite: () => void
+  busy: boolean
 }): JSX.Element {
   return (
     <div className="flex gap-2">
@@ -102,7 +75,8 @@ function InviteRow({
       <button
         type="button"
         onClick={onInvite}
-        className="flex h-9 items-center gap-1.5 rounded-md px-3.5 text-[13px] font-medium text-white"
+        disabled={busy}
+        className="flex h-9 items-center gap-1.5 rounded-md px-3.5 text-[13px] font-medium text-white disabled:opacity-60"
         style={{ background: '#e04a3d' }}
       >
         <UserPlus size={15} />
@@ -129,29 +103,76 @@ function RolesLegend(): JSX.Element {
   )
 }
 
-export function MembersTable(): JSX.Element {
-  const [members, setMembers] = useState<Member[]>(MEMBERS)
-  const [invite, setInvite] = useState('')
+const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/
 
-  const onRole = (email: string, role: Role): void =>
-    setMembers(m => m.map(x => (x.email === email ? { ...x, role } : x)))
-  const onRemove = (email: string): void => setMembers(m => m.filter(x => x.email !== email))
-  const onInvite = (): void => {
-    const email = invite.trim().toLowerCase()
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || members.some(m => m.email === email)) return
-    setMembers([...members, { name: email, email, role: 'Viewer', status: 'invited' }])
-    setInvite('')
+function rosterRows(
+  agencyEmail: string,
+  members: { id: number; member_email: string }[],
+): DisplayRow[] {
+  return [
+    { id: null, email: agencyEmail, roleLabel: 'Owner', locked: true },
+    ...members.map(m => ({
+      id: m.id,
+      email: m.member_email,
+      roleLabel: 'Member' as const,
+      locked: false,
+    })),
+  ]
+}
+
+/** The admin's team roster: invite input + owner/member rows + legend. */
+function TeamRoster({ agencyEmail }: { agencyEmail: string }): JSX.Element {
+  const { members, invite, remove, isMutating } = useAgencyMembers(true)
+  const [inviteEmail, setInviteEmail] = useState('')
+  const [error, setError] = useState('')
+
+  const onInvite = async (): Promise<void> => {
+    const email = inviteEmail.trim().toLowerCase()
+    setError('')
+    if (!EMAIL_RE.test(email)) {
+      setError('Enter a valid email address.')
+      return
+    }
+    try {
+      await invite(email)
+      setInviteEmail('')
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : 'Could not invite that teammate.')
+    }
   }
 
   return (
     <div className="space-y-4">
-      <InviteRow value={invite} setValue={setInvite} onInvite={onInvite} />
+      <InviteRow
+        value={inviteEmail}
+        setValue={setInviteEmail}
+        onInvite={onInvite}
+        busy={isMutating}
+      />
+      {error && <p className="text-[12px] font-medium text-[#E5484D]">{error}</p>}
       <div className="divide-y divide-[var(--cat-border)] overflow-hidden rounded-lg border border-[var(--cat-border)] bg-[var(--cat-card)]">
-        {members.map(m => (
-          <MemberRow key={m.email} member={m} onRole={onRole} onRemove={onRemove} />
+        {rosterRows(agencyEmail, members).map(row => (
+          <MemberRow key={row.email} row={row} onRemove={remove} />
         ))}
       </div>
       <RolesLegend />
     </div>
   )
+}
+
+/** Agency team management — invite up to 2 teammates, all Members; the owner is Admin. */
+export function MembersTable(): JSX.Element {
+  const { agencyEmail, isAdmin, isLoading } = useAgencyRole()
+
+  if (isLoading) {
+    return <p className="text-[13px] text-[var(--cat-ink-3)]">Loading team…</p>
+  }
+  if (!isAdmin) {
+    return (
+      <p className="rounded-lg border border-[var(--cat-border)] bg-[var(--cat-bg)] px-4 py-3 text-[13px] text-[var(--cat-ink-3)]">
+        Only the agency admin can manage the team.
+      </p>
+    )
+  }
+  return <TeamRoster agencyEmail={agencyEmail ?? 'You'} />
 }

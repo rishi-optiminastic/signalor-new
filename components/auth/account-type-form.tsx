@@ -31,13 +31,15 @@ const OPTIONS: Option[] = [
 /** Step 1: choose Individual vs Agency. Drives the rest of the flow. */
 export function AccountTypeForm(): JSX.Element {
   const accountType = useOnboardingStore(s => s.accountType)
+  const authMode = useOnboardingStore(s => s.authMode)
   const setAccountType = useOnboardingStore(s => s.setAccountType)
   const setStep = useOnboardingStore(s => s.setStep)
   const [selected, setSelected] = useState<AccountType>(accountType)
 
   const handleContinue = (): void => {
     setAccountType(selected)
-    setStep('auth-method')
+    // Agencies fill in their name / agency / role before choosing an auth method.
+    setStep(authMode === 'sign-up' && selected === 'agency' ? 'org-details' : 'auth-method')
   }
 
   return (

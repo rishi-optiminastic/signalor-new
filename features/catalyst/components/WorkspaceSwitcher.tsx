@@ -2,13 +2,12 @@
 
 import { Building2, Check, ChevronsUpDown, Plus } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 
-import { getOrganizations } from '@/lib/api/organizations'
-import { useSession } from '@/lib/auth-client'
+import { useActiveProject } from '@/hooks/useActiveProject'
 
 const LOGO_BG = 'conic-gradient(from 210deg at 50% 50%, #F2A79E, #e04a3d, #b9382d, #F2A79E)'
-const ACTIVE_KEY = 'signalor.activeProjectId'
 
 interface Project {
   id: number
@@ -16,66 +15,20 @@ interface Project {
   url: string
 }
 
-const SAMPLE_PROJECTS: Project[] = [
-  { id: 1, name: 'Optiminastic', url: 'optiminastic.com' },
-  { id: 2, name: 'Signalor', url: 'signalor.ai' },
-  { id: 3, name: 'Tech5', url: 'tech5.io' },
-]
-
 function Tile({ label }: { label: string }): JSX.Element {
   return (
     <span
       className="grid h-8 w-8 shrink-0 place-items-center rounded-md text-[13px] font-semibold text-white uppercase"
       style={{ background: LOGO_BG }}
     >
-      {label[0]}
+      {label[0] ?? '?'}
     </span>
   )
 }
 
-interface SwitcherState {
-  projects: Project[]
-  activeProject: Project
-  select: (id: number) => void
-}
-
-function useProjectSwitcher(): SwitcherState {
-  const { data: session } = useSession()
-  const email = session?.user?.email
-  const [projects, setProjects] = useState<Project[]>(SAMPLE_PROJECTS)
-  const [activeId, setActiveId] = useState<number | null>(null)
-
-  useEffect(() => {
-    const saved = Number(localStorage.getItem(ACTIVE_KEY))
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (saved) setActiveId(saved)
-  }, [])
-
-  useEffect(() => {
-    if (!email) return
-    let active = true
-    getOrganizations(email)
-      .then(orgs => {
-        if (active && orgs.length)
-          setProjects(orgs.map(o => ({ id: o.id, name: o.name, url: o.url })))
-      })
-      .catch(() => {})
-    return () => {
-      active = false
-    }
-  }, [email])
-
-  const activeProject = projects.find(p => p.id === activeId) ?? projects[0]
-  const select = (id: number): void => {
-    setActiveId(id)
-    localStorage.setItem(ACTIVE_KEY, String(id))
-  }
-  return { projects, activeProject, select }
-}
-
 interface MenuProps {
   projects: Project[]
-  activeId: number
+  activeId: number | undefined
   onSelect: (id: number) => void
 }
 
@@ -120,6 +73,9 @@ function ProjectMenu({ projects, activeId, onSelect }: MenuProps): JSX.Element {
           {p.id === activeId && <Check size={15} className="shrink-0 text-[#e04a3d]" />}
         </button>
       ))}
+      {projects.length === 0 && (
+        <p className="px-2 py-2 text-[12px] text-[var(--cat-ink-3)]">No projects yet.</p>
+      )}
       <MenuFooter />
     </div>
   )
@@ -150,8 +106,11 @@ function SwitcherTrigger({
   )
 }
 
+const EMPTY_PROJECT: Project = { id: 0, name: 'No project', url: 'Create a brand to start' }
+
 export function WorkspaceSwitcher({ collapsed }: { collapsed?: boolean }): JSX.Element {
-  const { projects, activeProject, select } = useProjectSwitcher()
+  const { projects, activeOrg, select } = useActiveProject()
+  const router = useRouter()
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
@@ -163,27 +122,34 @@ export function WorkspaceSwitcher({ collapsed }: { collapsed?: boolean }): JSX.E
     return () => document.removeEventListener('mousedown', onDown)
   }, [])
 
+  const active: Project = activeOrg
+    ? { id: activeOrg.id, name: activeOrg.name, url: activeOrg.url }
+    : EMPTY_PROJECT
+  const list: Project[] = projects.map(p => ({ id: p.id, name: p.name, url: p.url }))
+
   const choose = (id: number): void => {
     select(id)
     setOpen(false)
+    const org = projects.find(p => p.id === id)
+    if (org?.slug) router.push(`/dashboard/${org.slug}`)
   }
 
   if (collapsed) {
     return (
       <Link
         href="/dashboard/brands"
-        title={activeProject.name}
+        title={active.name}
         className="mt-3 flex justify-center rounded-md py-1 transition-colors hover:bg-[var(--cat-hover)]"
       >
-        <Tile label={activeProject.name} />
+        <Tile label={active.name} />
       </Link>
     )
   }
 
   return (
     <div ref={ref} className="relative mt-3">
-      <SwitcherTrigger project={activeProject} onToggle={() => setOpen(o => !o)} />
-      {open && <ProjectMenu projects={projects} activeId={activeProject.id} onSelect={choose} />}
+      <SwitcherTrigger project={active} onToggle={() => setOpen(o => !o)} />
+      {open && <ProjectMenu projects={list} activeId={activeOrg?.id} onSelect={choose} />}
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { AuditRow } from '@/features/catalyst/components/sitemap/AuditRow'
-import { AUDIT_ROWS } from '@/features/catalyst/sitemap-data'
+import type { AuditRow as Row } from '@/features/catalyst/sitemap-data'
 
 const COLS = [
   'URL',
@@ -16,7 +16,7 @@ const COLS = [
   'Crawled',
 ]
 
-export function AuditTable(): JSX.Element {
+export function AuditTable({ rows }: { rows: Row[] }): JSX.Element {
   return (
     <div className="cat-rise overflow-hidden rounded-md border border-[var(--cat-border)] bg-[var(--cat-card)]">
       <div className="overflow-x-auto">
@@ -34,7 +34,7 @@ export function AuditTable(): JSX.Element {
             </tr>
           </thead>
           <tbody>
-            {AUDIT_ROWS.map(row => (
+            {rows.map(row => (
               <AuditRow key={row.path} row={row} />
             ))}
           </tbody>

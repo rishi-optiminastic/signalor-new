@@ -1,10 +1,10 @@
 import { TaskStatCard } from '@/features/catalyst/components/tasks/TaskStatCard'
-import { TASK_STATS } from '@/features/catalyst/tasks-data'
+import type { StatCard } from '@/features/catalyst/tasks-data'
 
-export function TaskStatCards(): JSX.Element {
+export function TaskStatCards({ stats }: { stats: StatCard[] }): JSX.Element {
   return (
     <div className="cat-stagger grid grid-cols-2 gap-2 md:grid-cols-3 xl:grid-cols-6">
-      {TASK_STATS.map(stat => (
+      {stats.map(stat => (
         <TaskStatCard key={stat.label} stat={stat} />
       ))}
     </div>

@@ -1,4 +1,9 @@
+import { fileURLToPath } from 'node:url'
+import { dirname } from 'node:path'
+
 /** @type {import('next').NextConfig} */
+
+const projectRoot = dirname(fileURLToPath(import.meta.url))
 
 // Headers applied to every response. Tune CSP for your asset/CDN/auth setup.
 const securityHeaders = [
@@ -33,6 +38,11 @@ const securityHeaders = [
 ]
 
 const nextConfig = {
+  // Pin the workspace root — a stray lockfile in a parent dir otherwise makes
+  // Turbopack infer the wrong root (C:\Users\mrido).
+  turbopack: {
+    root: projectRoot,
+  },
   reactStrictMode: true,
   poweredByHeader: false,
   images: {

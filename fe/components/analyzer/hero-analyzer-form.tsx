@@ -1,0 +1,248 @@
+"use client";
+
+import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+import { startAnalysis } from "@fe/lib/api/analyzer";
+import { getOrFetchOnboardingToken } from "@fe/lib/api/onboarding-security";
+import { routes } from "@fe/lib/config";
+import { ArrowRight, Sparkles, BarChart3, Target } from "@fe/components/icons";
+import { Select, SelectContent, SelectItem, SelectTrigger } from "@fe/components/ui/select";
+import { SignalorLoader } from "@fe/components/ui/signalor-loader";
+import { RotatingGeoFact } from "@fe/components/ui/rotating-geo-fact";
+import { BorderBeam } from "@fe/components/magicui/border-beam";
+
+const COUNTRY_OPTIONS = [
+  { code: "US", label: "United States" },
+  { code: "CA", label: "Canada" },
+  { code: "GB", label: "United Kingdom" },
+  { code: "AU", label: "Australia" },
+  { code: "IN", label: "India" },
+  { code: "DE", label: "Germany" },
+  { code: "FR", label: "France" },
+  { code: "SG", label: "Singapore" },
+  { code: "AE", label: "United Arab Emirates" },
+];
+
+function flagSrc(code: string): string {
+  return `https://flagcdn.com/${code.toLowerCase()}.svg`;
+}
+
+const slideVariants = {
+  enter: (dir: number) => ({ x: dir > 0 ? 300 : -300, opacity: 0 }),
+  center: { x: 0, opacity: 1 },
+  exit: (dir: number) => ({ x: dir > 0 ? -300 : 300, opacity: 0 }),
+};
+
+export function HeroAnalyzerForm({ initialUrl = "" }: { initialUrl?: string }) {
+  const router = useRouter();
+  const [step, setStep] = useState(0);
+  const [dir, setDir] = useState(1);
+  const [url, setUrl] = useState(initialUrl);
+  const [country, setCountry] = useState("United States");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const selectedCountry = COUNTRY_OPTIONS.find((c) => c.label === country);
+
+  async function handleAnalyze() {
+    if (!url.trim()) return;
+    const normalizedUrl =
+      url.startsWith("http://") || url.startsWith("https://")
+        ? url.trim()
+        : `https://${url.trim()}`;
+
+    setError("");
+    setLoading(true);
+    setDir(1);
+    setStep(1);
+
+    try {
+      const onboardingToken = await getOrFetchOnboardingToken();
+      await startAnalysis(
+        {
+          url: normalizedUrl,
+          run_type: "full_site",
+          country,
+        },
+        onboardingToken,
+      );
+      router.push(routes.signUp);
+    } catch {
+      setError("Couldn't start the audit. Check the URL and try again.");
+      setLoading(false);
+      setDir(-1);
+      setStep(0);
+    }
+  }
+
+  return (
+    <div className="relative w-full max-w-xl">
+      {/* Soft horizontal halo glow below the card — primary palette */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-2 -bottom-3 h-16 rounded-full opacity-80 blur-2xl"
+        style={{
+          background:
+            "linear-gradient(90deg, transparent 0%, #e04a3d 15%, #f4748f 45%, #fbbf24 75%, transparent 100%)",
+        }}
+      />
+
+      {/* White input card — sits on top with z-10 over the orange platform below */}
+      <div className="relative z-10 overflow-hidden rounded-2xl border border-black/10 bg-white shadow-lg">
+        {/* Animated border beams — two for a chase effect */}
+        <BorderBeam
+          size={180}
+          duration={10}
+          colorFrom="#e04a3d"
+          colorTo="#f4748f"
+          cornerRadius={16}
+        />
+        <BorderBeam
+          size={180}
+          duration={10}
+          delay={5}
+          colorFrom="#f4748f"
+          colorTo="#fbbf24"
+          cornerRadius={16}
+        />
+
+        <div>
+          <AnimatePresence mode="wait" custom={dir}>
+            {step === 0 && (
+              <motion.div
+                key="url"
+                custom={dir}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                className="flex min-h-25 flex-col"
+              >
+                {/* Input row with left accent bar */}
+                <div className="relative flex flex-1 items-start gap-2 px-4 pt-4">
+                  {/* <span aria-hidden className="mt-0.5 h-4 w-px shrink-0 bg-primary" /> */}
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    placeholder="Ask Signalor to audit your site (e.g. signalor.ai)"
+                    value={url}
+                    onChange={(e) => {
+                      setUrl(e.target.value);
+                      setError("");
+                    }}
+                    onKeyDown={(e) => e.key === "Enter" && url.trim() && handleAnalyze()}
+                    className="w-full bg-transparent text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none"
+                    autoFocus
+                  />
+                </div>
+
+                {/* Bottom toolbar — chips + country dropdown + submit */}
+                <div className="flex items-center justify-end gap-2 px-3 pb-3 pt-4">
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <Select value={country} onValueChange={setCountry}>
+                      <SelectTrigger
+                        size="sm"
+                        className="h-7 shrink-0 gap-1.5 rounded-md border-black/10 bg-white px-2 text-xs font-medium text-foreground shadow-none hover:border-black/20 hover:bg-muted hover:text-foreground focus-visible:ring-0"
+                      >
+                        <span className="flex items-center gap-1.5">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={flagSrc(selectedCountry?.code ?? "US")}
+                            alt={`${selectedCountry?.label ?? "United States"} flag`}
+                            width={14}
+                            height={10}
+                            className="h-2.5 w-3.5 rounded-[1px] object-cover"
+                          />
+                          <span>{selectedCountry?.code ?? "US"}</span>
+                        </span>
+                      </SelectTrigger>
+                      <SelectContent position="popper" align="start" sideOffset={6}>
+                        {COUNTRY_OPTIONS.map((opt) => (
+                          <SelectItem key={opt.code} value={opt.label}>
+                            <span className="flex items-center gap-2">
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                src={flagSrc(opt.code)}
+                                alt={`${opt.label} flag`}
+                                width={16}
+                                height={12}
+                                className="h-3 w-4 rounded-[1px] object-cover"
+                              />
+                              <span>{opt.label}</span>
+                            </span>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={handleAnalyze}
+                    disabled={!url.trim()}
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-primary text-white shadow-[0_4px_12px_-2px_rgba(224,74,61,0.6)] transition hover:bg-primary/90 active:scale-95 disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground disabled:shadow-none"
+                    aria-label="Run audit"
+                  >
+                    <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
+                  </button>
+                </div>
+              </motion.div>
+            )}
+
+            {step === 1 && (
+              <motion.div
+                key="loading"
+                custom={dir}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                className="flex flex-col items-center justify-center gap-3 px-5 py-10"
+              >
+                <SignalorLoader size="sm" />
+                <RotatingGeoFact intervalMs={4500} size="xs" className="min-h-9 w-full max-w-md" />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+
+      {/* Orange platform — sits BEHIND the white card with ~48px overlap, so
+          only a thin strip with the "Free first scan" line peeks below.
+          Padding (pt-14 pb-3) pushes content into the visible 30-40px area. */}
+      <div
+        className="relative -mt-12 flex items-center justify-center gap-2 rounded-2xl px-6 pb-3 pt-14 text-xs font-semibold text-white shadow-[0_20px_40px_-12px_rgba(224,74,61,0.5)]"
+        style={{
+          background: "linear-gradient(90deg, #e04a3d 0%, #f4748f 50%, #fbbf24 100%)",
+        }}
+      >
+        <Sparkles className="h-3.5 w-3.5 shrink-0" strokeWidth={2.25} aria-hidden />
+        no signup required
+      </div>
+
+      <AnimatePresence>
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="mt-3 flex items-center gap-2 rounded-xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive"
+          >
+            <svg className="h-4 w-4 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fillRule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                clipRule="evenodd"
+              />
+            </svg>
+            {error}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}

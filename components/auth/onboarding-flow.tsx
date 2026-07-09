@@ -4,21 +4,29 @@ import Link from 'next/link'
 import { useEffect } from 'react'
 
 import { routes } from '@/lib/routes'
-import { useOnboardingStore, type AuthMode, type OnboardingStep } from '@/stores/useOnboardingStore'
+import {
+  useOnboardingStore,
+  type AccountType,
+  type AuthMode,
+  type OnboardingStep,
+} from '@/stores/useOnboardingStore'
 
 import { AccountTypeForm } from './account-type-form'
 import { AuthMethodForm } from './auth-method-form'
 import { OnboardingComplete } from './onboarding-complete'
+import { OrgDetailsForm } from './org-details-form'
 import { OtpForm } from './otp-form'
 
 interface OnboardingFlowProps {
   mode: AuthMode
 }
 
-// Sign-up continues into the product onboarding wizard (/onboarding) after OTP.
-const STEP_ORDER: Record<AuthMode, OnboardingStep[]> = {
-  'sign-up': ['account-type', 'auth-method', 'otp-verify'],
-  'sign-in': ['account-type', 'auth-method', 'otp-verify'],
+// Agency sign-ups insert an org-details step (name / agency / role) before auth.
+function stepOrder(mode: AuthMode, accountType: AccountType): OnboardingStep[] {
+  if (mode === 'sign-up' && accountType === 'agency') {
+    return ['account-type', 'org-details', 'auth-method', 'otp-verify']
+  }
+  return ['account-type', 'auth-method', 'otp-verify']
 }
 
 function stepHeader(step: OnboardingStep, mode: AuthMode): { title: string; description: string } {
@@ -28,6 +36,11 @@ function stepHeader(step: OnboardingStep, mode: AuthMode): { title: string; desc
       return {
         title: isSignUp ? 'How will you use Signalor?' : 'Sign in',
         description: 'Choose Individual or Agency to continue.',
+      }
+    case 'org-details':
+      return {
+        title: 'Tell us about your agency',
+        description: 'Your name, agency and role — so we can set up your workspace.',
       }
     case 'auth-method':
       return {
@@ -45,6 +58,7 @@ function stepHeader(step: OnboardingStep, mode: AuthMode): { title: string; desc
 
 const STEP_COMPONENTS: Partial<Record<OnboardingStep, () => JSX.Element>> = {
   'account-type': AccountTypeForm,
+  'org-details': OrgDetailsForm,
   'auth-method': AuthMethodForm,
   'otp-verify': OtpForm,
 }
@@ -55,6 +69,7 @@ const STEP_COMPONENTS: Partial<Record<OnboardingStep, () => JSX.Element>> = {
  */
 export function OnboardingFlow({ mode }: OnboardingFlowProps): JSX.Element {
   const step = useOnboardingStore(s => s.step)
+  const accountType = useOnboardingStore(s => s.accountType)
   const reset = useOnboardingStore(s => s.reset)
   const setAuthMode = useOnboardingStore(s => s.setAuthMode)
   const setStep = useOnboardingStore(s => s.setStep)
@@ -70,7 +85,7 @@ export function OnboardingFlow({ mode }: OnboardingFlowProps): JSX.Element {
     return <OnboardingComplete />
   }
 
-  const order = STEP_ORDER[mode]
+  const order = stepOrder(mode, accountType)
   const stepIndex = Math.max(0, order.indexOf(step))
   const { title, description } = stepHeader(step, mode)
   const StepComponent = STEP_COMPONENTS[step]

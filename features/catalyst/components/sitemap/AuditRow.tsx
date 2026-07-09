@@ -77,7 +77,7 @@ export function AuditRow({ row }: { row: Row }): JSX.Element {
     <TwoLine key="res" main={row.files} sub={row.size} />,
     <TwoLine key="links" main={row.links} sub={row.intExt} />,
     <AiCell key="ai" value={row.ai} />,
-    <Warn key="warn" />,
+    row.warn ? <Warn key="warn" /> : <Dash key="warn" />,
     <Muted key="crawled" text={row.crawled} />,
   ]
   return (

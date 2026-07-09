@@ -21,6 +21,15 @@
   --accent-foreground: #171717;
   --destructive: #d80027;
   --destructive-foreground: #ffffff;
+  /* Semantic status tokens — ported from signalor-fe landing sections. */
+  --success: #047857;
+  --success-foreground: #ffffff;
+  --warning: #b45309;
+  --warning-foreground: #ffffff;
+  --info: #2563eb;
+  --info-foreground: #ffffff;
+  /* Feature accent used by the landing features grid (agent analytics row). */
+  --feature-violet: #6d28d9;
   --border: rgba(0, 0, 0, 0.08);
   --input: rgba(0, 0, 0, 0.08);
   --ring: #e04a3d;
@@ -64,6 +73,12 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
@@ -98,32 +113,6 @@
   }
 }
 
-/* Twinkling background pixels (loading / analysis screens). */
-@keyframes pixel-twinkle {
-  0%,
-  100% {
-    opacity: 0.04;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.28;
-    transform: scale(1.5);
-  }
-}
-
-/* Radar "blip" — an expanding ring pulse, like a detected signal. */
-@keyframes radar-ping {
-  0% {
-    transform: translate(-50%, -50%) scale(0.4);
-    opacity: 0.55;
-  }
-  80%,
-  100% {
-    transform: translate(-50%, -50%) scale(2.6);
-    opacity: 0;
-  }
-}
-
 /* Signalor brand CTA button — ported from signalor.ai auth screens */
 .auth-cta-btn {
   color: #ffffff;
@@ -145,6 +134,39 @@
 .auth-cta-btn:disabled {
   cursor: not-allowed;
   opacity: 0.6;
+}
+
+/* Warm orange column glowing on a soft grey field. */
+.hero-aurora {
+  background:
+    /* warm orange → peach fade from the very top (brand theme) */
+    linear-gradient(
+      180deg,
+      rgba(233, 120, 64, 0.95) 0%,
+      rgba(231, 128, 74, 0.9) 16%,
+      rgba(230, 150, 104, 0.62) 34%,
+      rgba(232, 173, 130, 0.34) 54%,
+      rgba(232, 173, 130, 0) 78%
+    ),
+    radial-gradient(36% 58% at 45% 46%, rgba(226, 146, 76, 0.85) 0%, rgba(226, 146, 76, 0) 70%),
+    radial-gradient(30% 40% at 56% 84%, rgba(226, 146, 76, 0.55) 0%, rgba(226, 146, 76, 0) 72%),
+    linear-gradient(
+      90deg,
+      #f3f2f0 0%,
+      #f3f2f0 10%,
+      rgba(243, 242, 240, 0) 40%,
+      rgba(243, 242, 240, 0) 60%,
+      #f3f2f0 90%,
+      #f3f2f0 100%
+    ),
+    #f5f4f2;
+}
+
+/* Fine film-grain / "slate paper" texture layered over the hero gradient. */
+.hero-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1 1'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 130px 130px;
+  opacity: 0.18;
 }
 
 /* Custom styles for the landing page */

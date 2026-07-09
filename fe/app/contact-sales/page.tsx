@@ -1,0 +1,280 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { submitEnterpriseLead } from "@fe/lib/api/enterprise";
+import { LandingMarketingShell } from "@fe/components/landing/landing-marketing-shell";
+import { LandingFooter } from "@fe/components/landing/landing-footer";
+import { Input } from "@fe/components/ui/input";
+import { Label } from "@fe/components/ui/label";
+import { Button } from "@fe/components/ui/button";
+import { SignalorLoader } from "@fe/components/ui/signalor-loader";
+import { Check } from "@fe/components/icons";
+import { cn } from "@fe/lib/utils";
+
+const SUPPORT_LEVELS = [
+  { value: "", label: "Select…" },
+  { value: "self_serve", label: "Self-serve" },
+  { value: "managed", label: "Managed / agency-style" },
+  { value: "dedicated", label: "Dedicated team" },
+];
+
+const CURRENCIES = ["GBP", "USD", "EUR", "INR"];
+
+const AI_ENGINES = [
+  { value: "chatgpt", label: "ChatGPT" },
+  { value: "gemini", label: "Gemini" },
+  { value: "perplexity", label: "Perplexity" },
+  { value: "claude", label: "Claude" },
+  { value: "google", label: "Google AI" },
+  { value: "bing", label: "Bing / Copilot" },
+];
+
+const FIELD_CLASS =
+  "w-full rounded-none border border-border bg-white px-3 py-2.5 text-sm text-foreground outline-none focus:border-primary";
+
+export default function ContactSalesPage() {
+  const [form, setForm] = useState({
+    brand_name: "",
+    website: "",
+    email: "",
+    prompts_required: "",
+    brands_count: "",
+    current_investment: "",
+    support_level: "",
+    preferred_currency: "GBP",
+    team_size: "",
+  });
+  const [engines, setEngines] = useState<string[]>([]);
+  const [submitting, setSubmitting] = useState(false);
+  const [done, setDone] = useState(false);
+  const [error, setError] = useState("");
+
+  function update<K extends keyof typeof form>(key: K, value: string) {
+    setForm((f) => ({ ...f, [key]: value }));
+  }
+
+  function toggleEngine(value: string) {
+    setEngines((cur) => (cur.includes(value) ? cur.filter((e) => e !== value) : [...cur, value]));
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (submitting) return;
+    if (!form.brand_name.trim()) {
+      setError("Please enter your brand name.");
+      return;
+    }
+    setSubmitting(true);
+    setError("");
+    try {
+      const toInt = (v: string) => {
+        const n = parseInt(v, 10);
+        return Number.isFinite(n) && n > 0 ? n : null;
+      };
+      await submitEnterpriseLead({
+        brand_name: form.brand_name,
+        website: form.website,
+        email: form.email,
+        prompts_required: toInt(form.prompts_required),
+        brands_count: toInt(form.brands_count),
+        current_investment: form.current_investment,
+        support_level: form.support_level,
+        preferred_currency: form.preferred_currency,
+        team_size: form.team_size,
+        ai_engines: engines,
+      });
+      setDone(true);
+    } catch {
+      setError("Something went wrong. Please try again, or email hello@signalor.ai.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  return (
+    <LandingMarketingShell>
+      <section className="relative bg-background px-6 py-16 lg:px-12 lg:py-20">
+        <div className="mx-auto max-w-3xl">
+          <Link
+            href="/pricing"
+            className="text-xs font-medium text-muted-foreground hover:text-foreground"
+          >
+            ← Back to pricing
+          </Link>
+          <p className="mt-6 text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
+            [ enterprise ]
+          </p>
+          <h1 className="mt-4 text-3xl font-bold leading-tight tracking-tight text-foreground sm:text-4xl">
+            Talk to sales
+          </h1>
+          <p className="mt-4 max-w-2xl text-base font-light leading-relaxed text-accent-foreground">
+            For larger brands and agencies with higher prompt volumes, multiple domains, or advanced
+            support needs. Tell us what you need and we&apos;ll put together a plan.
+          </p>
+
+          {done ? (
+            <div className="mt-10 rounded-none border border-success/30 bg-success/5 p-8 text-center">
+              <div className="mx-auto mb-4 grid h-12 w-12 place-content-center rounded-full bg-success/15">
+                <Check className="h-6 w-6 text-success" strokeWidth={2.5} aria-hidden />
+              </div>
+              <h2 className="text-xl font-semibold text-foreground">Thanks — we&apos;ve got it</h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Our team will be in touch shortly. You can head back to pricing in the meantime.
+              </p>
+              <Link
+                href="/pricing"
+                className="mt-6 inline-block rounded-none border border-border bg-foreground px-5 py-2.5 text-sm font-semibold text-white"
+              >
+                Back to pricing
+              </Link>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="mt-10 space-y-6">
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <div className="space-y-1.5">
+                  <Label htmlFor="brand_name">Brand name *</Label>
+                  <Input
+                    id="brand_name"
+                    value={form.brand_name}
+                    onChange={(e) => update("brand_name", e.target.value)}
+                    placeholder="Acme Inc."
+                    required
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="website">Website / domain</Label>
+                  <Input
+                    id="website"
+                    value={form.website}
+                    onChange={(e) => update("website", e.target.value)}
+                    placeholder="acme.com"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="email">Work email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={form.email}
+                    onChange={(e) => update("email", e.target.value)}
+                    placeholder="you@acme.com"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="team_size">Team size</Label>
+                  <Input
+                    id="team_size"
+                    value={form.team_size}
+                    onChange={(e) => update("team_size", e.target.value)}
+                    placeholder="e.g. 11–50"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="prompts_required">Number of prompts required</Label>
+                  <Input
+                    id="prompts_required"
+                    type="number"
+                    min={1}
+                    value={form.prompts_required}
+                    onChange={(e) => update("prompts_required", e.target.value)}
+                    placeholder="e.g. 100"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="brands_count">Number of brands / domains</Label>
+                  <Input
+                    id="brands_count"
+                    type="number"
+                    min={1}
+                    value={form.brands_count}
+                    onChange={(e) => update("brands_count", e.target.value)}
+                    placeholder="e.g. 5"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="support_level">Required support level</Label>
+                  <select
+                    id="support_level"
+                    value={form.support_level}
+                    onChange={(e) => update("support_level", e.target.value)}
+                    className={FIELD_CLASS}
+                  >
+                    {SUPPORT_LEVELS.map((s) => (
+                      <option key={s.value} value={s.value}>
+                        {s.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="preferred_currency">Preferred currency</Label>
+                  <select
+                    id="preferred_currency"
+                    value={form.preferred_currency}
+                    onChange={(e) => update("preferred_currency", e.target.value)}
+                    className={FIELD_CLASS}
+                  >
+                    {CURRENCIES.map((c) => (
+                      <option key={c} value={c}>
+                        {c}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="current_investment">Current SEO / content investment</Label>
+                <textarea
+                  id="current_investment"
+                  value={form.current_investment}
+                  onChange={(e) => update("current_investment", e.target.value)}
+                  rows={3}
+                  placeholder="Roughly what you invest today, agencies/tools you use, etc."
+                  className={FIELD_CLASS}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label>AI engines you want to track</Label>
+                <div className="flex flex-wrap gap-2">
+                  {AI_ENGINES.map((eng) => {
+                    const active = engines.includes(eng.value);
+                    return (
+                      <button
+                        key={eng.value}
+                        type="button"
+                        onClick={() => toggleEngine(eng.value)}
+                        aria-pressed={active}
+                        className={cn(
+                          "rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors",
+                          active
+                            ? "border-primary bg-primary/10 text-primary"
+                            : "border-border text-muted-foreground hover:text-foreground",
+                        )}
+                      >
+                        {eng.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {error ? (
+                <p className="rounded-none border border-destructive/25 bg-destructive/5 px-4 py-3 text-sm text-destructive">
+                  {error}
+                </p>
+              ) : null}
+
+              <Button type="submit" disabled={submitting} className="w-full rounded-none py-6">
+                {submitting ? <SignalorLoader size="sm" /> : "Send to sales"}
+              </Button>
+            </form>
+          )}
+        </div>
+      </section>
+      <LandingFooter />
+    </LandingMarketingShell>
+  );
+}

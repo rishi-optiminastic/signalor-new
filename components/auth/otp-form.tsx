@@ -4,6 +4,7 @@ import { ArrowLeft, Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState, type FormEvent } from 'react'
 
+import { authClient } from '@/lib/auth-client'
 import { routes } from '@/lib/routes'
 import { persistAccountType, sendVerificationOtp, verifyOtp } from '@/services/onboarding.service'
 import { useOnboardingStore } from '@/stores/useOnboardingStore'
@@ -15,7 +16,8 @@ const OTP_LENGTH = 6
 /** Step 3: verify the 6-digit code sent to the email. */
 export function OtpForm(): JSX.Element {
   const router = useRouter()
-  const { email, authMode, accountType, setStep } = useOnboardingStore()
+  const { email, authMode, accountType, companyName, userName, userRole, setStep } =
+    useOnboardingStore()
   const [otp, setOtp] = useState('')
   const [loading, setLoading] = useState(false)
   const [resending, setResending] = useState(false)
@@ -33,9 +35,13 @@ export function OtpForm(): JSX.Element {
       }
 
       if (authMode === 'sign-up') {
-        // Persist the account type now that the email is verified (best-effort),
-        // then continue into the product onboarding wizard.
-        await persistAccountType(email, accountType)
+        // Persist the account type (+ agency name / role for agencies) now that
+        // the email is verified, then continue into the product onboarding wizard.
+        if (userName) await authClient.updateUser({ name: userName }).catch(() => {})
+        await persistAccountType(email, accountType, {
+          agencyName: companyName,
+          role: userRole,
+        })
         router.push(routes.onboarding)
       } else {
         setStep('complete')

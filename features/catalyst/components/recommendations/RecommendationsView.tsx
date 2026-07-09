@@ -1,12 +1,12 @@
+'use client'
+
 import { Check, Zap } from 'lucide-react'
 
 import { DashHeader, DashStatRow } from '@/features/catalyst/components/dash/DashStat'
-import {
-  PRIORITY_STYLE,
-  RECOMMENDATIONS,
-  REC_STATS,
-  type Recommendation,
-} from '@/features/catalyst/recommendations-data'
+import { DataState } from '@/features/catalyst/components/DataState'
+import { PRIORITY_STYLE, type Recommendation } from '@/features/catalyst/recommendations-data'
+import { useActiveProject } from '@/hooks/useActiveProject'
+import { useRecommendations } from '@/hooks/useRecommendations'
 
 function RecAction({ item }: { item: Recommendation }): JSX.Element {
   if (item.status === 'done') {
@@ -69,20 +69,35 @@ function RecRow({ item }: { item: Recommendation }): JSX.Element {
 }
 
 export function RecommendationsView(): JSX.Element {
+  const { slug, isLoading: projectLoading } = useActiveProject()
+  const { data, isLoading, isError } = useRecommendations(slug)
+
   return (
     <div className="mx-auto w-full max-w-[1100px]">
       <DashHeader
         title="Recommendations"
         subtitle="Prioritised fixes ranked by expected GEO lift — start at the top."
       />
-      <div className="mb-5">
-        <DashStatRow stats={REC_STATS} />
-      </div>
-      <div className="divide-y divide-[var(--cat-border)] overflow-hidden rounded-lg border border-[var(--cat-border)] bg-[var(--cat-card)]">
-        {RECOMMENDATIONS.map(r => (
-          <RecRow key={r.id} item={r} />
-        ))}
-      </div>
+      <DataState
+        isLoading={projectLoading || isLoading}
+        isError={isError}
+        isEmpty={!slug || !data || data.recommendations.length === 0}
+        emptyTitle="No recommendations yet"
+        emptyHint="Run an analysis for this project to generate prioritised GEO fixes."
+      >
+        {data && (
+          <>
+            <div className="mb-5">
+              <DashStatRow stats={data.stats} />
+            </div>
+            <div className="divide-y divide-[var(--cat-border)] overflow-hidden rounded-lg border border-[var(--cat-border)] bg-[var(--cat-card)]">
+              {data.recommendations.map(r => (
+                <RecRow key={r.id} item={r} />
+              ))}
+            </div>
+          </>
+        )}
+      </DataState>
     </div>
   )
 }

@@ -1,0 +1,444 @@
+"use client";
+
+import { useState, useEffect, useMemo } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { useSession } from "@fe/lib/auth-client";
+import { getExportPDFUrl, startAnalysis } from "@fe/lib/api/analyzer";
+import { useRun } from "./_components/run-context";
+import { config, routes } from "@fe/lib/config";
+import { Download, RefreshCw, Loader2, AlertCircle, Calendar } from "@fe/components/icons";
+import { useOrgStore } from "@fe/lib/stores/org-store";
+import { ScheduleAnalysisDialog } from "./_components/schedule-analysis-dialog";
+import { OverviewSkeleton } from "@fe/components/dashboard/skeletons";
+import { Button } from "@fe/components/ui/button";
+import { cn } from "@fe/lib/utils";
+import {
+  SocialBrandReachCard,
+  type SocialPresenceDetails,
+} from "@fe/components/analyzer/social-brand-reach-card";
+import type { DashboardSentiment } from "@fe/components/dashboard/types";
+import { GeoScoreCard } from "@fe/components/dashboard/geo-score-card";
+import { GeoScoreHistoryCard } from "@fe/components/dashboard/geo-score-history-card";
+import { PillarBreakdownCard } from "@fe/components/dashboard/pillar-breakdown-card";
+import { VisibilityByPlatformCard } from "@fe/components/dashboard/visibility-by-platform-card";
+import { CompetitorsCard } from "@fe/components/dashboard/competitors-card";
+import { PredictionSentimentRow } from "@fe/components/dashboard/prediction-sentiment-row";
+import { SentimentAnalysisCard } from "@fe/components/dashboard/sentiment-analysis-card";
+import { AiRecommendationCard } from "@fe/components/dashboard/ai-recommendation-card";
+import { SearchTrafficInsightsCard } from "@fe/components/dashboard/search-traffic-insights-card";
+import { WeeklyPerformanceSection } from "@fe/components/dashboard/weekly-performance-section";
+import { DomainAnalyticsPanel } from "@fe/components/analyzer/domain-analytics-panel";
+
+export default function OverviewView() {
+  const { slug } = useParams<{ slug: string }>();
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  const { run, scoreHistory, loading, error, scoreBump } = useRun();
+  const [reanalyzing, setReanalyzing] = useState(false);
+  const [reanalyzeError, setReanalyzeError] = useState("");
+  const [scheduleOpen, setScheduleOpen] = useState(false);
+  const { activeOrg } = useOrgStore();
+
+  const [greeting, setGreeting] = useState(() => {
+    const h = new Date().getHours();
+    if (h < 12) return "Good Morning";
+    if (h < 17) return "Good Afternoon";
+    if (h < 21) return "Good Evening";
+    return "Good Night";
+  });
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const h = new Date().getHours();
+      let g = "Good Night";
+      if (h < 12) g = "Good Morning";
+      else if (h < 17) g = "Good Afternoon";
+      else if (h < 21) g = "Good Evening";
+      setGreeting(g);
+    }, 60_000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const email = session?.user?.email ?? "";
+
+  async function handleReanalyze() {
+    if (!run || !email) return;
+    setReanalyzing(true);
+    try {
+      const newRun = await startAnalysis({
+        url: run.url,
+        run_type: "single_page",
+        email,
+        brand_name: run.brand_name,
+      });
+      router.push(routes.dashboardProject(newRun.slug));
+    } catch {
+      setReanalyzeError("Failed to start re-analysis");
+    } finally {
+      setReanalyzing(false);
+    }
+  }
+
+  function handleDownloadPDF() {
+    if (!run) return;
+    window.open(`${config.apiBaseUrl}${getExportPDFUrl(run.id)}`, "_blank");
+  }
+
+  const normalizeUrl = (u: string) =>
+    u
+      .replace(/^https?:\/\//, "")
+      .replace(/\/+$/, "")
+      .toLowerCase();
+  const pageScore =
+    run?.page_scores?.find((p) => normalizeUrl(p.url) === normalizeUrl(run.url)) ??
+    run?.page_scores?.[0] ??
+    null;
+  const compositeScore = run?.composite_score ?? 0;
+  const brandVis = run?.brand_visibility;
+  const recommendations = run?.recommendations ?? [];
+  const isRunning = !!run && run.status !== "complete" && run.status !== "failed";
+
+  const prevScore =
+    scoreHistory.length >= 2 ? scoreHistory[scoreHistory.length - 2]?.composite_score : null;
+  const scoreChange = prevScore !== null ? Math.round(compositeScore - prevScore) : null;
+
+  const prediction = useMemo(() => {
+    let totalImpact = 0;
+    const pillarImpacts: Record<string, number> = {};
+
+    for (const rec of recommendations) {
+      const match = rec.impact_estimate?.match(/(\d+)/);
+      const pts = match ? parseInt(match[1], 10) : 0;
+      const weight =
+        rec.priority === "critical"
+          ? 1
+          : rec.priority === "high"
+            ? 0.7
+            : rec.priority === "medium"
+              ? 0.4
+              : 0.2;
+      const impact = Math.min(pts * weight, 15);
+      totalImpact += impact;
+      if (rec.pillar) {
+        pillarImpacts[rec.pillar] = (pillarImpacts[rec.pillar] || 0) + impact;
+      }
+    }
+
+    const projected = Math.min(100, compositeScore + totalImpact);
+    const projectedGain = Math.round(projected - compositeScore);
+
+    const days = Array.from({ length: 7 }, (_, i) => {
+      const dayScore = compositeScore + projectedGain * ((i + 1) / 7);
+      const d = new Date();
+      d.setDate(d.getDate() + i + 1);
+      return {
+        day: d.toLocaleDateString("en-US", { weekday: "short" }),
+        score: Math.round(dayScore),
+      };
+    });
+
+    return { projected: Math.round(projected), gain: projectedGain, days, pillarImpacts };
+  }, [recommendations, compositeScore]);
+
+  const sentiment = useMemo((): DashboardSentiment | null => {
+    const redditDetails = brandVis?.reddit_details as Record<string, unknown> | undefined;
+    const redditSentiment = redditDetails?.sentiment as
+      | { positive: number; negative: number; neutral: number; modifier: number }
+      | undefined;
+
+    const probes = run?.ai_probes ?? [];
+    const mentioned = probes.filter((p) => p.brand_mentioned).length;
+    const total = probes.length;
+
+    const positive = redditSentiment?.positive ?? 0;
+    const negative = redditSentiment?.negative ?? 0;
+    const neutral = redditSentiment?.neutral ?? 0;
+    const modifier = redditSentiment?.modifier ?? 0;
+    const score = Math.round(modifier / 2);
+
+    const hasData = positive + negative + neutral > 0 || total > 0;
+    if (!hasData) return null;
+
+    return {
+      positive,
+      negative,
+      neutral,
+      score,
+      totalMentions: positive + negative + neutral,
+      aiMentioned: mentioned,
+      aiTotal: total,
+    };
+  }, [brandVis?.reddit_details, run?.ai_probes]);
+
+  if (loading) {
+    return <OverviewSkeleton />;
+  }
+
+  if ((error || reanalyzeError) && !run) {
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        <div className="flex items-center gap-3 rounded-xl border border-primary/20 bg-primary/5 px-5 py-4 text-sm text-primary shadow-sm">
+          <AlertCircle className="h-4 w-4 shrink-0" />
+          {error || reanalyzeError}
+        </div>
+      </div>
+    );
+  }
+
+  if (run?.status === "failed") {
+    return (
+      <div className="flex h-full w-full items-center justify-center px-6">
+        <div className="max-w-md w-full text-center space-y-6 bg-card p-8 rounded-xl border border-border shadow-sm">
+          <div className="mx-auto w-12 h-12 rounded-xl flex items-center justify-center bg-primary/10">
+            <AlertCircle className="w-6 h-6 text-primary" />
+          </div>
+          <div>
+            <h2 className="text-lg font-semibold text-foreground mb-1">Analysis Failed</h2>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              {run.error_message || "Something went wrong during analysis. Please try again."}
+            </p>
+          </div>
+          <div className="flex items-center justify-center gap-3 pt-2">
+            <Button
+              type="button"
+              variant="default"
+              size="default"
+              className="rounded-sm shadow-sm gap-2 text-xs font-semibold"
+              onClick={handleReanalyze}
+              disabled={reanalyzing}
+            >
+              {reanalyzing ? (
+                <>
+                  <Loader2 className="size-4 animate-spin" />
+                  Retrying…
+                </>
+              ) : (
+                <>
+                  <RefreshCw className="size-4" />
+                  Try Again
+                </>
+              )}
+            </Button>
+          </div>
+          {reanalyzeError && <p className="text-xs text-destructive">{reanalyzeError}</p>}
+        </div>
+      </div>
+    );
+  }
+
+  const projectName =
+    run?.display_brand_name?.trim() ||
+    run?.brand_name ||
+    (run?.url ? normalizeUrl(run.url).split("/")[0] : "Overview");
+  const brandDomain = run?.url ? normalizeUrl(run.url).split("/")[0] : "";
+  const brandFavicon = brandDomain
+    ? `https://www.google.com/s2/favicons?domain=${brandDomain}&sz=128`
+    : "";
+  const statusLabel =
+    run?.status === "complete" ? "Active" : run?.status === "failed" ? "Failed" : "Analyzing";
+  const statusClasses =
+    run?.status === "complete"
+      ? "bg-success/10 text-success border-success/30"
+      : run?.status === "failed"
+        ? "bg-destructive/10 text-destructive border-destructive/30"
+        : "bg-warning/10 text-warning border-warning/30";
+
+  return (
+    <>
+      {/* <header className="sticky top-0 z-20 border-b border-border bg-white px-6 py-4"> */}
+      <div
+        className="flex flex-col gap-2 px-3 sm:flex-row sm:items-center sm:justify-between sm:px-4"
+        data-tour-card="overview-header"
+      >
+        <div className="flex min-w-0 items-start gap-2.5">
+          {brandFavicon ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={brandFavicon}
+              alt={`${projectName} logo`}
+              width={36}
+              height={36}
+              className="mt-0.5 size-9 shrink-0 rounded-lg object-contain ring-1 ring-black/8"
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).style.display = "none";
+              }}
+            />
+          ) : null}
+          <div className="min-w-0">
+            <h1 className="truncate text-lg font-semibold tracking-tight text-foreground capitalize sm:text-xl">
+              {projectName}
+            </h1>
+            {brandDomain ? (
+              <p className="mt-0.5 truncate text-xs text-muted-foreground">{brandDomain}</p>
+            ) : null}
+          </div>
+        </div>
+        <div className="flex shrink-0 flex-wrap items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">
+              Status
+            </span>
+            <span
+              className={cn(
+                "rounded-sm border px-2 py-0.5 text-[10px] font-medium tracking-wide uppercase",
+                statusClasses,
+              )}
+            >
+              {statusLabel}
+            </span>
+          </div>
+
+          {run?.created_at ? (
+            <div className="hidden flex-col items-end gap-0.5 text-right sm:flex border-l border-border pl-3">
+              <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">
+                Created on
+              </span>
+              <span className="text-xs font-medium text-foreground">
+                {new Date(run.created_at).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+              </span>
+            </div>
+          ) : null}
+
+          <div className="flex items-center gap-1.5 pl-1">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleReanalyze}
+              disabled={reanalyzing || isRunning}
+              className="gap-1.5 border-border bg-white px-4 text-foreground shadow-sm"
+            >
+              {reanalyzing ? (
+                <Loader2 className="size-3.5 animate-spin" />
+              ) : (
+                <RefreshCw className="size-3.5" />
+              )}
+              Re-analyze
+            </Button>
+            <Button
+              type="button"
+              variant="default"
+              onClick={() => setScheduleOpen(true)}
+              disabled={!run || isRunning || !session?.user?.email || !activeOrg?.id}
+              className="gap-1.5 px-4 shadow-sm"
+            >
+              <Calendar className="size-3.5" />
+              Schedule
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleDownloadPDF}
+              disabled={!run || isRunning}
+              className="gap-1.5 border-border bg-white px-4 text-foreground shadow-sm"
+            >
+              <Download className="size-3.5" />
+              Export
+            </Button>
+          </div>
+
+          {run && session?.user?.email && activeOrg?.id ? (
+            <ScheduleAnalysisDialog
+              open={scheduleOpen}
+              onClose={() => setScheduleOpen(false)}
+              email={session.user.email}
+              orgId={activeOrg.id}
+              url={run.url}
+              brandName={run.brand_name || ""}
+            />
+          ) : null}
+        </div>
+      </div>
+      {/* </header> */}
+
+      {run && !isRunning && (
+        <div className="px-3 pb-3 pt-2 sm:px-4">
+          {/* GEO Score card (left) + GEO Performance chart (right), equal height */}
+          <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-stretch">
+            <div className="w-full shrink-0 sm:w-56" data-tour-card="overview-score">
+              <GeoScoreCard
+                compositeScore={compositeScore}
+                scoreChange={scoreChange}
+                sparkle={!!scoreBump && scoreBump > 0}
+              />
+            </div>
+            <div className="min-w-0 flex-1" data-tour-card="overview-performance">
+              <WeeklyPerformanceSection
+                scoreHistory={scoreHistory}
+                joinDate={scoreHistory.length > 0 ? scoreHistory[0].date : run.created_at}
+                className="mb-0 h-full"
+              />
+            </div>
+          </div>
+          <div className="mb-3">
+            <SearchTrafficInsightsCard slug={slug} />
+          </div>
+
+          <div className="grid grid-cols-12 items-stretch gap-3 mb-3">
+            <div className="col-span-4 min-h-0 h-full" data-tour-card="overview-platforms">
+              <VisibilityByPlatformCard brandVis={brandVis} />
+            </div>
+            {/* <GeoScoreHistoryCard scoreHistory={scoreHistory} /> */}
+            <div className="col-span-3 min-h-0 h-full" data-tour-card="overview-pillars">
+              <PillarBreakdownCard pageScore={pageScore} />
+            </div>
+            <div className="col-span-5 min-h-0 h-full" data-tour-card="overview-sentiment">
+              <SentimentAnalysisCard sentiment={sentiment} />
+            </div>
+          </div>
+
+          <div
+            className="grid grid-cols-12 items-stretch gap-3 mb-3"
+            data-tour-card="overview-citations"
+          >
+            <div className="col-span-12 min-h-0">
+              <AiRecommendationCard slug={slug} />
+            </div>
+          </div>
+
+          <div
+            className="grid grid-cols-12 items-stretch gap-3 mb-3"
+            data-tour-card="overview-reach"
+          >
+            <SocialBrandReachCard
+              slug={slug}
+              brandName={projectName}
+              brandUrl={run.url ?? ""}
+              homeCountry={run.country ?? undefined}
+              details={brandVis?.social_presence_details as SocialPresenceDetails | undefined}
+              brandVisibility={brandVis}
+              coral="var(--primary)"
+            />
+          </div>
+
+          <div className="grid grid-cols-12 items-stretch gap-3 mb-3">
+            <CompetitorsCard
+              slug={slug}
+              competitors={run.competitors ?? []}
+              yourScore={compositeScore}
+              yourName={projectName}
+              yourUrl={run.url}
+              yourPageScore={pageScore}
+            />
+          </div>
+
+          <div className="mb-3">
+            <DomainAnalyticsPanel slug={slug} />
+          </div>
+
+          {(prediction.gain > 0 || sentiment) && (
+            <PredictionSentimentRow
+              compositeScore={compositeScore}
+              prediction={prediction}
+              sentiment={sentiment}
+            />
+          )}
+        </div>
+      )}
+    </>
+  );
+}

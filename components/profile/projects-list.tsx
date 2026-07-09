@@ -3,6 +3,7 @@ import { Plus } from 'lucide-react'
 import { formatDate } from '@/lib/format'
 import type { AccountProject } from '@/services/account.service'
 
+import { DeleteProjectButton } from './delete-project-button'
 import { SectionCard } from './section-card'
 
 function ProjectRow({ project }: { project: AccountProject }): JSX.Element {
@@ -15,9 +16,10 @@ function ProjectRow({ project }: { project: AccountProject }): JSX.Element {
         <p className="truncate text-[13px] font-medium text-[var(--cat-ink)]">{project.name}</p>
         <p className="truncate text-xs text-[var(--cat-ink-3)]">{project.url}</p>
       </div>
-      <span className="shrink-0 text-xs text-[var(--cat-ink-3)]">
+      <span className="hidden shrink-0 text-xs text-[var(--cat-ink-3)] sm:inline">
         Added {formatDate(project.createdAt)}
       </span>
+      <DeleteProjectButton id={project.id} name={project.name} />
     </li>
   )
 }

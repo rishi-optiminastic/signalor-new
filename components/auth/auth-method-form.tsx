@@ -73,7 +73,11 @@ export function AuthMethodForm(): JSX.Element {
     <div className="space-y-5">
       <button
         type="button"
-        onClick={() => setStep('account-type')}
+        onClick={() =>
+          setStep(
+            authMode === 'sign-up' && accountType === 'agency' ? 'org-details' : 'account-type',
+          )
+        }
         className="text-muted-foreground hover:text-foreground -mt-1 flex items-center gap-1 text-[11px] font-medium transition-colors"
       >
         <ArrowLeft className="h-3 w-3" />

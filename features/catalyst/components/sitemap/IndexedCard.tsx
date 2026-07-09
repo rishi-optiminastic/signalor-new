@@ -1,9 +1,15 @@
-import { GREEN } from '@/features/catalyst/constants'
-import { INDEXED, INDEXED_ICON } from '@/features/catalyst/sitemap-data'
+import { CheckCircle2 } from 'lucide-react'
 
-export function IndexedCard(): JSX.Element {
-  const Icon = INDEXED_ICON
-  const pct = INDEXED.total ? (INDEXED.value / INDEXED.total) * 100 : 0
+import { GREEN } from '@/features/catalyst/constants'
+
+export interface IndexedInfo {
+  value: number
+  total: number
+  crawlLimit: string
+}
+
+export function IndexedCard({ indexed }: { indexed: IndexedInfo }): JSX.Element {
+  const pct = indexed.total ? (indexed.value / indexed.total) * 100 : 0
   return (
     <div className="flex flex-col rounded-md border border-[var(--cat-border)] bg-[var(--cat-card)] p-4">
       <div className="flex items-center justify-between">
@@ -14,14 +20,14 @@ export function IndexedCard(): JSX.Element {
           className="grid h-6 w-6 place-items-center rounded-md"
           style={{ background: 'rgba(47,190,126,.14)' }}
         >
-          <Icon size={13} style={{ color: GREEN }} />
+          <CheckCircle2 size={13} style={{ color: GREEN }} />
         </span>
       </div>
       <div className="mt-2 text-[26px] font-bold tracking-tight text-[var(--cat-ink)]">
-        {INDEXED.value}
+        {indexed.value}
         <span className="text-[15px] font-semibold text-[var(--cat-ink-3)]">
           {' '}
-          / {INDEXED.total}
+          / {indexed.total}
         </span>
       </div>
       <div className="mt-auto pt-3">
@@ -29,7 +35,7 @@ export function IndexedCard(): JSX.Element {
           <div className="h-full rounded-full" style={{ width: `${pct}%`, background: GREEN }} />
         </div>
         <div className="mt-1.5 text-[12px] text-[var(--cat-ink-3)]">
-          Crawl limit: {INDEXED.crawlLimit}
+          Crawl limit: {indexed.crawlLimit}
         </div>
       </div>
     </div>

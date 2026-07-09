@@ -1,6 +1,6 @@
+import { AiCitationCard } from '@/features/catalyst/components/cards/AiCitationCard'
 import { ConversionRateCard } from '@/features/catalyst/components/cards/ConversionRateCard'
-import { TotalSalesCard } from '@/features/catalyst/components/cards/TotalSalesCard'
-import { TotalVisitorsCard } from '@/features/catalyst/components/cards/TotalVisitorsCard'
+import { GeoScoreCard } from '@/features/catalyst/components/cards/GeoScoreCard'
 import { UserRetentionCard } from '@/features/catalyst/components/cards/UserRetentionCard'
 import { VisitorsChannelsCard } from '@/features/catalyst/components/cards/VisitorsChannelsCard'
 import { WeeklyVisitorsCard } from '@/features/catalyst/components/cards/WeeklyVisitorsCard'
@@ -12,8 +12,8 @@ export function DashboardContent(): JSX.Element {
     <>
       <Topbar />
       <section className="cat-stagger mt-2.5 grid min-h-0 flex-1 auto-rows-min grid-cols-1 gap-2 overflow-y-auto pr-0.5 sm:grid-cols-2 xl:grid-cols-3">
-        <TotalSalesCard />
-        <TotalVisitorsCard />
+        <GeoScoreCard />
+        <AiCitationCard />
         <ConversionRateCard />
         <VisitorsChannelsCard />
         <UserRetentionCard />

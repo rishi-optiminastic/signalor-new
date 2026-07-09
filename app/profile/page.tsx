@@ -1,6 +1,7 @@
 import { headers } from 'next/headers'
 
 import { BillingHistory } from '@/components/profile/billing-history'
+import { DangerZone } from '@/components/profile/danger-zone'
 import { EnginesCard } from '@/components/profile/engines-card'
 import { PlanBilling } from '@/components/profile/plan-billing'
 import { ProfileHeader } from '@/components/profile/profile-header'
@@ -39,6 +40,7 @@ export default async function ProfilePage(): Promise<JSX.Element> {
               <EnginesCard engines={data.engines} />
             </div>
           </div>
+          <DangerZone email={data.user.email} />
         </div>
       </main>
     </CatalystThemeProvider>

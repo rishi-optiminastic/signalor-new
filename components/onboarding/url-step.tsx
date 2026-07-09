@@ -40,7 +40,8 @@ const PLATFORM_COPY: Record<string, { title: string; sub: string; placeholder: s
 
 /** Step 3: capture the site URL and create the organization. */
 export function UrlStep(): JSX.Element {
-  const { platform, siteUrl, setSiteUrl, setStep, companyName } = useOnboardingWizardStore()
+  const { platform, siteUrl, setSiteUrl, setOrgId, setStep, companyName } =
+    useOnboardingWizardStore()
   const { data: session } = useSession()
   const [value, setValue] = useState(siteUrl)
   const [loading, setLoading] = useState(false)
@@ -63,6 +64,7 @@ export function UrlStep(): JSX.Element {
         setError(result.error ?? 'Failed. Please try again.')
         return
       }
+      setOrgId(result.orgId ?? null)
       setSiteUrl(value.trim())
       setStep('install')
     } catch {

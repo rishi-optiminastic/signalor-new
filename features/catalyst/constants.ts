@@ -1,7 +1,5 @@
 import {
-  BarChart3,
   Blocks,
-  Building2,
   Eye,
   Facebook,
   Instagram,
@@ -9,8 +7,7 @@ import {
   Link2,
   ListChecks,
   MessageCircle,
-  MessageSquareText,
-  Network,
+  PenLine,
   Search,
   Store,
   Users,
@@ -72,27 +69,24 @@ export interface TableRow {
 }
 
 /* --------------------------------------------------------------------- data */
-export const MAIN_NAV: NavEntry[] = [
-  { icon: LayoutGrid, label: 'Overview', href: '/dashboard' },
-  { icon: Building2, label: 'Brands', href: '/dashboard/brands' },
-]
+export const MAIN_NAV: NavEntry[] = [{ icon: LayoutGrid, label: 'Overview', href: '' }]
 
+// Visibility now hosts Prompt Tracking, Sitemap and Analytics as in-page tabs
+// (see MonitoringTabs), so they are no longer separate sidebar entries.
 export const MONITORING_NAV: NavEntry[] = [
-  { icon: Eye, label: 'Visibility', href: '/dashboard/visibility' },
-  { icon: MessageSquareText, label: 'Prompt Tracker', href: '/dashboard/prompt-tracker' },
-  { icon: Network, label: 'Sitemap', href: '/dashboard/sitemap' },
-  { icon: Users, label: 'Competitors', href: '/dashboard/competitors' },
-  { icon: BarChart3, label: 'Analytics', href: '/dashboard/analytics' },
+  { icon: Eye, label: 'Visibility', href: 'visibility' },
+  { icon: Users, label: 'Competitors', href: 'competitors' },
 ]
 
 export const OPTIMIZATION_NAV: NavEntry[] = [
-  { icon: ListChecks, label: 'Tasks', href: '/dashboard/tasks', badge: 7 },
-  { icon: Link2, label: 'Backlinks', href: '/dashboard/backlinks' },
-  { icon: Blocks, label: 'Integrations', href: '/dashboard/integrations' },
+  { icon: ListChecks, label: 'Tasks', href: 'tasks' },
+  { icon: PenLine, label: 'Content', href: 'optimisation' },
+  { icon: Link2, label: 'Backlinks', href: 'backlinks' },
+  { icon: Blocks, label: 'Integrations', href: 'integrations' },
 ]
 
 export const SOCIALS_NAV: NavEntry[] = [
-  { icon: MessageCircle, label: 'Reddit', href: '/dashboard/socials/reddit' },
+  { icon: MessageCircle, label: 'Reddit', href: 'socials/reddit' },
 ]
 
 export const SALES_LINE: number[] = [

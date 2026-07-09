@@ -1,10 +1,10 @@
 import { BRAND, BRAND_SOFT, BRAND_STRONG } from '@/features/catalyst/constants'
-import { TASK_TABS } from '@/features/catalyst/tasks-data'
+import type { StatusTab } from '@/features/catalyst/tasks-data'
 
-export function TaskStatusTabs(): JSX.Element {
+export function TaskStatusTabs({ tabs }: { tabs: StatusTab[] }): JSX.Element {
   return (
     <div className="flex items-center gap-1 overflow-x-auto">
-      {TASK_TABS.map(tab => (
+      {tabs.map(tab => (
         <button
           key={tab.label}
           className="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-[13px] font-medium whitespace-nowrap transition-colors"

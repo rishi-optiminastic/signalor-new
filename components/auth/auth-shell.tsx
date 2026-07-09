@@ -1,82 +1,55 @@
 import Image from 'next/image'
-import type { CSSProperties, ReactNode } from 'react'
+import type { ReactNode } from 'react'
 
 import { cn } from '@/lib/utils'
 
-const DIAMOND_SIZE = 5
+const DEFAULT_EYEBROW = 'Answer-engine visibility'
+const DEFAULT_HEADLINE = 'See how your brand shows up in AI search, and fix what holds you back.'
 
-/**
- * Single diamond marker, absolutely positioned by the caller. Punctuates the
- * corners where the auth frame's detached edge lines cross.
- */
-function Diamond({ style }: { style?: CSSProperties }): JSX.Element {
-  return (
-    <span
-      aria-hidden
-      className="pointer-events-none absolute z-10 rotate-45"
-      style={{
-        width: DIAMOND_SIZE,
-        height: DIAMOND_SIZE,
-        background: 'rgba(0,0,0,0.22)',
-        ...style,
-      }}
-    />
-  )
+interface AuthMarketingPanelProps {
+  /** Right-panel background image. Defaults to the sign-in/up sunset visual. */
+  imageSrc?: string
+  /** Small uppercase kicker above the headline. */
+  eyebrow?: string
+  /** Bottom-right headline copy. */
+  headline?: string
 }
 
-/** Right-hand marketing panel. Hidden below the lg breakpoint. */
-export function AuthMarketingPanel(): JSX.Element {
+/**
+ * Right-hand marketing panel: an inset, large-radius visual with the eyebrow +
+ * headline anchored bottom-right. Hidden below the lg breakpoint.
+ */
+export function AuthMarketingPanel({
+  imageSrc = '/auth-visual.jpg',
+  eyebrow = DEFAULT_EYEBROW,
+  headline = DEFAULT_HEADLINE,
+}: AuthMarketingPanelProps): JSX.Element {
   return (
-    <aside className="relative m-4 hidden flex-col overflow-hidden rounded-2xl border border-black/8 bg-gradient-to-br from-[#e04a3d]/22 via-[#e04a3d]/10 to-transparent p-7 shadow-sm lg:flex xl:m-6 xl:p-9">
-      <div className="pointer-events-none absolute inset-0 opacity-25">
-        <svg
-          className="absolute top-1/2 left-1/2 h-[min(340px,72%)] w-[min(340px,72%)] -translate-x-1/2 -translate-y-[42%]"
-          viewBox="0 0 400 400"
-          fill="none"
-          aria-hidden="true"
-        >
-          <path
-            d="M200 80 C 120 80 80 140 80 200 C 80 280 140 320 200 320 C 280 320 320 260 320 200 C 320 120 260 80 200 80"
-            stroke="currentColor"
-            strokeWidth="1"
-            strokeDasharray="6 10"
-            className="text-muted-foreground"
-          />
-          <circle cx="200" cy="120" r="22" className="stroke-border fill-white" strokeWidth="1" />
-          <circle cx="110" cy="220" r="18" className="stroke-border fill-white" strokeWidth="1" />
-          <circle cx="290" cy="210" r="18" className="stroke-border fill-white" strokeWidth="1" />
-          <text
-            x="200"
-            y="126"
-            textAnchor="middle"
-            fill="#737373"
-            fontFamily="system-ui, sans-serif"
-            fontSize="14"
-            fontWeight="600"
-          >
-            S
-          </text>
-        </svg>
-      </div>
-
-      <div className="relative shrink-0">
-        <p className="text-muted-foreground text-[10px] font-medium tracking-[0.14em] uppercase">
-          Answer-engine visibility
-        </p>
-        <h2 className="text-foreground mt-2.5 max-w-[280px] text-lg leading-snug font-semibold tracking-tight xl:max-w-xs xl:text-xl">
-          See how your brand shows up in AI search, and fix what holds you back.
-        </h2>
-      </div>
-
-      <div className="absolute top-[11.5rem] right-[-9rem] bottom-[-2rem] left-7 z-10 overflow-hidden rounded-tl-xl shadow-lg xl:left-9">
+    <aside className="relative hidden min-h-svh p-3 lg:flex xl:p-4">
+      <div className="relative flex flex-1 flex-col justify-end overflow-hidden rounded-[16px] p-10 xl:p-14">
         <Image
-          src="/carousel1.png"
-          alt="AI search surfaces preview"
-          width={1877}
-          height={892}
+          src={imageSrc}
+          alt=""
+          fill
           priority
-          className="pointer-events-none block h-full w-full object-cover object-left-top select-none"
+          sizes="50vw"
+          className="pointer-events-none object-cover select-none"
         />
+
+        {/* Soft scrim so the bottom-right copy stays legible over darker imagery. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-2/3 bg-gradient-to-t from-white/70 via-white/25 to-transparent"
+        />
+
+        <div className="relative z-10 ml-auto max-w-md text-right">
+          <p className="text-[10px] font-medium tracking-[0.14em] text-neutral-700/80 uppercase">
+            {eyebrow}
+          </p>
+          <h2 className="mt-3 ml-auto max-w-sm text-2xl leading-[1.15] font-semibold tracking-tight text-neutral-900 xl:text-[28px]">
+            {headline}
+          </h2>
+        </div>
       </div>
     </aside>
   )
@@ -91,8 +64,8 @@ interface AuthShellProps {
 }
 
 /**
- * Split-screen auth layout: a framed card column on the left (with detached
- * edge lines + corner diamonds) and a marketing panel on the right.
+ * Split-screen auth layout: a card column on the left and a marketing panel on
+ * the right.
  */
 export function AuthShell({
   children,
@@ -104,18 +77,6 @@ export function AuthShell({
       {/* LEFT — scrolls independently so the right illustration stays fixed. */}
       <div className="relative flex min-h-svh flex-col justify-center px-4 py-8 sm:px-5 lg:h-svh lg:min-h-0 lg:overflow-y-auto lg:bg-white lg:px-10 xl:px-14">
         <div className="relative flex w-full flex-col justify-center py-4 lg:min-h-full">
-          {/* Detached frame lines */}
-          <div className="absolute top-4 -right-8 -left-8 h-px bg-black/6" />
-          <div className="absolute -right-8 bottom-4 -left-8 h-px bg-black/6" />
-          <div className="absolute -top-8 -bottom-8 left-4 w-px bg-black/6" />
-          <div className="absolute -top-8 right-4 -bottom-8 w-px bg-black/6" />
-
-          {/* Corner diamonds */}
-          <Diamond style={{ top: 'calc(1rem - 2.5px)', left: 'calc(1rem - 2.5px)' }} />
-          <Diamond style={{ top: 'calc(1rem - 2.5px)', right: 'calc(1rem - 2.5px)' }} />
-          <Diamond style={{ bottom: 'calc(1rem - 2.5px)', left: 'calc(1rem - 2.5px)' }} />
-          <Diamond style={{ bottom: 'calc(1rem - 2.5px)', right: 'calc(1rem - 2.5px)' }} />
-
           <div className={cn('relative z-10 mx-auto w-[360px] max-w-full', contentClassName)}>
             <div className="rounded-lg border border-black/6 bg-white p-6 shadow-xs sm:p-7 lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none">
               {children}
