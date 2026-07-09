@@ -4,6 +4,7 @@ import Link from 'next/link'
 
 import { DataState } from '@/features/catalyst/components/DataState'
 import { useActiveProject } from '@/hooks/useActiveProject'
+import { useBrandPath } from '@/hooks/useBrandPath'
 import { useContentOptimisation, type ContentOptimisation } from '@/hooks/useContentOptimisation'
 
 import { AlertCircle, ExternalLink, FileText, X } from '@fe/components/icons'
@@ -80,6 +81,7 @@ function ChromeHeader({ co }: { co: ContentOptimisation }): JSX.Element {
 
 /** The "how edits apply" banner line — GitHub PR, connect-prompt, or nothing. */
 function ModeHint({ co }: { co: ContentOptimisation }): JSX.Element | null {
+  const brandPath = useBrandPath()
   if (!co.pageFields || co.applyMode === 'cms') return null
   if (co.applyMode === 'github') {
     return (
@@ -97,7 +99,7 @@ function ModeHint({ co }: { co: ContentOptimisation }): JSX.Element | null {
       <AlertCircle className="size-3.5" />
       <span>Click any element to edit. To apply, connect WordPress/Shopify or a GitHub repo.</span>
       <Link
-        href="/dashboard/integrations"
+        href={brandPath('integrations')}
         className="text-primary inline-flex items-center gap-0.5 font-semibold hover:underline"
       >
         Connect <ExternalLink className="size-3" />

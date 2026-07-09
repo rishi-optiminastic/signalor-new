@@ -70,12 +70,7 @@ export function SidebarContent({ collapsed, onClose }: SidebarContentProps): JSX
         <NavSection title="Main" items={MAIN_NAV} collapsed={collapsed} />
         {collapsed && <div className="mx-1 my-2 h-px bg-[var(--cat-border-soft)]" />}
         <div className={collapsed ? '' : 'mt-1'}>
-          <NavItem
-            icon={Sparkles}
-            label="Growth Agent"
-            href="/dashboard/agent"
-            collapsed={collapsed}
-          />
+          <NavItem icon={Sparkles} label="Growth Agent" href="agent" collapsed={collapsed} />
         </div>
         <NavSection title="Monitoring" items={MONITORING_NAV} collapsed={collapsed} />
         <NavSection title="Optimization" items={OPTIMIZATION_NAV} collapsed={collapsed} />

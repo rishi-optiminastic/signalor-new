@@ -10,6 +10,7 @@ import { AnalyticsView } from '@/features/catalyst/components/analytics/Analytic
 import { PromptTrackerView } from '@/features/catalyst/components/prompt-tracker/PromptTrackerView'
 import { SitemapView } from '@/features/catalyst/components/sitemap/SitemapView'
 import { VisibilityView } from '@/features/catalyst/components/visibility/VisibilityView'
+import { useBrandPath } from '@/hooks/useBrandPath'
 
 interface MonitoringTab {
   key: string
@@ -29,6 +30,7 @@ const TABS: MonitoringTab[] = [
  * Analytics as tabs (selected via the `?tab=` query param, so each is linkable). */
 export function MonitoringTabs(): JSX.Element {
   const params = useSearchParams()
+  const brandPath = useBrandPath()
   const current = params.get('tab') ?? 'visibility'
   const active = TABS.find(t => t.key === current) ?? TABS[0]
   const ActiveView = active.View
@@ -41,7 +43,7 @@ export function MonitoringTabs(): JSX.Element {
           return (
             <Link
               key={tab.key}
-              href={`/dashboard/visibility?tab=${tab.key}`}
+              href={`${brandPath('visibility')}?tab=${tab.key}`}
               className={`-mb-px flex shrink-0 items-center gap-1.5 border-b-2 px-3.5 py-2.5 text-[13px] font-medium transition-colors ${
                 on
                   ? 'border-[#e04a3d] text-[var(--cat-ink)]'

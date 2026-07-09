@@ -1,10 +1,16 @@
 import { betterAuth } from 'better-auth'
-import { prismaAdapter } from 'better-auth/adapters/prisma'
 import { emailOTP } from 'better-auth/plugins'
+import { Pool } from 'pg'
 
 import { sendOtpEmail } from '@/lib/email'
 import { env } from '@/lib/env'
-import { prisma } from '@/lib/prisma'
+
+// better-auth talks to Postgres directly via a pg Pool (Kysely under the hood),
+// using the same `user`/`session`/`account`/`verification` tables as before —
+// no ORM. Reuse one Pool across dev hot-reloads so we don't exhaust connections.
+const globalForPool = globalThis as unknown as { authPool: Pool | undefined }
+const pool = globalForPool.authPool ?? new Pool({ connectionString: env.DATABASE_URL })
+if (env.NODE_ENV !== 'production') globalForPool.authPool = pool
 
 // Google OAuth is wired only when both credentials are present, so the app
 // still boots (and email/password still works) without them configured.
@@ -19,9 +25,7 @@ const socialProviders =
     : undefined
 
 export const auth = betterAuth({
-  database: prismaAdapter(prisma, {
-    provider: 'postgresql',
-  }),
+  database: pool,
   secret: env.BETTER_AUTH_SECRET,
   baseURL: env.BETTER_AUTH_URL,
   emailAndPassword: {

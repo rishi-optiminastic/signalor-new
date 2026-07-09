@@ -69,24 +69,24 @@ export interface TableRow {
 }
 
 /* --------------------------------------------------------------------- data */
-export const MAIN_NAV: NavEntry[] = [{ icon: LayoutGrid, label: 'Overview', href: '/dashboard' }]
+export const MAIN_NAV: NavEntry[] = [{ icon: LayoutGrid, label: 'Overview', href: '' }]
 
 // Visibility now hosts Prompt Tracking, Sitemap and Analytics as in-page tabs
 // (see MonitoringTabs), so they are no longer separate sidebar entries.
 export const MONITORING_NAV: NavEntry[] = [
-  { icon: Eye, label: 'Visibility', href: '/dashboard/visibility' },
-  { icon: Users, label: 'Competitors', href: '/dashboard/competitors' },
+  { icon: Eye, label: 'Visibility', href: 'visibility' },
+  { icon: Users, label: 'Competitors', href: 'competitors' },
 ]
 
 export const OPTIMIZATION_NAV: NavEntry[] = [
-  { icon: ListChecks, label: 'Tasks', href: '/dashboard/tasks', badge: 7 },
-  { icon: PenLine, label: 'Content', href: '/dashboard/optimisation' },
-  { icon: Link2, label: 'Backlinks', href: '/dashboard/backlinks' },
-  { icon: Blocks, label: 'Integrations', href: '/dashboard/integrations' },
+  { icon: ListChecks, label: 'Tasks', href: 'tasks', badge: 7 },
+  { icon: PenLine, label: 'Content', href: 'optimisation' },
+  { icon: Link2, label: 'Backlinks', href: 'backlinks' },
+  { icon: Blocks, label: 'Integrations', href: 'integrations' },
 ]
 
 export const SOCIALS_NAV: NavEntry[] = [
-  { icon: MessageCircle, label: 'Reddit', href: '/dashboard/socials/reddit' },
+  { icon: MessageCircle, label: 'Reddit', href: 'socials/reddit' },
 ]
 
 export const SALES_LINE: number[] = [

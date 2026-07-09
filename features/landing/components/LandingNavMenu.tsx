@@ -17,7 +17,7 @@ const TRIGGERS: Array<{ label: string; key?: MenuKey; href?: string }> = [
   { label: 'Pricing', key: 'pricing' },
   { label: 'Resources', key: 'resources' },
   { label: 'Partnerships', href: '/creators-program' },
-  { label: 'Careers', href: '/careers' },
+  { label: 'Free Tools', href: '/tools' },
 ]
 
 const PANELS: Array<{ key: MenuKey; node: JSX.Element }> = [

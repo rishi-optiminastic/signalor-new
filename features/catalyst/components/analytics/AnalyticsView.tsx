@@ -4,6 +4,7 @@ import { BarChart3, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 
 import { DashHeader } from '@/features/catalyst/components/dash/DashStat'
+import { useBrandPath } from '@/hooks/useBrandPath'
 import { useIntegrations } from '@/hooks/useIntegrations'
 
 function Centered({ children }: { children: React.ReactNode }): JSX.Element {
@@ -15,6 +16,7 @@ function Centered({ children }: { children: React.ReactNode }): JSX.Element {
 }
 
 function ConnectGa4(): JSX.Element {
+  const brandPath = useBrandPath()
   return (
     <Centered>
       <span className="grid h-11 w-11 place-items-center rounded-md bg-[rgba(224,74,61,0.1)] text-[#e04a3d]">
@@ -27,7 +29,7 @@ function ConnectGa4(): JSX.Element {
         </p>
       </div>
       <Link
-        href="/dashboard/integrations"
+        href={brandPath('integrations')}
         className="mt-1 inline-flex h-9 items-center rounded-md px-4 text-[13px] font-semibold text-white"
         style={{ background: '#e04a3d' }}
       >

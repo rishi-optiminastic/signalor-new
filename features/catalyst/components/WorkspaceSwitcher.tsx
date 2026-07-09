@@ -2,6 +2,7 @@
 
 import { Building2, Check, ChevronsUpDown, Plus } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 
 import { useActiveProject } from '@/hooks/useActiveProject'
@@ -109,6 +110,7 @@ const EMPTY_PROJECT: Project = { id: 0, name: 'No project', url: 'Create a brand
 
 export function WorkspaceSwitcher({ collapsed }: { collapsed?: boolean }): JSX.Element {
   const { projects, activeOrg, select } = useActiveProject()
+  const router = useRouter()
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
@@ -128,6 +130,8 @@ export function WorkspaceSwitcher({ collapsed }: { collapsed?: boolean }): JSX.E
   const choose = (id: number): void => {
     select(id)
     setOpen(false)
+    const org = projects.find(p => p.id === id)
+    if (org?.slug) router.push(`/dashboard/${org.slug}`)
   }
 
   if (collapsed) {

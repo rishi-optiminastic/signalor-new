@@ -1,3 +1,4 @@
+import { AnnouncementBar } from '@/features/landing/components/AnnouncementBar'
 import { Sparkle } from '@/features/landing/components/Sparkle'
 
 function SparkleBadge(): JSX.Element {
@@ -11,6 +12,7 @@ function SparkleBadge(): JSX.Element {
 export function Hero(): JSX.Element {
   return (
     <section className="mx-auto flex min-h-[calc(100svh-100px)] max-w-4xl flex-col items-center justify-center px-6 pb-16 text-center">
+      <AnnouncementBar />
       <h1 className="text-[38px] leading-[1.06] font-semibold tracking-tight text-[#141414] sm:text-[58px]">
         The{' '}
         <span className="text-[#e04a3d] underline decoration-[#e04a3d]/45 decoration-dotted decoration-2 underline-offset-[10px]">

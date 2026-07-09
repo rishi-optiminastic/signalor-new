@@ -139,8 +139,17 @@
 /* Warm orange column glowing on a soft grey field. */
 .hero-aurora {
   background:
-    radial-gradient(36% 58% at 45% 46%, rgba(226, 146, 76, 0.95) 0%, rgba(226, 146, 76, 0) 70%),
-    radial-gradient(30% 40% at 56% 84%, rgba(226, 146, 76, 0.6) 0%, rgba(226, 146, 76, 0) 72%),
+    /* warm yellow → peach fade from the very top (kept alongside the peach bloom) */
+    linear-gradient(
+      180deg,
+      rgba(244, 219, 104, 0.98) 0%,
+      rgba(243, 214, 112, 0.95) 16%,
+      rgba(238, 192, 132, 0.7) 34%,
+      rgba(232, 173, 130, 0.38) 54%,
+      rgba(232, 173, 130, 0) 78%
+    ),
+    radial-gradient(36% 58% at 45% 46%, rgba(226, 146, 76, 0.85) 0%, rgba(226, 146, 76, 0) 70%),
+    radial-gradient(30% 40% at 56% 84%, rgba(226, 146, 76, 0.55) 0%, rgba(226, 146, 76, 0) 72%),
     linear-gradient(
       90deg,
       #f3f2f0 0%,

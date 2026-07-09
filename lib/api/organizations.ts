@@ -5,6 +5,8 @@ import { apiDelete, apiGet, apiPost } from './client'
 const organizationSchema = z.object({
   id: z.number(),
   name: z.string(),
+  // Unguessable public slug used in the dashboard URL (/dashboard/<slug>).
+  slug: z.string().optional().default(''),
   url: z.string(),
   owner_email: z.string(),
   created_at: z.string(),

@@ -1,4 +1,3 @@
-import { AnnouncementBar } from '@/features/landing/components/AnnouncementBar'
 import { Hero } from '@/features/landing/components/Hero'
 import { LandingNav } from '@/features/landing/components/LandingNav'
 
@@ -53,7 +52,6 @@ export default function HomePage(): JSX.Element {
         <div className="hero-aurora pointer-events-none absolute inset-0 opacity-60" />
         <div className="hero-grain pointer-events-none absolute inset-0" />
         <div className="relative z-10">
-          <AnnouncementBar />
           <LandingNav />
           <Hero />
         </div>
