@@ -39,6 +39,7 @@ An opinionated, production-ready Next.js 14 (App Router) template wired for ship
 
 - **pino** + **pino-pretty** structured logger (`lib/logger.ts`) — never `console.log`
 - `createLogger(module)` factory for per-module child loggers
+- deploy
 
 ### Code quality
 
