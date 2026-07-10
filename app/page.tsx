@@ -1,16 +1,15 @@
 import { AnnouncementBar } from '@/features/landing/components/AnnouncementBar'
+import { Faq } from '@/features/landing/components/Faq'
+import { FeaturesGrid } from '@/features/landing/components/FeaturesGrid'
+import { Footer } from '@/features/landing/components/Footer'
 import { Hero } from '@/features/landing/components/Hero'
+import { HowItWorks } from '@/features/landing/components/HowItWorks'
+import { IntegrationsStrip } from '@/features/landing/components/IntegrationsStrip'
 import { LandingNav } from '@/features/landing/components/LandingNav'
-
-import { LandingFaq } from '@fe/components/landing/landing-faq'
-import { LandingFeaturesGrid } from '@fe/components/landing/landing-features-grid'
-import { LandingFooter } from '@fe/components/landing/landing-footer'
-import { LandingHowItWorks } from '@fe/components/landing/landing-how-it-works'
-import { LandingIntegrationsStrip } from '@fe/components/landing/landing-integrations-strip'
-import { LandingNewsletter } from '@fe/components/landing/landing-newsletter'
-import { LandingPricingTeaser } from '@fe/components/landing/landing-pricing-teaser'
-import { LandingTestimonials } from '@fe/components/landing/landing-testimonials'
-import { LandingWhySignalor } from '@fe/components/landing/landing-why-signalor'
+import { Newsletter } from '@/features/landing/components/Newsletter'
+import { PricingTeaser } from '@/features/landing/components/PricingTeaser'
+import { Testimonials } from '@/features/landing/components/Testimonials'
+import { WhySignalor } from '@/features/landing/components/WhySignalor'
 
 const HOMEPAGE_FAQ = [
   {
@@ -60,15 +59,15 @@ export default function HomePage(): JSX.Element {
       </div>
 
       {/* the rest of the landing — ranking-fe sections */}
-      <LandingHowItWorks />
-      <LandingFeaturesGrid />
-      <LandingTestimonials />
-      <LandingWhySignalor />
-      <LandingIntegrationsStrip />
-      <LandingPricingTeaser />
-      <LandingFaq items={HOMEPAGE_FAQ} />
-      <LandingNewsletter />
-      <LandingFooter />
+      <HowItWorks />
+      <FeaturesGrid />
+      <Testimonials />
+      <WhySignalor />
+      <IntegrationsStrip />
+      <PricingTeaser />
+      <Faq items={HOMEPAGE_FAQ} />
+      <Newsletter />
+      <Footer />
     </div>
   )
 }

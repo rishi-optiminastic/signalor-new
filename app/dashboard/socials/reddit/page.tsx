@@ -1,10 +1,10 @@
 import { CatalystShell } from '@/features/catalyst/components/CatalystShell'
-import { RedditRoadmapView } from '@/features/catalyst/components/socials/RedditRoadmapView'
+import { RedditView } from '@/features/catalyst/components/socials/RedditView'
 
 export default function RedditPage(): JSX.Element {
   return (
     <CatalystShell>
-      <RedditRoadmapView />
+      <RedditView />
     </CatalystShell>
   )
 }

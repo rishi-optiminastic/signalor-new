@@ -9,9 +9,11 @@ import {
 } from '@tanstack/react-query'
 
 import {
+  autoPublishAll,
   getBacklinkSchedule,
   getOurBacklinks,
   setBacklinkSchedule,
+  type AutoPublishAllResult,
   type BacklinkSchedule,
   type OurBacklinks,
 } from '@/lib/api/backlinks'
@@ -44,6 +46,22 @@ export function useToggleSchedule(
     mutationFn: (isActive: boolean) => setBacklinkSchedule(slug as string, isActive),
     onSuccess: next => {
       qc.setQueryData(queryKeys.backlinks.schedule(slug ?? ''), next)
+    },
+  })
+}
+
+/**
+ * Generate + publish one blog to each of the five satellite sites right now,
+ * then refresh the published list so the new backlinks appear.
+ */
+export function useAutoPublishAll(
+  slug: string | null,
+): UseMutationResult<AutoPublishAllResult, Error, void> {
+  const qc = useQueryClient()
+  return useMutation<AutoPublishAllResult, Error, void>({
+    mutationFn: () => autoPublishAll(slug as string),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: queryKeys.backlinks.auto(slug ?? '') })
     },
   })
 }

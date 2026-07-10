@@ -6,13 +6,14 @@ import {
   LayoutGrid,
   Link2,
   ListChecks,
-  MessageCircle,
   PenLine,
   Search,
   Store,
   Users,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
+
+import { RedditIcon } from '@/features/catalyst/components/RedditIcon'
 
 /* ------------------------------------------------------------------ tokens */
 /* Brand pulled from the auth (sign-in / sign-up) theme: --primary #e04a3d,
@@ -86,7 +87,7 @@ export const OPTIMIZATION_NAV: NavEntry[] = [
 ]
 
 export const SOCIALS_NAV: NavEntry[] = [
-  { icon: MessageCircle, label: 'Reddit', href: '/dashboard/socials/reddit' },
+  { icon: RedditIcon, label: 'Reddit', href: '/dashboard/socials/reddit' },
 ]
 
 export const SALES_LINE: number[] = [
