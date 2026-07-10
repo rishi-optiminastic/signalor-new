@@ -19,10 +19,10 @@ import {
   Target,
   TrendingUp,
   Check,
-} from '@fe/components/icons'
-import { LandingFaq } from '@fe/components/landing/landing-faq'
-import { JsonLd } from '@fe/components/seo/json-ld'
-import { RelatedLinks } from '@fe/components/seo/related-links'
+} from '@legacy/components/icons'
+import { LandingFaq } from '@legacy/components/landing/landing-faq'
+import { JsonLd } from '@legacy/components/seo/json-ld'
+import { RelatedLinks } from '@legacy/components/seo/related-links'
 import {
   SolutionsBenefitsList,
   SolutionsBottomCTA,
@@ -35,7 +35,7 @@ import {
   type SolutionsBenefit,
   type SolutionsFeature,
   type SolutionsStep,
-} from '@fe/components/solutions/solutions-shared'
+} from '@legacy/components/solutions/solutions-shared'
 import {
   AGGREGATE_RATING,
   SITE_BRAND,
@@ -46,7 +46,7 @@ import {
   faqJsonLd,
   organizationJsonLd,
   websiteJsonLd,
-} from '@fe/lib/seo'
+} from '@legacy/lib/seo'
 
 const PATH = '/solutions/visibility'
 

@@ -4,18 +4,18 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 
-import { CheckCircle2, Loader2 } from '@fe/components/icons'
-import { startAnalysis } from '@fe/lib/api/analyzer'
-import { getSubscriptionStatus } from '@fe/lib/api/payments'
-import { useSession } from '@fe/lib/auth-client'
-import { routes } from '@fe/lib/config'
+import { CheckCircle2, Loader2 } from '@legacy/components/icons'
+import { startAnalysis } from '@legacy/lib/api/analyzer'
+import { getSubscriptionStatus } from '@legacy/lib/api/payments'
+import { useSession } from '@legacy/lib/auth-client'
+import { routes } from '@legacy/lib/config'
 import {
   ONBOARDING_DRAFT_KEY,
   POST_CHECKOUT_REDIRECT_KEY,
   clearPendingAnalysisAfterPayment,
   readPendingAnalysisAfterPayment,
   safeInternalReturnPath,
-} from '@fe/lib/internal-nav'
+} from '@legacy/lib/internal-nav'
 
 /** Read and remove post-checkout redirect (same as before, exported for reuse). */
 function consumePostCheckoutPath(): string {

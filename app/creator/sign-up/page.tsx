@@ -2,7 +2,7 @@ import { Suspense } from 'react'
 
 import { MarketingShell } from '@/features/landing/components/MarketingShell'
 
-import { CreatorAuthCard } from '@fe/components/creator/creator-auth-card'
+import { CreatorAuthCard } from '@legacy/components/creator/creator-auth-card'
 
 export const metadata = {
   title: 'Sign up — Signalor Creators',

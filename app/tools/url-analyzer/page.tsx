@@ -2,9 +2,9 @@
 
 import { MarketingShell } from '@/features/landing/components/MarketingShell'
 
-import { RelatedLinks } from '@fe/components/seo/related-links'
-import { ToolPage } from '@fe/components/tools/tool-page'
-import { UrlAnalyzerToolInline } from '@fe/components/tools/url-analyzer-inline'
+import { RelatedLinks } from '@legacy/components/seo/related-links'
+import { ToolPage } from '@legacy/components/tools/tool-page'
+import { UrlAnalyzerToolInline } from '@legacy/components/tools/url-analyzer-inline'
 
 export default function UrlAnalyzerToolPage() {
   return (

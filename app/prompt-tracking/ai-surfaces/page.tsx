@@ -2,16 +2,16 @@ import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/features/landing/components/MarketingShell'
 
-import { LayoutGrid } from '@fe/components/icons'
-import { FeatureDetailHero } from '@fe/components/landing/feature-detail-hero'
-import { IntegrationDetailCta } from '@fe/components/landing/integration-detail-cta'
-import { LandingFaq } from '@fe/components/landing/landing-faq'
-import { JsonLd } from '@fe/components/seo/json-ld'
+import { LayoutGrid } from '@legacy/components/icons'
+import { FeatureDetailHero } from '@legacy/components/landing/feature-detail-hero'
+import { IntegrationDetailCta } from '@legacy/components/landing/integration-detail-cta'
+import { LandingFaq } from '@legacy/components/landing/landing-faq'
+import { JsonLd } from '@legacy/components/seo/json-ld'
 import {
   AI_SURFACES_PAGE,
   PROMPT_TRACKING_SURFACES_FAQ,
-} from '@fe/lib/landing-prompt-tracking-content'
-import { breadcrumbJsonLd, buildMetadata, faqJsonLd } from '@fe/lib/seo'
+} from '@legacy/lib/landing-prompt-tracking-content'
+import { breadcrumbJsonLd, buildMetadata, faqJsonLd } from '@legacy/lib/seo'
 
 export const metadata: Metadata = buildMetadata({
   title: 'AI surfaces, prompt tracking',

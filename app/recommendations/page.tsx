@@ -2,11 +2,11 @@
 
 import { MarketingShell } from '@/features/landing/components/MarketingShell'
 
-import { LandingFaq } from '@fe/components/landing/landing-faq'
-import { PromptTrackingFeaturesGrid } from '@fe/components/landing/prompt-tracking-features-grid'
-import { PromptTrackingHero } from '@fe/components/landing/prompt-tracking-hero'
-import { PromptTrackingWhySection } from '@fe/components/landing/prompt-tracking-why-section'
-import { RelatedLinks } from '@fe/components/seo/related-links'
+import { LandingFaq } from '@legacy/components/landing/landing-faq'
+import { PromptTrackingFeaturesGrid } from '@legacy/components/landing/prompt-tracking-features-grid'
+import { PromptTrackingHero } from '@legacy/components/landing/prompt-tracking-hero'
+import { PromptTrackingWhySection } from '@legacy/components/landing/prompt-tracking-why-section'
+import { RelatedLinks } from '@legacy/components/seo/related-links'
 import {
   INTEGRATIONS_CAPABILITY_ROWS,
   INTEGRATIONS_FAQ,
@@ -18,7 +18,7 @@ import {
   INTEGRATIONS_PILLAR_ROWS,
   INTEGRATIONS_PROOF_METRICS,
   INTEGRATIONS_WHY,
-} from '@fe/lib/landing-integrations-feature-content'
+} from '@legacy/lib/landing-integrations-feature-content'
 
 export default function IntegrationsFeaturePage() {
   return (

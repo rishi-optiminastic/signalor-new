@@ -2,9 +2,9 @@
 
 import { MarketingShell } from '@/features/landing/components/MarketingShell'
 
-import { RelatedLinks } from '@fe/components/seo/related-links'
-import { LlmsCheckInline } from '@fe/components/tools/llms-check-inline'
-import { ToolPage } from '@fe/components/tools/tool-page'
+import { RelatedLinks } from '@legacy/components/seo/related-links'
+import { LlmsCheckInline } from '@legacy/components/tools/llms-check-inline'
+import { ToolPage } from '@legacy/components/tools/tool-page'
 
 export default function LlmsCheckToolPage() {
   return (

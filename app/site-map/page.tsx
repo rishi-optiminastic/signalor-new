@@ -3,8 +3,8 @@ import Link from 'next/link'
 
 import { MarketingShell } from '@/features/landing/components/MarketingShell'
 
-import { JsonLd } from '@fe/components/seo/json-ld'
-import { breadcrumbJsonLd, buildMetadata } from '@fe/lib/seo'
+import { JsonLd } from '@legacy/components/seo/json-ld'
+import { breadcrumbJsonLd, buildMetadata } from '@legacy/lib/seo'
 
 export const metadata: Metadata = buildMetadata({
   title: 'Sitemap: All Signalor pages',

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import { buildMetadata } from '@fe/lib/seo'
+import { buildMetadata } from '@legacy/lib/seo'
 
 export const metadata: Metadata = buildMetadata({
   title: 'Signalor: Creator invite',

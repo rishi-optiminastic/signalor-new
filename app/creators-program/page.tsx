@@ -3,10 +3,10 @@ import Link from 'next/link'
 
 import { MarketingShell } from '@/features/landing/components/MarketingShell'
 
-import { ArrowRight, ChevronDown } from '@fe/components/icons'
-import { JsonLd } from '@fe/components/seo/json-ld'
-import { ScreenHR } from '@fe/components/ui/intersection-diamonds'
-import { breadcrumbJsonLd, buildMetadata } from '@fe/lib/seo'
+import { ArrowRight, ChevronDown } from '@legacy/components/icons'
+import { JsonLd } from '@legacy/components/seo/json-ld'
+import { ScreenHR } from '@legacy/components/ui/intersection-diamonds'
+import { breadcrumbJsonLd, buildMetadata } from '@legacy/lib/seo'
 
 export const metadata: Metadata = buildMetadata({
   title: 'Signalor Creators Program: Earn 20% on every referral',

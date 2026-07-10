@@ -23,10 +23,10 @@ const config = [
       '*.config.mjs',
       '*.config.js',
       '*.config.ts',
-      // Vendored ranking-fe mirror (used via the @fe/* alias) — it follows the
+      // Vendored ranking-fe mirror (used via the @legacy/* alias) — it follows the
       // old app's conventions, not this project's strict lint rules. Still
       // type-checked by tsc; just not linted here.
-      'fe/**',
+      'legacy/**',
       // Sanity Studio config/schemas (generated/tool-owned, default exports etc.)
       'sanity.cli.ts',
       'sanity/**',
@@ -78,7 +78,7 @@ const config = [
           groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
           pathGroups: [
             { pattern: '@/**', group: 'internal', position: 'before' },
-            { pattern: '@fe/**', group: 'internal', position: 'after' },
+            { pattern: '@legacy/**', group: 'internal', position: 'after' },
           ],
           pathGroupsExcludedImportTypes: ['builtin'],
           'newlines-between': 'always',
@@ -143,8 +143,8 @@ const config = [
     },
   },
 
-  // Ported marketing/tools pages import heavily from the @fe/* mirror; multi-line
-  // @fe imports trigger import/order false-positives ("empty line within group")
+  // Ported marketing/tools pages import heavily from the @legacy/* mirror; multi-line
+  // @legacy imports trigger import/order false-positives ("empty line within group")
   // that --fix can't resolve. Import ordering there is cosmetic — the core app
   // (features/**, lib/**, services/**) keeps strict import/order.
   {

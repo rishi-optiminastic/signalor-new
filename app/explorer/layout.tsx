@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 
-import { JsonLd } from '@fe/components/seo/json-ld'
-import { REPORTING_FAQ } from '@fe/lib/landing-reporting-content'
-import { breadcrumbJsonLd, buildMetadata, faqJsonLd, SITE_URL } from '@fe/lib/seo'
+import { JsonLd } from '@legacy/components/seo/json-ld'
+import { REPORTING_FAQ } from '@legacy/lib/landing-reporting-content'
+import { breadcrumbJsonLd, buildMetadata, faqJsonLd, SITE_URL } from '@legacy/lib/seo'
 
 export const metadata: Metadata = buildMetadata({
   title: 'GEO Explorer: AI Citation Analytics & Reporting',

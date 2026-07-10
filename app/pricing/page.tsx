@@ -6,17 +6,17 @@ import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 
 import { MarketingShell } from '@/features/landing/components/MarketingShell'
 
-import { track } from '@fe/amplitude'
-import { Check, Clock, Crown, Rocket, Zap } from '@fe/components/icons'
-import { LandingFaq } from '@fe/components/landing/landing-faq'
-import { AudienceToggle, type PricingAudience } from '@fe/components/pricing/audience-toggle'
-import { CurrencyToggle } from '@fe/components/pricing/currency-toggle'
-import { PricingHero } from '@fe/components/pricing/pricing-hero'
-import { PricingStatsSection } from '@fe/components/pricing/pricing-stats-section'
-import { ScreenHR } from '@fe/components/ui/intersection-diamonds'
-import { SignalorLoader } from '@fe/components/ui/signalor-loader'
-import { setAccountType as persistAccountType } from '@fe/lib/api/account'
-import { pingCheckoutStarted, pingPricingViewed } from '@fe/lib/api/drip'
+import { track } from '@legacy/amplitude'
+import { Check, Clock, Crown, Rocket, Zap } from '@legacy/components/icons'
+import { LandingFaq } from '@legacy/components/landing/landing-faq'
+import { AudienceToggle, type PricingAudience } from '@legacy/components/pricing/audience-toggle'
+import { CurrencyToggle } from '@legacy/components/pricing/currency-toggle'
+import { PricingHero } from '@legacy/components/pricing/pricing-hero'
+import { PricingStatsSection } from '@legacy/components/pricing/pricing-stats-section'
+import { ScreenHR } from '@legacy/components/ui/intersection-diamonds'
+import { SignalorLoader } from '@legacy/components/ui/signalor-loader'
+import { setAccountType as persistAccountType } from '@legacy/lib/api/account'
+import { pingCheckoutStarted, pingPricingViewed } from '@legacy/lib/api/drip'
 import {
   CheckoutSessionError,
   createCheckoutSession,
@@ -24,14 +24,14 @@ import {
   getSubscriptionStatus,
   type DodoMode,
   type DodoPlanPrice,
-} from '@fe/lib/api/payments'
-import { useSession } from '@fe/lib/auth-client'
-import { routes } from '@fe/lib/config'
-import { useCurrency, formatPrice } from '@fe/lib/hooks/use-currency'
-import { POST_CHECKOUT_REDIRECT_KEY, safeInternalReturnPath } from '@fe/lib/internal-nav'
-import { PRICING_FAQ_ITEMS } from '@fe/lib/pricing-marketing-content'
-import { useOrgStore } from '@fe/lib/stores/org-store'
-import { cn } from '@fe/lib/utils'
+} from '@legacy/lib/api/payments'
+import { useSession } from '@legacy/lib/auth-client'
+import { routes } from '@legacy/lib/config'
+import { useCurrency, formatPrice } from '@legacy/lib/hooks/use-currency'
+import { POST_CHECKOUT_REDIRECT_KEY, safeInternalReturnPath } from '@legacy/lib/internal-nav'
+import { PRICING_FAQ_ITEMS } from '@legacy/lib/pricing-marketing-content'
+import { useOrgStore } from '@legacy/lib/stores/org-store'
+import { cn } from '@legacy/lib/utils'
 
 const CURRENCY_SYMBOLS: Record<string, string> = {
   USD: '$',

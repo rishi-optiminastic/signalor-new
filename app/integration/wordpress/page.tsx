@@ -2,16 +2,16 @@ import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/features/landing/components/MarketingShell'
 
-import { IntegrationDetailCta } from '@fe/components/landing/integration-detail-cta'
-import { IntegrationPlatformHero } from '@fe/components/landing/integration-platform-hero'
-import { LandingFaq } from '@fe/components/landing/landing-faq'
-import { JsonLd } from '@fe/components/seo/json-ld'
-import { RelatedLinks } from '@fe/components/seo/related-links'
+import { IntegrationDetailCta } from '@legacy/components/landing/integration-detail-cta'
+import { IntegrationPlatformHero } from '@legacy/components/landing/integration-platform-hero'
+import { LandingFaq } from '@legacy/components/landing/landing-faq'
+import { JsonLd } from '@legacy/components/seo/json-ld'
+import { RelatedLinks } from '@legacy/components/seo/related-links'
 import {
   INTEGRATION_DETAIL_FAQ,
   WORDPRESS_INTEGRATION_PAGE,
-} from '@fe/lib/landing-integration-content'
-import { AGGREGATE_RATING, breadcrumbJsonLd, buildMetadata, faqJsonLd, SITE_URL } from '@fe/lib/seo'
+} from '@legacy/lib/landing-integration-content'
+import { AGGREGATE_RATING, breadcrumbJsonLd, buildMetadata, faqJsonLd, SITE_URL } from '@legacy/lib/seo'
 
 export const metadata: Metadata = buildMetadata({
   title: 'WordPress plugin, GEO scoring & schema fixes',

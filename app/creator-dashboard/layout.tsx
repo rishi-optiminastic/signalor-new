@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import { buildMetadata } from '@fe/lib/seo'
+import { buildMetadata } from '@legacy/lib/seo'
 
 import { CreatorDashboardShell } from './_components/creator-dashboard-shell'
 

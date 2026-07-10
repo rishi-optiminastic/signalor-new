@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 
 import config from '@/sanity.config'
 
-import { sanityConfigured, sanityConfigError } from '@fe/sanity/env'
+import { sanityConfigured, sanityConfigError } from '@legacy/sanity/env'
 
 // Sanity Studio (and its deps) touch `window` at module evaluation, which
 // crashes Next.js' default SSR pass for Client Components. Loading it via

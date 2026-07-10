@@ -2,14 +2,14 @@ import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/features/landing/components/MarketingShell'
 
-import { LandingFaq } from '@fe/components/landing/landing-faq'
-import { PromptTrackingFeaturesGrid } from '@fe/components/landing/prompt-tracking-features-grid'
-import { PromptTrackingHero } from '@fe/components/landing/prompt-tracking-hero'
-import { PromptTrackingWhySection } from '@fe/components/landing/prompt-tracking-why-section'
-import { JsonLd } from '@fe/components/seo/json-ld'
-import { RelatedLinks } from '@fe/components/seo/related-links'
-import { PROMPT_TRACKING_HUB_FAQ } from '@fe/lib/landing-prompt-tracking-content'
-import { breadcrumbJsonLd, buildMetadata, faqJsonLd, SITE_URL } from '@fe/lib/seo'
+import { LandingFaq } from '@legacy/components/landing/landing-faq'
+import { PromptTrackingFeaturesGrid } from '@legacy/components/landing/prompt-tracking-features-grid'
+import { PromptTrackingHero } from '@legacy/components/landing/prompt-tracking-hero'
+import { PromptTrackingWhySection } from '@legacy/components/landing/prompt-tracking-why-section'
+import { JsonLd } from '@legacy/components/seo/json-ld'
+import { RelatedLinks } from '@legacy/components/seo/related-links'
+import { PROMPT_TRACKING_HUB_FAQ } from '@legacy/lib/landing-prompt-tracking-content'
+import { breadcrumbJsonLd, buildMetadata, faqJsonLd, SITE_URL } from '@legacy/lib/seo'
 
 export const metadata: Metadata = buildMetadata({
   title: 'AI Prompt Monitoring: Track Brand Mentions in ChatGPT & Gemini',

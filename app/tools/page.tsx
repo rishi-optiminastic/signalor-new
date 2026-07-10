@@ -10,9 +10,9 @@ import {
   BarChart3,
   ListChecks,
   Radar,
-} from '@fe/components/icons'
-import { ScreenHR } from '@fe/components/ui/intersection-diamonds'
-import { buildMetadata } from '@fe/lib/seo'
+} from '@legacy/components/icons'
+import { ScreenHR } from '@legacy/components/ui/intersection-diamonds'
+import { buildMetadata } from '@legacy/lib/seo'
 
 export const metadata = buildMetadata({
   title: 'Free GEO & AI Visibility Tools',

@@ -3,22 +3,22 @@
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useState, type FormEvent } from 'react'
 
-import { AppSidebar } from '@fe/components/navigation/app-sidebar'
-import { SettingsNav } from '@fe/components/settings/settings-nav'
-import { Button } from '@fe/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@fe/components/ui/card'
-import { Input } from '@fe/components/ui/input'
-import { getOrFetchOnboardingToken } from '@fe/lib/api/onboarding-security'
+import { AppSidebar } from '@legacy/components/navigation/app-sidebar'
+import { SettingsNav } from '@legacy/components/settings/settings-nav'
+import { Button } from '@legacy/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@legacy/components/ui/card'
+import { Input } from '@legacy/components/ui/input'
+import { getOrFetchOnboardingToken } from '@legacy/lib/api/onboarding-security'
 import {
   createOrganization,
   deleteOrganization,
   getOrganizations,
   updateOrganization,
   type Organization,
-} from '@fe/lib/api/organizations'
-import { signOut, useSession } from '@fe/lib/auth-client'
-import { routes } from '@fe/lib/config'
-import { useOrgStore } from '@fe/lib/stores/org-store'
+} from '@legacy/lib/api/organizations'
+import { signOut, useSession } from '@legacy/lib/auth-client'
+import { routes } from '@legacy/lib/config'
+import { useOrgStore } from '@legacy/lib/stores/org-store'
 
 export default function AccountSettingsPage() {
   const router = useRouter()

@@ -4,21 +4,21 @@ import { notFound } from 'next/navigation'
 
 import { MarketingShell } from '@/features/landing/components/MarketingShell'
 
-import { ArrowLeft, ArrowRight, Clock } from '@fe/components/icons'
-import { HeroBackgroundGrid } from '@fe/components/landing/hero-background-grid'
-import { JsonLd } from '@fe/components/seo/json-ld'
-import { ScreenHR } from '@fe/components/ui/intersection-diamonds'
-import type { BlogPost } from '@fe/lib/landing-blog-content'
-import { buildMetadata, breadcrumbJsonLd, articleJsonLd, SITE_URL } from '@fe/lib/seo'
-import { cn } from '@fe/lib/utils'
-import { client } from '@fe/sanity/lib/client'
+import { ArrowLeft, ArrowRight, Clock } from '@legacy/components/icons'
+import { HeroBackgroundGrid } from '@legacy/components/landing/hero-background-grid'
+import { JsonLd } from '@legacy/components/seo/json-ld'
+import { ScreenHR } from '@legacy/components/ui/intersection-diamonds'
+import type { BlogPost } from '@legacy/lib/landing-blog-content'
+import { buildMetadata, breadcrumbJsonLd, articleJsonLd, SITE_URL } from '@legacy/lib/seo'
+import { cn } from '@legacy/lib/utils'
+import { client } from '@legacy/sanity/lib/client'
 import {
   POST_BY_SLUG_QUERY,
   ALL_POST_SLUGS_QUERY,
   ALL_POSTS_NAV_QUERY,
   type SanityBlogPost,
   type AdjacentPost,
-} from '@fe/sanity/lib/queries'
+} from '@legacy/sanity/lib/queries'
 
 export const revalidate = 60
 

@@ -9,9 +9,9 @@ import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 
 // Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
-import {apiVersion, dataset, projectId} from './fe/sanity/env'
-import {schema} from './fe/sanity/schemaTypes'
-import {structure} from './fe/sanity/structure'
+import {apiVersion, dataset, projectId} from './legacy/sanity/env'
+import {schema} from './legacy/sanity/schemaTypes'
+import {structure} from './legacy/sanity/structure'
 
 export default defineConfig({
   basePath: '/studio',

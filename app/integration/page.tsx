@@ -2,13 +2,13 @@ import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/features/landing/components/MarketingShell'
 
-import { IntegrationHero } from '@fe/components/landing/integration-hero'
-import { IntegrationMidSection } from '@fe/components/landing/integration-mid-section'
-import { LandingFaq } from '@fe/components/landing/landing-faq'
-import { JsonLd } from '@fe/components/seo/json-ld'
-import { RelatedLinks } from '@fe/components/seo/related-links'
-import { INTEGRATION_HUB_FAQ } from '@fe/lib/landing-integration-content'
-import { breadcrumbJsonLd, buildMetadata, faqJsonLd } from '@fe/lib/seo'
+import { IntegrationHero } from '@legacy/components/landing/integration-hero'
+import { IntegrationMidSection } from '@legacy/components/landing/integration-mid-section'
+import { LandingFaq } from '@legacy/components/landing/landing-faq'
+import { JsonLd } from '@legacy/components/seo/json-ld'
+import { RelatedLinks } from '@legacy/components/seo/related-links'
+import { INTEGRATION_HUB_FAQ } from '@legacy/lib/landing-integration-content'
+import { breadcrumbJsonLd, buildMetadata, faqJsonLd } from '@legacy/lib/seo'
 
 export const metadata: Metadata = buildMetadata({
   title: 'Integrations, Shopify & WordPress',
