@@ -56,6 +56,19 @@ const nextConfig = {
       },
     ]
   },
+  // Canonical domain: send all www traffic to the apex so Better Auth (which
+  // only trusts https://signalor.ai) sees a matching Origin. Runs before
+  // middleware, so auth gating still works on the apex host.
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.signalor.ai' }],
+        destination: 'https://signalor.ai/:path*',
+        permanent: true,
+      },
+    ]
+  },
 }
 
 export default nextConfig

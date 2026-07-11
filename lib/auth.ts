@@ -12,6 +12,17 @@ const globalForPool = globalThis as unknown as { authPool: Pool | undefined }
 const pool = globalForPool.authPool ?? new Pool({ connectionString: env.DATABASE_URL })
 if (env.NODE_ENV !== 'production') globalForPool.authPool = pool
 
+// Better Auth runs its CSRF origin check whenever a request carries cookies
+// (i.e. every real browser call) and compares the request Origin against this
+// list with an exact string match. A trailing slash or a www/apex difference
+// therefore fails as INVALID_ORIGIN. Normalise to the bare origin (scheme +
+// host + port, no trailing slash) and trust both the apex and www hosts.
+function buildTrustedOrigins(appUrl: string): string[] {
+  const { protocol, host } = new URL(appUrl)
+  const bareHost = host.replace(/^www\./, '')
+  return [`${protocol}//${bareHost}`, `${protocol}//www.${bareHost}`]
+}
+
 // Google OAuth is wired only when both credentials are present, so the app
 // still boots (and email/password still works) without them configured.
 const socialProviders =
@@ -73,7 +84,7 @@ export const auth = betterAuth({
       maxAge: 5 * 60, // 5 minutes
     },
   },
-  trustedOrigins: [env.NEXT_PUBLIC_APP_URL],
+  trustedOrigins: buildTrustedOrigins(env.NEXT_PUBLIC_APP_URL),
 })
 
 export type Session = typeof auth.$Infer.Session
