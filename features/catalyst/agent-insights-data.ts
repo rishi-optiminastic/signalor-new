@@ -16,46 +16,6 @@ export interface AllocItem {
   color: string
 }
 
-/** Visibility score line — how often the brand appears in AI answers over ~2 weeks. */
-export const VISIBILITY_SCORE = {
-  value: '68.4%',
-  series: [42, 45, 43, 48, 46, 51, 49, 54, 52, 58, 56, 61, 60, 64, 63, 68],
-  axis: ['Feb 12', 'Feb 13', 'Feb 14', 'Feb 15', 'Feb 16', 'Feb 17', 'Feb 18'],
-}
-
-export const VISIBILITY_RANK: RankRow[] = [
-  { name: 'Signalor', value: '72.1%', color: BRAND, owned: true },
-  { name: 'Peec AI', value: '68.4%', color: PURPLE },
-  { name: 'Otterly', value: '63.2%', color: TEAL },
-  { name: 'Profound', value: '59.8%', color: BLUE },
-  { name: 'Semrush', value: '55.5%', color: YELLOW },
-  { name: 'Ahrefs', value: '52.9%', color: NEG },
-  { name: 'Writesonic', value: '48.3%', color: GRAY },
-]
-
-export const SHARE_OF_VOICE = {
-  headline: '34%',
-  delta: '+1.2%',
-  positive: true,
-  items: [
-    { name: 'Signalor', pct: 34, color: BRAND },
-    { name: 'Peec AI', pct: 22, color: PURPLE },
-    { name: 'Otterly', pct: 16, color: TEAL },
-    { name: 'Profound', pct: 12, color: BLUE },
-    { name: 'Semrush', pct: 9, color: YELLOW },
-    { name: 'Others', pct: 7, color: GRAY },
-  ] as AllocItem[],
-}
-
-export const SHARE_OF_VOICE_RANK: RankRow[] = [
-  { name: 'Signalor', value: '34%', color: BRAND, owned: true },
-  { name: 'Peec AI', value: '22%', color: PURPLE },
-  { name: 'Otterly', value: '16%', color: TEAL },
-  { name: 'Profound', value: '12%', color: BLUE },
-  { name: 'Semrush', value: '9%', color: YELLOW },
-  { name: 'Others', value: '7%', color: GRAY },
-]
-
 export const PLATFORMS: AllocItem[] = [
   { name: 'ChatGPT', pct: 62, color: BRAND },
   { name: 'Perplexity', pct: 18, color: TEAL },
@@ -76,15 +36,6 @@ export const SENTIMENT: AllocItem[] = [
   { name: 'Positive', pct: 68, color: GREEN },
   { name: 'Neutral', pct: 24, color: GRAY },
   { name: 'Negative', pct: 8, color: NEG },
-]
-
-export const PROMPTS_RANK: RankRow[] = [
-  { name: '“best AI visibility tools”', value: '74%', color: BRAND },
-  { name: '“how to rank in ChatGPT”', value: '66%', color: PURPLE },
-  { name: '“GEO vs SEO”', value: '61%', color: TEAL },
-  { name: '“track brand in Perplexity”', value: '58%', color: BLUE },
-  { name: '“AI search optimization”', value: '52%', color: YELLOW },
-  { name: '“LLM citation tracking”', value: '47%', color: GRAY },
 ]
 
 export const REGIONS_RANK: RankRow[] = [
@@ -114,14 +65,6 @@ export const CITATIONS_RANK: RankRow[] = [
   { name: 'indiehackers.com', value: '41', color: GRAY },
 ]
 
-export const INSIGHT_TABS = [
-  'Visibility',
-  'Prompts',
-  'Platforms',
-  'Regions',
-  'Personas',
-  'Sentiment',
-  'Citations',
-] as const
+export const INSIGHT_TABS = ['Platforms', 'Regions', 'Personas', 'Sentiment', 'Citations'] as const
 
 export type InsightTab = (typeof INSIGHT_TABS)[number]

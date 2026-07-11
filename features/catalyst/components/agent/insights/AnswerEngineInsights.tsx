@@ -8,29 +8,18 @@ import {
   PERSONAS_RANK,
   PLATFORMS,
   PLATFORMS_RANK,
-  PROMPTS_RANK,
   REGIONS_RANK,
   SENTIMENT,
-  SHARE_OF_VOICE,
-  SHARE_OF_VOICE_RANK,
-  VISIBILITY_RANK,
 } from '@/features/catalyst/agent-insights-data'
 import type { InsightTab, RankRow } from '@/features/catalyst/agent-insights-data'
 import { AllocationBlock } from '@/features/catalyst/components/agent/insights/AllocationBlock'
 import { InsightCard } from '@/features/catalyst/components/agent/insights/InsightCard'
 import { RankTable } from '@/features/catalyst/components/agent/insights/RankTable'
-import { VisibilityScoreCard } from '@/features/catalyst/components/agent/insights/VisibilityScoreCard'
 
 const RANK_TABS: Record<
   string,
   { rows: RankRow[]; nameHeader: string; valueHeader: string; caption: string }
 > = {
-  Prompts: {
-    rows: PROMPTS_RANK,
-    nameHeader: 'Prompt',
-    valueHeader: 'Visibility',
-    caption: 'Prompts where you show up most',
-  },
   Regions: {
     rows: REGIONS_RANK,
     nameHeader: 'Region',
@@ -59,39 +48,7 @@ function ExpandButton(): JSX.Element {
   )
 }
 
-function VisibilityTab(): JSX.Element {
-  return (
-    <div className="grid gap-3 lg:grid-cols-2">
-      <VisibilityScoreCard />
-      <InsightCard
-        title="Visibility score rank"
-        subtitle="14 brands tracked"
-        right={<ExpandButton />}
-      >
-        <RankTable rows={VISIBILITY_RANK} nameHeader="Brand" valueHeader="Score" />
-      </InsightCard>
-      <InsightCard title="Share of voice" subtitle="Your mentions vs competitors in AI answers">
-        <AllocationBlock
-          items={SHARE_OF_VOICE.items}
-          headline={SHARE_OF_VOICE.headline}
-          delta={SHARE_OF_VOICE.delta}
-          positive={SHARE_OF_VOICE.positive}
-          note="last 4 days"
-        />
-      </InsightCard>
-      <InsightCard
-        title="Share of voice rank"
-        subtitle="14 assets tracked"
-        right={<ExpandButton />}
-      >
-        <RankTable rows={SHARE_OF_VOICE_RANK} nameHeader="Asset" valueHeader="Share" />
-      </InsightCard>
-    </div>
-  )
-}
-
 function TabContent({ tab }: { tab: InsightTab }): JSX.Element {
-  if (tab === 'Visibility') return <VisibilityTab />
   if (tab === 'Platforms') {
     return (
       <div className="grid gap-3 lg:grid-cols-2">
@@ -147,7 +104,7 @@ function TabBar({
 }
 
 export function AnswerEngineInsights(): JSX.Element {
-  const [tab, setTab] = useState<InsightTab>('Visibility')
+  const [tab, setTab] = useState<InsightTab>('Platforms')
   return (
     <section>
       <div className="mb-2 flex items-center justify-between gap-2">
