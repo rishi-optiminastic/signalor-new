@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { MarketingShell } from '@/features/landing/components/MarketingShell'
 
 import { IntegrationDetailCta } from '@/features/site/components/landing/integration-detail-cta'
+import { IntegrationPlatformDetails } from '@/features/site/components/landing/integration-platform-details'
 import { IntegrationPlatformHero } from '@/features/site/components/landing/integration-platform-hero'
 import { LandingFaq } from '@/features/site/components/landing/landing-faq'
 import { JsonLd } from '@/features/site/components/seo/json-ld'
@@ -40,6 +41,7 @@ export default function ShopifyIntegrationPage() {
       />
       <JsonLd id="ld-shopify-faq" data={faqJsonLd([...INTEGRATION_DETAIL_FAQ])} />
       <IntegrationPlatformHero copy={SHOPIFY_INTEGRATION_PAGE} logoSrc="/logos/shopify.svg" />
+      <IntegrationPlatformDetails platform="shopify" title="Shopify" />
       <IntegrationDetailCta />
       <LandingFaq
         sectionId="shopify-integration-faq"

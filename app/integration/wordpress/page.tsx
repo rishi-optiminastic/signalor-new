@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { MarketingShell } from '@/features/landing/components/MarketingShell'
 
 import { IntegrationDetailCta } from '@/features/site/components/landing/integration-detail-cta'
+import { IntegrationPlatformDetails } from '@/features/site/components/landing/integration-platform-details'
 import { IntegrationPlatformHero } from '@/features/site/components/landing/integration-platform-hero'
 import { LandingFaq } from '@/features/site/components/landing/landing-faq'
 import { JsonLd } from '@/features/site/components/seo/json-ld'
@@ -11,7 +12,13 @@ import {
   INTEGRATION_DETAIL_FAQ,
   WORDPRESS_INTEGRATION_PAGE,
 } from '@/features/site/lib/landing-integration-content'
-import { AGGREGATE_RATING, breadcrumbJsonLd, buildMetadata, faqJsonLd, SITE_URL } from '@/features/site/lib/seo'
+import {
+  AGGREGATE_RATING,
+  breadcrumbJsonLd,
+  buildMetadata,
+  faqJsonLd,
+  SITE_URL,
+} from '@/features/site/lib/seo'
 
 export const metadata: Metadata = buildMetadata({
   title: 'WordPress plugin, GEO scoring & schema fixes',
@@ -55,6 +62,7 @@ export default function WordPressIntegrationPage() {
       <JsonLd id="ld-wordpress-plugin" data={wordpressPluginJsonLd} />
       <JsonLd id="ld-wordpress-faq" data={faqJsonLd([...INTEGRATION_DETAIL_FAQ])} />
       <IntegrationPlatformHero copy={WORDPRESS_INTEGRATION_PAGE} logoSrc="/logos/wordpress.svg" />
+      <IntegrationPlatformDetails platform="wordpress" title="WordPress" />
       <IntegrationDetailCta />
       <LandingFaq
         sectionId="wordpress-integration-faq"
