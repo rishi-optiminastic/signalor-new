@@ -3,6 +3,8 @@ import { Instrument_Serif } from 'next/font/google'
 import localFont from 'next/font/local'
 import type React from 'react'
 
+import { Analytics } from '@vercel/analytics/next'
+
 import { QueryProvider } from '@/components/providers/query-provider'
 import { JsonLd } from '@/features/site/components/seo/json-ld'
 import {
@@ -66,6 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }):
       </head>
       <body className="font-sans antialiased">
         <QueryProvider>{children}</QueryProvider>
+        <Analytics />
       </body>
     </html>
   )
