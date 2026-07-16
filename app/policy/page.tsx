@@ -185,8 +185,8 @@ export default function PrivacyPolicyPage() {
           <h2 className="text-base font-semibold">12. Contact</h2>
           <p className="mt-2">
             For privacy-related questions, requests, or complaints, contact us at{' '}
-            <a href="mailto:tech3@optiminastic.com" className="hover:text-foreground underline">
-              tech3@optiminastic.com
+            <a href="mailto:legal@optiminastic.com" className="hover:text-foreground underline">
+              legal@optiminastic.com
             </a>
             .
           </p>
