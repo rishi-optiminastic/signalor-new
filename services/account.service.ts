@@ -56,7 +56,7 @@ export interface AccountOverview {
 }
 
 export const SAMPLE_ACCOUNT: AccountOverview = {
-  user: { name: 'Rishi Sharma', email: 'tech1@optiminastic.com', accountType: 'agency' },
+  user: { name: 'Jane Doe', email: 'jane@example.com', accountType: 'agency' },
   plan: {
     key: 'pro',
     label: 'Pro',
