@@ -3,7 +3,7 @@ import type { ReactNode, SVGProps } from 'react'
 import type { TaskType } from '@/features/catalyst/tasks-data'
 
 /**
- * Hand-drawn glyphs for task types — no icon library. Follows the Signalor
+ * Hand-drawn glyphs for task types — no icon library. Follows the SignalorAI
  * icon family style: 24-grid, 2px round strokes on currentColor, one filled
  * accent dot where it reinforces meaning. Add a glyph here when a new
  * TaskType is added in tasks-data.ts.

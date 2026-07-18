@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 
 // Private workspace page - title only; noindex is inherited from the dashboard layout.
 export const metadata: Metadata = {
-  title: 'Brand Profile · Signalor',
+  title: 'Brand Profile · SignalorAI',
 }
 
 export default function BrandProfileLayout({ children }: { children: ReactNode }): JSX.Element {

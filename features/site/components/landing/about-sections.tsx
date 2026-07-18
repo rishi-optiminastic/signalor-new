@@ -4,7 +4,7 @@ import { GridCornerHandles, GridHandle } from '@/features/site/components/landin
 const ABOUT_STATS = [
   { value: '6', lead: 'AI engines tracked', rest: 'from ChatGPT to Google AI Overviews.' },
   { value: '6', lead: 'Scoring pillars', rest: 'behind every 0-100 GEO score.' },
-  { value: '5k+', lead: 'Websites optimizing', rest: 'their AI citations with Signalor.' },
+  { value: '5k+', lead: 'Websites optimizing', rest: 'their AI citations with SignalorAI.' },
   { value: '24h', lead: 'To first movement', rest: 'after your first shipped fix.' },
 ] as const
 
@@ -47,7 +47,7 @@ function AboutStats(): JSX.Element {
                 Built to make GEO measurable
               </h2>
               <p className="text-muted-foreground mt-4 max-w-sm text-base leading-relaxed text-pretty">
-                Signalor turns how AI talks about a brand into{' '}
+                SignalorAI turns how AI talks about a brand into{' '}
                 <strong className="text-foreground font-semibold">numbers a team can move</strong> -
                 scored, tracked, and tied to shipped fixes.
               </p>

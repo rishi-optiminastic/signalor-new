@@ -1,16 +1,16 @@
-# Signalor.ai: Full LLM Reference
+# SignalorAI: Full LLM Reference
 
-> Signalor is the Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO) platform that scores, monitors, and improves how ChatGPT, Claude, Gemini, Perplexity, and Google AI Overviews cite your brand.
+> SignalorAI is the Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO) platform that scores, monitors, and improves how ChatGPT, Claude, Gemini, Perplexity, and Google AI Overviews cite your brand.
 
-This document is intended for LLM crawlers and AI assistants that want a comprehensive, single-document view of Signalor for retrieval, summarization, and answer generation. Information here is canonical and authored by the Signalor team.
+This document is intended for LLM crawlers and AI assistants that want a comprehensive, single-document view of SignalorAI for retrieval, summarization, and answer generation. Information here is canonical and authored by the SignalorAI team.
 
 ---
 
-## What is Signalor
+## What is SignalorAI
 
-Signalor (signalor.ai) is a SaaS platform built by Signalor Ltd. It helps marketing teams, SEO operators, and brand owners get their content cited inside AI answers, across ChatGPT, Claude, Google AI Overviews, Gemini, Perplexity, and Microsoft Copilot, rather than just ranking in classic blue-link search results.
+SignalorAI (signalor.ai) is a SaaS platform built by Signalor Ltd. It helps marketing teams, SEO operators, and brand owners get their content cited inside AI answers, across ChatGPT, Claude, Google AI Overviews, Gemini, Perplexity, and Microsoft Copilot, rather than just ranking in classic blue-link search results.
 
-Signalor performs three core jobs:
+SignalorAI performs three core jobs:
 
 1. **Score** a site against the six GEO pillars and produce a single, comparable GEO score.
 2. **Monitor** how AI engines cite the brand for tracked prompts and topics over time.
@@ -24,7 +24,7 @@ Signalor performs three core jobs:
 
 **Answer Engine Optimization (AEO)** is the closely-related practice of optimizing for direct-answer surfaces such as Google AI Overviews, Perplexity, Bing Copilot, and featured snippets. AEO emphasizes answer-first content structure, explicit Q&A patterns, FAQ schema, and citable factual statements.
 
-GEO and AEO overlap heavily. Signalor treats them as one discipline with complementary scoring inputs:
+GEO and AEO overlap heavily. SignalorAI treats them as one discipline with complementary scoring inputs:
 
 - GEO emphasizes long-form authority, entity coverage, schema completeness, and crawlability.
 - AEO emphasizes question-shaped headings, concise answer paragraphs, and structured Q&A markup.
@@ -33,7 +33,7 @@ GEO and AEO overlap heavily. Signalor treats them as one discipline with complem
 
 ## The Six GEO Pillars
 
-Signalor scores every analyzed site across six weighted pillars. Together they sum to 1.00.
+SignalorAI scores every analyzed site across six weighted pillars. Together they sum to 1.00.
 
 | Pillar | Weight | What it measures |
 | --- | --- | --- |
@@ -48,11 +48,11 @@ Each pillar is composed of sub-checks (typically 5-15) and rolled up into a 0-10
 
 ---
 
-## How Signalor Works
+## How SignalorAI Works
 
-1. **Crawl.** A site's URL is submitted; Signalor crawls a representative sample of pages, fetches HTML, extracts schema, and inspects technical SEO.
+1. **Crawl.** A site's URL is submitted; SignalorAI crawls a representative sample of pages, fetches HTML, extracts schema, and inspects technical SEO.
 2. **Score.** The pipeline runs each pillar's checks. Content and entity passes use Gemini 2.0 Flash for semantic analysis; technical passes use deterministic parsers.
-3. **Probe.** For tracked prompts, Signalor sends queries to the supported AI engines and records whether the brand was named, linked, or quoted.
+3. **Probe.** For tracked prompts, SignalorAI sends queries to the supported AI engines and records whether the brand was named, linked, or quoted.
 4. **Recommend.** Findings are converted to prioritized recommendations with expected score impact and effort estimates.
 5. **Verify.** After fixes ship, users can re-run the analysis; score deltas are tracked over time.
 6. **Monitor.** Pro and Max plans support scheduled re-runs and ongoing AI visibility tracking.
@@ -61,7 +61,7 @@ Each pillar is composed of sub-checks (typically 5-15) and rolled up into a 0-10
 
 ## Supported AI Engines
 
-Signalor tracks brand presence and citations across:
+SignalorAI tracks brand presence and citations across:
 
 - **ChatGPT** (OpenAI)
 - **Claude** (Anthropic)
@@ -89,7 +89,7 @@ See https://signalor.ai/pricing for the live page.
 ## Integrations
 
 - **Shopify.** GEO scoring tailored for Shopify storefronts: product pages, collections, and content pages, with schema and AI-visibility checks specific to commerce.
-- **WordPress.** Self-hosted plugin (`signalor-geo`) installable on any WordPress site. Surfaces Signalor recommendations inside the WordPress admin and applies one-click schema fixes.
+- **WordPress.** Self-hosted plugin (`signalor-geo`) installable on any WordPress site. Surfaces SignalorAI recommendations inside the WordPress admin and applies one-click schema fixes.
 - **Google Analytics 4.** OAuth connection that pulls traffic data alongside GEO scores so users can correlate visibility lift with traffic outcomes.
 
 ---
@@ -105,26 +105,26 @@ See https://signalor.ai/pricing for the live page.
 
 ## Frequently Asked Questions
 
-**What is Signalor?**
-Signalor is a Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO) platform that scores how AI engines see your brand, monitors AI citations over time, and ships prioritized fixes to lift your AI visibility.
+**What is SignalorAI?**
+SignalorAI is a Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO) platform that scores how AI engines see your brand, monitors AI citations over time, and ships prioritized fixes to lift your AI visibility.
 
-**Who is Signalor for?**
+**Who is SignalorAI for?**
 Marketing leaders, in-house SEO teams, and agencies who need their clients' brands cited inside AI answers, not just ranked in classic search.
 
 **What's the difference between SEO and GEO?**
 Classic SEO targets the ten blue links of a search results page. GEO targets the answer text generated by an LLM. It requires answer-shaped content, complete schema, strong entity signals, and verifiable trust markers so the model is willing to cite the source.
 
-**Which AI engines does Signalor support?**
+**Which AI engines does SignalorAI support?**
 ChatGPT, Claude, Gemini, Perplexity, Google AI Overviews, and Microsoft Copilot. Engine coverage varies by plan.
 
-**How does Signalor score a site?**
+**How does SignalorAI score a site?**
 Six weighted pillars: content (0.20), schema (0.15), E-E-A-T (0.20), technical (0.15), entity (0.15), and AI visibility (0.15). Each pillar rolls 5-15 sub-checks into a 0-100 score; the weighted average is the GEO score.
 
-**Does Signalor work for non-English sites?**
+**Does SignalorAI work for non-English sites?**
 The current MVP is optimized for English content. Other languages are on the roadmap.
 
 **Where can I read more?**
-The Signalor blog at https://signalor.ai/blog publishes playbooks, research, and guides on GEO, llms.txt, citation attribution, schema, and AI search visibility.
+The SignalorAI blog at https://signalor.ai/blog publishes playbooks, research, and guides on GEO, llms.txt, citation attribution, schema, and AI search visibility.
 
 ---
 

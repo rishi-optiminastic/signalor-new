@@ -6,7 +6,7 @@ import { breadcrumbJsonLd, buildMetadata } from '@/features/site/lib/seo'
 export const metadata: Metadata = buildMetadata({
   title: 'Privacy policy',
   description:
-    'How Signalor handles user, account, and crawl data. Plain-English overview of what we collect, why, and your rights.',
+    'How SignalorAI handles user, account, and crawl data. Plain-English overview of what we collect, why, and your rights.',
   path: '/policy',
 })
 

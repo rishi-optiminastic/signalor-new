@@ -1,60 +1,60 @@
-"use client";
+'use client'
 
-import Image from "next/image";
-import { ScreenHR } from "@/features/site/components/ui/intersection-diamonds";
-import { cn } from "@/features/site/lib/utils";
+import Image from 'next/image'
+import { ScreenHR } from '@/features/site/components/ui/intersection-diamonds'
+import { cn } from '@/features/site/lib/utils'
 
 // Orbiting integration nodes laid out left → right across the rings.
 // `tier` controls size + opacity by distance from the centre node, so the
 // graphic fades toward the edges (Linear-style). The two Live integrations
 // (Shopify, WordPress) sit closest to the centre.
 type OrbitNode = {
-  name: string;
-  src: string;
-  tier: 1 | 2 | 3 | 4;
-};
+  name: string
+  src: string
+  tier: 1 | 2 | 3 | 4
+}
 
 const LEFT_NODES: OrbitNode[] = [
-  { name: "Framer", src: "/logos/framer.svg", tier: 4 },
-  { name: "Search Console", src: "/logos/search-console.svg", tier: 3 },
-  { name: "Google Analytics", src: "/logos/google-analytics.svg", tier: 2 },
-  { name: "WordPress", src: "/logos/wordpress.svg", tier: 1 },
-];
+  { name: 'Framer', src: '/logos/framer.svg', tier: 4 },
+  { name: 'Search Console', src: '/logos/search-console.svg', tier: 3 },
+  { name: 'Google Analytics', src: '/logos/google-analytics.svg', tier: 2 },
+  { name: 'WordPress', src: '/logos/wordpress.svg', tier: 1 },
+]
 
 const RIGHT_NODES: OrbitNode[] = [
-  { name: "Shopify", src: "/logos/shopify.svg", tier: 1 },
-  { name: "Slack", src: "/logos/slack.svg", tier: 2 },
-  { name: "Next.js", src: "/logos/nextjs.svg", tier: 3 },
-  { name: "Webflow", src: "/logos/webflow.svg", tier: 4 },
-];
+  { name: 'Shopify', src: '/logos/shopify.svg', tier: 1 },
+  { name: 'Slack', src: '/logos/slack.svg', tier: 2 },
+  { name: 'Next.js', src: '/logos/nextjs.svg', tier: 3 },
+  { name: 'Webflow', src: '/logos/webflow.svg', tier: 4 },
+]
 
-const TIER_STYLE: Record<OrbitNode["tier"], { box: number; icon: number; opacity: number }> = {
+const TIER_STYLE: Record<OrbitNode['tier'], { box: number; icon: number; opacity: number }> = {
   1: { box: 74, icon: 34, opacity: 1 },
   2: { box: 66, icon: 32, opacity: 0.78 },
   3: { box: 58, icon: 27, opacity: 0.5 },
   4: { box: 52, icon: 24, opacity: 0.28 },
-};
+}
 
 // Concentric orbit ring diameters (px).
-const RINGS = [150, 250, 360];
+const RINGS = [150, 250, 360]
 
 export function LandingIntegrationsStrip() {
   return (
     <section className="relative bg-transparent" aria-labelledby="landing-integrations-heading">
       <ScreenHR />
 
-      <div className="mx-auto max-w-7xl px-6 pb-12 pt-6 lg:px-12 lg:pb-14 lg:pt-8">
+      <div className="mx-auto max-w-7xl px-6 pt-6 pb-12 lg:px-12 lg:pt-8 lg:pb-14">
         {/* Orbital graphic */}
         <div className="relative mx-auto flex h-[370px] w-full max-w-3xl items-center justify-center overflow-hidden sm:h-[390px]">
           {/* Concentric rings */}
           <div
             aria-hidden
-            className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+            className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
           >
-            {RINGS.map((d) => (
+            {RINGS.map(d => (
               <div
                 key={d}
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-black/[0.07]"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-black/[0.07]"
                 style={{ width: d, height: d }}
               />
             ))}
@@ -63,33 +63,33 @@ export function LandingIntegrationsStrip() {
           {/* Centre glow */}
           <div
             aria-hidden
-            className="pointer-events-none absolute left-1/2 top-1/2 h-[230px] w-[230px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
+            className="pointer-events-none absolute top-1/2 left-1/2 h-[230px] w-[230px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
             style={{
               background:
-                "radial-gradient(circle, color-mix(in srgb, var(--primary) 32%, transparent) 0%, transparent 68%)",
+                'radial-gradient(circle, color-mix(in srgb, var(--primary) 32%, transparent) 0%, transparent 68%)',
             }}
           />
 
           {/* Icon row across the rings */}
           <div className="relative z-10 flex items-center gap-4 sm:gap-6">
-            {LEFT_NODES.map((node) => (
+            {LEFT_NODES.map(node => (
               <OrbitIcon key={node.name} node={node} />
             ))}
 
-            {/* Centre node — the Signalor hub */}
+            {/* Centre node — the SignalorAI hub */}
             <div className="relative flex shrink-0 items-center justify-center">
               <span
                 aria-hidden
-                className="absolute inset-0 -z-10 animate-pulse rounded-full bg-primary/30 blur-md"
+                className="bg-primary/30 absolute inset-0 -z-10 animate-pulse rounded-full blur-md"
               />
-              <span className="flex h-[84px] w-[84px] items-center justify-center rounded-full bg-gradient-to-b from-primary to-[color-mix(in_srgb,var(--primary)_82%,#b83227)] shadow-[0_8px_24px_-6px_rgba(224,74,61,0.6)] ring-4 ring-primary/15">
+              <span className="from-primary ring-primary/15 flex h-[84px] w-[84px] items-center justify-center rounded-full bg-gradient-to-b to-[color-mix(in_srgb,var(--primary)_82%,#b83227)] shadow-[0_8px_24px_-6px_rgba(224,74,61,0.6)] ring-4">
                 <svg
                   width="46"
                   height="46"
                   viewBox="0 0 1080 1080"
                   className="[&_path]:fill-white"
                   role="img"
-                  aria-label="Signalor"
+                  aria-label="SignalorAI"
                 >
                   <path d="M565.79,201.17c43.67-3.79,81.17,9.26,114.46,37.06,72.34,60.41,69.67,134.55,104.91,214.09,45.59,102.92,157.65,196.05,41.43,299.84-44.78,39.99-108.24,55.11-162.85,76.4-85,33.15-130.62,64.56-228.66,44.72-279.35-56.53-309.76-455.82-77.76-594.82,46.15-27.65,156.07-72.76,208.47-77.3ZM568,214.45c-58.22,5.52-189.54,65.9-234.39,104.54-164.55,141.78-133.25,460.72,89.16,526.74,99.37,29.49,151.25-3.57,239.8-36.07,73.92-27.13,214.99-62.76,202.49-169.19-5.05-43-71.95-132.08-93.19-179.28-34.95-77.64-30.97-157.5-101.48-215.3-30.04-24.62-63.48-35.13-102.39-31.44Z" />
                   <path d="M541.41,267.61c43.38-3.96,85.03,14.63,115.42,44.99,46.12,46.07,53.19,108.76,79.59,166.31,18.03,39.32,45.84,78.9,61.27,118.16,30.53,77.71-34.74,131.9-98.61,160.49-47.32,21.18-166.45,71.33-213.74,72.07-259.82,4.08-322.49-377.1-108.88-501.03,37.36-21.68,122.92-57.16,164.96-61ZM757.75,699.92c65.98-66.57,15.37-111.39-17.66-175.94-24.71-48.28-35.17-87.92-53.21-137.3-20.87-57.16-75.06-108.91-139.43-104.17-40.85,3-130.99,43.35-165.77,66.84-207.44,140.12-95.06,536.35,176.85,442.68,53.98-18.6,161.1-53.63,199.23-92.1Z" />
@@ -100,7 +100,7 @@ export function LandingIntegrationsStrip() {
               </span>
             </div>
 
-            {RIGHT_NODES.map((node) => (
+            {RIGHT_NODES.map(node => (
               <OrbitIcon key={node.name} node={node} />
             ))}
           </div>
@@ -108,23 +108,23 @@ export function LandingIntegrationsStrip() {
 
         {/* Copy */}
         <div className="mx-auto mt-4 max-w-4xl text-center">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary">
+          <p className="text-primary text-[11px] font-semibold tracking-[0.24em] uppercase">
             Integrations
           </p>
           <h2
             id="landing-integrations-heading"
-            className="mt-4 text-3xl font-bold leading-[1.12] tracking-tight text-foreground sm:text-4xl lg:text-[2.65rem]"
+            className="text-foreground mt-4 text-3xl leading-[1.12] font-bold tracking-tight sm:text-4xl lg:text-[2.65rem]"
           >
-            Works where your{" "}
-            <span className="relative text-primary">
+            Works where your{' '}
+            <span className="text-primary relative">
               team already ships
               <span
-                className="absolute -bottom-1 left-0 right-0 border-b-2 border-dashed border-primary/45"
+                className="border-primary/45 absolute right-0 -bottom-1 left-0 border-b-2 border-dashed"
                 aria-hidden
               />
             </span>
           </h2>
-          <p className="mx-auto mt-5 max-w-2xl text-base font-light leading-relaxed text-accent-foreground lg:text-lg">
+          <p className="text-accent-foreground mx-auto mt-5 max-w-2xl text-base leading-relaxed font-light lg:text-lg">
             Auto-fix schema and meta on Shopify and WordPress, with more integrations on the way.
           </p>
         </div>
@@ -132,15 +132,15 @@ export function LandingIntegrationsStrip() {
 
       <ScreenHR />
     </section>
-  );
+  )
 }
 
 function OrbitIcon({ node }: { node: OrbitNode }) {
-  const { box, icon, opacity } = TIER_STYLE[node.tier];
+  const { box, icon, opacity } = TIER_STYLE[node.tier]
   return (
     <div
       className={cn(
-        "flex shrink-0 items-center justify-center rounded-full border border-black/[0.06] bg-white shadow-[0_2px_10px_-4px_rgba(0,0,0,0.18)]",
+        'flex shrink-0 items-center justify-center rounded-full border border-black/[0.06] bg-white shadow-[0_2px_10px_-4px_rgba(0,0,0,0.18)]',
       )}
       style={{ width: box, height: box, opacity }}
       title={node.name}
@@ -154,5 +154,5 @@ function OrbitIcon({ node }: { node: OrbitNode }) {
         style={{ width: icon, height: icon }}
       />
     </div>
-  );
+  )
 }

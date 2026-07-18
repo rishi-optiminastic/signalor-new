@@ -4,13 +4,21 @@ import { env } from './env'
 
 export const SITE_URL = env.NEXT_PUBLIC_SITE_URL
 
-export const SITE_NAME = 'Signalor'
-export const SITE_DISPLAY_NAME = 'Signalor AI'
+export const SITE_NAME = 'SignalorAI'
+export const SITE_DISPLAY_NAME = 'SignalorAI'
+// Registered company name — a factual schema.org `legalName`, not brand copy.
+// Only change this if the entity is actually renamed at Companies House.
 export const SITE_LEGAL_NAME = 'Signalor Ltd.'
-export const SITE_BRAND = 'Signalor.AI'
+export const SITE_BRAND = 'SignalorAI'
+
+// Names the brand was known by before the SignalorAI rename. Google has these
+// indexed, so they stay in `alternateName` / keywords: that is what tells the
+// knowledge graph the renamed entity is the same one, instead of a new brand
+// starting from zero. Remove only once "SignalorAI" ranks for these terms.
+export const SITE_PRIOR_NAMES = ['Signalor', 'Signalor AI', 'signalor.ai'] as const
 export const SITE_TAGLINE = 'AI search visibility & GEO platform'
 export const SITE_DESCRIPTION =
-  'Signalor is the Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO) platform that scores, monitors, and improves how ChatGPT, Claude, Gemini, Perplexity, and Google AI cite your brand.'
+  'SignalorAI is the Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO) platform that scores, monitors, and improves how ChatGPT, Claude, Gemini, Perplexity, and Google AI cite your brand.'
 
 export const SITE_KEYWORDS = [
   'GEO',
@@ -56,7 +64,10 @@ export const SITE_KEYWORDS = [
   'llms.txt',
   'AI crawler optimization',
   'brand visibility',
+  'SignalorAI',
+  // Prior brand terms people still type — keep targeting them through the rename.
   'Signalor',
+  'Signalor AI',
   'signalor.ai',
   'platforma signalor',
   'platform signalor',
@@ -193,9 +204,11 @@ export function organizationJsonLd() {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     '@id': `${SITE_URL}#organization`,
-    name: SITE_LEGAL_NAME,
+    // schema.org: `name` is the common/brand name, `legalName` the registered
+    // entity. They differ here — the brand is SignalorAI, the company is not.
+    name: SITE_DISPLAY_NAME,
     legalName: SITE_LEGAL_NAME,
-    alternateName: [SITE_DISPLAY_NAME, SITE_BRAND, SITE_NAME, 'signalor.ai'],
+    alternateName: [...SITE_PRIOR_NAMES],
     url: SITE_URL,
     logo: {
       '@type': 'ImageObject',
@@ -224,7 +237,7 @@ export function websiteJsonLd() {
     '@id': `${SITE_URL}#website`,
     url: SITE_URL,
     name: SITE_DISPLAY_NAME,
-    alternateName: [SITE_NAME, SITE_BRAND, 'signalor.ai'],
+    alternateName: [...SITE_PRIOR_NAMES],
     description: SITE_DESCRIPTION,
     publisher: { '@id': `${SITE_URL}#organization` },
     inLanguage: 'en-US',
@@ -298,31 +311,31 @@ export const SITE_NAV = [
   {
     name: 'Pricing',
     path: '/pricing',
-    description: 'Signalor plans for every team: Starter, Pro, and Max.',
+    description: 'SignalorAI plans for every team: Starter, Pro, and Max.',
   },
   {
     name: 'AI Visibility Tracking',
     path: '/ai-visibility',
-    description: 'Signalor Monitors how ChatGPT, Claude, Gemini, and Perplexity cite your brand.',
+    description: 'SignalorAI Monitors how ChatGPT, Claude, Gemini, and Perplexity cite your brand.',
   },
   {
     name: 'Prompt Tracking',
     path: '/prompt-tracking',
     description:
-      'Signalor Tracks which AI prompts surface your brand and how rankings shift over time.',
+      'SignalorAI Tracks which AI prompts surface your brand and how rankings shift over time.',
   },
   {
     name: 'Recommendations',
     path: '/recommendations',
-    description: 'Signalor Prioritizes GEO fixes automatically generated for your site.',
+    description: 'SignalorAI Prioritizes GEO fixes automatically generated for your site.',
   },
   {
     name: 'Free Tools',
     path: '/tools',
-    description: 'Free GEO tools from Signalor: URL analyzer, schema validator, and more.',
+    description: 'Free GEO tools from SignalorAI: URL analyzer, schema validator, and more.',
   },
   {
-    name: 'About Signalor',
+    name: 'About SignalorAI',
     path: '/about-us',
     description: 'The team and mission behind the AI search visibility platform.',
   },

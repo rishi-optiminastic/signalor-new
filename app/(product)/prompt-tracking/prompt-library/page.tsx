@@ -43,7 +43,7 @@ export default function PromptLibraryPage() {
         sectionId="prompt-tracking-library-faq"
         headingId="prompt-tracking-library-faq-heading"
         heading="FAQs"
-        description="Libraries, exports, and collaboration in Signalor."
+        description="Libraries, exports, and collaboration in SignalorAI."
         items={[...PROMPT_TRACKING_LIBRARY_FAQ]}
       />
     </MarketingShell>

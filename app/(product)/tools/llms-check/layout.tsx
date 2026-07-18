@@ -52,14 +52,14 @@ const FAQ = [
   {
     question: 'Does passing the LLM check guarantee AI citations?',
     answer:
-      "It removes the technical blockers that silently prevent AI engines from reading and citing your content. Earning citations also requires strong content quality, topical authority, and clear entity definitions, all areas Signalor's full GEO audit covers.",
+      "It removes the technical blockers that silently prevent AI engines from reading and citing your content. Earning citations also requires strong content quality, topical authority, and clear entity definitions, all areas SignalorAI's full GEO audit covers.",
   },
 ]
 
 const llmsCheckJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
-  name: 'Signalor llms.txt Checker',
+  name: 'SignalorAI llms.txt Checker',
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Web',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },

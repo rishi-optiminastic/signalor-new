@@ -27,7 +27,7 @@ export function ProfileTopBar(): JSX.Element {
         Dashboard
       </Link>
       <span className="text-[15px] font-semibold tracking-tight text-[var(--cat-ink)]">
-        Signalor
+        SignalorAI
       </span>
       <div className="flex items-center gap-1">
         <button

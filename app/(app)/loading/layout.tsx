@@ -6,7 +6,7 @@ import { buildMetadata } from '@/features/site/lib/seo'
 // Transient analysis-progress screen - not a landing target, keep it unindexed.
 export const metadata: Metadata = buildMetadata({
   title: 'Analyzing',
-  description: 'Signalor is analyzing your site.',
+  description: 'SignalorAI is analyzing your site.',
   path: '/loading',
   noindex: true,
 })

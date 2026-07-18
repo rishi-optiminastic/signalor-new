@@ -68,7 +68,7 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: 'citation-source-attribution-shipped',
     title: 'New: Citation source attribution (Phase 1 + 2 shipped)',
     excerpt:
-      'Every Signalor project now captures which URLs AI engines cite, your pages, rival pages, and the domain roll-up. Pairs with auto-fix to close the content loop.',
+      'Every SignalorAI project now captures which URLs AI engines cite, your pages, rival pages, and the domain roll-up. Pairs with auto-fix to close the content loop.',
     category: 'Product',
     readingMinutes: 4,
     publishedAt: '2026-04-21',

@@ -4,7 +4,7 @@ import { buildMetadata } from '@/features/site/lib/seo'
 
 export const metadata: Metadata = buildMetadata({
   title: 'Payments',
-  description: 'Signalor checkout and billing pages.',
+  description: 'SignalorAI checkout and billing pages.',
   noindex: true,
 })
 

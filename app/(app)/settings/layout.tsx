@@ -4,7 +4,7 @@ import { buildMetadata } from '@/features/site/lib/seo'
 
 export const metadata: Metadata = buildMetadata({
   title: 'Settings',
-  description: 'Manage your Signalor account and integrations.',
+  description: 'Manage your SignalorAI account and integrations.',
   noindex: true,
 })
 

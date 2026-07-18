@@ -12,7 +12,7 @@ interface AgentChatState {
 }
 
 /**
- * UI-only state for the Signalor Agent chat panel. Holds nothing but the
+ * UI-only state for the SignalorAI Agent chat panel. Holds nothing but the
  * open/expanded flags - there is no conversation backend yet, so this drives
  * the shell layout and the topbar trigger and nothing else.
  */

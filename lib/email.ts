@@ -21,10 +21,10 @@ export async function sendOtpEmail(to: string, otp: string): Promise<void> {
 
   try {
     await resend.emails.send({
-      from: `Signalor <${from}>`,
+      from: `SignalorAI <${from}>`,
       to,
-      subject: 'Your Signalor verification code',
-      text: `Your Signalor verification code is ${otp}. It expires in 10 minutes.`,
+      subject: 'Your SignalorAI verification code',
+      text: `Your SignalorAI verification code is ${otp}. It expires in 10 minutes.`,
     })
   } catch (error) {
     log.error({ error }, 'Resend send failed')

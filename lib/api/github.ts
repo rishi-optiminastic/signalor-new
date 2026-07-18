@@ -4,7 +4,7 @@ import { apiGet, apiPost } from './client'
 
 /**
  * GitHub App — org-scoped connect used in onboarding. Installing the app lets
- * Signalor open fix PRs (schema, llms.txt, robots, canonical) on the connected
+ * SignalorAI open fix PRs (schema, llms.txt, robots, canonical) on the connected
  * Next.js repo. See ranking-be `apps.github_agent`.
  */
 

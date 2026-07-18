@@ -15,7 +15,7 @@ import { routes } from '@/lib/routes'
  * Tokens are already stored after the OAuth connect, so the picker can list and
  * re-select properties directly — no second trip through Google. This is what
  * lets a user who picked the wrong property (or wants a different one — "the pick
- * post" instead of "Signalor") switch it.
+ * post" instead of "SignalorAI") switch it.
  */
 function ChangeProperty(): JSX.Element {
   const { data: session } = useSession()

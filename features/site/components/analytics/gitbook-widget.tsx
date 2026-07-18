@@ -4,7 +4,7 @@ import Script from 'next/script'
 
 /**
  * GitBook "Ask AI" documentation widget. Loads the hosted embed from the
- * Signalor guide space and configures the launcher button once ready.
+ * SignalorAI guide space and configures the launcher button once ready.
  */
 export function GitBookWidget() {
   return (

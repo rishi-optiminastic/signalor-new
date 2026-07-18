@@ -10,7 +10,7 @@ import { useAgentChat } from '@/stores/useAgentChat'
 const BEAM_RADIUS = 8
 
 /**
- * Topbar button that opens the Signalor Agent chat panel, ringed by an animated
+ * Topbar button that opens the SignalorAI Agent chat panel, ringed by an animated
  * border beam. The beam runs only while the panel is closed: once the Agent is
  * open the affordance has done its job, and a permanently animating control
  * next to an open panel is just noise. `border-beam` disables its own animation
@@ -38,7 +38,7 @@ export function AgentChatTrigger(): JSX.Element {
         type="button"
         onClick={toggle}
         aria-pressed={open}
-        aria-label="Signalor Agent"
+        aria-label="SignalorAI Agent"
         className={`${base} ${state}`}
       >
         <Sparkles size={16} strokeWidth={1.9} className="text-[#e04a3d]" />

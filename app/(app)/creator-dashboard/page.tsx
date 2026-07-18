@@ -150,7 +150,7 @@ export default function CreatorDashboardOverviewPage() {
               Your share link
             </p>
             <p className="text-muted-foreground mt-1 text-[13px]">
-              Anyone who lands on Signalor through this link gets 10% off. You earn{' '}
+              Anyone who lands on SignalorAI through this link gets 10% off. You earn{' '}
               {profile.commission_percent}% of their first paid invoice.
             </p>
           </div>

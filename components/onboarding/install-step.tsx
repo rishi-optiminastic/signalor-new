@@ -18,7 +18,7 @@ import { useOnboardingWizardStore, type Platform } from '@/stores/useOnboardingW
 
 const CARD = 'shadow-input rounded-xl border border-black/8 bg-white p-5'
 
-/** Next.js → connect the GitHub App so Signalor can open fix PRs on the repo. */
+/** Next.js → connect the GitHub App so SignalorAI can open fix PRs on the repo. */
 function GithubConnector({ email }: { email: string }): JSX.Element {
   const setAppInstalled = useOnboardingWizardStore(s => s.setAppInstalled)
 
@@ -58,7 +58,7 @@ function GithubConnector({ email }: { email: string }): JSX.Element {
         <div>
           <p className="text-foreground text-[13px] font-semibold">GitHub repo connected</p>
           <p className="mt-0.5 text-xs text-neutral-500">
-            {status.data?.repo_full_name || 'Signalor can now open fix PRs on your repo.'}
+            {status.data?.repo_full_name || 'SignalorAI can now open fix PRs on your repo.'}
           </p>
         </div>
       </div>
@@ -74,7 +74,7 @@ function GithubConnector({ email }: { email: string }): JSX.Element {
         <div>
           <p className="text-foreground text-[13px] font-semibold">Connect your GitHub repo</p>
           <p className="mt-0.5 text-xs leading-relaxed text-neutral-500">
-            Install the Signalor GitHub App so it can open fix PRs (schema, llms.txt, robots,
+            Install the SignalorAI GitHub App so it can open fix PRs (schema, llms.txt, robots,
             canonical) on your Next.js repo.
           </p>
         </div>
@@ -137,7 +137,7 @@ function LinkConnector({ platform }: { platform: Platform }): JSX.Element {
     <div className={`${CARD} space-y-3`}>
       <p className="text-foreground text-[13px] font-semibold">Connect your site</p>
       <p className="text-xs leading-relaxed text-neutral-500">
-        Install the Signalor connector to enable auto-fixes, schema injection & AI meta tags.
+        Install the SignalorAI connector to enable auto-fixes, schema injection & AI meta tags.
       </p>
       <a
         href={link.href}
@@ -163,7 +163,7 @@ export function InstallStep(): JSX.Element {
       <div className="text-center">
         <p className="text-foreground text-sm font-semibold">Connect your site</p>
         <p className="mt-1 text-xs leading-relaxed font-light text-neutral-400">
-          Let Signalor apply fixes automatically — or skip and analyse by URL.
+          Let SignalorAI apply fixes automatically — or skip and analyse by URL.
         </p>
       </div>
 

@@ -20,7 +20,7 @@ export const FOR_AGENCIES_HERO = {
   titleLine2: 'AI search visibility for',
   titleAccent: 'every client you manage',
   subhead:
-    'Manage each brand as its own project with separate scores, prompts, and runs. Signalor rolls up GEO audits, share of voice, and prioritized fixes across your whole roster, so one strategist can deliver AI search for twenty clients.',
+    'Manage each brand as its own project with separate scores, prompts, and runs. SignalorAI rolls up GEO audits, share of voice, and prioritized fixes across your whole roster, so one strategist can deliver AI search for twenty clients.',
   footnote: 'Multi-brand workspace · white-label reports · one login',
   primaryCta: 'Start an agency workspace',
   secondaryCta: 'See agency pricing',
@@ -99,7 +99,7 @@ export const FOR_AGENCIES_FEATURES_INTRO = {
   titleBefore: 'Everything you need to',
   titleAccent: 'deliver AI search at scale',
   description:
-    'Answer engines decide what to cite from structure, schema, and trust signals, not blue-link rankings. Signalor keeps those markers healthy across every client, and rolls the work up so one team can run AI search for a full book of business.',
+    'Answer engines decide what to cite from structure, schema, and trust signals, not blue-link rankings. SignalorAI keeps those markers healthy across every client, and rolls the work up so one team can run AI search for a full book of business.',
 } as const
 
 export const FOR_AGENCIES_FEATURE_CELLS = [
@@ -267,13 +267,13 @@ export const FOR_AGENCIES_WHY = {
   titleAccent: 'roster',
   titleAfter: 'from one workspace',
   intro:
-    'Delivering AI search for a book of clients breaks the moment it lives in spreadsheets. Signalor keeps every brand, score, and fix in one workspace, so account managers report a number and strategists spend hours on work that moves it.',
+    'Delivering AI search for a book of clients breaks the moment it lives in spreadsheets. SignalorAI keeps every brand, score, and fix in one workspace, so account managers report a number and strategists spend hours on work that moves it.',
   proofTitle: 'Proof in numbers',
   proofBody:
-    'What agency teams point to once they move from per-client spreadsheets to one signals-driven AI search program in Signalor.',
+    'What agency teams point to once they move from per-client spreadsheets to one signals-driven AI search program in SignalorAI.',
   liveTitle: 'Live preview',
   liveBody:
-    'How a managed client shows up in AI answers, and the exact schema and trust gaps Signalor flags to keep them cited.',
+    'How a managed client shows up in AI answers, and the exact schema and trust gaps SignalorAI flags to keep them cited.',
   livePrompt: 'What is the best project management tool for remote teams?',
   liveAnswerParts: [
     { t: 'Strong options include ' },
@@ -303,7 +303,7 @@ export const FOR_AGENCIES_WHY = {
 
 export const FOR_AGENCIES_FAQ = [
   {
-    question: 'How does Signalor handle multiple clients in one account?',
+    question: 'How does SignalorAI handle multiple clients in one account?',
     answer:
       'Each client is a separate project with its own GEO score, prompt set, competitors, and run schedule. You switch between brands without new logins, and reporting keeps every client cleanly isolated.',
   },

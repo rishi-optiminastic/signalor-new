@@ -6,7 +6,7 @@ import { CreatorDashboardShell } from './_components/creator-dashboard-shell'
 
 export const metadata: Metadata = buildMetadata({
   title: 'Creator dashboard',
-  description: 'Manage your Signalor creator link, earnings, and payouts.',
+  description: 'Manage your SignalorAI creator link, earnings, and payouts.',
   path: '/creator-dashboard',
   noindex: true,
 })

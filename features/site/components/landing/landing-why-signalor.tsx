@@ -1,71 +1,78 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import { ArrowRight, Gauge, Layers, Link2, ListChecks, Sparkles } from "@/features/site/components/icons";
-import { Button } from "@/features/site/components/ui/button";
-import { LANDING_PRIMARY_CTA_CLASS } from "./constants";
-import { ScreenHR } from "@/features/site/components/ui/intersection-diamonds";
+import Link from 'next/link'
+import {
+  ArrowRight,
+  Gauge,
+  Layers,
+  Link2,
+  ListChecks,
+  Sparkles,
+} from '@/features/site/components/icons'
+import { Button } from '@/features/site/components/ui/button'
+import { LANDING_PRIMARY_CTA_CLASS } from './constants'
+import { ScreenHR } from '@/features/site/components/ui/intersection-diamonds'
 
 const FEATURE_ROWS = [
   {
     icon: Gauge,
-    title: "GEO score",
-    description: "One 0-100 read on how AI engines trust and cite your site.",
+    title: 'GEO score',
+    description: 'One 0-100 read on how AI engines trust and cite your site.',
   },
   {
     icon: Link2,
-    title: "Citation & prompt signals",
-    description: "See which pages AI models actually use. Double down on what works.",
+    title: 'Citation & prompt signals',
+    description: 'See which pages AI models actually use. Double down on what works.',
   },
   {
     icon: ListChecks,
-    title: "Prioritized fixes",
-    description: "Plain-language tasks ranked by impact. Schema, structure, content.",
+    title: 'Prioritized fixes',
+    description: 'Plain-language tasks ranked by impact. Schema, structure, content.',
   },
   {
     icon: Layers,
-    title: "Multi-engine view",
-    description: "ChatGPT, Claude, Gemini, Perplexity, one view, always fresh.",
+    title: 'Multi-engine view',
+    description: 'ChatGPT, Claude, Gemini, Perplexity, one view, always fresh.',
   },
-] as const;
+] as const
 
 const PROOF_METRICS = [
-  { value: "5k+", label: "Websites optimizing with us" },
-  { value: "40%", label: "Avg. lift in AI citations" },
-  { value: "40%", label: "Higher buyer intent" },
-  { value: "24h", label: "To see visibility growth" },
-] as const;
+  { value: '5k+', label: 'Websites optimizing with us' },
+  { value: '40%', label: 'Avg. lift in AI citations' },
+  { value: '40%', label: 'Higher buyer intent' },
+  { value: '24h', label: 'To see visibility growth' },
+] as const
 
 export function LandingWhySignalor() {
   return (
     <section className="relative bg-transparent" aria-labelledby="why-signalor-heading">
       <ScreenHR />
 
-      <div className="mx-auto max-w-7xl px-6 pb-12 pt-14 lg:px-12 lg:pb-14 lg:pt-16">
-        <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
+      <div className="mx-auto max-w-7xl px-6 pt-14 pb-12 lg:px-12 lg:pt-16 lg:pb-14">
+        <p className="text-muted-foreground text-[11px] font-medium tracking-[0.22em] uppercase">
           [ why signalor ]
         </p>
         <h2
           id="why-signalor-heading"
-          className="mt-4 max-w-4xl text-3xl font-bold leading-[1.12] tracking-tight text-foreground sm:text-4xl lg:text-[2.65rem] xl:text-5xl"
+          className="text-foreground mt-4 max-w-4xl text-3xl leading-[1.12] font-bold tracking-tight sm:text-4xl lg:text-[2.65rem] xl:text-5xl"
         >
-          SEO got your site on Google. GEO gets you into{" "}
-          <span className="relative inline-flex items-center gap-2 whitespace-nowrap text-primary align-middle">
+          SEO got your site on Google. GEO gets you into{' '}
+          <span className="text-primary relative inline-flex items-center gap-2 align-middle whitespace-nowrap">
             <Sparkles
-              className="inline-block h-[0.85em] w-[0.85em] shrink-0 align-middle text-primary"
+              className="text-primary inline-block h-[0.85em] w-[0.85em] shrink-0 align-middle"
               strokeWidth={2.25}
               aria-hidden
-            />{" "}
+            />{' '}
             answers
             <span
-              className="absolute -bottom-1 left-0 right-0 border-b-2 border-dashed border-primary/45"
+              className="border-primary/45 absolute right-0 -bottom-1 left-0 border-b-2 border-dashed"
               aria-hidden
             />
           </span>
         </h2>
-        <p className="mt-5 max-w-2xl text-base font-light leading-relaxed text-accent-foreground lg:text-lg">
+        <p className="text-accent-foreground mt-5 max-w-2xl text-base leading-relaxed font-light lg:text-lg">
           Over 40% of searches now happen inside AI tools. Those tools cite sources, not links.
-          Signalor scores your citability and shows where you win or lose against competitors.
+          SignalorAI scores your citability and shows where you win or lose against competitors.
         </p>
       </div>
 
@@ -74,27 +81,27 @@ export function LandingWhySignalor() {
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 divide-y divide-black/6 md:grid-cols-2 md:divide-x md:divide-y-0">
           {/* 1, Proof in numbers + CTAs */}
-          <div className="flex flex-col gap-8 bg-white px-6 py-12 transition-colors duration-200 hover:bg-muted/25 md:px-8 md:py-16 lg:px-10">
+          <div className="hover:bg-muted/25 flex flex-col gap-8 bg-white px-6 py-12 transition-colors duration-200 md:px-8 md:py-16 lg:px-10">
             <div>
-              <h3 className="text-lg font-semibold tracking-tight text-foreground md:text-xl">
+              <h3 className="text-foreground text-lg font-semibold tracking-tight md:text-xl">
                 Proof in numbers
               </h3>
-              <p className="mt-3 max-w-sm text-sm font-light leading-relaxed text-accent-foreground md:text-sm">
-                From teams using Signalor to grow citations.
+              <p className="text-accent-foreground mt-3 max-w-sm text-sm leading-relaxed font-light md:text-sm">
+                From teams using SignalorAI to grow citations.
               </p>
             </div>
 
             <div className="flex min-h-0 flex-1 flex-col">
-              <div className="grid grid-cols-2 gap-px border border-black/6 bg-border">
-                {PROOF_METRICS.map((m) => (
+              <div className="bg-border grid grid-cols-2 gap-px border border-black/6">
+                {PROOF_METRICS.map(m => (
                   <div
                     key={m.label}
-                    className="bg-background p-6 transition-colors hover:bg-muted/50 sm:p-7"
+                    className="bg-background hover:bg-muted/50 p-6 transition-colors sm:p-7"
                   >
-                    <p className="font-sans text-3xl font-bold tabular-nums tracking-tight text-foreground md:text-4xl">
+                    <p className="text-foreground font-sans text-3xl font-bold tracking-tight tabular-nums md:text-4xl">
                       {m.value}
                     </p>
-                    <p className="mt-2 text-sm font-medium leading-snug text-muted-foreground">
+                    <p className="text-muted-foreground mt-2 text-sm leading-snug font-medium">
                       {m.label}
                     </p>
                   </div>
@@ -112,7 +119,7 @@ export function LandingWhySignalor() {
               <Button
                 asChild
                 variant="outline"
-                className="h-10 border-black/15 bg-background px-5 text-sm font-semibold shadow-sm hover:bg-muted/50"
+                className="bg-background hover:bg-muted/50 h-10 border-black/15 px-5 text-sm font-semibold shadow-sm"
               >
                 <Link href="#features">Explore platform</Link>
               </Button>
@@ -120,61 +127,61 @@ export function LandingWhySignalor() {
           </div>
 
           {/* 2, Citation attribution (feature moat, the URL roll-up) */}
-          <div className="flex flex-col gap-8 bg-white px-6 py-12 transition-colors duration-200 hover:bg-muted/25 md:px-8 md:py-16 lg:px-10">
+          <div className="hover:bg-muted/25 flex flex-col gap-8 bg-white px-6 py-12 transition-colors duration-200 md:px-8 md:py-16 lg:px-10">
             <div>
-              <h3 className="text-lg font-semibold tracking-tight text-foreground md:text-xl">
+              <h3 className="text-foreground text-lg font-semibold tracking-tight md:text-xl">
                 Citation attribution
               </h3>
-              <p className="mt-3 max-w-sm text-sm font-light leading-relaxed text-accent-foreground md:text-sm">
+              <p className="text-accent-foreground mt-3 max-w-sm text-sm leading-relaxed font-light md:text-sm">
                 See exactly which URLs AI engines cite — yours, your rivals&rsquo;,
                 everyone&rsquo;s. No guessing.
               </p>
             </div>
 
             <div className="flex min-h-0 flex-1 flex-col justify-center">
-              <div className="rounded-none border border-black/6 bg-background p-4">
+              <div className="bg-background rounded-none border border-black/6 p-4">
                 <div className="rounded-none border border-black/8 bg-white p-4 shadow-xs">
-                  <div className="mb-3 flex items-center justify-between text-[11px] font-semibold text-muted-foreground">
+                  <div className="text-muted-foreground mb-3 flex items-center justify-between text-[11px] font-semibold">
                     <span>Top cited domains · 7d</span>
-                    <span className="tabular-nums text-muted-foreground">24 citations</span>
+                    <span className="text-muted-foreground tabular-nums">24 citations</span>
                   </div>
                   <ul className="space-y-2.5 text-xs font-medium">
                     {[
                       {
-                        domain: "signalor.ai",
+                        domain: 'signalor.ai',
                         pct: 62,
-                        tag: "YOU",
-                        tagBg: "bg-success/10",
-                        tagFg: "text-success",
-                        bar: "bg-success",
+                        tag: 'YOU',
+                        tagBg: 'bg-success/10',
+                        tagFg: 'text-success',
+                        bar: 'bg-success',
                       },
                       {
-                        domain: "tryprofound.com",
+                        domain: 'tryprofound.com',
                         pct: 38,
-                        tag: "RIVAL",
-                        tagBg: "bg-warning/10",
-                        tagFg: "text-warning",
-                        bar: "bg-warning",
+                        tag: 'RIVAL',
+                        tagBg: 'bg-warning/10',
+                        tagFg: 'text-warning',
+                        bar: 'bg-warning',
                       },
                       {
-                        domain: "siftly.ai",
+                        domain: 'siftly.ai',
                         pct: 26,
-                        tag: "RIVAL",
-                        tagBg: "bg-warning/10",
-                        tagFg: "text-warning",
-                        bar: "bg-warning",
+                        tag: 'RIVAL',
+                        tagBg: 'bg-warning/10',
+                        tagFg: 'text-warning',
+                        bar: 'bg-warning',
                       },
                       {
-                        domain: "searchengineland.com",
+                        domain: 'searchengineland.com',
                         pct: 18,
-                        tag: "",
-                        tagBg: "",
-                        tagFg: "",
-                        bar: "bg-muted",
+                        tag: '',
+                        tagBg: '',
+                        tagFg: '',
+                        bar: 'bg-muted',
                       },
-                    ].map((r) => (
+                    ].map(r => (
                       <li key={r.domain}>
-                        <div className="flex items-center justify-between gap-2 text-xs font-semibold text-foreground">
+                        <div className="text-foreground flex items-center justify-between gap-2 text-xs font-semibold">
                           <span className="flex min-w-0 items-center gap-1.5">
                             <span className="truncate">{r.domain}</span>
                             {r.tag && (
@@ -185,9 +192,9 @@ export function LandingWhySignalor() {
                               </span>
                             )}
                           </span>
-                          <span className="tabular-nums text-muted-foreground">{r.pct}%</span>
+                          <span className="text-muted-foreground tabular-nums">{r.pct}%</span>
                         </div>
-                        <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-muted">
+                        <div className="bg-muted mt-1 h-1.5 overflow-hidden rounded-full">
                           <div
                             className={`h-full rounded-full ${r.bar}`}
                             style={{ width: `${r.pct}%` }}
@@ -202,58 +209,58 @@ export function LandingWhySignalor() {
           </div>
 
           {/* 3, Competitor delta (closing the gap week over week) */}
-          <div className="flex flex-col gap-8 bg-white px-6 py-12 transition-colors duration-200 hover:bg-muted/25 md:px-8 md:py-16 lg:px-10">
+          <div className="hover:bg-muted/25 flex flex-col gap-8 bg-white px-6 py-12 transition-colors duration-200 md:px-8 md:py-16 lg:px-10">
             <div>
-              <h3 className="text-lg font-semibold tracking-tight text-foreground md:text-xl">
+              <h3 className="text-foreground text-lg font-semibold tracking-tight md:text-xl">
                 Competitor delta
               </h3>
-              <p className="mt-3 max-w-sm text-sm font-light leading-relaxed text-accent-foreground md:text-sm">
+              <p className="text-accent-foreground mt-3 max-w-sm text-sm leading-relaxed font-light md:text-sm">
                 Track which prompts you win back from rivals every week. See the work pay off.
               </p>
             </div>
 
             <div className="flex flex-1 flex-col justify-center">
-              <div className="rounded-none border border-black/6 bg-background p-4">
+              <div className="bg-background rounded-none border border-black/6 p-4">
                 <div className="rounded-none border border-black/8 bg-white p-4 shadow-xs">
                   <div className="flex items-end justify-between gap-3">
                     <div>
-                      <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                      <p className="text-muted-foreground text-[11px] font-semibold tracking-wide uppercase">
                         Prompts won this week
                       </p>
-                      <p className="mt-1 text-3xl font-bold tabular-nums tracking-tight text-foreground">
+                      <p className="text-foreground mt-1 text-3xl font-bold tracking-tight tabular-nums">
                         +4
-                        <span className="ml-1 text-sm font-semibold text-success">↑</span>
+                        <span className="text-success ml-1 text-sm font-semibold">↑</span>
                       </p>
                     </div>
-                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-4 border-success/30 text-[11px] font-bold text-success">
+                    <div className="border-success/30 text-success flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-4 text-[11px] font-bold">
                       +18%
                     </div>
                   </div>
                   <ul className="mt-4 space-y-2.5 border-t border-black/6 pt-3 text-xs font-medium">
                     {[
-                      { name: "Acme", prev: 44, now: 40, delta: -4, rival: true },
-                      { name: "Northwind", prev: 22, now: 20, delta: -2, rival: true },
-                      { name: "You", prev: 34, now: 40, delta: 6, rival: false },
-                    ].map((row) => (
+                      { name: 'Acme', prev: 44, now: 40, delta: -4, rival: true },
+                      { name: 'Northwind', prev: 22, now: 20, delta: -2, rival: true },
+                      { name: 'You', prev: 34, now: 40, delta: 6, rival: false },
+                    ].map(row => (
                       <li key={row.name} className="flex items-center gap-2">
                         <span className="min-w-0 flex-1">
                           <span
-                            className={row.rival ? "text-foreground" : "font-semibold text-success"}
+                            className={row.rival ? 'text-foreground' : 'text-success font-semibold'}
                           >
                             {row.name}
                           </span>
-                          <span className="ml-1 text-[11px] text-muted-foreground tabular-nums">
+                          <span className="text-muted-foreground ml-1 text-[11px] tabular-nums">
                             {row.prev}% → {row.now}%
                           </span>
                         </span>
                         <span
                           className={`rounded px-1.5 py-0.5 text-[10px] font-bold tabular-nums ${
                             row.delta > 0
-                              ? "bg-success/10 text-success"
-                              : "bg-destructive/10 text-destructive"
+                              ? 'bg-success/10 text-success'
+                              : 'bg-destructive/10 text-destructive'
                           }`}
                         >
-                          {row.delta > 0 ? "+" : ""}
+                          {row.delta > 0 ? '+' : ''}
                           {row.delta}
                         </span>
                       </li>
@@ -265,28 +272,28 @@ export function LandingWhySignalor() {
           </div>
 
           {/* 4, What you ship (capability list) */}
-          <div className="flex flex-col gap-8 bg-white px-6 py-12 transition-colors duration-200 hover:bg-muted/25 md:px-8 md:py-16 lg:px-10">
+          <div className="hover:bg-muted/25 flex flex-col gap-8 bg-white px-6 py-12 transition-colors duration-200 md:px-8 md:py-16 lg:px-10">
             <div>
-              <h3 className="text-lg font-semibold tracking-tight text-foreground md:text-xl">
+              <h3 className="text-foreground text-lg font-semibold tracking-tight md:text-xl">
                 What you ship
               </h3>
-              <p className="mt-3 max-w-sm text-sm font-light leading-relaxed text-accent-foreground md:text-sm">
+              <p className="text-accent-foreground mt-3 max-w-sm text-sm leading-relaxed font-light md:text-sm">
                 Every surface you use weekly — score, fixes, engine-by-engine visibility.
               </p>
             </div>
 
             <div className="flex flex-1 flex-col">
-              <div className="rounded-none border border-black/6 bg-background p-4">
+              <div className="bg-background rounded-none border border-black/6 p-4">
                 <div className="rounded-none border border-black/8 bg-white p-3 shadow-xs">
                   <ul className="divide-y divide-black/6 text-xs font-medium">
                     {FEATURE_ROWS.map(({ icon: Icon, title, description }) => (
                       <li key={title} className="flex gap-3 py-3 first:pt-1 last:pb-1">
-                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-black/8 bg-muted text-primary">
+                        <span className="bg-muted text-primary flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-black/8">
                           <Icon className="h-4 w-4" strokeWidth={1.75} aria-hidden />
                         </span>
                         <div className="min-w-0 flex-1">
-                          <div className="font-semibold text-foreground">{title}</div>
-                          <p className="mt-1 text-[11px] font-normal leading-relaxed text-muted-foreground">
+                          <div className="text-foreground font-semibold">{title}</div>
+                          <p className="text-muted-foreground mt-1 text-[11px] leading-relaxed font-normal">
                             {description}
                           </p>
                         </div>
@@ -302,5 +309,5 @@ export function LandingWhySignalor() {
 
       <ScreenHR />
     </section>
-  );
+  )
 }

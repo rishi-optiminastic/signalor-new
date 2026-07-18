@@ -50,7 +50,7 @@ export async function GET() {
         : new Date().toUTCString()
       const title = escapeXml(post.title ?? post.slug)
       const description = escapeXml(post.excerpt ?? '')
-      const author = 'Signalor'
+      const author = 'SignalorAI'
       const category = post.category ? `<category>${escapeXml(post.category)}</category>` : ''
       return `    <item>
       <title>${title}</title>
@@ -67,7 +67,7 @@ export async function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
-    <title>Signalor Blog</title>
+    <title>SignalorAI Blog</title>
     <link>${SITE_URL}/blog</link>
     <description>Playbooks, research, and guides on Generative Engine Optimization (GEO), Answer Engine Optimization (AEO), and AI search visibility.</description>
     <language>en</language>

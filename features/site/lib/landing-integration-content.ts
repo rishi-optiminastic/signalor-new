@@ -29,7 +29,7 @@ export const INTEGRATION_HUB_STATS = [
 
 export const INTEGRATION_HUB_FAQ = [
   {
-    question: 'Do I need a paid Signalor plan to connect Shopify or WordPress?',
+    question: 'Do I need a paid SignalorAI plan to connect Shopify or WordPress?',
     answer:
       'You can explore integration docs and marketing pages on any plan. Connecting a live store or site to your workspace follows the same rules as the rest of the product,start free, then upgrade when you need saved runs and team features.',
   },
@@ -54,7 +54,7 @@ export const SHOPIFY_INTEGRATION_PAGE = {
   title: 'Shopify',
   headline: 'GEO signals from your real storefront',
   subhead:
-    'Connect Shopify so Signalor can align audits with products, collections, and the story your theme tells,without replacing your stack.',
+    'Connect Shopify so SignalorAI can align audits with products, collections, and the story your theme tells,without replacing your stack.',
   bullets: [
     'Product and collection metadata feed citation and entity signals.',
     'Theme-visible copy helps models ground answers in what shoppers see.',
@@ -76,7 +76,7 @@ export const WORDPRESS_INTEGRATION_PAGE = {
 
 export const INTEGRATION_DETAIL_FAQ = [
   {
-    question: 'Is my admin password shared with Signalor?',
+    question: 'Is my admin password shared with SignalorAI?',
     answer:
       'No. OAuth or app-style tokens are used where the platform supports them; you grant only the scopes required for read-oriented syncs described in settings.',
   },
@@ -88,6 +88,6 @@ export const INTEGRATION_DETAIL_FAQ = [
   {
     question: 'Where do I manage the live connection?',
     answer:
-      'Use Integrations inside your Signalor workspace (same surface as analytics connectors). Marketing pages on this site are overview only.',
+      'Use Integrations inside your SignalorAI workspace (same surface as analytics connectors). Marketing pages on this site are overview only.',
   },
 ] as const

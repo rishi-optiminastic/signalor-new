@@ -80,7 +80,9 @@ export function AuthShell({
       <div className="relative flex min-h-svh flex-col px-4 py-6 sm:px-6 lg:h-svh lg:min-h-0 lg:overflow-y-auto lg:px-10 xl:px-14">
         <Link href="/" className="flex w-fit shrink-0 items-center gap-2">
           <SignalorMark className="text-primary h-6 w-6" />
-          <span className="text-foreground text-[17px] font-semibold tracking-tight">Signalor</span>
+          <span className="text-foreground text-[17px] font-semibold tracking-tight">
+            SignalorAI
+          </span>
         </Link>
 
         <div className="flex flex-1 flex-col justify-center py-8">

@@ -32,7 +32,7 @@ const BOT_PATTERN =
 
 function middlewareSnippet(ingestUrl: string, token: string): string {
   return [
-    '// middleware.ts — report AI crawler visits to Signalor (fire-and-forget)',
+    '// middleware.ts — report AI crawler visits to SignalorAI (fire-and-forget)',
     'import { NextResponse, type NextRequest } from "next/server"',
     '',
     `const AI_BOTS = /${BOT_PATTERN}/i`,
@@ -63,7 +63,7 @@ export function CrawlerSetupCard({ token }: { token: string }): JSX.Element {
     <Card>
       <CardHead title="Connect your site" />
       <p className="text-[12px] leading-relaxed text-[var(--cat-ink-3)]">
-        AI crawler visits only exist in your server logs, so your site reports them to Signalor.
+        AI crawler visits only exist in your server logs, so your site reports them to SignalorAI.
         Paste the middleware below into a Next.js site, or POST the same JSON from nginx,
         CloudFront, a Cloudflare Worker, or your WordPress server. Only requests matching known AI
         bots are stored.

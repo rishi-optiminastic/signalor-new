@@ -10,7 +10,7 @@ export default function SchemaValidatorToolPage() {
   return (
     <MarketingShell>
       <p className="sr-only">
-        The Signalor Schema Validator is a free JSON-LD and Schema.org coverage checker that scans
+        The SignalorAI Schema Validator is a free JSON-LD and Schema.org coverage checker that scans
         any public URL for structured data completeness. It detects 18 schema types including
         Organization, Product, Article, FAQPage, HowTo, BreadcrumbList, Event, Review,
         AggregateRating, LocalBusiness, SoftwareApplication, and more. The validator flags missing

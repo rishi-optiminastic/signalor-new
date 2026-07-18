@@ -18,7 +18,7 @@ const PLATFORM_COPY: Record<string, { title: string; sub: string; placeholder: s
   },
   wordpress: {
     title: 'Enter your WordPress URL',
-    sub: "We'll connect your site via the Signalor plugin after verifying your URL.",
+    sub: "We'll connect your site via the SignalorAI plugin after verifying your URL.",
     placeholder: 'yoursite.com',
   },
   webflow: {

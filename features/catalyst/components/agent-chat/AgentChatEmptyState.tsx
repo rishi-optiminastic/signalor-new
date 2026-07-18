@@ -22,7 +22,7 @@ export function AgentChatEmptyState(): JSX.Element {
 
       <div className="space-y-2">
         <div className="flex items-center gap-2">
-          <h2 className="text-[15px] font-semibold text-[var(--cat-ink)]">Signalor Agent</h2>
+          <h2 className="text-[15px] font-semibold text-[var(--cat-ink)]">SignalorAI Agent</h2>
           <span className="rounded-full bg-[var(--cat-track)] px-1.5 py-px text-[10px] font-semibold tracking-wide text-[var(--cat-ink-2)] uppercase">
             Beta
           </span>

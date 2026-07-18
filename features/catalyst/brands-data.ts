@@ -27,7 +27,7 @@ export const BRANDS: Brand[] = [
   },
   {
     slug: 'signalor',
-    name: 'Signalor',
+    name: 'SignalorAI',
     url: 'signalor.ai',
     plan: 'Business',
     geoScore: 88,

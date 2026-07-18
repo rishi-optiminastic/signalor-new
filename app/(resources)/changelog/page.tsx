@@ -4,14 +4,14 @@ import { MarketingContent } from '@/features/landing/components/MarketingContent
 
 export const metadata: Metadata = {
   title: 'Changelog',
-  description: "What's new in Signalor — recent releases and improvements.",
+  description: "What's new in SignalorAI — recent releases and improvements.",
 }
 
 export default function ChangelogPage(): JSX.Element {
   return (
     <MarketingContent
       eyebrow="Changelog"
-      title="What's new in Signalor"
+      title="What's new in SignalorAI"
       subtitle="A running log of what we've shipped — new features, engine coverage, and improvements to scoring and integrations."
       cta={{ label: 'Try the latest', href: '/explorer' }}
       sections={[

@@ -10,7 +10,7 @@ export default function CompetitorsAnalysisToolPage() {
   return (
     <MarketingShell>
       <p className="sr-only">
-        The Signalor Competitor Analysis tool reveals which brands AI engines recommend, compare,
+        The SignalorAI Competitor Analysis tool reveals which brands AI engines recommend, compare,
         and cite alongside yours. It sources competitors from live Google autocomplete signals, the
         exact "vs", "alternatives to", and "compared to" phrases buyers type when researching your
         category. Results are ranked by co-mention frequency so you see which rivals appear most

@@ -13,7 +13,7 @@ export function RedditHeader(): JSX.Element {
           Reddit Roadmap
         </h1>
         <p className="text-[13px] text-[var(--cat-ink-2)]">
-          A 20-day plan to warm up your account and grow Signalor’s visibility on Reddit.
+          A 20-day plan to warm up your account and grow SignalorAI’s visibility on Reddit.
         </p>
       </div>
       <span className="ml-auto hidden rounded-md border border-[var(--cat-border)] bg-[var(--cat-card)] px-3 py-1.5 text-[13px] font-medium text-[var(--cat-ink-2)] sm:inline-flex">

@@ -65,7 +65,7 @@ const CONTACT_CHANNELS = [
     ),
   },
   {
-    label: 'Build on Signalor',
+    label: 'Build on SignalorAI',
     node: (
       <Link
         href="/api"

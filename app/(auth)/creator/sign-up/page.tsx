@@ -5,8 +5,8 @@ import { MarketingShell } from '@/features/landing/components/MarketingShell'
 import { CreatorAuthCard } from '@/features/site/components/creator/creator-auth-card'
 
 export const metadata = {
-  title: 'Sign up — Signalor Creators',
-  description: 'Create your Signalor creators-program account.',
+  title: 'Sign up — SignalorAI Creators',
+  description: 'Create your SignalorAI creators-program account.',
   robots: { index: false, follow: false },
 }
 

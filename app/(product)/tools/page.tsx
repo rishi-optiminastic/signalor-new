@@ -17,7 +17,7 @@ import { buildMetadata } from '@/features/site/lib/seo'
 export const metadata = buildMetadata({
   title: 'Free GEO & AI Visibility Tools',
   description:
-    'Free, no-signup tools to check your AI search visibility: GEO score, llms.txt readiness, schema validation, competitor citation share, and domain rating. Built on the Signalor engine.',
+    'Free, no-signup tools to check your AI search visibility: GEO score, llms.txt readiness, schema validation, competitor citation share, and domain rating. Built on the SignalorAI engine.',
   path: '/tools',
   keywords: [
     'free GEO tools',
@@ -95,7 +95,7 @@ export default function ToolsIndexPage() {
           <p className="text-accent-foreground mt-5 max-w-2xl text-base leading-relaxed font-light lg:text-lg">
             Run instant, no-signup checks on any domain — GEO score, llms.txt readiness, schema
             coverage, competitor citation share, and domain authority. Each one runs on the same
-            engine that powers Signalor.
+            engine that powers SignalorAI.
           </p>
         </div>
       </section>

@@ -56,7 +56,7 @@ const FAQ_ITEMS = [
       'A side-by-side comparison of how often you and your competitors appear in generative AI answers, across mentions, citations, and recommendation rate, for the prompts that decide consideration.',
   },
   {
-    question: 'How does Signalor pick which competitors to track?',
+    question: 'How does SignalorAI pick which competitors to track?',
     answer:
       'We auto-suggest competitors AI engines already cite alongside you. Add, remove, or pin any brand. Pro tracks up to five; Max is unlimited.',
   },
@@ -71,7 +71,7 @@ const FAQ_ITEMS = [
       'Yes. Lens surfaces the signal causing each gap, schema, content depth, EEAT, entity graph, and each one resolves into a ranked fix.',
   },
   {
-    question: 'How does Signalor identify emerging competitors?',
+    question: 'How does SignalorAI identify emerging competitors?',
     answer:
       "We watch the source list each AI engine cites. When a new brand surfaces in the top three over multiple runs, it's flagged with a confidence score.",
   },
@@ -86,7 +86,7 @@ const FAQ_ITEMS = [
       "A content gap is a topic competitors win and you don't appear for. An authority gap is a topic where you have content but lack the trust signals to be cited.",
   },
   {
-    question: 'Does Signalor track AI recommendation rate per competitor?',
+    question: 'Does SignalorAI track AI recommendation rate per competitor?',
     answer:
       'Yes. Recommendation rate is tracked separately from mentions because being championed is different from being merely listed.',
   },
@@ -217,9 +217,9 @@ export const metadata: Metadata = buildMetadata({
     'share of voice AI',
     'GEO Optimization',
     'LLM SEO',
-    'Signalor GEO',
-    'Signalor AI',
-    'Signalor',
+    'SignalorAI GEO',
+    'SignalorAI',
+    'SignalorAI',
   ],
 })
 
@@ -252,7 +252,7 @@ export default function CompetitiveLensSolutionPage() {
     name: `${SITE_BRAND} Competitive Lens`,
     description:
       'Competitive AI visibility benchmarking. Compare citation share, mention share, and recommendation rate against rivals across every major AI engine.',
-    brand: { '@type': 'Brand', name: 'Signalor' },
+    brand: { '@type': 'Brand', name: 'SignalorAI' },
     url: absoluteUrl(PATH),
     image: `${SITE_URL}/carousel1.png`,
     offers: {

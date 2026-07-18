@@ -140,7 +140,7 @@ const AGENCY_PLANS: PlanConfig[] = [
     label: 'Agency Account',
     price: 99.69,
     period: '/month',
-    description: 'Manage multiple client brands from one Signalor workspace.',
+    description: 'Manage multiple client brands from one SignalorAI workspace.',
     icon: Crown,
     popular: true,
     cta: 'contact',
@@ -406,7 +406,7 @@ function PricingPageInner() {
             fix it. Pick a single-brand plan, or manage every client brand as an agency.
           </p>
           <p className="sr-only">
-            Signalor measures whether ChatGPT, Gemini, Perplexity, Claude, and other AI engines
+            SignalorAI measures whether ChatGPT, Gemini, Perplexity, Claude, and other AI engines
             recommend your brand. The Self-Serve Brand plan covers one brand with ten tracked
             prompts you run yourself. The Managed Growth Brand plan covers one brand with
             twenty-five tracked prompts plus daily agency-style support from our team. Enterprise
@@ -685,9 +685,9 @@ function PricingPageInner() {
 function PricingSeoContent() {
   return (
     <div className="sr-only">
-      <h1>Signalor pricing: plans for AI search and GEO visibility</h1>
+      <h1>SignalorAI pricing: plans for AI search and GEO visibility</h1>
       <p>
-        Compare Signalor plans and pick the tier that matches your brand. Every plan shows whether
+        Compare SignalorAI plans and pick the tier that matches your brand. Every plan shows whether
         AI engines like ChatGPT, Gemini, Perplexity, and Claude recommend your brand, ignore it, or
         recommend your competitors — with prompt ranking, competitor visibility tracking, and
         improvement guidance. Individual brands start with Self-Serve, upgrade to Managed Growth for

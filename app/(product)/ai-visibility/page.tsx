@@ -24,14 +24,14 @@ export default function ContentSignalsPage() {
   return (
     <MarketingShell>
       <p className="sr-only">
-        Signalor AI Visibility scoring audits how ChatGPT, Claude, Gemini, Perplexity, and Google AI
+        SignalorAI Visibility scoring audits how ChatGPT, Claude, Gemini, Perplexity, and Google AI
         Overview see and cite your brand. The platform checks schema.org JSON-LD coverage across
         Organization, Product, Article, FAQ, HowTo, and BreadcrumbList types, detects missing or
         malformed structured data, and evaluates trust signals including authorship markers,
         citation authority, and credibility indicators that large language models weigh when
         deciding what to recommend. Every audit maps findings to a 0-100 GEO score pillar breakdown
         , Schema, E-E-A-T, Content, and Technical, so SEO teams, content managers, and developers
-        know exactly which fixes deliver the highest citation lift. Signalor AI Visibility is built
+        know exactly which fixes deliver the highest citation lift. SignalorAI Visibility is built
         for brands optimizing for generative engine optimization (GEO) and answer engine
         optimization (AEO) across the AI search landscape.
       </p>
@@ -57,7 +57,7 @@ export default function ContentSignalsPage() {
         sectionId="content-signals-faq"
         headingId="content-signals-faq-heading"
         heading="Content signal FAQs"
-        description="How Signalor grades structure, schema, and trust on your site."
+        description="How SignalorAI grades structure, schema, and trust on your site."
         items={[...CONTENT_SIGNALS_FAQ]}
       />
       <RelatedLinks page="/ai-visibility" />

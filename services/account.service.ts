@@ -74,7 +74,7 @@ export const SAMPLE_ACCOUNT: AccountOverview = {
   engines: ['ChatGPT', 'Gemini', 'Perplexity', 'Claude', 'Google', 'Bing'],
   projects: [
     { id: 1, name: 'Optiminastic', url: 'optiminastic.com', createdAt: '2026-05-12' },
-    { id: 2, name: 'Signalor', url: 'signalor.ai', createdAt: '2026-06-01' },
+    { id: 2, name: 'SignalorAI', url: 'signalor.ai', createdAt: '2026-06-01' },
     { id: 3, name: 'Tech5', url: 'tech5.io', createdAt: '2026-06-20' },
   ],
   invoices: [

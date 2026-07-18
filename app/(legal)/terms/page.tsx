@@ -12,8 +12,8 @@ export default function TermsAndConditionsPage() {
         <div>
           <p>
             These Terms and Conditions (&ldquo;Terms&rdquo;) govern your access to and use of the
-            Signalor GEO website, applications, and services (collectively, the
-            &ldquo;Service&rdquo;) provided by Signalor GEO (&ldquo;Signalor&rdquo;,
+            SignalorAI GEO website, applications, and services (collectively, the
+            &ldquo;Service&rdquo;) provided by SignalorAI GEO (&ldquo;SignalorAI&rdquo;,
             &ldquo;we&rdquo;, &ldquo;us&rdquo;). By creating an account or using the Service, you
             agree to these Terms.
           </p>
@@ -31,7 +31,7 @@ export default function TermsAndConditionsPage() {
         <div>
           <h2 className="text-base font-semibold">2. The Service</h2>
           <p className="mt-2">
-            Signalor GEO provides generative-engine-optimization tooling, including site analysis,
+            SignalorAI GEO provides generative-engine-optimization tooling, including site analysis,
             scoring, recommendations, AI visibility checks, and integrations with third-party
             platforms. Features and limits depend on your subscription plan and may change over
             time.
@@ -101,9 +101,9 @@ export default function TermsAndConditionsPage() {
           <h2 className="text-base font-semibold">6. User Content</h2>
           <p className="mt-2">
             You retain ownership of the content you submit to the Service (URLs, brand inputs,
-            prompts, and similar). You grant Signalor a limited, worldwide, non-exclusive license to
-            host, process, and use that content solely to operate, secure, and improve the Service.
-            You are responsible for ensuring you have the rights to submit that content.
+            prompts, and similar). You grant SignalorAI a limited, worldwide, non-exclusive license
+            to host, process, and use that content solely to operate, secure, and improve the
+            Service. You are responsible for ensuring you have the rights to submit that content.
           </p>
         </div>
 
@@ -122,8 +122,8 @@ export default function TermsAndConditionsPage() {
           <h2 className="text-base font-semibold">8. Intellectual Property</h2>
           <p className="mt-2">
             The Service, including its software, designs, trademarks, and documentation, is owned by
-            Signalor and its licensors and is protected by intellectual property laws. We grant you
-            a limited, non-exclusive, non-transferable right to access and use the Service in
+            SignalorAI and its licensors and is protected by intellectual property laws. We grant
+            you a limited, non-exclusive, non-transferable right to access and use the Service in
             accordance with these Terms. No other rights are granted, expressly or by implication.
           </p>
         </div>
@@ -163,10 +163,10 @@ export default function TermsAndConditionsPage() {
         <div>
           <h2 className="text-base font-semibold">12. Indemnification</h2>
           <p className="mt-2">
-            You agree to defend, indemnify, and hold harmless Signalor and its officers, employees,
-            and affiliates from any claims, damages, liabilities, and expenses (including reasonable
-            legal fees) arising out of your use of the Service, your content, or your violation of
-            these Terms.
+            You agree to defend, indemnify, and hold harmless SignalorAI and its officers,
+            employees, and affiliates from any claims, damages, liabilities, and expenses (including
+            reasonable legal fees) arising out of your use of the Service, your content, or your
+            violation of these Terms.
           </p>
         </div>
 
@@ -183,7 +183,7 @@ export default function TermsAndConditionsPage() {
         <div>
           <h2 className="text-base font-semibold">14. Governing Law and Disputes</h2>
           <p className="mt-2">
-            These Terms are governed by the laws of the jurisdiction in which Signalor is
+            These Terms are governed by the laws of the jurisdiction in which SignalorAI is
             established, without regard to conflict-of-laws rules. Disputes will be resolved by the
             competent courts of that jurisdiction, except where mandatory consumer-protection law
             grants you alternative rights.

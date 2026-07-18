@@ -12,7 +12,7 @@ import {
 export const metadata: Metadata = buildMetadata({
   title: 'Free AI Competitor Analysis | Who Wins in Your Category',
   description:
-    "See which brands AI engines recommend alongside yours. Paste your domain and Signalor ranks competitors by co-mention frequency in live 'vs', 'alternatives', and comparison queries, free, no sign-up.",
+    "See which brands AI engines recommend alongside yours. Paste your domain and SignalorAI ranks competitors by co-mention frequency in live 'vs', 'alternatives', and comparison queries, free, no sign-up.",
   path: '/tools/competitors-analysis',
   keywords: [
     'AI competitor analysis',
@@ -59,7 +59,7 @@ const FAQ = [
 const competitorsToolJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
-  name: 'Signalor Competitor Analysis',
+  name: 'SignalorAI Competitor Analysis',
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Web',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },

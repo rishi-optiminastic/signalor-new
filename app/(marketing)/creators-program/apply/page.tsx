@@ -485,7 +485,7 @@ function SuccessCard({ result }: { result: CreatorApplyResponse }) {
         Hi {result.name}, here's your creator link
       </h2>
       <p className="text-muted-foreground mt-1 text-[13px]">
-        Share this anywhere. Visitors land on Signalor with 10% off; you earn{' '}
+        Share this anywhere. Visitors land on SignalorAI with 10% off; you earn{' '}
         {result.commission_percent}% on every first-time subscription.
       </p>
 

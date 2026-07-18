@@ -22,7 +22,7 @@ export function AgentChatComposer(): JSX.Element {
         <AgentComposerActions canSend={canSend} />
       </div>
       <p className="mt-2 text-center text-[11px] text-[var(--cat-ink-3)]">
-        Signalor Agent can make mistakes. Verify important changes.
+        SignalorAI Agent can make mistakes. Verify important changes.
       </p>
     </div>
   )

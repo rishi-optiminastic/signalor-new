@@ -76,7 +76,7 @@ export function AboutHero(): JSX.Element {
           />
           <div className="relative mx-auto max-w-2xl text-center">
             <p className="text-primary text-[12px] font-semibold tracking-[0.18em] uppercase">
-              About Signalor
+              About SignalorAI
             </p>
             <h1
               id="about-hero-heading"
@@ -88,7 +88,7 @@ export function AboutHero(): JSX.Element {
               </span>
             </h1>
             <p className="text-muted-foreground mx-auto mt-4 max-w-xl text-base leading-relaxed text-pretty sm:text-lg">
-              Buyers increasingly ask ChatGPT, Gemini, and Perplexity before they search. Signalor
+              Buyers increasingly ask ChatGPT, Gemini, and Perplexity before they search. SignalorAI
               exists so those answers describe your brand accurately - and cite it.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">

@@ -16,7 +16,7 @@ export function AgentChatHeader(): JSX.Element {
   return (
     <div className="flex shrink-0 items-center justify-between border-b border-[var(--cat-border)] px-3 py-2.5">
       <span className="text-[12px] font-semibold tracking-wide text-[var(--cat-ink-2)] uppercase">
-        Signalor Agent
+        SignalorAI Agent
       </span>
       <div className="flex items-center gap-0.5">
         <button

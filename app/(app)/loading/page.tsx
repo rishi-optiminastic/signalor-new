@@ -130,7 +130,7 @@ export default function LoadingPage(): JSX.Element {
       />
       <div className="relative z-10 w-full max-w-[420px]">
         <p className="text-[11px] font-semibold tracking-[0.18em] text-neutral-400 uppercase">
-          Signalor · GEO analysis
+          SignalorAI · GEO analysis
         </p>
 
         <div className="mt-3 flex items-baseline gap-3">

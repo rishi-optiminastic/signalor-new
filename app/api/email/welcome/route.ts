@@ -58,7 +58,7 @@ function buildHtml(firstName: string, dashboardUrl: string): string {
             <tbody>
               <tr>
                 <td style="text-align: left; padding: 0 0 28px;" align="left">
-                  <img src="${logoUrl}" alt="Signalor" width="140" height="auto"
+                  <img src="${logoUrl}" alt="SignalorAI" width="140" height="auto"
                     style="display: inline-block; height: auto; max-width: 140px; border: 0; outline: none; text-decoration: none;" />
                 </td>
               </tr>
@@ -71,7 +71,7 @@ function buildHtml(firstName: string, dashboardUrl: string): string {
               <tr>
                 <td style="padding: 0 0 20px;" align="left">
                   <span style="font-size: 24px; font-weight: 700; color: #0d0d0d; font-family: Helvetica, Arial, sans-serif; line-height: 1.3;">
-                    Welcome to Signalor${firstName ? `, ${firstName}` : ''} 👋
+                    Welcome to SignalorAI${firstName ? `, ${firstName}` : ''} 👋
                   </span>
                 </td>
               </tr>
@@ -85,10 +85,10 @@ function buildHtml(firstName: string, dashboardUrl: string): string {
                 <td style="color: #333333; font-family: Helvetica, Arial, sans-serif; font-size: 15px; line-height: 22px; padding: 0;">
 
                   <p style="margin: 0 0 16px; line-height: 1.6; color: #333333;">
-                    You're in. Over <strong>40% of searches now happen inside AI tools</strong>, not Google. Signalor is the platform that tracks, measures, and improves how your brand gets cited by ChatGPT, Gemini, Perplexity, and Claude.
+                    You're in. Over <strong>40% of searches now happen inside AI tools</strong>, not Google. SignalorAI is the platform that tracks, measures, and improves how your brand gets cited by ChatGPT, Gemini, Perplexity, and Claude.
                   </p>
 
-                  <h2 style="font-size: 13px; font-weight: 700; color: #0d0d0d; margin: 22px 0 8px; text-transform: uppercase; letter-spacing: 0.5px;">What you can do with Signalor</h2>
+                  <h2 style="font-size: 13px; font-weight: 700; color: #0d0d0d; margin: 22px 0 8px; text-transform: uppercase; letter-spacing: 0.5px;">What you can do with SignalorAI</h2>
 
                   <ul style="list-style: none; margin: 0 0 20px 0; padding: 0;">
                     <li style="padding: 8px 0 8px 18px; border-bottom: 1px solid #f0f0f0; font-size: 14px; color: #444444; line-height: 1.5; position: relative;">
@@ -134,7 +134,7 @@ function buildHtml(firstName: string, dashboardUrl: string): string {
                   <hr style="border: none; border-top: 1px solid #eeeeee; margin: 24px 0;">
 
                   <p style="margin: 0; line-height: 1.6; font-size: 14px; color: #333333;">
-                    The Signalor Team<br>
+                    The SignalorAI Team<br>
                     <a href="mailto:hello@signalor.ai" style="color: #e04a3d; border: none; outline: none;">hello@signalor.ai</a>
                   </p>
 
@@ -159,7 +159,7 @@ function buildHtml(firstName: string, dashboardUrl: string): string {
               <tr>
                 <td class="footer-td" style="font-family: Helvetica, Arial, sans-serif; font-size: 12px; padding: 20px 30px 15px; text-align: center;" align="center">
                   <p style="color: #b7b7b7; font-size: 12px; font-weight: 300; margin: 0 0 4px;">
-                    © 2026 Signalor.ai · AI Search Visibility &amp; GEO Platform
+                    © 2026 SignalorAI · AI Search Visibility &amp; GEO Platform
                   </p>
                   <p style="margin: 0;">
                     <a href="${SITE_URL}" style="color: #b7b7b7; font-size: 12px; font-weight: 300; text-decoration: underline;">
@@ -206,8 +206,8 @@ export async function POST(req: NextRequest) {
     },
     body: JSON.stringify({
       personalizations: [{ to: [{ email }] }],
-      from: { email: FROM_EMAIL, name: 'Signalor' },
-      subject: 'Welcome to Signalor, your AI visibility report is ready',
+      from: { email: FROM_EMAIL, name: 'SignalorAI' },
+      subject: 'Welcome to SignalorAI, your AI visibility report is ready',
       content: [{ type: 'text/html', value: html }],
     }),
   })

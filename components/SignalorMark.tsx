@@ -1,4 +1,4 @@
-/** The real Signalor brand mark — 5 nested "signal ring" paths. Shared app-wide. */
+/** The real SignalorAI brand mark — 5 nested "signal ring" paths. Shared app-wide. */
 export function SignalorMark({ className }: { className?: string }): JSX.Element {
   return (
     <svg viewBox="0 0 1080 1080" className={className} fill="currentColor" aria-hidden="true">

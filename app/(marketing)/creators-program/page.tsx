@@ -9,12 +9,12 @@ import { ScreenHR } from '@/features/site/components/ui/intersection-diamonds'
 import { breadcrumbJsonLd, buildMetadata } from '@/features/site/lib/seo'
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Signalor Creators Program | Earn 20% on Every Referral',
+  title: 'SignalorAI Creators Program | Earn 20% on Every Referral',
   description:
-    'Share Signalor with your audience and earn 20% commission on every first-time GEO subscription. Auto-approved links, 30-day refund window, transparent payouts.',
+    'Share SignalorAI with your audience and earn 20% commission on every first-time GEO subscription. Auto-approved links, 30-day refund window, transparent payouts.',
   path: '/creators-program',
   keywords: [
-    'Signalor creators program',
+    'SignalorAI creators program',
     'GEO affiliate program',
     'AI SEO referral',
     'creator partnerships',
@@ -113,7 +113,7 @@ function ProgramFaq() {
     },
     {
       q: 'What does my audience get?',
-      a: 'A 10% discount applied automatically at checkout on Signalor subscriptions. The discount stacks with annual billing.',
+      a: 'A 10% discount applied automatically at checkout on SignalorAI subscriptions. The discount stacks with annual billing.',
     },
     {
       q: 'Can I edit my profile later?',
@@ -182,7 +182,7 @@ export default function CreatorsProgramPage() {
             .
           </h1>
           <p className="text-muted-foreground mx-auto mt-4 max-w-xl text-sm leading-relaxed">
-            Get a creator link in 30 seconds. Visitors land on Signalor with 10% off; you earn 20%
+            Get a creator link in 30 seconds. Visitors land on SignalorAI with 10% off; you earn 20%
             on every first paid subscription. No quotas, no waiting list, no kickoff call.
           </p>
           <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
@@ -259,7 +259,7 @@ export default function CreatorsProgramPage() {
       <section className="px-6 py-16 lg:px-12">
         <div className="bg-muted/60 mx-auto max-w-3xl rounded-2xl border border-black/8 px-6 py-10 text-center sm:px-10">
           <h2 className="text-foreground text-2xl font-semibold tracking-tight sm:text-3xl">
-            Ready to share Signalor?
+            Ready to share SignalorAI?
           </h2>
           <p className="text-muted-foreground mt-2 text-sm">
             Apply now and get your creator link in 30 seconds.

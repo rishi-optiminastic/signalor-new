@@ -7,7 +7,7 @@ import { breadcrumbJsonLd, buildMetadata, faqJsonLd, SITE_URL } from '@/features
 export const metadata: Metadata = buildMetadata({
   title: 'GEO Recommendations | AI Fix Queue for Shopify & WordPress',
   description:
-    'Prioritized GEO fix recommendations ranked by citation impact. Signalor connects to Shopify and WordPress so you can apply schema, meta, and content fixes to your live site in one click, no engineering required.',
+    'Prioritized GEO fix recommendations ranked by citation impact. SignalorAI connects to Shopify and WordPress so you can apply schema, meta, and content fixes to your live site in one click, no engineering required.',
   path: '/recommendations',
   keywords: [
     'GEO recommendations',
@@ -50,7 +50,7 @@ const recommendationsWebPageJsonLd = {
   },
   mainEntity: {
     '@type': 'SoftwareApplication',
-    name: 'Signalor GEO Recommendations',
+    name: 'SignalorAI GEO Recommendations',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web',
     offers: {

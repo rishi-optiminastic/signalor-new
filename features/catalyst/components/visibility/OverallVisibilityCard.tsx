@@ -21,7 +21,7 @@ export function OverallVisibilityCard({ data }: { data: OverallVis }): JSX.Eleme
       </div>
       <BarMeter value={data.score} color={BRAND} />
       <div className="text-[12px] text-[var(--cat-ink-3)]">
-        {data.detected} of {data.total} platforms detected · Signalor
+        {data.detected} of {data.total} platforms detected · SignalorAI
       </div>
     </div>
   )

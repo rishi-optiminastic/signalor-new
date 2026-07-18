@@ -59,7 +59,7 @@ const FAQ = [
 const urlAnalyzerJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
-  name: 'Signalor URL Analyzer',
+  name: 'SignalorAI URL Analyzer',
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Web',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },

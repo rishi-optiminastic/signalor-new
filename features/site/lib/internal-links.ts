@@ -107,7 +107,7 @@ const CATALOG: Record<string, RelatedLink> = {
   },
   '/about-us': {
     href: '/about-us',
-    title: 'About Signalor',
+    title: 'About SignalorAI',
     desc: 'What we build, who it is for, and the team behind the GEO platform.',
   },
 }

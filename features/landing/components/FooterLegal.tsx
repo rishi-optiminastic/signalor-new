@@ -30,7 +30,7 @@ export function FooterLegal(): JSX.Element {
             <span className="h-2 w-2 shrink-0 rounded-full bg-[#16a34a]" aria-hidden />
             All systems online
           </span>
-          <p className="text-[12px] text-[#9ca3af]">© {year} Signalor. All rights reserved.</p>
+          <p className="text-[12px] text-[#9ca3af]">© {year} SignalorAI. All rights reserved.</p>
         </div>
       </div>
     </div>

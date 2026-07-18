@@ -60,7 +60,8 @@ export default async function BlogPage() {
           </h1>
           <p className="text-accent-foreground mt-5 max-w-2xl text-base leading-relaxed font-light lg:text-lg">
             Playbooks, research, and honest guides on GEO, citation attribution, llms.txt, and the
-            schemas that actually move the needle, written by operators shipping Signalor every day.
+            schemas that actually move the needle, written by operators shipping SignalorAI every
+            day.
           </p>
           <div className="mt-6 flex flex-wrap gap-2">
             <span className="text-foreground inline-flex items-center rounded-full border border-black/10 bg-white px-3 py-1 text-[11px] font-semibold">
@@ -102,7 +103,7 @@ export default async function BlogPage() {
             <h2 className="text-foreground mt-4 max-w-4xl text-3xl leading-[1.12] font-bold tracking-tight sm:text-4xl lg:text-[2.65rem]">
               Fresh from the{' '}
               <span className="text-warning relative whitespace-nowrap">
-                Signalor studio
+                SignalorAI studio
                 <span
                   className="border-warning/45 absolute right-0 -bottom-1 left-0 border-b-2 border-dashed"
                   aria-hidden

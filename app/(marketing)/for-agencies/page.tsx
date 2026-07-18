@@ -14,7 +14,7 @@ import { breadcrumbJsonLd, buildMetadata, faqJsonLd, SITE_URL } from '@/features
 export const metadata: Metadata = buildMetadata({
   title: 'AI Search for Agencies | Track GEO Across Your Whole Client Roster',
   description:
-    'Run GEO audits, monitor AI share of voice, and ship prioritized fixes across every client from one Signalor workspace. Multi-brand projects, white-label reporting, and roster-wide fix planning built for agencies.',
+    'Run GEO audits, monitor AI share of voice, and ship prioritized fixes across every client from one SignalorAI workspace. Multi-brand projects, white-label reporting, and roster-wide fix planning built for agencies.',
   path: '/for-agencies',
   keywords: [
     'AI search for agencies',
@@ -36,7 +36,7 @@ const forAgenciesWebPageJsonLd = {
   '@id': `${SITE_URL}/for-agencies`,
   name: 'AI Search for Agencies: Track GEO Across Your Whole Client Roster',
   description:
-    'Run GEO audits, monitor AI share of voice, and ship prioritized fixes across every client from one Signalor workspace, with multi-brand projects and white-label reporting built for agencies.',
+    'Run GEO audits, monitor AI share of voice, and ship prioritized fixes across every client from one SignalorAI workspace, with multi-brand projects and white-label reporting built for agencies.',
   url: `${SITE_URL}/for-agencies`,
   breadcrumb: {
     '@type': 'BreadcrumbList',
@@ -47,7 +47,7 @@ const forAgenciesWebPageJsonLd = {
   },
   mainEntity: {
     '@type': 'SoftwareApplication',
-    name: 'Signalor for Agencies',
+    name: 'SignalorAI for Agencies',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web',
     offers: {
@@ -71,7 +71,7 @@ export default function ForAgenciesPage(): JSX.Element {
   return (
     <MarketingShell>
       <p className="sr-only">
-        Signalor for Agencies lets marketing agencies, SEO consultants, and GEO specialists run AI
+        SignalorAI for Agencies lets marketing agencies, SEO consultants, and GEO specialists run AI
         search visibility for an entire client roster from one workspace. Each client is a separate
         project with its own GEO score, prompt library, competitor set, and run schedule, so account
         managers report a clean 0-100 number while strategists focus on the schema, structure, and
