@@ -1,7 +1,5 @@
 'use client'
 
-import { useEffect } from 'react'
-
 import { AiCitationCard } from '@/features/catalyst/components/cards/AiCitationCard'
 import { CompetitorHeatmapCard } from '@/features/catalyst/components/cards/CompetitorHeatmapCard'
 import { ConversionRateCard } from '@/features/catalyst/components/cards/ConversionRateCard'
@@ -13,22 +11,13 @@ import { DashboardSkeleton } from '@/features/catalyst/components/DashboardSkele
 import { AiAssistantPanel } from '@/features/catalyst/components/overview/AiAssistantPanel'
 import { DashboardGreeting } from '@/features/catalyst/components/overview/DashboardGreeting'
 import { WorldPresenceCard } from '@/features/catalyst/components/overview/WorldPresenceCard'
-import { TopbarActions } from '@/features/catalyst/components/TopbarActions'
 import { useDashboardReady } from '@/hooks/useDashboardReady'
-import { useTopbarSlot } from '@/stores/useTopbarSlot'
-
 
 export function DashboardContent(): JSX.Element {
   const ready = useDashboardReady()
-  const setActions = useTopbarSlot(s => s.setActions)
 
-  // Inject this page's toolbar (range/engine filters + New Analysis) into the
-  // shared GlobalBar, so there's a single top bar instead of two stacked ones.
-  useEffect(() => {
-    setActions(<TopbarActions />)
-    return () => setActions(null)
-  }, [setActions])
-
+  // This page's toolbar (range, engine filter, Re-analyze) renders on the
+  // greeting row via DashboardGreeting rather than in the shared GlobalBar.
   if (!ready) return <DashboardSkeleton />
 
   return (

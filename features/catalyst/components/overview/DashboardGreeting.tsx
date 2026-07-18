@@ -1,5 +1,6 @@
 'use client'
 
+import { OverviewActions } from '@/features/catalyst/components/OverviewActions'
 import { useActiveProject } from '@/hooks/useActiveProject'
 import { useSession } from '@/lib/auth-client'
 
@@ -10,9 +11,10 @@ function firstNameOf(raw: string): string {
 }
 
 /**
- * Lightweight page title for the dashboard Overview. Replaces the old second
- * top bar — the account avatar/search/notifications now live once in the shared
- * GlobalBar, so this is just a warm greeting in the content flow.
+ * Page header for the dashboard Overview: the greeting on the left and this
+ * page's toolbar (range, engine filter, Re-analyze) right-aligned on the same
+ * line. The account avatar/search/notifications live once in the shared
+ * GlobalBar; the page's own controls sit here in the content flow.
  */
 export function DashboardGreeting(): JSX.Element {
   const { data: session } = useSession()
@@ -22,15 +24,22 @@ export function DashboardGreeting(): JSX.Element {
   const name = firstNameOf(raw)
 
   return (
-    <div className="cat-rise col-span-full mb-0.5">
-      <h1 className="text-[19px] font-semibold tracking-tight text-[var(--cat-ink)]">
-        Welcome back, {name} 👋
-      </h1>
-      <p className="mt-0.5 text-[13px] text-[var(--cat-ink-2)]">
-        {activeOrg
-          ? `Here’s what’s happening with ${activeOrg.name} today.`
-          : 'Here’s what’s happening today.'}
-      </p>
+    // relative z-30: `cat-rise`/`cat-stagger` animate transform+opacity, which
+    // makes every grid child its own stacking context. Without an explicit
+    // z-index here the toolbar's dropdowns are trapped in this row's context and
+    // the later sibling cards paint over them. Stays under the topbar's z-40.
+    <div className="cat-rise relative z-30 col-span-full mb-0.5 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
+      <div className="min-w-0">
+        <h1 className="text-[19px] font-semibold tracking-tight text-[var(--cat-ink)]">
+          Welcome back, {name} 👋
+        </h1>
+        <p className="mt-0.5 text-[13px] text-[var(--cat-ink-2)]">
+          {activeOrg
+            ? `Here’s what’s happening with ${activeOrg.name} today.`
+            : 'Here’s what’s happening today.'}
+        </p>
+      </div>
+      <OverviewActions />
     </div>
   )
 }

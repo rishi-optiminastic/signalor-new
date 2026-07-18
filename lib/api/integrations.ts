@@ -40,6 +40,34 @@ export async function getGAAuthUrl(email: string): Promise<string> {
   return z.object({ auth_url: z.string() }).parse(data).auth_url
 }
 
+/* ──────────────────────────────────────────────── Google Search Console (GSC) */
+
+/**
+ * GET /api/integrations/google-search-console/auth-url/ → the Google OAuth URL.
+ *
+ * Unlike GA4, GSC's callback is server-side: Google redirects to the backend,
+ * which exchanges the code and then sends the browser back to
+ * `{frontend_base}{return_to}?gsc=connected|error`. Both are passed here so the
+ * user lands back on the page they started from.
+ */
+export async function getGscAuthUrl(email: string, returnTo: string): Promise<string> {
+  const data = await apiGet<unknown>('/api/integrations/google-search-console/auth-url/', {
+    params: {
+      email: normalizeEmail(email),
+      return_to: returnTo,
+      frontend_base: typeof window === 'undefined' ? '' : window.location.origin,
+    },
+  })
+  return z.object({ auth_url: z.string() }).parse(data).auth_url
+}
+
+/** DELETE /api/integrations/google-search-console/disconnect/?email= */
+export async function disconnectGsc(email: string): Promise<void> {
+  await apiDelete<unknown>(
+    `/api/integrations/google-search-console/disconnect/?email=${encodeURIComponent(normalizeEmail(email))}`,
+  )
+}
+
 /** GET /api/integrations/shopify/auth-url/?email=&shop= → the app install URL. */
 export async function getShopifyAuthUrl(email: string, shop: string): Promise<string> {
   const data = await apiGet<unknown>('/api/integrations/shopify/auth-url/', {

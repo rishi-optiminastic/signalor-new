@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 
+import { AgentChatPanel } from '@/features/catalyst/components/agent-chat/AgentChatPanel'
 import { GlobalBar } from '@/features/catalyst/components/GlobalBar'
 import { Sidebar } from '@/features/catalyst/components/Sidebar'
 
@@ -24,6 +25,7 @@ export function CatalystShell({ children }: CatalystShellProps): JSX.Element {
           {children}
         </div>
       </main>
+      <AgentChatPanel />
     </div>
   )
 }

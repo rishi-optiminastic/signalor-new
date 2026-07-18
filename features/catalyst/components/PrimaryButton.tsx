@@ -17,7 +17,7 @@ export function PrimaryButton({
 }: PrimaryButtonProps): JSX.Element {
   const base = iconOnly
     ? 'auth-cta-btn grid h-[34px] w-[34px] shrink-0 place-items-center rounded-md text-white'
-    : 'auth-cta-btn inline-flex h-[34px] shrink-0 items-center gap-2 rounded-md px-3.5 text-[13px] font-semibold text-white'
+    : 'auth-cta-btn inline-flex h-[34px] shrink-0 items-center gap-2 rounded-md px-3.5 text-[13px] font-semibold whitespace-nowrap text-white'
   return (
     <button type="button" {...rest} className={`${base} ${className}`}>
       {Icon && <Icon size={16} strokeWidth={2.2} />}

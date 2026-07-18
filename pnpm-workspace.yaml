@@ -1,3 +1,9 @@
+# This repo is a single project, not a monorepo. pnpm still treats the presence
+# of this file as declaring a workspace, so `packages` must exist or every
+# workspace-mutating command (`pnpm add`, …) fails with
+# ERR_PNPM_INVALID_WORKSPACE_CONFIGURATION: packages field missing or empty.
+packages: []
+
 allowBuilds:
   '@prisma/client': false
   '@prisma/engines': false

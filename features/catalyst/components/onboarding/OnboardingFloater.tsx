@@ -6,11 +6,13 @@ import { useState } from 'react'
 
 import { TickBar } from '@/features/catalyst/components/brands/BrandBits'
 import { useActiveProject } from '@/hooks/useActiveProject'
+import { useDraggableFloater, type DragHandle } from '@/hooks/useDraggableFloater'
 import { useMounted } from '@/hooks/useMounted'
 import { useOnboardingSteps, type OnboardingStep } from '@/hooks/useOnboardingSteps'
 
 const DISMISS_KEY = 'signalor.onboarding.dismissed'
 const OPEN_KEY = 'signalor.onboarding.open'
+const POSITION_KEY = 'signalor.onboarding.position'
 
 /** Read a persisted boolean flag, guarding SSR where localStorage is absent. */
 function readFlag(key: string, fallback: boolean): boolean {
@@ -64,20 +66,26 @@ function StepRow({ step, active }: { step: OnboardingStep; active: boolean }): J
   )
 }
 
-function CollapsedTrigger({
-  completed,
-  total,
-  onOpen,
-}: {
+interface CollapsedTriggerProps {
   completed: number
   total: number
   onOpen: () => void
-}): JSX.Element {
+  drag: DragHandle
+}
+
+/** The pill doubles as its own drag handle; the hook swallows the click that
+ *  follows a real drag, so it only opens the card on a genuine press. */
+function CollapsedTrigger({ completed, total, onOpen, drag }: CollapsedTriggerProps): JSX.Element {
   return (
     <button
       type="button"
+      onPointerDown={drag.startDrag}
       onClick={onOpen}
-      className="inline-flex items-center gap-2 rounded-full bg-[var(--cat-card)] py-2 pr-3.5 pl-2.5 text-[13px] font-semibold text-[var(--cat-ink)] shadow-[0_10px_30px_-10px_rgba(0,0,0,0.3)] ring-1 ring-black/10 transition-transform hover:-translate-y-0.5 dark:ring-white/10"
+      className={`inline-flex touch-none items-center gap-2 rounded-full bg-[var(--cat-card)] py-2 pr-3.5 pl-2.5 text-[13px] font-semibold text-[var(--cat-ink)] shadow-[0_10px_30px_-10px_rgba(0,0,0,0.3)] ring-1 ring-black/10 select-none dark:ring-white/10 ${
+        drag.dragging
+          ? 'cursor-grabbing'
+          : 'cursor-grab transition-transform hover:-translate-y-0.5'
+      }`}
     >
       <span className="grid h-6 w-6 place-items-center rounded-full bg-[#e04a3d]/10 text-[#e04a3d]">
         <ListChecks size={14} />
@@ -97,19 +105,25 @@ interface CardProps {
   allDone: boolean
   onCollapse: () => void
   onDismiss: () => void
+  drag: DragHandle
 }
 
-function CardHeader({
-  completed,
-  total,
-  onCollapse,
-}: {
+interface CardHeaderProps {
   completed: number
   total: number
   onCollapse: () => void
-}): JSX.Element {
+  drag: DragHandle
+}
+
+/** Header doubles as the card's drag handle; the step links below stay clickable. */
+function CardHeader({ completed, total, onCollapse, drag }: CardHeaderProps): JSX.Element {
   return (
-    <div className="flex items-start justify-between gap-2 px-4 pt-4">
+    <div
+      onPointerDown={drag.startDrag}
+      className={`flex touch-none items-start justify-between gap-2 px-4 pt-4 select-none ${
+        drag.dragging ? 'cursor-grabbing' : 'cursor-grab'
+      }`}
+    >
       <div>
         <p className="text-[14px] font-semibold text-[var(--cat-ink)]">Get started with Signalor</p>
         <p className="mt-0.5 text-[12px] text-[var(--cat-ink-3)]">
@@ -120,7 +134,9 @@ function CardHeader({
         type="button"
         aria-label="Minimize"
         onClick={onCollapse}
-        className="grid h-7 w-7 shrink-0 place-items-center rounded-md text-[var(--cat-ink-3)] transition-colors hover:bg-[var(--cat-hover)] hover:text-[var(--cat-ink)]"
+        // Keep the press on the button from starting a drag of the card.
+        onPointerDown={e => e.stopPropagation()}
+        className="grid h-7 w-7 shrink-0 cursor-pointer place-items-center rounded-md text-[var(--cat-ink-3)] transition-colors hover:bg-[var(--cat-hover)] hover:text-[var(--cat-ink)]"
       >
         <Minus size={16} />
       </button>
@@ -135,11 +151,12 @@ function OnboardingCard({
   allDone,
   onCollapse,
   onDismiss,
+  drag,
 }: CardProps): JSX.Element {
   const activeId = steps.find(s => !s.done)?.id
   return (
     <div className="w-[330px] max-w-[calc(100vw-2.5rem)] overflow-hidden rounded-xl bg-[var(--cat-card)] shadow-[0_20px_50px_-16px_rgba(0,0,0,0.35)] ring-1 ring-black/10 dark:ring-white/10">
-      <CardHeader completed={completed} total={total} onCollapse={onCollapse} />
+      <CardHeader completed={completed} total={total} onCollapse={onCollapse} drag={drag} />
       <div className="px-4 pt-3">
         <TickBar value={(completed / total) * 100} ticks={total * 4} showValue={false} />
       </div>
@@ -166,17 +183,23 @@ function OnboardingCard({
   )
 }
 
-export function OnboardingFloater(): JSX.Element | null {
-  const mounted = useMounted()
-  const { orgSlug } = useActiveProject()
-  const { steps, completed, total, allDone } = useOnboardingSteps()
-  // Open by default; the lazy initializers read the user's saved preference on
-  // the client (SSR-guarded), so there's no set-state-in-effect churn.
-  const [open, setOpen] = useState(() => readFlag(OPEN_KEY, true))
+interface Visibility {
+  open: boolean
+  dismissed: boolean
+  setOpen: (next: boolean) => void
+  dismiss: () => void
+}
+
+/**
+ * Open/dismissed state, persisted. The lazy initializers read the saved
+ * preference on the client (SSR-guarded), so there's no set-state-in-effect churn.
+ */
+function useOnboardingVisibility(): Visibility {
+  const [open, setOpenState] = useState(() => readFlag(OPEN_KEY, true))
   const [dismissed, setDismissed] = useState(() => readFlag(DISMISS_KEY, false))
 
-  const setOpenPersisted = (next: boolean): void => {
-    setOpen(next)
+  const setOpen = (next: boolean): void => {
+    setOpenState(next)
     localStorage.setItem(OPEN_KEY, next ? '1' : '0')
   }
   const dismiss = (): void => {
@@ -184,24 +207,48 @@ export function OnboardingFloater(): JSX.Element | null {
     localStorage.setItem(DISMISS_KEY, '1')
   }
 
+  return { open, dismissed, setOpen, dismiss }
+}
+
+export function OnboardingFloater(): JSX.Element | null {
+  const mounted = useMounted()
+  const { orgSlug } = useActiveProject()
+  const { steps, completed, total, allDone } = useOnboardingSteps()
+  const { open, dismissed, setOpen, dismiss } = useOnboardingVisibility()
+  // Destructured rather than kept as one object: the react-hooks/refs lint pass
+  // taints a hook result that closes over refs, so member access on it in render
+  // would be flagged even though nothing here reads a ref.
+  const { setContainer, style: dragStyle, dragging, startDrag } = useDraggableFloater(POSITION_KEY)
+  const drag: DragHandle = { dragging, startDrag }
+
   if (!mounted || !orgSlug || dismissed) return null
 
   return (
-    <div className="fixed right-5 bottom-5 z-40 flex flex-col items-end print:hidden">
+    <div
+      ref={setContainer}
+      style={dragStyle}
+      // Parked bottom-right until the user drags it; after that `style` pins
+      // explicit left/top coordinates instead.
+      className={`fixed z-40 flex flex-col items-end print:hidden ${
+        dragStyle ? '' : 'right-5 bottom-5'
+      }`}
+    >
       {open ? (
         <OnboardingCard
           steps={steps}
           completed={completed}
           total={total}
           allDone={allDone}
-          onCollapse={() => setOpenPersisted(false)}
+          onCollapse={() => setOpen(false)}
           onDismiss={dismiss}
+          drag={drag}
         />
       ) : (
         <CollapsedTrigger
           completed={completed}
           total={total}
-          onOpen={() => setOpenPersisted(true)}
+          onOpen={() => setOpen(true)}
+          drag={drag}
         />
       )}
     </div>

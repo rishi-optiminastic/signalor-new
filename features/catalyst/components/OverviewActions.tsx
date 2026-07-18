@@ -1,6 +1,6 @@
 'use client'
 
-import { Calendar, Check, ChevronDown, Loader2, Plus, SlidersHorizontal } from 'lucide-react'
+import { Calendar, Check, ChevronDown, Loader2, RotateCw, SlidersHorizontal } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 
@@ -23,7 +23,9 @@ function Dropdown({
 }): JSX.Element {
   const [open, setOpen] = useState(false)
   return (
-    <div className="relative">
+    // shrink-0: without it this wrapper collapses under a crowded bar and the
+    // chip inside is squeezed regardless of its own shrink-0.
+    <div className="relative shrink-0">
       {trigger(() => setOpen(o => !o))}
       {open && (
         <>
@@ -128,41 +130,42 @@ function SelectChip({
 const RANGES = ['Last 7 days', 'Last month', 'Last 3 months', 'Last year']
 const FILTERS = ['All engines', 'ChatGPT', 'Claude', 'Gemini', 'Google', 'Perplexity']
 
-function NewAnalysisButton(): JSX.Element {
+function ReAnalyzeButton(): JSX.Element {
   const { email, activeOrg } = useActiveProject()
   const { trigger, isRunning } = useNewAnalysis()
 
   return (
     <PrimaryButton
-      icon={isRunning ? undefined : Plus}
+      icon={isRunning ? undefined : RotateCw}
       disabled={!email || !activeOrg || isRunning}
       onClick={trigger}
     >
       {isRunning && <Loader2 size={16} className="animate-spin" />}
-      {isRunning ? 'Analyzing…' : 'New Analysis'}
+      {isRunning ? 'Analyzing…' : 'Re-analyze'}
     </PrimaryButton>
   )
 }
 
-export function TopbarActions(): JSX.Element {
+/**
+ * Overview toolbar: date range, engine filter and Re-analyze. Sits on the
+ * greeting row in the content flow (not the global top bar), so the controls
+ * have room and no longer need to be hidden on smaller widths.
+ */
+export function OverviewActions(): JSX.Element {
   const [range, setRange] = useState('Last month')
   const [filter, setFilter] = useState('All engines')
 
   return (
-    <div className="flex items-center gap-1.5 sm:gap-2">
-      <div className="hidden sm:block">
-        <SelectChip icon={Calendar} options={RANGES} value={range} onChange={setRange} />
-      </div>
-      <div className="hidden md:block">
-        <SelectChip
-          icon={SlidersHorizontal}
-          options={FILTERS}
-          value={filter}
-          onChange={setFilter}
-          withLogos
-        />
-      </div>
-      <NewAnalysisButton />
+    <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+      <SelectChip icon={Calendar} options={RANGES} value={range} onChange={setRange} />
+      <SelectChip
+        icon={SlidersHorizontal}
+        options={FILTERS}
+        value={filter}
+        onChange={setFilter}
+        withLogos
+      />
+      <ReAnalyzeButton />
     </div>
   )
 }
