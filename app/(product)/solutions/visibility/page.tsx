@@ -305,7 +305,7 @@ export default function VisibilitySolutionPage() {
   const softwareApp = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: `${SITE_BRAND} AI Visibility Platform`,
+    name: `${SITE_BRAND} Visibility Platform`,
     operatingSystem: 'Web',
     applicationCategory: 'BusinessApplication',
     applicationSubCategory: 'SEO',
