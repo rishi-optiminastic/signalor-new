@@ -10,7 +10,7 @@ export default function LlmsCheckToolPage() {
   return (
     <MarketingShell>
       <p className="sr-only">
-        The Signalor LLM Checker is a free tool that diagnoses whether AI search engines can
+        The SignalorAI LLM Checker is a free tool that diagnoses whether AI search engines can
         discover, access, and cite your website. It validates the presence and structure of your
         llms.txt manifest, the file that guides language models to your most important content. The
         checker parses robots.txt for AI bot directives covering GPTBot (ChatGPT / OpenAI),
@@ -18,7 +18,7 @@ export default function LlmsCheckToolPage() {
         Overviews), and OAI-SearchBot. It also verifies sitemap reachability and scans on-page
         signals including Organization schema, Article JSON-LD, canonical tags, and Open Graph
         metadata. Missing or blocking configurations silently prevent AI citations even when content
-        quality is high. Results are instant with no account required. The full Signalor GEO audit
+        quality is high. Results are instant with no account required. The full SignalorAI GEO audit
         adds live probes that show exactly how each AI engine describes and cites your brand.
       </p>
       <ToolPage

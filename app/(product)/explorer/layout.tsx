@@ -45,7 +45,7 @@ const explorerWebPageJsonLd = {
   },
   mainEntity: {
     '@type': 'SoftwareApplication',
-    name: 'Signalor Explorer',
+    name: 'SignalorAI Explorer',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web',
     offers: {

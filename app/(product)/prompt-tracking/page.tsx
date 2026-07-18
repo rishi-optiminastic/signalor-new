@@ -14,7 +14,7 @@ import { breadcrumbJsonLd, buildMetadata, faqJsonLd, SITE_URL } from '@/features
 export const metadata: Metadata = buildMetadata({
   title: 'AI Prompt Monitoring | Track Brand Mentions in ChatGPT & Gemini',
   description:
-    'Monitor the AI prompts buyers ask ChatGPT, Claude, Gemini, and Perplexity about your category. Signalor tracks every citation, paraphrase, and omission, then ties it to your GEO score and prioritized fixes.',
+    'Monitor the AI prompts buyers ask ChatGPT, Claude, Gemini, and Perplexity about your category. SignalorAI tracks every citation, paraphrase, and omission, then ties it to your GEO score and prioritized fixes.',
   path: '/prompt-tracking',
   keywords: [
     'AI prompt monitoring',
@@ -41,7 +41,7 @@ const promptTrackingWebPageJsonLd = {
   '@id': `${SITE_URL}/prompt-tracking`,
   name: 'AI Prompt Monitoring: Track Brand Mentions in ChatGPT & Gemini',
   description:
-    'Monitor the AI prompts buyers ask ChatGPT, Claude, Gemini, and Perplexity, then tie every citation, paraphrase, and omission to your Signalor GEO score and prioritized fixes.',
+    'Monitor the AI prompts buyers ask ChatGPT, Claude, Gemini, and Perplexity, then tie every citation, paraphrase, and omission to your SignalorAI GEO score and prioritized fixes.',
   url: `${SITE_URL}/prompt-tracking`,
   breadcrumb: {
     '@type': 'BreadcrumbList',
@@ -57,7 +57,7 @@ const promptTrackingWebPageJsonLd = {
   },
   mainEntity: {
     '@type': 'SoftwareApplication',
-    name: 'Signalor Prompt Monitoring',
+    name: 'SignalorAI Prompt Monitoring',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web',
     offers: {
@@ -72,7 +72,7 @@ const promptTrackingWebPageJsonLd = {
       'Per-surface citation, paraphrase, and omission tracking',
       'Drift alerts when AI answers change after a launch',
       'Competitor share-of-voice benchmarking',
-      'Prompt-level deltas linked to the Signalor GEO fix queue',
+      'Prompt-level deltas linked to the SignalorAI GEO fix queue',
     ],
   },
 }
@@ -81,17 +81,17 @@ export default function PromptTrackingPage() {
   return (
     <MarketingShell>
       <p className="sr-only">
-        Signalor Prompt Tracking lets marketing teams, SEO strategists, and brand managers monitor
+        SignalorAI Prompt Tracking lets marketing teams, SEO strategists, and brand managers monitor
         which user prompts trigger AI citations of their brand across ChatGPT, Claude, Gemini,
         Perplexity, and Google AI Overviews. You define branded queries, category questions,
-        head-to-head comparisons, and buying-intent prompts, and Signalor runs live probes on a
+        head-to-head comparisons, and buying-intent prompts, and SignalorAI runs live probes on a
         configurable schedule, recording every AI-generated response, paraphrase, direct citation,
         and omission. The prompt library organizes tracked queries by topic, campaign, or funnel
         stage so teams can spot which content gaps cost AI visibility before competitors exploit
         them. AI surfaces reporting gives a per-engine breakdown: which prompts rank on ChatGPT but
         not Gemini, where Perplexity cites a rival instead, and how mention tone shifts over time.
-        Prompt Tracking integrates with Signalor GEO scoring so every drop in citation rate maps to
-        a schema, content, or trust signal that can be actioned. It is the core generative engine
+        Prompt Tracking integrates with SignalorAI GEO scoring so every drop in citation rate maps
+        to a schema, content, or trust signal that can be actioned. It is the core generative engine
         optimization (GEO) and answer engine optimization (AEO) monitoring layer for brands
         competing in AI search.
       </p>
@@ -111,7 +111,7 @@ export default function PromptTrackingPage() {
         sectionId="prompt-tracking-faq"
         headingId="prompt-tracking-faq-heading"
         heading="Prompt tracking FAQs"
-        description="How surfaces, libraries, and plans fit together inside Signalor."
+        description="How surfaces, libraries, and plans fit together inside SignalorAI."
         items={[...PROMPT_TRACKING_HUB_FAQ]}
       />
       <RelatedLinks page="/prompt-tracking" />

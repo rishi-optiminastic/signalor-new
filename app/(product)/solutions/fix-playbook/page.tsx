@@ -59,15 +59,15 @@ const FAQ_ITEMS = [
   {
     question: 'What is a GEO Fix Playbook?',
     answer:
-      'The prioritized, ship-ready set of actions Signalor generates after auditing your site against how generative AI engines decide what to cite, each scored by expected visibility lift and effort.',
+      'The prioritized, ship-ready set of actions SignalorAI generates after auditing your site against how generative AI engines decide what to cite, each scored by expected visibility lift and effort.',
   },
   {
-    question: 'How does Signalor decide which fixes have the most impact?',
+    question: 'How does SignalorAI decide which fixes have the most impact?',
     answer:
       'Every recommendation is scored against expected citation lift, signal strength on the engines you track, and your current baseline. Quick wins on top, compounding investments below, never random.',
   },
   {
-    question: 'What AI visibility issues does Signalor detect?',
+    question: 'What AI visibility issues does SignalorAI detect?',
     answer:
       'Missing entities, weak citations, content structure issues, missing or broken schema, low authority signals, llms.txt and robots.txt issues, and EEAT gaps, across six GEO pillars.',
   },
@@ -87,7 +87,7 @@ const FAQ_ITEMS = [
       "Schema and technical fixes register inside 24-72 hours. Content, EEAT, and authority compound over two to six weeks. Every recommendation tells you which bucket it's in.",
   },
   {
-    question: 'Does Signalor auto-fix or only recommend?',
+    question: 'Does SignalorAI auto-fix or only recommend?',
     answer:
       "Both. Safe fixes (Organization schema, FAQ markup, llms.txt, AI meta tags) auto-apply on Shopify and WordPress. Editorial work stays in your team's hands with full context.",
   },
@@ -109,7 +109,7 @@ const FAQ_ITEMS = [
   {
     question: 'How does the verify step work?',
     answer:
-      "After you mark a recommendation as shipped, Signalor re-checks the affected page or signal and tracks citation impact through the next audit cycle. If a fix didn't land, verify flags it.",
+      "After you mark a recommendation as shipped, SignalorAI re-checks the affected page or signal and tracks citation impact through the next audit cycle. If a fix didn't land, verify flags it.",
   },
   {
     question: 'Is the Fix Playbook free?',
@@ -270,7 +270,7 @@ const INTERNAL_LINKS = [
 export const metadata: Metadata = buildMetadata({
   title: 'Fix Playbook | Prioritized GEO & AI Visibility Recommendations',
   description:
-    "Turn AI visibility issues into prioritized, ship-ready actions. Signalor's Fix Playbook ranks every GEO recommendation by impact, effort, and citation lift across ChatGPT, Claude, Gemini, and Perplexity.",
+    "Turn AI visibility issues into prioritized, ship-ready actions. SignalorAI's Fix Playbook ranks every GEO recommendation by impact, effort, and citation lift across ChatGPT, Claude, Gemini, and Perplexity.",
   path: PATH,
   keywords: [
     'GEO Optimization',
@@ -282,9 +282,9 @@ export const metadata: Metadata = buildMetadata({
     'AI visibility fixes',
     'AI Visibility Platform',
     'GEO Playbook',
-    'Signalor GEO',
-    'Signalor AI',
-    'Signalor',
+    'SignalorAI GEO',
+    'SignalorAI',
+    'SignalorAI',
   ],
 })
 
@@ -317,7 +317,7 @@ export default function FixPlaybookSolutionPage() {
     name: `${SITE_BRAND} Fix Playbook`,
     description:
       'AI-powered GEO recommendation engine: prioritized fixes for schema, content, EEAT, technical SEO, entity recognition, and citation improvements.',
-    brand: { '@type': 'Brand', name: 'Signalor' },
+    brand: { '@type': 'Brand', name: 'SignalorAI' },
     url: absoluteUrl(PATH),
     image: `${SITE_URL}/carousel1.png`,
     offers: {
@@ -383,7 +383,7 @@ export default function FixPlaybookSolutionPage() {
       <SolutionsSection
         id="problem-detection"
         eyebrow="problem detection"
-        heading="The gaps Signalor finds in"
+        heading="The gaps SignalorAI finds in"
         highlight="every audit"
       >
         <div className="grid grid-cols-1 gap-px overflow-hidden rounded-none border border-black/8 bg-black/8 md:grid-cols-2 lg:grid-cols-3">

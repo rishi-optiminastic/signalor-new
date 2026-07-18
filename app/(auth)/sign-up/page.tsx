@@ -6,7 +6,7 @@ import { buildMetadata } from '@/features/site/lib/seo'
 
 export const metadata: Metadata = buildMetadata({
   title: 'Sign up',
-  description: 'Sign in or create your Signalor account.',
+  description: 'Sign in or create your SignalorAI account.',
   path: '/sign-up',
   noindex: true,
 })

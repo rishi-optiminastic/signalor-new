@@ -34,7 +34,7 @@ function stepHeader(step: OnboardingStep, mode: AuthMode): { title: string; desc
   switch (step) {
     case 'account-type':
       return {
-        title: isSignUp ? 'How will you use Signalor?' : 'Sign in',
+        title: isSignUp ? 'How will you use SignalorAI?' : 'Sign in',
         description: 'Choose Individual or Agency to continue.',
       }
     case 'org-details':
@@ -47,7 +47,7 @@ function stepHeader(step: OnboardingStep, mode: AuthMode): { title: string; desc
         title: isSignUp ? 'Create your account' : 'Welcome back',
         description: isSignUp
           ? "Start tracking your brand's AI-search visibility."
-          : 'Sign in to continue to Signalor.',
+          : 'Sign in to continue to SignalorAI.',
       }
     case 'otp-verify':
       return { title: 'Verify your email', description: 'Almost there — check your inbox.' }

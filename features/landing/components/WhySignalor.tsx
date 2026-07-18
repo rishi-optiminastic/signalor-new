@@ -62,7 +62,7 @@ export function WhySignalor(): JSX.Element {
         </h2>
         <p className="text-accent-foreground mt-5 max-w-2xl text-base leading-relaxed font-light lg:text-lg">
           Over 40% of searches now happen inside AI tools. Those tools cite sources, not links.
-          Signalor scores your citability and shows where you win or lose against competitors.
+          SignalorAI scores your citability and shows where you win or lose against competitors.
         </p>
       </div>
 
@@ -77,7 +77,7 @@ export function WhySignalor(): JSX.Element {
                 Proof in numbers
               </h3>
               <p className="text-accent-foreground mt-3 max-w-sm text-sm leading-relaxed font-light md:text-sm">
-                From teams using Signalor to grow citations.
+                From teams using SignalorAI to grow citations.
               </p>
             </div>
 

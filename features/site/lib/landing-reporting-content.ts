@@ -258,7 +258,7 @@ export const REPORTING_WHY = {
   titleAccent: 'when leadership sees them',
   titleAfter: '',
   intro:
-    'The score moved. The citations grew. But none of that matters if it never makes it into an exec review. Explorer turns Signalor runs into stakeholder-ready stories, no slide rebuilding, no copy-paste.',
+    'The score moved. The citations grew. But none of that matters if it never makes it into an exec review. Explorer turns SignalorAI runs into stakeholder-ready stories, no slide rebuilding, no copy-paste.',
   proofTitle: 'Proof in numbers',
   proofBody:
     'What reporting looks like for teams that ship GEO wins into boardrooms and client reviews on a weekly cadence.',
@@ -268,7 +268,7 @@ export const REPORTING_WHY = {
   livePrompt: "Summarize this month's AI visibility for the leadership review",
   liveAnswerParts: [
     { t: 'GEO score moved from 66 → 78 (+12). ' },
-    { t: 'Signalor', variant: 'brand' as const },
+    { t: 'SignalorAI', variant: 'brand' as const },
     { t: ' now earns 41% share of AI citations on priority prompts, up 14% after the ' },
     { t: 'Organization schema', variant: 'link' as const },
     { t: ' launch. Next sprint: tighten /docs FAQ schema to close the last content gap.' },

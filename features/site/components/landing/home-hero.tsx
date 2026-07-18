@@ -135,7 +135,7 @@ function HeroScreenshot(): JSX.Element {
         <div className="border-border bg-card overflow-hidden border-x">
           <Image
             src="/carousel1.png"
-            alt="Signalor dashboard showing GEO score, tracked prompts, and AI citation analytics"
+            alt="SignalorAI dashboard showing GEO score, tracked prompts, and AI citation analytics"
             width={2000}
             height={2000}
             priority
@@ -200,14 +200,14 @@ export function HomeHero(): JSX.Element {
               id="home-hero-heading"
               className="text-foreground text-4xl font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl"
             >
-              Signalor gets your brand{' '}
+              SignalorAI gets your brand{' '}
               <span className="decoration-primary/60 underline decoration-dashed decoration-2 underline-offset-4">
                 cited
               </span>{' '}
               in AI answers
             </h1>
             <p className="text-muted-foreground mx-auto mt-4 max-w-xl text-lg leading-relaxed text-balance">
-              Signalor scores your site, tracks prompts across ChatGPT, Claude, Gemini, and
+              SignalorAI scores your site, tracks prompts across ChatGPT, Claude, Gemini, and
               Perplexity, and hands you the exact fixes that win citations.
             </p>
             <HeroAuditForm />

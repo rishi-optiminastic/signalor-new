@@ -8,7 +8,7 @@ export const PRICING_FAQ_ITEMS = [
   {
     question: 'What happens after I subscribe?',
     answer:
-      'You return to Signalor with an active subscription. Project limits, prompt caps, and engine access match the plan you chose. If you subscribed during onboarding, you are sent back to finish or launch your first run.',
+      'You return to SignalorAI with an active subscription. Project limits, prompt caps, and engine access match the plan you chose. If you subscribed during onboarding, you are sent back to finish or launch your first run.',
   },
   {
     question: 'Can I switch plans later?',

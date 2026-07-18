@@ -13,7 +13,7 @@ import {
 export const metadata: Metadata = buildMetadata({
   title: 'Pricing, GEO + AEO platform plans',
   description:
-    'Signalor pricing for AI visibility and GEO. GBP plans: Self-Serve Brand (£69.99), Managed Growth Brand (£99.69), and Enterprise (contact sales). Agency plans available. Cancel anytime.',
+    'SignalorAI pricing for AI visibility and GEO. GBP plans: Self-Serve Brand (£69.99), Managed Growth Brand (£99.69), and Enterprise (contact sales). Agency plans available. Cancel anytime.',
   path: '/pricing',
 })
 
@@ -22,7 +22,7 @@ const pricingProductJsonLd = {
   '@type': 'Product',
   name: SITE_BRAND,
   description: 'Generative Engine Optimization and AI visibility platform for brands and agencies.',
-  brand: { '@type': 'Brand', name: 'Signalor' },
+  brand: { '@type': 'Brand', name: 'SignalorAI' },
   url: `${SITE_URL}/pricing`,
   offers: [
     {

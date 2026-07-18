@@ -6,7 +6,7 @@ import { breadcrumbJsonLd, buildMetadata, SITE_BRAND, SITE_URL } from '@/feature
 export const metadata: Metadata = buildMetadata({
   title: 'Blog, GEO playbooks, AI visibility research',
   description:
-    'Playbooks, research, and guides on GEO, AI search visibility, citation attribution, llms.txt, and the schemas that move the needle, written by operators shipping Signalor every day.',
+    'Playbooks, research, and guides on GEO, AI search visibility, citation attribution, llms.txt, and the schemas that move the needle, written by operators shipping SignalorAI every day.',
   path: '/blog',
 })
 

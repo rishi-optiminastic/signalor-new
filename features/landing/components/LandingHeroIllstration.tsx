@@ -138,7 +138,11 @@ function CentralHub(): JSX.Element {
     >
       <div className="bg-card shadow-primary/20 relative flex h-14 w-14 items-center justify-center rounded-lg shadow-xl md:h-16 md:w-16">
         <span className="bg-primary animate-hub-pulse absolute inset-0 rounded-lg opacity-20" />
-        <img src="/icon%20copy.svg" alt="Signalor" className="relative h-10 w-10 md:h-12 md:w-12" />
+        <img
+          src="/icon%20copy.svg"
+          alt="SignalorAI"
+          className="relative h-10 w-10 md:h-12 md:w-12"
+        />
       </div>
     </div>
   )

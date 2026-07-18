@@ -16,7 +16,7 @@ import {
 
 function SectionLabel({ children }: { children: string }): JSX.Element {
   return (
-    <div className="px-2 pt-1 pb-1 text-[11px] font-medium tracking-[0.1em]  uppercase">
+    <div className="px-2 pt-1 pb-1 text-[11px] font-medium tracking-[0.1em] uppercase">
       {children}
     </div>
   )
@@ -24,7 +24,7 @@ function SectionLabel({ children }: { children: string }): JSX.Element {
 
 function IconTile({ icon: Icon }: { icon: TablerIcon }): JSX.Element {
   return (
-    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-sm  bg-white shadow ring-1 ring-foreground/10">
+    <span className="ring-foreground/10 grid h-10 w-10 shrink-0 place-items-center rounded-sm bg-white shadow ring-1">
       <Icon size={18} stroke={1.75} className="text-[#3f3f46]" />
     </span>
   )
@@ -60,7 +60,7 @@ function SectionCard({
   className?: string
 }): JSX.Element {
   return (
-    <div className={`rounded-xl shadow ring-1 ring-foreground/10 bg-white p-2 ${className}`}>
+    <div className={`ring-foreground/10 rounded-xl bg-white p-2 shadow ring-1 ${className}`}>
       <SectionLabel>{section.title}</SectionLabel>
       <div className={section.cols === 2 ? 'grid grid-cols-2 gap-x-1' : 'grid'}>
         {section.links.map(l => (
@@ -103,7 +103,7 @@ function FeaturedCard(): JSX.Element {
       <div className="px-4 pb-4">
         <p className="text-[14px] font-medium text-[#171717]">API &amp; MCP</p>
         <p className="mt-0.5 truncate text-[13px] text-[#71717a]">
-          Plug your AI stack into Signalor data
+          Plug your AI stack into SignalorAI data
         </p>
       </div>
     </Link>
@@ -112,7 +112,7 @@ function FeaturedCard(): JSX.Element {
 
 export function ProductPanel(): JSX.Element {
   return (
-    <div className="flex w-220 gap-1 p-1 bg-[#FAFAFA]">
+    <div className="flex w-220 gap-1 bg-[#FAFAFA] p-1">
       <SectionCard section={PRODUCT_FEATURES} className="flex-1" />
       <SectionCard section={PRODUCT_MORE} className="flex-1" />
       <FeaturedCard />
@@ -122,7 +122,7 @@ export function ProductPanel(): JSX.Element {
 
 export function ResourcesPanel(): JSX.Element {
   return (
-    <div className="flex w-230 gap-1 p-1 bg-[#FAFAFA]">
+    <div className="flex w-230 gap-1 bg-[#FAFAFA] p-1">
       <SectionCard section={RESOURCE_MAIN} className="flex-1" />
       <SectionCard section={RESOURCE_PRODUCT} className="w-56 shrink-0" />
       <QuickList title={RESOURCE_SUPPORT.title} links={RESOURCE_SUPPORT.links} />
@@ -132,7 +132,7 @@ export function ResourcesPanel(): JSX.Element {
 
 export function PricingPanel(): JSX.Element {
   return (
-    <div className="w-78 p-1 bg-[#FAFAFA]">
+    <div className="w-78 bg-[#FAFAFA] p-1">
       <SectionCard section={PRICING_SECTION} />
     </div>
   )

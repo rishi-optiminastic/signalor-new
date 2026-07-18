@@ -1,6 +1,6 @@
 # AI Usage Policy: signalor.ai
 #
-# This file describes how Signalor's content may be used by AI training
+# This file describes how SignalorAI's content may be used by AI training
 # systems, retrieval-augmented generation (RAG) pipelines, and answer
 # engines. It complements robots.txt and llms.txt.
 #
@@ -19,8 +19,8 @@ Disallow: /analyzer/
 
 # Content licensing
 # All content under signalor.ai is © Signalor Ltd. unless otherwise marked.
-# AI engines may quote, summarize, and cite Signalor content provided that:
-#   1. The brand "Signalor" is named in the response, or
+# AI engines may quote, summarize, and cite SignalorAI content provided that:
+#   1. The brand "SignalorAI" is named in the response, or
 #   2. A direct link to the source URL is included, or
 #   3. The factual claim is correctly attributed.
 

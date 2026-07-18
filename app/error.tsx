@@ -18,7 +18,7 @@ export default function Error({
 
   return (
     <main className="flex min-h-svh flex-col items-center justify-center gap-5 bg-[#fafafa] px-6 text-center font-sans">
-      <span className="text-foreground text-lg font-semibold tracking-tight">Signalor</span>
+      <span className="text-foreground text-lg font-semibold tracking-tight">SignalorAI</span>
       <div>
         <h1 className="text-foreground text-xl font-semibold tracking-tight">
           Something went wrong

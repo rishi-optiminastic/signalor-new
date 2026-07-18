@@ -40,7 +40,13 @@ const FOOTER_COLUMNS: FooterColumn[] = [
       { href: '/solutions/competitive-lens', label: 'Agencies' },
       { href: '/solutions/visibility', label: 'Brands' },
       { href: '/solutions/fix-playbook', label: 'SEO & growth teams' },
-      { href: '#contact-sales', label: 'Contact sales', external: true, mailUser: 'hello', mailSubject: 'Sales inquiry' },
+      {
+        href: '#contact-sales',
+        label: 'Contact sales',
+        external: true,
+        mailUser: 'hello',
+        mailSubject: 'Sales inquiry',
+      },
     ],
   },
   {
@@ -103,7 +109,7 @@ function FooterBrandCell(): JSX.Element {
       <Link href="/" className="inline-block">
         <LogoComp compact size={30} />
       </Link>
-      <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
+      <p className="text-muted-foreground mt-4 max-w-xs text-sm leading-relaxed">
         The AI visibility platform to monitor, score, and grow how generative search cites your
         brand.
       </p>
@@ -115,7 +121,7 @@ function FooterBrandCell(): JSX.Element {
               target="_blank"
               rel="noreferrer"
               aria-label={label}
-              className="flex h-8 w-8 items-center justify-center rounded-md bg-card text-muted-foreground shadow-sm shadow-black/5 ring-1 ring-border transition-colors hover:text-foreground hover:ring-foreground/20"
+              className="bg-card text-muted-foreground ring-border hover:text-foreground hover:ring-foreground/20 flex h-8 w-8 items-center justify-center rounded-md shadow-sm ring-1 shadow-black/5 transition-colors"
             >
               <Icon className="h-4 w-4" strokeWidth={1.75} aria-hidden />
             </a>
@@ -128,30 +134,30 @@ function FooterBrandCell(): JSX.Element {
 
 function FooterLegalBar(): JSX.Element {
   return (
-    <div className="relative border-t border-border">
+    <div className="border-border relative border-t">
       <GridCornerHandles top />
       <div className="flex flex-col gap-4 px-6 py-6 sm:px-8 lg:flex-row lg:items-center lg:justify-between">
         <nav
           aria-label="Legal"
-          className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] font-medium text-muted-foreground"
+          className="text-muted-foreground flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] font-medium"
         >
           {LEGAL_LINKS.map((link, index) => (
             <span key={link.href} className="flex items-center gap-2">
               {index > 0 ? <span aria-hidden>·</span> : null}
-              <Link href={link.href} className="transition-colors hover:text-foreground">
+              <Link href={link.href} className="hover:text-foreground transition-colors">
                 {link.label}
               </Link>
             </span>
           ))}
           <span aria-hidden>·</span>
-          <MailLink user="hello" className="transition-colors hover:text-foreground">
+          <MailLink user="hello" className="hover:text-foreground transition-colors">
             Contact us
           </MailLink>
           <span aria-hidden>·</span>
           <MailLink
             user="hello"
             subject="Press inquiry"
-            className="transition-colors hover:text-foreground"
+            className="hover:text-foreground transition-colors"
           >
             Press
           </MailLink>
@@ -161,19 +167,19 @@ function FooterLegalBar(): JSX.Element {
             href="https://status.signalor.ai/"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-card px-3 py-1 text-[11px] font-medium text-foreground shadow-sm shadow-black/5 ring-1 ring-border transition-colors hover:ring-foreground/20"
+            className="bg-card text-foreground ring-border hover:ring-foreground/20 inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-medium shadow-sm ring-1 shadow-black/5 transition-colors"
           >
             <span className="relative flex h-2 w-2 shrink-0">
               <span
                 aria-hidden
-                className="absolute inline-flex h-full w-full rounded-full bg-success/50 motion-safe:animate-ping [animation-duration:2.5s]"
+                className="bg-success/50 absolute inline-flex h-full w-full rounded-full [animation-duration:2.5s] motion-safe:animate-ping"
               />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-success" />
+              <span className="bg-success relative inline-flex h-2 w-2 rounded-full" />
             </span>
             All systems online
           </a>
-          <p className="text-[12px] text-muted-foreground">
-            © {new Date().getFullYear()} Signalor. All rights reserved.
+          <p className="text-muted-foreground text-[12px]">
+            © {new Date().getFullYear()} SignalorAI. All rights reserved.
           </p>
         </div>
       </div>
@@ -183,19 +189,22 @@ function FooterLegalBar(): JSX.Element {
 
 export function HomeFooter(): JSX.Element {
   return (
-    <footer className="border-t border-border">
-      <div className="relative mx-auto max-w-6xl border-x border-border">
+    <footer className="border-border border-t">
+      <div className="border-border relative mx-auto max-w-6xl border-x">
         <GridCornerHandles top />
-        <div className="grid lg:grid-cols-[1.3fr_1fr_1fr_1fr_1fr] lg:divide-x lg:divide-border">
+        <div className="lg:divide-border grid lg:grid-cols-[1.3fr_1fr_1fr_1fr_1fr] lg:divide-x">
           <FooterBrandCell />
-          {FOOTER_COLUMNS.map((column) => (
-            <div key={column.title} className="relative px-6 py-10 max-lg:border-t max-lg:border-border sm:px-8 lg:py-12">
-              <GridHandle className="-left-[3.5px] -top-[3.5px] hidden lg:block" />
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-foreground">
+          {FOOTER_COLUMNS.map(column => (
+            <div
+              key={column.title}
+              className="max-lg:border-border relative px-6 py-10 max-lg:border-t sm:px-8 lg:py-12"
+            >
+              <GridHandle className="-top-[3.5px] -left-[3.5px] hidden lg:block" />
+              <p className="text-foreground text-[11px] font-semibold tracking-[0.18em] uppercase">
                 {column.title}
               </p>
               <ul className="mt-4 space-y-2.5">
-                {column.links.map((link) => (
+                {column.links.map(link => (
                   <li key={link.label}>
                     <FooterLinkRow {...link} />
                   </li>
@@ -206,9 +215,9 @@ export function HomeFooter(): JSX.Element {
           ))}
         </div>
         <FooterLegalBar />
-        <div aria-hidden className="overflow-hidden border-t border-border px-6">
-          <p className="-mb-[0.18em] select-none bg-gradient-to-b from-foreground/[0.08] to-foreground/[0.01] bg-clip-text text-center font-sans text-[clamp(72px,13vw,164px)] font-bold leading-none tracking-tighter text-transparent">
-            Signalor
+        <div aria-hidden className="border-border overflow-hidden border-t px-6">
+          <p className="from-foreground/[0.08] to-foreground/[0.01] -mb-[0.18em] bg-gradient-to-b bg-clip-text text-center font-sans text-[clamp(72px,13vw,164px)] leading-none font-bold tracking-tighter text-transparent select-none">
+            SignalorAI
           </p>
         </div>
       </div>

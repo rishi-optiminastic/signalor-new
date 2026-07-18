@@ -23,7 +23,7 @@ const STEP_HEADER: Record<WizardStep, { title: string; description: string }> = 
   company: { title: 'Company details', description: 'Tell us about your organization.' },
   platform: { title: "Where's your site built?", description: 'Pick your platform to connect.' },
   url: { title: 'Your website', description: 'Enter your site URL to start analysis.' },
-  install: { title: 'Connect your site', description: 'Install Signalor to enable auto-fixes.' },
+  install: { title: 'Connect your site', description: 'Install SignalorAI to enable auto-fixes.' },
   prompts: { title: 'Prompts to track', description: "We'll watch how AI answers these." },
   analytics: { title: 'Connect analytics', description: 'Measure AI-driven traffic (optional).' },
   launch: { title: 'Review & launch', description: 'Confirm and start your first analysis.' },

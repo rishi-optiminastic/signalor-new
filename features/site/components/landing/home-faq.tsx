@@ -27,12 +27,10 @@ function FaqRow({ item, index, isOpen, onToggle }: FaqRowProps): JSX.Element {
     <li
       className={cn(
         'rounded-lg transition-all duration-200',
-        isOpen
-          ? 'bg-card shadow-sm shadow-black/5 ring-1 ring-primary/40'
-          : 'hover:bg-muted/40',
+        isOpen ? 'bg-card ring-primary/40 shadow-sm ring-1 shadow-black/5' : 'hover:bg-muted/40',
       )}
     >
-      <h3 className="m-0 text-[15px] font-medium leading-snug text-foreground">
+      <h3 className="text-foreground m-0 text-[15px] leading-snug font-medium">
         <button
           id={buttonId}
           type="button"
@@ -44,7 +42,7 @@ function FaqRow({ item, index, isOpen, onToggle }: FaqRowProps): JSX.Element {
           <span className="min-w-0 pr-2">{item.question}</span>
           <ChevronDown
             className={cn(
-              'h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200',
+              'text-muted-foreground h-4 w-4 shrink-0 transition-transform duration-200',
               isOpen && 'rotate-180',
             )}
             aria-hidden
@@ -61,7 +59,7 @@ function FaqRow({ item, index, isOpen, onToggle }: FaqRowProps): JSX.Element {
         )}
       >
         <div className="min-h-0 overflow-hidden">
-          <p className="px-4 pb-5 pr-10 text-sm leading-relaxed text-muted-foreground sm:px-5">
+          <p className="text-muted-foreground px-4 pr-10 pb-5 text-sm leading-relaxed sm:px-5">
             {item.answer}
           </p>
         </div>
@@ -75,27 +73,27 @@ export function HomeFaq({ items }: HomeFaqProps): JSX.Element {
 
   return (
     <section id="faq" className="scroll-mt-20" aria-labelledby="home-faq-heading">
-      <div className="relative border-t border-border">
+      <div className="border-border relative border-t">
         <GridCornerHandles top />
         <GridHandle className="-top-[3.5px] left-[40%] -ml-[3.5px] hidden lg:block" />
-        <div className="grid lg:grid-cols-[2fr_3fr] lg:divide-x lg:divide-border">
-          <div className="relative max-lg:border-b max-lg:border-border">
+        <div className="lg:divide-border grid lg:grid-cols-[2fr_3fr] lg:divide-x">
+          <div className="max-lg:border-border relative max-lg:border-b">
             <div className="px-6 py-14 sm:px-10 lg:sticky lg:top-24 lg:py-20">
-              <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-primary">
+              <p className="text-primary text-[12px] font-semibold tracking-[0.18em] uppercase">
                 FAQ
               </p>
               <h2
                 id="home-faq-heading"
-                className="mt-3 max-w-sm text-balance text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
+                className="text-foreground mt-3 max-w-sm text-3xl font-semibold tracking-tight text-balance sm:text-4xl"
               >
                 Your questions, answered
               </h2>
-              <p className="mt-4 max-w-sm text-pretty text-base leading-relaxed text-muted-foreground">
+              <p className="text-muted-foreground mt-4 max-w-sm text-base leading-relaxed text-pretty">
                 Can&rsquo;t find what you&rsquo;re looking for?{' '}
                 <MailLink
                   user="hello"
-                  subject="Question about Signalor"
-                  className="font-semibold text-primary transition-colors hover:text-primary/80"
+                  subject="Question about SignalorAI"
+                  className="text-primary hover:text-primary/80 font-semibold transition-colors"
                 >
                   Contact our support team
                 </MailLink>

@@ -7,7 +7,7 @@ import { breadcrumbJsonLd, buildMetadata, faqJsonLd, SITE_URL } from '@/features
 export const metadata: Metadata = buildMetadata({
   title: 'AI Visibility Scoring | Schema, Trust & Citation Signals',
   description:
-    'Score how ChatGPT, Claude, Gemini, and Perplexity see your brand. Signalor audits schema coverage, trust markers, and content structure across every page so you know exactly what to fix to earn more AI citations.',
+    'Score how ChatGPT, Claude, Gemini, and Perplexity see your brand. SignalorAI audits schema coverage, trust markers, and content structure across every page so you know exactly what to fix to earn more AI citations.',
   path: '/ai-visibility',
   keywords: [
     'AI visibility',
@@ -34,7 +34,7 @@ const aiVisibilityWebPageJsonLd = {
   '@id': `${SITE_URL}/ai-visibility`,
   name: 'AI Visibility Scoring: Schema, Trust & Citation Signals',
   description:
-    'Audit structure, schema, and trust markers across every page. Signalor scores how ChatGPT, Claude, Gemini, and Perplexity see and cite your brand.',
+    'Audit structure, schema, and trust markers across every page. SignalorAI scores how ChatGPT, Claude, Gemini, and Perplexity see and cite your brand.',
   url: `${SITE_URL}/ai-visibility`,
   breadcrumb: {
     '@type': 'BreadcrumbList',
@@ -50,7 +50,7 @@ const aiVisibilityWebPageJsonLd = {
   },
   mainEntity: {
     '@type': 'SoftwareApplication',
-    name: 'Signalor AI Visibility',
+    name: 'SignalorAI Visibility',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web',
     offers: {

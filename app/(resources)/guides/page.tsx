@@ -17,7 +17,7 @@ export default function GuidesPage(): JSX.Element {
       sections={[
         {
           heading: 'GEO fundamentals',
-          body: 'What generative engine optimization is, how it differs from SEO, and the six pillars Signalor scores: content, schema, E-E-A-T, technical, entity, and AI visibility.',
+          body: 'What generative engine optimization is, how it differs from SEO, and the six pillars SignalorAI scores: content, schema, E-E-A-T, technical, entity, and AI visibility.',
         },
         {
           heading: 'Schema & structured data',

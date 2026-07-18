@@ -14,7 +14,7 @@ export const CONTENT_SIGNALS_HERO = {
   titleLine2: 'visibility across',
   titleAccent: 'every answer engine',
   subhead:
-    'Measure your AI visibility across ChatGPT, Claude, Gemini, and Perplexity. Signalor audits structure, schema, and trust signals on every page, then prioritizes the rewrites that move how answer engines summarize and cite you.',
+    'Measure your AI visibility across ChatGPT, Claude, Gemini, and Perplexity. SignalorAI audits structure, schema, and trust signals on every page, then prioritizes the rewrites that move how answer engines summarize and cite you.',
   footnote: 'Schema diagnostics · E-E-A-T scoring · content suggestions',
   primaryCta: 'Score my content',
   secondaryCta: 'Run free GEO audit',
@@ -84,7 +84,7 @@ export const CONTENT_SIGNALS_CAPABILITY_ROWS = [
     icon: LinkIcon,
     title: 'Tied to GEO fixes',
     description:
-      'Jump straight from a weak signal into prioritized schema, content, and technical tasks already ranked by Signalor.',
+      'Jump straight from a weak signal into prioritized schema, content, and technical tasks already ranked by SignalorAI.',
   },
 ] as const
 
@@ -248,14 +248,14 @@ export const CONTENT_SIGNALS_WHY = {
     'Even great writing gets skipped when structure, schema, and trust markers are missing. AI visibility scoring surfaces what generative engines grade first, so every rewrite or schema push moves answers, not just rankings.',
   proofTitle: 'Proof in numbers',
   proofBody:
-    'Benchmarks teams cite once they move from keyword-only SEO to signals-driven AI visibility programs inside Signalor.',
+    'Benchmarks teams cite once they move from keyword-only SEO to signals-driven AI visibility programs inside SignalorAI.',
   liveTitle: 'Live preview',
   liveBody:
-    'The content review strategists run before shipping copy, anchored to the schema, structure, and trust gaps Signalor detects automatically on your site.',
+    'The content review strategists run before shipping copy, anchored to the schema, structure, and trust gaps SignalorAI detects automatically on your site.',
   livePrompt: 'Which ecommerce platform has the best GEO-ready product schema?',
   liveAnswerParts: [
     { t: 'Platforms like ' },
-    { t: 'Signalor Commerce', variant: 'brand' as const },
+    { t: 'SignalorAI Commerce', variant: 'brand' as const },
     { t: ' and ' },
     { t: 'Acme', variant: 'link' as const },
     {
@@ -293,10 +293,10 @@ export const CONTENT_SIGNALS_FAQ = [
   {
     question: 'Does improving AI visibility signals raise my GEO score?',
     answer:
-      'Yes. Structure, schema, and trust are core inputs into the Signalor GEO score. Every fix maps to its expected score delta, so engineering and content teams can prioritize the work that earns the most AI citations.',
+      'Yes. Structure, schema, and trust are core inputs into the SignalorAI GEO score. Every fix maps to its expected score delta, so engineering and content teams can prioritize the work that earns the most AI citations.',
   },
   {
-    question: 'How often does Signalor re-scan my AI visibility signals?',
+    question: 'How often does SignalorAI re-scan my AI visibility signals?',
     answer:
       'Your workspace re-scans on the cadence your plan sets. Higher tiers enable faster re-scans for priority templates plus side-by-side comparisons across launches.',
   },

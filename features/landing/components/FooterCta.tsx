@@ -44,7 +44,7 @@ export function FooterCta(): JSX.Element {
             <div className="relative rounded-none bg-white/90 p-2 shadow-xl backdrop-blur-[2px] sm:p-3">
               <Image
                 src="/carousel1.png"
-                alt="Signalor dashboard showing AI visibility and GEO scores"
+                alt="SignalorAI dashboard showing AI visibility and GEO scores"
                 width={2000}
                 height={2000}
                 unoptimized

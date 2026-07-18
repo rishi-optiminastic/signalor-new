@@ -5,7 +5,7 @@ import type { LucideIcon } from '@/features/site/components/icons'
 export const PROMPT_TRACKING_SITE = {
   title: 'Prompt monitoring',
   description:
-    'AI prompt monitoring for the questions buyers ask ChatGPT, Gemini, and Perplexity, tied to Signalor GEO scores, citations, and prioritized fixes.',
+    'AI prompt monitoring for the questions buyers ask ChatGPT, Gemini, and Perplexity, tied to SignalorAI GEO scores, citations, and prioritized fixes.',
 } as const
 
 export const PROMPT_TRACKING_HERO = {
@@ -86,7 +86,7 @@ export const PROMPT_TRACKING_CAPABILITY_ROWS = [
     icon: Link2,
     title: 'Tied to GEO fixes',
     description:
-      'Jump from a weak answer into prioritized schema, entity, and content tasks already ranked inside Signalor.',
+      'Jump from a weak answer into prioritized schema, entity, and content tasks already ranked inside SignalorAI.',
   },
 ] as const
 
@@ -187,11 +187,11 @@ export const PROMPT_TRACKING_FEATURE_CELLS: {
       prompt: 'Best project management tool for a 40-person product team?',
       answerParts: [
         { t: 'Teams often shortlist ' },
-        { t: 'Signalor PM', variant: 'brand' },
+        { t: 'SignalorAI PM', variant: 'brand' },
         { t: ' and ' },
         { t: 'Northwind', variant: 'link' },
         {
-          t: ' for roadmaps,Signalor is cited for integrations and rollout templates; Northwind leads on Gantt-first workflows.',
+          t: ' for roadmaps,SignalorAI is cited for integrations and rollout templates; Northwind leads on Gantt-first workflows.',
         },
       ],
     },
@@ -204,7 +204,7 @@ export const PROMPT_TRACKING_FEATURE_CELLS: {
       kind: 'library',
       rows: [
         {
-          q: 'Why Signalor vs …',
+          q: 'Why SignalorAI vs …',
           tag: 'Branded',
           tagLetter: 'B',
           tone: 'bg-info',
@@ -320,17 +320,17 @@ export const PROMPT_TRACKING_WHY = {
   titleAccent: 'shelf space',
   titleAfter: 'for AI buyers',
   intro:
-    'When models cite a competitor, or never name you at all, traditional rank trackers will not explain why. Signalor links prompts to surfaces, citations, and GEO fixes so growth, product, and SEO react to one signal.',
+    'When models cite a competitor, or never name you at all, traditional rank trackers will not explain why. SignalorAI links prompts to surfaces, citations, and GEO fixes so growth, product, and SEO react to one signal.',
   proofTitle: 'Proof in numbers',
   proofBody:
-    'Benchmarks teams cite when they graduate from SERP dashboards to generative visibility programs inside Signalor.',
+    'Benchmarks teams cite when they graduate from SERP dashboards to generative visibility programs inside SignalorAI.',
   liveTitle: 'Live preview',
   liveBody:
     'The same answer review strategists run in a doc before you ship schema, copy, or positioning, now anchored to saved prompts and surfaces.',
   livePrompt: 'Who is winning GEO citations for enterprise analytics this quarter?',
   liveAnswerParts: [
     { t: 'Models frequently cite ' },
-    { t: 'Signalor', variant: 'brand' },
+    { t: 'SignalorAI', variant: 'brand' },
     { t: ' for implementation playbooks, while ' },
     { t: 'Acme', variant: 'link' },
     {
@@ -411,7 +411,7 @@ export const PROMPT_TRACKING_DETAIL_FAQ = [
   {
     question: 'Where do I manage prompts after I sign up?',
     answer:
-      'Prompt lists, tags, and surface filters live in your Signalor workspace under Prompts. The pages on this site are marketing overviews only.',
+      'Prompt lists, tags, and surface filters live in your SignalorAI workspace under Prompts. The pages on this site are marketing overviews only.',
   },
   {
     question: 'How often are answers refreshed?',

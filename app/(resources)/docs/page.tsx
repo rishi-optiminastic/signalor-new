@@ -4,7 +4,7 @@ import { MarketingContent } from '@/features/landing/components/MarketingContent
 
 export const metadata: Metadata = {
   title: 'Docs',
-  description: 'How the Signalor platform works — scoring, integrations, and the API.',
+  description: 'How the SignalorAI platform works — scoring, integrations, and the API.',
 }
 
 export default function DocsPage(): JSX.Element {
@@ -29,7 +29,7 @@ export default function DocsPage(): JSX.Element {
         },
         {
           heading: 'API & MCP',
-          body: 'Pull scores, runs, and recommendations programmatically, or wire Signalor into an assistant with the MCP server.',
+          body: 'Pull scores, runs, and recommendations programmatically, or wire SignalorAI into an assistant with the MCP server.',
         },
       ]}
     />

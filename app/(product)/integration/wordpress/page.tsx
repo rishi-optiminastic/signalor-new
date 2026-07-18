@@ -28,7 +28,7 @@ export const metadata: Metadata = buildMetadata({
 const wordpressPluginJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
-  name: 'Signalor GEO for WordPress',
+  name: 'SignalorAI GEO for WordPress',
   applicationCategory: 'BrowserApplication',
   operatingSystem: 'WordPress',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
@@ -36,19 +36,19 @@ const wordpressPluginJsonLd = {
   url: `${SITE_URL}/integration/wordpress`,
   downloadUrl: `${SITE_URL}/downloads/signalor-geo.zip`,
   description:
-    'Self-hosted WordPress plugin that surfaces Signalor GEO recommendations and applies one-click schema fixes inside the WordPress admin.',
+    'Self-hosted WordPress plugin that surfaces SignalorAI GEO recommendations and applies one-click schema fixes inside the WordPress admin.',
 }
 
 export default function WordPressIntegrationPage() {
   return (
     <MarketingShell>
       <p className="sr-only">
-        The Signalor WordPress plugin brings GEO recommendations and one-click schema fixes directly
-        into your WordPress admin panel. After installing the self-hosted plugin, Signalor audits
-        your posts and pages for missing or malformed JSON-LD, incomplete Organization markup, and
-        weak AI citability signals, then lets you apply fixes without touching code. The plugin
-        works with any WordPress theme and requires no API keys to install. Download is free;
-        advanced monitoring and bulk fixes require a Signalor plan.
+        The SignalorAI WordPress plugin brings GEO recommendations and one-click schema fixes
+        directly into your WordPress admin panel. After installing the self-hosted plugin,
+        SignalorAI audits your posts and pages for missing or malformed JSON-LD, incomplete
+        Organization markup, and weak AI citability signals, then lets you apply fixes without
+        touching code. The plugin works with any WordPress theme and requires no API keys to
+        install. Download is free; advanced monitoring and bulk fixes require a SignalorAI plan.
       </p>
       <JsonLd
         id="ld-wordpress-breadcrumb"

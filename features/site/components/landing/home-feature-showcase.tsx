@@ -9,7 +9,7 @@ type EngineRow = {
   name: string
   logo: string
   cited: boolean
-  /** Flips from "Missing" to "Cited" on hover — the win Signalor delivers. */
+  /** Flips from "Missing" to "Cited" on hover — the win SignalorAI delivers. */
   flipsOnHover?: boolean
 }
 
@@ -23,26 +23,26 @@ const ENGINE_ROWS: EngineRow[] = [
 /** Engine coverage list; the missing engine flips to "Cited" on hover. */
 function EngineCoverageIllo(): JSX.Element {
   return (
-    <div className="w-full max-w-75 rounded-xl bg-card p-2 shadow-sm shadow-black/5 ring-1 ring-border">
-      <p className="px-2.5 pb-1.5 pt-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+    <div className="bg-card ring-border w-full max-w-75 rounded-xl p-2 shadow-sm ring-1 shadow-black/5">
+      <p className="text-muted-foreground px-2.5 pt-1 pb-1.5 text-[10px] font-semibold tracking-[0.14em] uppercase">
         Engines
       </p>
-      <ul className="divide-y divide-border/70">
-        {ENGINE_ROWS.map((row) => (
+      <ul className="divide-border/70 divide-y">
+        {ENGINE_ROWS.map(row => (
           <li key={row.name} className="flex items-center gap-2.5 px-2.5 py-2">
             <Image src={row.logo} alt="" width={16} height={16} className="h-4 w-4 shrink-0" />
-            <span className="flex-1 text-[13px] font-medium text-foreground">{row.name}</span>
+            <span className="text-foreground flex-1 text-[13px] font-medium">{row.name}</span>
             {row.flipsOnHover ? (
               <span className="relative inline-grid text-[10px] font-semibold uppercase">
-                <span className="col-start-1 row-start-1 rounded-md bg-muted px-1.5 py-0.5 text-muted-foreground ring-1 ring-border transition-opacity duration-300 motion-safe:group-hover:opacity-0">
+                <span className="bg-muted text-muted-foreground ring-border col-start-1 row-start-1 rounded-md px-1.5 py-0.5 ring-1 transition-opacity duration-300 motion-safe:group-hover:opacity-0">
                   Missing
                 </span>
-                <span className="col-start-1 row-start-1 rounded-md bg-success/10 px-1.5 py-0.5 text-center text-success opacity-0 transition-opacity duration-300 motion-safe:group-hover:opacity-100">
+                <span className="bg-success/10 text-success col-start-1 row-start-1 rounded-md px-1.5 py-0.5 text-center opacity-0 transition-opacity duration-300 motion-safe:group-hover:opacity-100">
                   Cited
                 </span>
               </span>
             ) : (
-              <span className="rounded-md bg-success/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase text-success">
+              <span className="bg-success/10 text-success rounded-md px-1.5 py-0.5 text-[10px] font-semibold uppercase">
                 Cited
               </span>
             )}
@@ -64,26 +64,26 @@ const RUN_EVENTS = [
 function AutopilotIllo(): JSX.Element {
   return (
     <div className="w-full max-w-75">
-      <div className="relative mx-auto flex w-fit items-center gap-2 rounded-full bg-card px-3 py-1 shadow-sm shadow-black/5 ring-1 ring-border">
-        <span className="h-2 w-2 rounded-full bg-success" aria-hidden />
-        <span className="text-xs font-medium text-foreground">Run completed</span>
+      <div className="bg-card ring-border relative mx-auto flex w-fit items-center gap-2 rounded-full px-3 py-1 shadow-sm ring-1 shadow-black/5">
+        <span className="bg-success h-2 w-2 rounded-full" aria-hidden />
+        <span className="text-foreground text-xs font-medium">Run completed</span>
       </div>
       <ul className="relative mt-3 space-y-2 pl-4">
         <span
           aria-hidden
-          className="absolute bottom-3 left-1 top-1 w-px border-l border-dashed border-border"
+          className="border-border absolute top-1 bottom-3 left-1 w-px border-l border-dashed"
         />
         {RUN_EVENTS.map((event, index) => (
           <li
             key={event.label}
-            className="relative flex items-center gap-2 rounded-lg bg-card px-3 py-2 shadow-sm shadow-black/5 ring-1 ring-border transition-all duration-300 ease-out motion-safe:translate-y-0.5 motion-safe:opacity-80 motion-safe:group-hover:translate-y-0 motion-safe:group-hover:opacity-100"
+            className="bg-card ring-border relative flex items-center gap-2 rounded-lg px-3 py-2 shadow-sm ring-1 shadow-black/5 transition-all duration-300 ease-out motion-safe:translate-y-0.5 motion-safe:opacity-80 motion-safe:group-hover:translate-y-0 motion-safe:group-hover:opacity-100"
             style={{ transitionDelay: `${index * 80}ms` }}
           >
             <span
               aria-hidden
-              className="absolute -left-3.75 h-1.5 w-1.5 rounded-full bg-foreground/25 ring-2 ring-[#fafafa]"
+              className="bg-foreground/25 absolute -left-3.75 h-1.5 w-1.5 rounded-full ring-2 ring-[#fafafa]"
             />
-            <span className="flex-1 truncate text-xs font-medium text-foreground">
+            <span className="text-foreground flex-1 truncate text-xs font-medium">
               {event.label}
             </span>
             <span className={cn('shrink-0 text-[10px] font-semibold tabular-nums', event.tone)}>
@@ -127,14 +127,14 @@ interface SpotlightCellProps {
 
 function SpotlightCell({ title, description, children }: SpotlightCellProps): JSX.Element {
   return (
-    <div className="group flex flex-col bg-card px-6 py-12 sm:px-10">
+    <div className="group bg-card flex flex-col px-6 py-12 sm:px-10">
       <div className={cn(HOME_WELL, 'flex min-h-56 flex-1 items-center justify-center')}>
         {children}
       </div>
-      <h3 className="mt-8 text-center text-base font-semibold tracking-tight text-foreground sm:text-lg">
+      <h3 className="text-foreground mt-8 text-center text-base font-semibold tracking-tight sm:text-lg">
         {title}
       </h3>
-      <p className="mx-auto mt-2 max-w-sm text-center text-sm leading-relaxed text-muted-foreground">
+      <p className="text-muted-foreground mx-auto mt-2 max-w-sm text-center text-sm leading-relaxed">
         {description}
       </p>
     </div>
@@ -145,17 +145,17 @@ export function HomeFeatureShowcase(): JSX.Element {
   return (
     <section aria-labelledby="home-showcase-heading">
       <h2 id="home-showcase-heading" className="sr-only">
-        How Signalor works under the hood
+        How SignalorAI works under the hood
       </h2>
-      <div className="relative border-t border-border">
+      <div className="border-border relative border-t">
         <GridCornerHandles top />
         <GridHandle className="-top-[3.5px] left-1/2 -ml-[3.5px] hidden lg:block" />
-        <div className="grid grid-cols-1 divide-border max-lg:divide-y lg:grid-cols-2 lg:divide-x">
+        <div className="divide-border grid grid-cols-1 max-lg:divide-y lg:grid-cols-2 lg:divide-x">
           <SpotlightCell
             title={
               <>
                 <GitFork
-                  className="mr-1.5 inline-block h-4 w-4 -translate-y-px text-primary"
+                  className="text-primary mr-1.5 inline-block h-4 w-4 -translate-y-px"
                   aria-hidden
                 />
                 Every engine, one view
@@ -173,19 +173,19 @@ export function HomeFeatureShowcase(): JSX.Element {
           </SpotlightCell>
         </div>
       </div>
-      <div className="relative border-t border-border">
+      <div className="border-border relative border-t">
         <GridCornerHandles top />
         <GridHandle className="-top-[3.5px] left-1/4 -ml-[3.5px] hidden lg:block" />
         <GridHandle className="-top-[3.5px] left-1/2 -ml-[3.5px] hidden lg:block" />
         <GridHandle className="-top-[3.5px] left-3/4 -ml-[3.5px] hidden lg:block" />
-        <div className="grid grid-cols-1 divide-border max-lg:divide-y sm:max-lg:grid-cols-2 lg:grid-cols-4 lg:divide-x">
+        <div className="divide-border grid grid-cols-1 max-lg:divide-y sm:max-lg:grid-cols-2 lg:grid-cols-4 lg:divide-x">
           {MINI_FEATURES.map(({ icon: Icon, title, description }) => (
             <div key={title} className="bg-card px-6 py-8 sm:px-8">
               <div className="flex items-center gap-2">
-                <Icon className="h-4 w-4 text-primary" strokeWidth={2} aria-hidden />
-                <h3 className="text-sm font-semibold text-foreground">{title}</h3>
+                <Icon className="text-primary h-4 w-4" strokeWidth={2} aria-hidden />
+                <h3 className="text-foreground text-sm font-semibold">{title}</h3>
               </div>
-              <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground">
+              <p className="text-muted-foreground mt-2 text-[13px] leading-relaxed">
                 {description}
               </p>
             </div>

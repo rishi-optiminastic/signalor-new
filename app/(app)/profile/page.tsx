@@ -18,7 +18,7 @@ import { loadAccountOverview, SAMPLE_ACCOUNT } from '@/services/account.service'
 // Private account page - keep it out of search indexes.
 export const metadata: Metadata = buildMetadata({
   title: 'Profile',
-  description: 'Manage your Signalor account, plan, and projects.',
+  description: 'Manage your SignalorAI account, plan, and projects.',
   path: '/profile',
   noindex: true,
 })

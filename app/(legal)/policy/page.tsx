@@ -11,10 +11,10 @@ export default function PrivacyPolicyPage() {
       <section className="text-foreground/90 space-y-6 text-sm leading-7">
         <div>
           <p>
-            This Privacy Policy explains how Signalor GEO (&ldquo;Signalor&rdquo;, &ldquo;we&rdquo;,
-            &ldquo;us&rdquo;) collects, uses, and safeguards information when you use our website
-            and services (the &ldquo;Service&rdquo;). By using the Service, you agree to the
-            practices described below.
+            This Privacy Policy explains how SignalorAI GEO (&ldquo;SignalorAI&rdquo;,
+            &ldquo;we&rdquo;, &ldquo;us&rdquo;) collects, uses, and safeguards information when you
+            use our website and services (the &ldquo;Service&rdquo;). By using the Service, you
+            agree to the practices described below.
           </p>
         </div>
 

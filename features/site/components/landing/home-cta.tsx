@@ -67,7 +67,7 @@ export function HomeCta(): JSX.Element {
             <MeasureBox className="p-3">
               <Image
                 src="/hero-compass.png"
-                alt="Illustration of a hand holding a compass — Signalor guiding your AI search strategy"
+                alt="Illustration of a hand holding a compass — SignalorAI guiding your AI search strategy"
                 width={667}
                 height={572}
                 sizes="(max-width: 1024px) 0px, 420px"

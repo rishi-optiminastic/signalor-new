@@ -22,8 +22,8 @@ export default function ForBrandsPage(): JSX.Element {
   return (
     <MarketingShell>
       <p className="sr-only">
-        Signalor for Brands shows marketing and growth teams how AI engines describe, cite, or skip
-        their brand. Track mentions, sentiment, and citations across ChatGPT, Claude, Gemini,
+        SignalorAI for Brands shows marketing and growth teams how AI engines describe, cite, or
+        skip their brand. Track mentions, sentiment, and citations across ChatGPT, Claude, Gemini,
         Perplexity, Copilot, and Google AI Overviews; get one 0-100 GEO score backed by content,
         schema, E-E-A-T, technical, entity, and AI-visibility checks; and turn every audit into a
         ranked fix list with connectors that apply many changes for you. Connect analytics to watch

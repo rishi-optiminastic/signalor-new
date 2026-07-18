@@ -52,14 +52,14 @@ const FAQ = [
   {
     question: 'Does a high Domain Rating guarantee AI citations?',
     answer:
-      "No. Backlink authority is one off-page trust signal among many. Earning AI citations also requires strong content quality, clear entity definitions, schema, and topical authority, all areas Signalor's full GEO audit covers.",
+      "No. Backlink authority is one off-page trust signal among many. Earning AI citations also requires strong content quality, clear entity definitions, schema, and topical authority, all areas SignalorAI's full GEO audit covers.",
   },
 ]
 
 const domainRatingJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
-  name: 'Signalor Domain Rating Checker',
+  name: 'SignalorAI Domain Rating Checker',
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Web',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },

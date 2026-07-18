@@ -10,11 +10,12 @@ export default function DomainRatingToolPage() {
   return (
     <MarketingShell>
       <p className="sr-only">
-        The Signalor Domain Rating checker is a free tool that scores any website&rsquo;s authority
-        on a 0&ndash;100 Domain Rating (DR) scale. Enter a domain and the checker returns its DR,
-        sourced from Ahrefs&rsquo; authority index. Domain Rating reflects the strength of the sites
-        linking to a domain, an important off-page signal that AI engines and search engines weigh
-        when deciding which sources to trust and cite. Results are instant with no account required.
+        The SignalorAI Domain Rating checker is a free tool that scores any website&rsquo;s
+        authority on a 0&ndash;100 Domain Rating (DR) scale. Enter a domain and the checker returns
+        its DR, sourced from Ahrefs&rsquo; authority index. Domain Rating reflects the strength of
+        the sites linking to a domain, an important off-page signal that AI engines and search
+        engines weigh when deciding which sources to trust and cite. Results are instant with no
+        account required.
       </p>
       <ToolPage
         theme="blue"

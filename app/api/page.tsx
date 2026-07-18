@@ -4,15 +4,15 @@ import { MarketingContent } from '@/features/landing/components/MarketingContent
 
 export const metadata: Metadata = {
   title: 'API & MCP',
-  description: 'Build on top of Signalor data with the API and MCP server.',
+  description: 'Build on top of SignalorAI data with the API and MCP server.',
 }
 
 export default function ApiPage(): JSX.Element {
   return (
     <MarketingContent
       eyebrow="API & MCP"
-      title="Build on top of Signalor data"
-      subtitle="Pull GEO scores, runs, and recommendations into your own tools — or wire Signalor into an assistant with the MCP server."
+      title="Build on top of SignalorAI data"
+      subtitle="Pull GEO scores, runs, and recommendations into your own tools — or wire SignalorAI into an assistant with the MCP server."
       cta={{ label: 'Talk to us', href: '/contact-sales' }}
       sections={[
         {
@@ -21,7 +21,7 @@ export default function ApiPage(): JSX.Element {
         },
         {
           heading: 'MCP server',
-          body: 'Expose Signalor to any MCP-compatible assistant so it can run audits and read results as part of a workflow.',
+          body: 'Expose SignalorAI to any MCP-compatible assistant so it can run audits and read results as part of a workflow.',
         },
         {
           heading: 'Webhooks',

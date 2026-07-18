@@ -24,7 +24,7 @@ function ConnectPrompt(): JSX.Element {
       </span>
       <p className="text-[14px] font-semibold text-[var(--cat-ink)]">Connect your Shopify store</p>
       <p className="max-w-md text-[12px] leading-relaxed text-[var(--cat-ink-3)]">
-        Signalor scores every product for AI-shopping readiness — descriptions, images, prices and
+        SignalorAI scores every product for AI-shopping readiness — descriptions, images, prices and
         structure that assistants like ChatGPT and Perplexity can actually read.
       </p>
       <TransitionLink

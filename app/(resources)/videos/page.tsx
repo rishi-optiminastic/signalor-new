@@ -4,14 +4,14 @@ import { MarketingContent } from '@/features/landing/components/MarketingContent
 
 export const metadata: Metadata = {
   title: 'Videos',
-  description: 'Product walkthroughs and short explainers for Signalor.',
+  description: 'Product walkthroughs and short explainers for SignalorAI.',
 }
 
 export default function VideosPage(): JSX.Element {
   return (
     <MarketingContent
       eyebrow="Videos"
-      title="Watch Signalor in action"
+      title="Watch SignalorAI in action"
       subtitle="Short walkthroughs of the analyzer, the dashboard, and the workflows teams use to improve how AI engines cite their brand."
       cta={{ label: 'Run a free audit', href: '/explorer' }}
       sections={[

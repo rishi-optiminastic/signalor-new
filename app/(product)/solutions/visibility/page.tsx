@@ -52,12 +52,12 @@ const PATH = '/solutions/visibility'
 
 const FAQ_ITEMS = [
   {
-    question: 'What is AI visibility and how does Signalor measure it?',
+    question: 'What is AI visibility and how does SignalorAI measure it?',
     answer:
-      'AI visibility is how often, how prominently, and how favorably your brand surfaces in generative answers. Signalor scores it across mention frequency, citation share, and recommendation strength, every result timestamped so you can correlate shifts with what you shipped.',
+      'AI visibility is how often, how prominently, and how favorably your brand surfaces in generative answers. SignalorAI scores it across mention frequency, citation share, and recommendation strength, every result timestamped so you can correlate shifts with what you shipped.',
   },
   {
-    question: 'Which AI engines does Signalor track?',
+    question: 'Which AI engines does SignalorAI track?',
     answer:
       'ChatGPT, Claude, Gemini, Perplexity, Google AI Overviews, and Microsoft Copilot. Engine coverage scales with plan; Max includes all of them.',
   },
@@ -67,7 +67,7 @@ const FAQ_ITEMS = [
       'SEO measures position on a results page. AI visibility measures whether the generated answer mentions, paraphrases, or links to you. Generative Engine Optimization (GEO) is the discipline of optimizing for that second layer.',
   },
   {
-    question: 'How often does Signalor refresh visibility data?',
+    question: 'How often does SignalorAI refresh visibility data?',
     answer:
       'Audit snapshots reflect the crawl and prompt run at trigger time. Saved workspaces re-run on a daily, weekly, or monthly schedule with alerts on critical citation changes.',
   },
@@ -77,12 +77,12 @@ const FAQ_ITEMS = [
       'Yes. Pin the prompts that matter, segment by country, and break down by AI surface to see where the gap is widest.',
   },
   {
-    question: 'Does Signalor track AI visibility for competitors too?',
+    question: 'Does SignalorAI track AI visibility for competitors too?',
     answer:
       'Yes. Every report compares your brand against the competitors you choose, with citation share, mention share, and recommendation rate side by side.',
   },
   {
-    question: 'What inputs does Signalor need to score AI visibility?',
+    question: 'What inputs does SignalorAI need to score AI visibility?',
     answer:
       'Just a URL. No SDK, no DNS change, no engineering ticket. Sign-in unlocks saved workspaces, alerts, and the fix queue.',
   },
@@ -102,7 +102,7 @@ const FAQ_ITEMS = [
       'Every mention is classified as recommended, neutral, comparison, or cautionary, so you measure not just visibility, but the quality of that visibility.',
   },
   {
-    question: 'Does Signalor support both B2B SaaS and Shopify or WordPress brands?',
+    question: 'Does SignalorAI support both B2B SaaS and Shopify or WordPress brands?',
     answer:
       'Yes. The platform is engine-agnostic, any public URL can be scored. Shopify and WordPress unlock one-click apply for schema and content fixes.',
   },
@@ -239,7 +239,7 @@ const INTERNAL_LINKS = [
 export const metadata: Metadata = buildMetadata({
   title: 'Visibility | AI Search Visibility & Citation Tracking',
   description:
-    'Track AI visibility, brand mentions, citations, and recommendation share across ChatGPT, Claude, Gemini, Perplexity, Copilot, and Google AI. Signalor scores AI search visibility and turns it into prioritized GEO actions.',
+    'Track AI visibility, brand mentions, citations, and recommendation share across ChatGPT, Claude, Gemini, Perplexity, Copilot, and Google AI. SignalorAI scores AI search visibility and turns it into prioritized GEO actions.',
   path: PATH,
   keywords: [
     'AI visibility platform',
@@ -253,8 +253,8 @@ export const metadata: Metadata = buildMetadata({
     'LLM SEO',
     'AI search analytics',
     'AI brand monitoring',
-    'Signalor',
-    'Signalor AI',
+    'SignalorAI',
+    'SignalorAI',
   ],
 })
 
@@ -288,7 +288,7 @@ export default function VisibilitySolutionPage() {
     name: `${SITE_BRAND} Visibility`,
     description:
       'AI visibility scoring, citation tracking, and brand mention monitoring across ChatGPT, Claude, Gemini, Perplexity, Google AI Overviews, and Microsoft Copilot.',
-    brand: { '@type': 'Brand', name: 'Signalor' },
+    brand: { '@type': 'Brand', name: 'SignalorAI' },
     url: absoluteUrl(PATH),
     image: `${SITE_URL}/carousel1.png`,
     offers: {

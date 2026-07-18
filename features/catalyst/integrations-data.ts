@@ -40,7 +40,7 @@ export const INTEGRATIONS: Integration[] = [
     name: 'WordPress',
     group: 'Platforms',
     logo: '/logos/wordpress.svg',
-    description: 'Install the Signalor plugin to apply fixes and serve llms.txt.',
+    description: 'Install the SignalorAI plugin to apply fixes and serve llms.txt.',
     accent: '#21759B',
   },
   {
@@ -56,7 +56,7 @@ export const INTEGRATIONS: Integration[] = [
     name: 'Framer',
     group: 'Platforms',
     logo: '/logos/framer.svg',
-    description: 'Connect your Framer site via the Signalor plugin.',
+    description: 'Connect your Framer site via the SignalorAI plugin.',
     accent: '#0055FF',
   },
   {
@@ -64,7 +64,7 @@ export const INTEGRATIONS: Integration[] = [
     name: 'Next.js',
     group: 'Platforms',
     logo: '/logos/nextjs.svg',
-    description: 'Drop in the Signalor SDK to instrument your app.',
+    description: 'Drop in the SignalorAI SDK to instrument your app.',
     accent: '#111827',
   },
   // ── Analytics ──────────────────────────────────────────────
@@ -98,7 +98,7 @@ export const INTEGRATIONS: Integration[] = [
     name: 'Zapier',
     group: 'Automation & alerts',
     logo: '/logos/zapier.svg',
-    description: 'Pipe Signalor events into 6,000+ apps and workflows.',
+    description: 'Pipe SignalorAI events into 6,000+ apps and workflows.',
     accent: '#FF4A00',
   },
 ]

@@ -20,7 +20,7 @@ function randomBetween(min: number, max: number) {
   return min + Math.random() * (max - min)
 }
 
-/** Canonical signal-wave rings, the classic Signalor loader visual. */
+/** Canonical signal-wave rings, the classic SignalorAI loader visual. */
 export function SignalorRings({ size = 'md', label }: SignalorRingsProps) {
   const px = SIZES[size]
   const svgRef = useRef<SVGSVGElement>(null)

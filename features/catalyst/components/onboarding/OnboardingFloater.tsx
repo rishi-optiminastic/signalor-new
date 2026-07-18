@@ -125,7 +125,9 @@ function CardHeader({ completed, total, onCollapse, drag }: CardHeaderProps): JS
       }`}
     >
       <div>
-        <p className="text-[14px] font-semibold text-[var(--cat-ink)]">Get started with Signalor</p>
+        <p className="text-[14px] font-semibold text-[var(--cat-ink)]">
+          Get started with SignalorAI
+        </p>
         <p className="mt-0.5 text-[12px] text-[var(--cat-ink-3)]">
           {completed} of {total} complete
         </p>

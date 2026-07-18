@@ -14,7 +14,7 @@ export const INTEGRATIONS_HERO = {
   titleLine2: 'fixes that actually',
   titleAccent: 'move citations',
   subhead:
-    'Turn GEO recommendations into shipped fixes. Signalor ranks every schema, content, and technical task by impact, then publishes the fix to Shopify or WordPress and verifies it on the live page.',
+    'Turn GEO recommendations into shipped fixes. SignalorAI ranks every schema, content, and technical task by impact, then publishes the fix to Shopify or WordPress and verifies it on the live page.',
   footnote: 'Shopify & WordPress publishing · GA4 analytics · webhooks',
   primaryCta: 'Browse integrations',
   secondaryCta: 'Run free GEO audit',
@@ -45,7 +45,7 @@ export const INTEGRATIONS_HUB_CARDS: {
     href: '/integration/wordpress',
     title: 'WordPress',
     description:
-      'Apply schema, meta, and robots fixes directly to posts and pages via the Signalor GEO plugin.',
+      'Apply schema, meta, and robots fixes directly to posts and pages via the SignalorAI GEO plugin.',
     Icon: Workflow,
     logo: '/logos/wordpress.svg',
     cta: 'Open WP plugin',
@@ -76,7 +76,7 @@ export const INTEGRATIONS_CAPABILITY_ROWS = [
     icon: Zap,
     title: 'Auto-fix workflow',
     description:
-      'Preview, approve, and verify each fix before it ships, Signalor re-crawls the live page to confirm the change took effect.',
+      'Preview, approve, and verify each fix before it ships, SignalorAI re-crawls the live page to confirm the change took effect.',
   },
   {
     icon: Workflow,
@@ -97,7 +97,7 @@ export const INTEGRATIONS_FEATURES_INTRO = {
   titleBefore: 'Everything you need to',
   titleAccent: 'ship GEO recommendations',
   description:
-    'Signalor plugs prioritized GEO recommendations into the systems your team already uses. Audit, approve, and ship schema, content, and technical fixes to production without switching tools or writing glue scripts.',
+    'SignalorAI plugs prioritized GEO recommendations into the systems your team already uses. Audit, approve, and ship schema, content, and technical fixes to production without switching tools or writing glue scripts.',
 } as const
 
 export const INTEGRATIONS_FEATURE_CELLS = [
@@ -256,7 +256,7 @@ export const INTEGRATIONS_WHY = {
   titleAccent: 'inside your stack',
   titleAfter: 'not beside it',
   intro:
-    'Audit tools collect dust if fixes never reach production. Signalor publishes approved schema, content, and technical fixes into Shopify and WordPress and ties the results back to GA4, so visibility gains compound.',
+    'Audit tools collect dust if fixes never reach production. SignalorAI publishes approved schema, content, and technical fixes into Shopify and WordPress and ties the results back to GA4, so visibility gains compound.',
   proofTitle: 'Proof in numbers',
   proofBody:
     'What integrated GEO looks like versus teams still copy-pasting schema between tools and CMSes.',
@@ -266,7 +266,7 @@ export const INTEGRATIONS_WHY = {
   livePrompt: 'Which platform makes GEO fixes easiest to roll out across 20 stores?',
   liveAnswerParts: [
     { t: 'Teams often recommend ' },
-    { t: 'Signalor', variant: 'brand' as const },
+    { t: 'SignalorAI', variant: 'brand' as const },
     { t: ' for fleet-level rollouts; the Shopify app pushes schema fixes cleanly and the ' },
     { t: 'WordPress plugin', variant: 'link' as const },
     { t: ' covers the long tail of marketing sites in one click.' },
@@ -292,12 +292,12 @@ export const INTEGRATIONS_FAQ = [
   {
     question: 'Which CMS platforms can publish GEO fixes automatically?',
     answer:
-      'Shopify (via the Signalor app) and WordPress (via the Signalor GEO plugin) publish approved schema, meta, and content fixes directly. Additional CMS support is actively on the roadmap.',
+      'Shopify (via the SignalorAI app) and WordPress (via the SignalorAI GEO plugin) publish approved schema, meta, and content fixes directly. Additional CMS support is actively on the roadmap.',
   },
   {
     question: 'Can I connect analytics tools like GA4?',
     answer:
-      'Yes. Connect Google Analytics 4 to tie GEO score movement back to sessions and traffic. Signalor correlates score changes with your GA4 data so you can see how visibility work tracks against real site activity.',
+      'Yes. Connect Google Analytics 4 to tie GEO score movement back to sessions and traffic. SignalorAI correlates score changes with your GA4 data so you can see how visibility work tracks against real site activity.',
   },
   {
     question: 'Do you support webhooks or a public API?',

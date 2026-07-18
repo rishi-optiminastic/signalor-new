@@ -38,7 +38,7 @@ const publicEnvSchema = z.object({
   NEXT_PUBLIC_SANITY_PROJECT_ID: z.string().min(1).optional(),
   NEXT_PUBLIC_SANITY_DATASET: z.string().min(1).optional(),
   NEXT_PUBLIC_SANITY_API_VERSION: z.string().min(1).default('2026-05-02'),
-  // The dev URL the Signalor plugin serves from. Users paste this into
+  // The dev URL the SignalorAI plugin serves from. Users paste this into
   // Framer's "Open Development Plugin" dialog (Framer doesn't expose a
   // deep-link to open a dev plugin from an external URL). Override with
   // the marketplace listing once published.
@@ -83,4 +83,3 @@ if (!parsed.success) {
 
 export const env = parsed.data
 export type PublicEnv = z.infer<typeof publicEnvSchema>
- 

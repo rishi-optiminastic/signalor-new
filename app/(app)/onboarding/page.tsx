@@ -7,7 +7,7 @@ import { buildMetadata } from '@/features/site/lib/seo'
 
 export const metadata: Metadata = buildMetadata({
   title: 'Onboarding',
-  description: 'Set up your Signalor workspace.',
+  description: 'Set up your SignalorAI workspace.',
   path: '/onboarding',
   noindex: true,
 })

@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 
 // Private workspace page - title only; noindex is inherited from the dashboard layout.
 export const metadata: Metadata = {
-  title: 'Overview · Signalor',
+  title: 'Overview · SignalorAI',
 }
 
 export default function SlugOverviewLayout({ children }: { children: ReactNode }): JSX.Element {

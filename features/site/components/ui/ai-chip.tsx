@@ -1,31 +1,31 @@
-import { cn } from "@/features/site/lib/utils";
+import { cn } from '@/features/site/lib/utils'
 
 interface SignalorMarkProps {
-  className?: string;
-  size?: "sm" | "md" | "lg";
+  className?: string
+  size?: 'sm' | 'md' | 'lg'
   /** Wrap the mark in a soft pill background (the old chip frame). */
-  framed?: boolean;
+  framed?: boolean
 }
 
-const SIZE_CLASSES: Record<NonNullable<SignalorMarkProps["size"]>, string> = {
-  sm: "h-5 w-5",
-  md: "h-7 w-7 sm:h-8 sm:w-8",
-  lg: "h-9 w-9 sm:h-11 sm:w-11",
-};
+const SIZE_CLASSES: Record<NonNullable<SignalorMarkProps['size']>, string> = {
+  sm: 'h-5 w-5',
+  md: 'h-7 w-7 sm:h-8 sm:w-8',
+  lg: 'h-9 w-9 sm:h-11 sm:w-11',
+}
 
-/** The Signalor mark, the same coral concentric-rings glyph from LogoComp,
+/** The SignalorAI mark, the same coral concentric-rings glyph from LogoComp,
  * sized for inline use inside headlines. Use `<SignalorMark />` anywhere a
  * brand glyph belongs in copy. Static (no animation) so it doesn't compete
  * with the headline's reading rhythm. */
-export function SignalorMark({ className, size = "md", framed = false }: SignalorMarkProps) {
+export function SignalorMark({ className, size = 'md', framed = false }: SignalorMarkProps) {
   const inner = (
     <svg
       viewBox="0 0 1080 1080"
       className={cn(
-        "h-full w-full text-primary [&_path]:fill-current",
-        framed ? "" : SIZE_CLASSES[size],
+        'text-primary h-full w-full [&_path]:fill-current',
+        framed ? '' : SIZE_CLASSES[size],
       )}
-      aria-label="Signalor"
+      aria-label="SignalorAI"
     >
       <path d="M565.79,201.17c43.67-3.79,81.17,9.26,114.46,37.06,72.34,60.41,69.67,134.55,104.91,214.09,45.59,102.92,157.65,196.05,41.43,299.84-44.78,39.99-108.24,55.11-162.85,76.4-85,33.15-130.62,64.56-228.66,44.72-279.35-56.53-309.76-455.82-77.76-594.82,46.15-27.65,156.07-72.76,208.47-77.3ZM568,214.45c-58.22,5.52-189.54,65.9-234.39,104.54-164.55,141.78-133.25,460.72,89.16,526.74,99.37,29.49,151.25-3.57,239.8-36.07,73.92-27.13,214.99-62.76,202.49-169.19-5.05-43-71.95-132.08-93.19-179.28-34.95-77.64-30.97-157.5-101.48-215.3-30.04-24.62-63.48-35.13-102.39-31.44Z" />
       <path d="M541.41,267.61c43.38-3.96,85.03,14.63,115.42,44.99,46.12,46.07,53.19,108.76,79.59,166.31,18.03,39.32,45.84,78.9,61.27,118.16,30.53,77.71-34.74,131.9-98.61,160.49-47.32,21.18-166.45,71.33-213.74,72.07-259.82,4.08-322.49-377.1-108.88-501.03,37.36-21.68,122.92-57.16,164.96-61ZM757.75,699.92c65.98-66.57,15.37-111.39-17.66-175.94-24.71-48.28-35.17-87.92-53.21-137.3-20.87-57.16-75.06-108.91-139.43-104.17-40.85,3-130.99,43.35-165.77,66.84-207.44,140.12-95.06,536.35,176.85,442.68,53.98-18.6,161.1-53.63,199.23-92.1Z" />
@@ -33,33 +33,33 @@ export function SignalorMark({ className, size = "md", framed = false }: Signalo
       <path d="M383.15,695.95c-75.08-75.11-59.14-217.22,36.79-268.47,103.24-55.16,165.88-17.39,208.72,81.67,31.43,72.67,49.43,119.77-29.92,165.81-27.84,16.15-110.47,55.8-139.96,55.15-26.54-.58-57.13-15.65-75.63-34.16ZM499.28,418.23c-41.99,4.08-96.65,38.5-117.29,75.42-44.51,79.65-.35,244.88,112.29,207.54,30.61-10.15,98.42-37.76,121.74-57.7,34.09-29.15,25.13-49.63,12.29-87.48-19.82-58.41-52.18-145.26-129.03-137.79Z" />
       <path d="M466.02,469.13c51.39-6.95,91.95,17.75,110.77,65.3,16.09,40.65,14.25,67.74-20.9,95.46-12.94,10.21-75.24,48.51-88.75,50.81-71.7,12.21-98.77-92.71-79.84-146.29,11.3-32,44.89-60.7,78.72-65.28ZM474.88,486.85c-32.42,4.44-61.84,34.68-65.69,67.23-4.13,34.98,14.09,119.35,64,99.45,15.86-6.33,72.23-34.89,83.05-45.43,20.53-19.98,14.37-44.5,4.41-68.61-14.93-36.14-45.63-58.14-85.78-52.64Z" />
     </svg>
-  );
+  )
 
   if (!framed) {
     return (
       <span
         className={cn(
-          "inline-flex shrink-0 items-center justify-center align-middle",
+          'inline-flex shrink-0 items-center justify-center align-middle',
           SIZE_CLASSES[size],
           className,
         )}
       >
         {inner}
       </span>
-    );
+    )
   }
   return (
     <span
       className={cn(
-        "inline-flex shrink-0 items-center justify-center rounded-md bg-white p-1 align-middle ring-1 ring-black/5",
+        'inline-flex shrink-0 items-center justify-center rounded-md bg-white p-1 align-middle ring-1 ring-black/5',
         SIZE_CLASSES[size],
         className,
       )}
     >
       {inner}
     </span>
-  );
+  )
 }
 
 /** @deprecated Use `<SignalorMark />`. Alias kept so existing imports keep working. */
-export const AiChip = SignalorMark;
+export const AiChip = SignalorMark

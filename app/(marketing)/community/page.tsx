@@ -4,7 +4,7 @@ import { MarketingContent } from '@/features/landing/components/MarketingContent
 
 export const metadata: Metadata = {
   title: 'Community',
-  description: 'Join the Signalor community of teams optimizing for AI search.',
+  description: 'Join the SignalorAI community of teams optimizing for AI search.',
 }
 
 export default function CommunityPage(): JSX.Element {

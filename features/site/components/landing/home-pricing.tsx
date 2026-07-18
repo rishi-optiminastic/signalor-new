@@ -46,7 +46,7 @@ const HOME_PLANS: HomePlan[] = [
     id: 'free',
     label: 'Free',
     price: 0,
-    tagline: 'Try Signalor on your own site, no credit card required.',
+    tagline: 'Try SignalorAI on your own site, no credit card required.',
     features: [
       '50 tracked prompts included',
       'Free GEO score & audit',
@@ -161,28 +161,28 @@ function PlanContent({ plan, symbol, amount, resolved }: PlanCellProps): JSX.Ele
     <>
       <div>
         <div className="flex items-center gap-2">
-          <h3 className="text-base font-semibold tracking-tight text-foreground">{plan.label}</h3>
+          <h3 className="text-foreground text-base font-semibold tracking-tight">{plan.label}</h3>
           {plan.popular ? (
-            <span className="rounded-full bg-primary px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary-foreground">
+            <span className="bg-primary text-primary-foreground rounded-full px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase">
               Popular
             </span>
           ) : null}
         </div>
-        <p className="mt-1.5 min-h-10 text-[13px] leading-relaxed text-muted-foreground">
+        <p className="text-muted-foreground mt-1.5 min-h-10 text-[13px] leading-relaxed">
           {plan.tagline}
         </p>
       </div>
       <div className="mt-5 flex items-start">
-        <span className="mt-1 text-base font-semibold text-foreground">{symbol}</span>
+        <span className="text-foreground mt-1 text-base font-semibold">{symbol}</span>
         <span
           className={cn(
-            'text-4xl font-semibold tabular-nums tracking-tight text-foreground transition-opacity duration-300',
+            'text-foreground text-4xl font-semibold tracking-tight tabular-nums transition-opacity duration-300',
             !resolved && 'opacity-40',
           )}
         >
           {amount}
         </span>
-        <span className="ml-1.5 mt-4 text-xs font-medium text-muted-foreground">/ month</span>
+        <span className="text-muted-foreground mt-4 ml-1.5 text-xs font-medium">/ month</span>
       </div>
       <Link
         href={plan.href}
@@ -190,23 +190,23 @@ function PlanContent({ plan, symbol, amount, resolved }: PlanCellProps): JSX.Ele
           'mt-6',
           plan.popular
             ? LANDING_PRIMARY_CTA_CLASS
-            : 'inline-flex h-9 items-center justify-center gap-1.5 rounded-md bg-card px-4 text-[13px] font-semibold text-foreground ring-1 ring-border shadow-sm shadow-black/5 transition-colors hover:bg-muted/60',
+            : 'bg-card text-foreground ring-border hover:bg-muted/60 inline-flex h-9 items-center justify-center gap-1.5 rounded-md px-4 text-[13px] font-semibold shadow-sm ring-1 shadow-black/5 transition-colors',
         )}
       >
         {plan.cta}
         <ArrowRight className="h-3.5 w-3.5" aria-hidden />
       </Link>
-      <ul className="mt-6 space-y-2.5 border-t border-border pt-5">
+      <ul className="border-border mt-6 space-y-2.5 border-t pt-5">
         {plan.featuresLead ? (
-          <li className="text-[13px] font-semibold text-foreground">{plan.featuresLead}</li>
+          <li className="text-foreground text-[13px] font-semibold">{plan.featuresLead}</li>
         ) : null}
-        {plan.features.map((feature) => (
+        {plan.features.map(feature => (
           <li
             key={feature}
-            className="flex items-start gap-2 text-[13px] leading-snug text-foreground/90"
+            className="text-foreground/90 flex items-start gap-2 text-[13px] leading-snug"
           >
             <Check
-              className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary"
+              className="text-primary mt-0.5 h-3.5 w-3.5 shrink-0"
               strokeWidth={2.5}
               aria-hidden
             />
@@ -220,31 +220,31 @@ function PlanContent({ plan, symbol, amount, resolved }: PlanCellProps): JSX.Ele
 
 function EnterpriseRow(): JSX.Element {
   return (
-    <div className="relative border-t border-border">
+    <div className="border-border relative border-t">
       <GridCornerHandles top />
       <GridHandle className="-top-[3.5px] left-1/3 -ml-[3.5px] hidden lg:block" />
-      <div className="grid lg:grid-cols-[1fr_2fr] lg:divide-x lg:divide-border">
-        <div className="bg-card px-6 py-10 max-lg:border-b max-lg:border-border sm:px-10">
-          <h3 className="text-base font-semibold tracking-tight text-foreground">Enterprise</h3>
-          <p className="mt-1.5 max-w-xs text-[13px] leading-relaxed text-muted-foreground">
+      <div className="lg:divide-border grid lg:grid-cols-[1fr_2fr] lg:divide-x">
+        <div className="bg-card max-lg:border-border px-6 py-10 max-lg:border-b sm:px-10">
+          <h3 className="text-foreground text-base font-semibold tracking-tight">Enterprise</h3>
+          <p className="text-muted-foreground mt-1.5 max-w-xs text-[13px] leading-relaxed">
             Higher prompt volumes, multiple domains, and advanced support for larger teams.
           </p>
           <Link
             href="/contact-sales"
-            className="mt-5 inline-flex h-9 items-center justify-center gap-1.5 rounded-md bg-card px-4 text-[13px] font-semibold text-foreground ring-1 ring-border shadow-sm shadow-black/5 transition-colors hover:bg-muted/60"
+            className="bg-card text-foreground ring-border hover:bg-muted/60 mt-5 inline-flex h-9 items-center justify-center gap-1.5 rounded-md px-4 text-[13px] font-semibold shadow-sm ring-1 shadow-black/5 transition-colors"
           >
             Contact sales
             <ArrowRight className="h-3.5 w-3.5" aria-hidden />
           </Link>
         </div>
-        <ul className="grid content-center gap-x-10 gap-y-3 bg-card px-6 py-10 sm:grid-cols-2 sm:px-10">
-          {ENTERPRISE_FEATURES.map((feature) => (
+        <ul className="bg-card grid content-center gap-x-10 gap-y-3 px-6 py-10 sm:grid-cols-2 sm:px-10">
+          {ENTERPRISE_FEATURES.map(feature => (
             <li
               key={feature}
-              className="flex items-start gap-2 text-[13px] leading-snug text-foreground/90"
+              className="text-foreground/90 flex items-start gap-2 text-[13px] leading-snug"
             >
               <Check
-                className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary"
+                className="text-primary mt-0.5 h-3.5 w-3.5 shrink-0"
                 strokeWidth={2.5}
                 aria-hidden
               />
@@ -263,7 +263,7 @@ export function HomePricing(): JSX.Element {
 
   useEffect(() => {
     getPlanPrices()
-      .then((res) => {
+      .then(res => {
         if (res.source === 'dodo') {
           setLivePrices({ starter: res.starter, pro: res.pro, business: res.business })
         }
@@ -277,7 +277,7 @@ export function HomePricing(): JSX.Element {
 
   return (
     <section id="pricing" className="scroll-mt-20" aria-labelledby="home-pricing-heading">
-      <div className="relative border-t border-border px-6 py-14 sm:py-16">
+      <div className="border-border relative border-t px-6 py-14 sm:py-16">
         <GridCornerHandles top />
         <HomeSectionHeader
           eyebrow="Pricing"
@@ -289,18 +289,18 @@ export function HomePricing(): JSX.Element {
           <CurrencyToggle currency={currency} onSelect={selectCurrency} />
           <Link
             href="/pricing"
-            className="text-[13px] font-semibold text-primary transition-colors hover:text-primary/80"
+            className="text-primary hover:text-primary/80 text-[13px] font-semibold transition-colors"
           >
             Full plan comparison →
           </Link>
         </div>
       </div>
-      <div className="relative border-t border-border">
+      <div className="border-border relative border-t">
         <GridCornerHandles top />
         <GridHandle className="-top-[3.5px] left-1/3 -ml-[3.5px] hidden lg:block" />
         <GridHandle className="-top-[3.5px] left-2/3 -ml-[3.5px] hidden lg:block" />
-        <div className="grid grid-cols-1 divide-border max-lg:divide-y lg:grid-cols-3 lg:divide-x">
-          {HOME_PLANS.map((plan) => {
+        <div className="divide-border grid grid-cols-1 max-lg:divide-y lg:grid-cols-3 lg:divide-x">
+          {HOME_PLANS.map(plan => {
             const price = planPriceLabel({
               plan,
               live: livePrices?.[plan.id] ?? null,
@@ -311,10 +311,10 @@ export function HomePricing(): JSX.Element {
             return (
               <div
                 key={plan.id}
-                className={cn('flex bg-card', plan.popular ? 'p-4 lg:p-5' : 'px-6 py-9 sm:px-8')}
+                className={cn('bg-card flex', plan.popular ? 'p-4 lg:p-5' : 'px-6 py-9 sm:px-8')}
               >
                 {plan.popular ? (
-                  <div className="relative z-10 flex w-full flex-col rounded-xl bg-card p-6 shadow-md shadow-black/10 ring-2 ring-primary/60 sm:p-7">
+                  <div className="bg-card ring-primary/60 relative z-10 flex w-full flex-col rounded-xl p-6 shadow-md ring-2 shadow-black/10 sm:p-7">
                     <PlanContent
                       plan={plan}
                       symbol={price.symbol}

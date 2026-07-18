@@ -12,7 +12,7 @@ import {
 export const metadata: Metadata = buildMetadata({
   title: 'Free Schema.org Validator | JSON-LD Coverage & AI Citation Check',
   description:
-    'Scan any URL for Organization, Product, Article, FAQ, HowTo, BreadcrumbList, and 15 other JSON-LD types. Signalor flags missing required fields, partial definitions, and duplicate blocks that reduce AI citation chances. Free, no account needed.',
+    'Scan any URL for Organization, Product, Article, FAQ, HowTo, BreadcrumbList, and 15 other JSON-LD types. SignalorAI flags missing required fields, partial definitions, and duplicate blocks that reduce AI citation chances. Free, no account needed.',
   path: '/tools/schema-validator',
   keywords: [
     'Schema.org validator',
@@ -59,7 +59,7 @@ const FAQ = [
 const schemaValidatorJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
-  name: 'Signalor Schema Validator',
+  name: 'SignalorAI Schema Validator',
   applicationCategory: 'DeveloperApplication',
   operatingSystem: 'Web',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },

@@ -44,7 +44,7 @@ export function Testimonials(): JSX.Element {
           </span>
         </h2>
         <p className="text-accent-foreground mt-5 max-w-2xl text-base leading-relaxed font-light lg:text-lg">
-          Real outcomes from growth, content, and DTC teams shipping Signalor into their existing
+          Real outcomes from growth, content, and DTC teams shipping SignalorAI into their existing
           workflow, not another dashboard to babysit.
         </p>
       </div>

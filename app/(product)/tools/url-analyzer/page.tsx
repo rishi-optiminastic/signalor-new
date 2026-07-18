@@ -10,7 +10,7 @@ export default function UrlAnalyzerToolPage() {
   return (
     <MarketingShell>
       <p className="sr-only">
-        The Signalor URL Analyzer is a free Generative Engine Optimization (GEO) and Answer Engine
+        The SignalorAI URL Analyzer is a free Generative Engine Optimization (GEO) and Answer Engine
         Optimization (AEO) audit tool that scores any public URL for AI citation readiness. It
         checks schema.org JSON-LD coverage across Organization, Product, Article, FAQPage, and HowTo
         types, validates llms.txt presence and structure, parses robots.txt for GPTBot, ClaudeBot,

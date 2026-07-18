@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 
 // Private workspace page - title only; noindex is inherited from the dashboard layout.
 export const metadata: Metadata = {
-  title: 'Recommendations · Signalor',
+  title: 'Recommendations · SignalorAI',
 }
 
 export default function RecommendationsLayout({ children }: { children: ReactNode }): JSX.Element {

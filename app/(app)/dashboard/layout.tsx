@@ -12,10 +12,10 @@ import { buildMetadata } from '@/features/site/lib/seo'
 export const metadata: Metadata = {
   ...buildMetadata({
     title: 'Dashboard',
-    description: 'Signalor workspace dashboard.',
+    description: 'SignalorAI workspace dashboard.',
     noindex: true,
   }),
-  title: 'Dashboard · Signalor',
+  title: 'Dashboard · SignalorAI',
 }
 
 export default function CatalystLayout({ children }: { children: ReactNode }): JSX.Element {

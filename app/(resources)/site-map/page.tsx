@@ -7,9 +7,9 @@ import { JsonLd } from '@/features/site/components/seo/json-ld'
 import { breadcrumbJsonLd, buildMetadata } from '@/features/site/lib/seo'
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Sitemap | All Signalor Pages',
+  title: 'Sitemap | All SignalorAI Pages',
   description:
-    'Browse every Signalor page: AI visibility and GEO features, free tools, solutions, integrations, and resources.',
+    'Browse every SignalorAI page: AI visibility and GEO features, free tools, solutions, integrations, and resources.',
   path: '/site-map',
 })
 
@@ -55,7 +55,7 @@ const SITEMAP: SitemapGroup[] = [
   {
     title: 'Company',
     links: [
-      { href: '/about-us', label: 'About Signalor' },
+      { href: '/about-us', label: 'About SignalorAI' },
       { href: '/creators-program', label: 'Creators program' },
       { href: '/blog', label: 'Blog & resources' },
     ],
@@ -85,10 +85,10 @@ export default function SitemapPage() {
             [ sitemap ]
           </p>
           <h1 className="text-foreground mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
-            All Signalor pages
+            All SignalorAI pages
           </h1>
           <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-neutral-600">
-            Every public page on Signalor, grouped by area. Looking for the machine-readable
+            Every public page on SignalorAI, grouped by area. Looking for the machine-readable
             version? It&apos;s at{' '}
             <a href="/sitemap.xml" className="text-primary font-medium hover:underline">
               /sitemap.xml

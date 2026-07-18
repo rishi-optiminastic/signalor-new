@@ -23,12 +23,12 @@ export default function ShopifyIntegrationPage() {
   return (
     <MarketingShell>
       <p className="sr-only">
-        The Signalor Shopify integration pulls your live product catalog into GEO scoring so AI
-        engines can accurately cite your inventory. Once connected, Signalor reads product titles,
+        The SignalorAI Shopify integration pulls your live product catalog into GEO scoring so AI
+        engines can accurately cite your inventory. Once connected, SignalorAI reads product titles,
         descriptions, prices, and existing schema markup, then surfaces prioritized recommendations
         for improving how ChatGPT, Claude, Gemini, and Perplexity describe and link to your store.
         The integration uses a read-only sync and does not modify your storefront. You can
-        disconnect at any time from your Signalor workspace settings.
+        disconnect at any time from your SignalorAI workspace settings.
       </p>
       <JsonLd
         id="ld-shopify-breadcrumb"

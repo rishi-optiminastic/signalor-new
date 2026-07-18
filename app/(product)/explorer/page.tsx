@@ -23,7 +23,7 @@ export default function ExplorerPage() {
   return (
     <MarketingShell>
       <p className="sr-only">
-        Signalor Explorer is the AI citation analytics layer for the prompts you already track. It
+        SignalorAI Explorer is the AI citation analytics layer for the prompts you already track. It
         charts your weekly AI citation rate per engine across ChatGPT, Claude, Gemini, Perplexity,
         Google, and Bing, and tracks your GEO score run over run so you can see whether visibility
         work is moving the answers. Explorer benchmarks your share of AI mentions against
@@ -31,7 +31,7 @@ export default function ExplorerPage() {
         is missing, so marketing knows where to invest in content next. Citation source reporting
         breaks down which of your pages and which rival pages each engine cites, by domain and by
         engine. Every analysis run can be exported as a board-ready PDF covering GEO score, citation
-        share, and the fixes you shipped. Signalor Explorer is the AI search analytics and GEO
+        share, and the fixes you shipped. SignalorAI Explorer is the AI search analytics and GEO
         reporting layer for marketing teams, SEO agencies, and in-house brand managers tracking
         generative engine visibility.
       </p>
@@ -57,7 +57,7 @@ export default function ExplorerPage() {
         sectionId="reporting-faq"
         headingId="reporting-faq-heading"
         heading="Reporting FAQs"
-        description="How Signalor turns GEO runs into stakeholder-ready stories."
+        description="How SignalorAI turns GEO runs into stakeholder-ready stories."
         items={[...REPORTING_FAQ]}
       />
     </MarketingShell>

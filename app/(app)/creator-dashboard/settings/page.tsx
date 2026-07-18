@@ -155,7 +155,7 @@ export default function CreatorSettingsPage() {
         <div className="border-border bg-card rounded-xl border p-5">
           <p className="text-foreground text-[13px] font-semibold">Channels</p>
           <p className="text-muted-foreground mt-0.5 text-xs">
-            Add the platforms where you'll share Signalor. Shown publicly.
+            Add the platforms where you'll share SignalorAI. Shown publicly.
           </p>
           <div className="mt-4">
             <SocialPlatformsField value={socials} onChange={setSocials} />

@@ -55,8 +55,8 @@ const instrumentSerif = Instrument_Serif({
 export const metadata: Metadata = {
   ...buildMetadata({ path: '/' }),
   title: {
-    default: 'Signalor.ai | AI search visibility & GEO platform',
-    template: '%s | Signalor.ai',
+    default: 'SignalorAI | AI search visibility & GEO platform',
+    template: '%s | SignalorAI',
   },
 }
 
@@ -86,7 +86,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }):
         <link
           rel="alternate"
           type="application/rss+xml"
-          title="Signalor Blog"
+          title="SignalorAI Blog"
           href="/blog/rss.xml"
         />
         <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
