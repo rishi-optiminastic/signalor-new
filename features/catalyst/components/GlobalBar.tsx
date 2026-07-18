@@ -3,6 +3,7 @@
 import { Bell, HelpCircle } from 'lucide-react'
 import Link from 'next/link'
 
+import { AgentChatTrigger } from '@/features/catalyst/components/agent-chat/AgentChatTrigger'
 import { ICON_TILE } from '@/features/catalyst/components/control-styles'
 import { FeedbackPopover } from '@/features/catalyst/components/FeedbackPopover'
 import { GlobalSearch } from '@/features/catalyst/components/GlobalSearch'
@@ -25,16 +26,22 @@ export function GlobalBar(): JSX.Element {
       <MobileMenuButton />
       <SidebarToggle />
       <GlobalSearch />
-      <div className="ml-auto flex items-center gap-1.5">
+      <div className="ml-auto flex shrink-0 items-center gap-1.5">
         {pageActions && (
           <>
             {pageActions}
             <span className="mx-1 hidden h-5 w-px bg-[var(--cat-border)] sm:block" />
           </>
         )}
+        {/* Agent sits with the app-level chrome (theme/help/bell), not the page actions. */}
+        <AgentChatTrigger />
         <ThemeToggleButton />
-        <FeedbackPopover />
-        <Link href="#" aria-label="Help & docs" className={ICON_TILE}>
+        {/* Lowest-priority chrome: dropped on narrow viewports so the fixed-width
+            right cluster can never outgrow the bar. */}
+        <span className="hidden lg:block">
+          <FeedbackPopover />
+        </span>
+        <Link href="#" aria-label="Help & docs" className={`hidden lg:grid ${ICON_TILE}`}>
           <HelpCircle size={17} strokeWidth={1.8} />
         </Link>
         <button type="button" aria-label="Notifications" className={`relative ${ICON_TILE}`}>

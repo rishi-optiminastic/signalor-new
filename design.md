@@ -544,6 +544,18 @@ Intentionally minimal - a single **rise + fade** on mount so content settles in 
 - **Respects `prefers-reduced-motion: reduce`** - the animation is disabled entirely.
 - No hover/scroll animation and no per-number count-ups; motion is an entrance only, never ambient.
 
+### Stacking-context gotcha (read before adding any dropdown or popover)
+
+Both utilities use `animation: cat-rise ... both`. `animation-fill-mode: both` keeps the final keyframe applied, so the element permanently computes `transform: translateY(0)` - a transform that is not `none`, which means **every `.cat-rise` element and every direct child of a `.cat-stagger` container is its own stacking context, forever, not just while animating.**
+
+Consequences when you put a dropdown, popover or menu inside one:
+
+- Its `z-50` is scoped to that element's context, so it cannot escape above later siblings. Later siblings in DOM order (the cards) paint on top of it regardless of how high you push the child's z-index.
+- The fix is to raise the **animated ancestor**, not the menu: give it `relative z-30` (or similar). Raising the menu itself does nothing.
+- Keep that value under the top bar's `z-40` so overlays never cover app chrome.
+
+Known instances already fixed this way: the task-detail header (`relative z-20`) and the Overview greeting row that hosts `OverviewActions` (`relative z-30`).
+
 ## B9. Extending this dashboard
 
 1. **New card** -> wrap in `<Card>`, lead with `<CardHead>` + `<Metric>`, keep it flat/bordered.

@@ -19,10 +19,16 @@ export const ICON_TILE =
   `text-[var(--cat-ink-2)] transition-colors hover:bg-[var(--cat-hover)] ` +
   `hover:text-[var(--cat-ink)] ${CONTROL_RING}`
 
-/** Labelled control with a caret — date range, engine filter. */
+/**
+ * Labelled control with a caret — date range, engine filter.
+ *
+ * `whitespace-nowrap` is load-bearing: the label is a bare text node, so without
+ * it a crowded top bar wraps "Last month" onto two lines and the chip outgrows
+ * its 34px height.
+ */
 export const CONTROL_CHIP =
   `inline-flex h-[34px] shrink-0 items-center gap-2 rounded-md bg-[var(--cat-card)] px-3 ` +
-  `text-[13px] font-medium text-[var(--cat-ink)] transition-colors ` +
+  `text-[13px] font-medium whitespace-nowrap text-[var(--cat-ink)] transition-colors ` +
   `hover:bg-[var(--cat-hover)] ${CONTROL_RING}`
 
 /**

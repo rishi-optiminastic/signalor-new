@@ -4,7 +4,13 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 
 import { ApiError } from '@/lib/api/client'
-import { disconnectGA, disconnectShopify, getGAAuthUrl } from '@/lib/api/integrations'
+import {
+  disconnectGA,
+  disconnectGsc,
+  disconnectShopify,
+  getGAAuthUrl,
+  getGscAuthUrl,
+} from '@/lib/api/integrations'
 import { useSession } from '@/lib/auth-client'
 
 /** Pull the backend's `{error: "..."}` message out of a failed request. */
@@ -20,12 +26,12 @@ function backendMessage(err: unknown): string {
 /**
  * Catalog slugs that can be connected from this page.
  *
- * Google Analytics connects via OAuth here; Shopify connect opens its own
- * token modal in the view, and disconnect flows through this hook. The rest
- * connect through their own install flows (the WordPress plugin, an SDK
- * snippet), so their switches render inert.
+ * Google Analytics and Search Console connect via OAuth here; Shopify connect
+ * opens its own token modal in the view, and disconnect flows through this
+ * hook. The rest connect through their own install flows (the WordPress
+ * plugin, an SDK snippet), so their switches render inert.
  */
-const CONNECTABLE = new Set(['google-analytics', 'shopify'])
+const CONNECTABLE = new Set(['google-analytics', 'search-console', 'shopify'])
 
 export function isConnectable(slug: string): boolean {
   return CONNECTABLE.has(slug)
@@ -51,13 +57,18 @@ export function useIntegrationConnect(): UseIntegrationConnectResult {
     setError('')
     try {
       if (next) {
-        // Shopify connect is handled by the view's token modal; only GA's OAuth
-        // hand-off runs here (the callback finishes and returns to the app).
+        // Shopify connect is handled by the view's token modal; the Google OAuth
+        // hand-offs run here (their callbacks finish and return to the app).
         if (slug === 'shopify') return
-        window.location.href = await getGAAuthUrl(email)
+        const returnTo = window.location.pathname + window.location.search
+        window.location.href =
+          slug === 'search-console'
+            ? await getGscAuthUrl(email, returnTo)
+            : await getGAAuthUrl(email)
         return
       }
       if (slug === 'shopify') await disconnectShopify(email)
+      else if (slug === 'search-console') await disconnectGsc(email)
       else await disconnectGA(email)
       await queryClient.invalidateQueries({ queryKey: ['catalyst', 'integrations'] })
       await queryClient.invalidateQueries({ queryKey: ['catalyst', 'ga-world-presence'] })

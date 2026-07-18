@@ -11,6 +11,9 @@ const PROVIDER_SLUG: Record<string, string> = {
   google_analytics: 'google-analytics',
   gsc: 'search-console',
   search_console: 'search-console',
+  // The value the backend actually stores (Integration.Provider.GOOGLE_SEARCH_CONSOLE).
+  // Without this the card never flips to connected after a successful OAuth.
+  google_search_console: 'search-console',
   shopify: 'shopify',
   wordpress: 'wordpress',
   woocommerce: 'wordpress',

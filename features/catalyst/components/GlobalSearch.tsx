@@ -119,7 +119,9 @@ export function GlobalSearch(): JSX.Element {
   }
 
   return (
-    <div ref={wrap} className="relative w-full max-w-[380px]">
+    // The one flexible item in the top bar: it gives up width first so the
+    // controls on the right keep their intrinsic size instead of wrapping.
+    <div ref={wrap} className="relative max-w-[260px] min-w-0 flex-1 xl:max-w-[380px]">
       <SearchInput
         inputRef={input}
         query={query}
