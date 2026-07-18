@@ -101,7 +101,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }):
         <ClarityInit />
         <GoogleAnalytics />
         <AhrefsAnalytics />
-        <GitBookWidget />
+        {/* <GitBookWidget /> */}
         <Suspense fallback={null}>
           <ReferralCapture />
           <AffiliateCapture />

@@ -125,9 +125,9 @@ middleware.ts             # Next.js edge middleware (auth gating)
 
 ### Design docs — read the right one before any UI work
 
-- Marketing site (home, feature pages, blog, tools, content pages, nav mega menu): follow `DESIGN-MARKETING.md` — page templates, tokens, class recipes, and the anti-AI checklist are mandatory.
-- `/catalyst` dashboard: follow `design.md`.
-- Generic de-AI principles: `DESIGN-NO-AI-FEEL.md` (repo-specific docs above win on conflict).
+- Single source of truth: `DESIGN.md`. Read its `## 0. Shared foundations` first (brand, font, borders, meters, motion, anti-AI tells - both surfaces obey these), then the Part for the surface you are touching.
+- Marketing site (home, feature pages, blog, tools, content pages, nav mega menu): `DESIGN.md` Part A - page templates, tokens, class recipes, and the anti-AI checklist are mandatory.
+- `/catalyst` dashboard: `DESIGN.md` Part B.
 
 ### Progress / score / visibility bars — always use the segmented tick meter
 
