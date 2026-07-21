@@ -4,8 +4,8 @@ import { ChevronDown, Loader2, RefreshCw, Trash2 } from 'lucide-react'
 import { useState } from 'react'
 
 import { TickBar } from '@/features/catalyst/components/brands/BrandBits'
+import { EngineLogo } from '@/features/catalyst/components/EngineLogo'
 import { PromptResultsPanel } from '@/features/catalyst/components/prompt-tracker/PromptResultsPanel'
-import { engineLogo } from '@/features/catalyst/engine-logos'
 import type { TrackedPrompt } from '@/features/catalyst/prompt-tracker-data'
 import { scoreColor } from '@/features/catalyst/visibility-data'
 
@@ -48,25 +48,9 @@ function EngineLogos({ item }: { item: TrackedPrompt }): JSX.Element {
   }
   return (
     <div className="hidden shrink-0 items-center gap-1.5 sm:flex">
-      {engines.map(engine => {
-        const logo = engineLogo(engine)
-        return (
-          <span
-            key={engine}
-            title={engine}
-            className="grid h-6 w-6 place-items-center rounded-md border border-[var(--cat-border)] bg-[var(--cat-card)]"
-          >
-            {logo ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={logo} alt={engine} className="h-3.5 w-3.5" />
-            ) : (
-              <span className="text-[9px] text-[var(--cat-ink-2)] uppercase">
-                {engine.slice(0, 2)}
-              </span>
-            )}
-          </span>
-        )
-      })}
+      {engines.map(engine => (
+        <EngineLogo key={engine} name={engine} size={24} />
+      ))}
     </div>
   )
 }

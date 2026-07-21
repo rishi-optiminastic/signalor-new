@@ -1,6 +1,16 @@
-import { engineLogo } from '@/features/catalyst/engine-logos'
+'use client'
+
+import { Maximize2 } from 'lucide-react'
+import { useState } from 'react'
+
+import { EngineLogo } from '@/features/catalyst/components/EngineLogo'
+import { ResponseDialog } from '@/features/catalyst/components/prompt-tracker/ResponseDialog'
+import { ResponseText } from '@/features/catalyst/components/prompt-tracker/ResponseText'
 import type { PromptEngineResult } from '@/features/catalyst/prompt-tracker-data'
 import { formatTaskDate } from '@/features/catalyst/tasks-data'
+
+const GREEN_TINT = 'rgba(47,190,126,0.12)'
+const GREEN_INK = '#2FBE7E'
 
 const SENTIMENT_TONE: Record<string, string> = {
   positive: 'bg-[rgba(47,190,126,0.12)] text-[#2FBE7E]',
@@ -8,13 +18,9 @@ const SENTIMENT_TONE: Record<string, string> = {
 }
 
 function EngineBadge({ result }: { result: PromptEngineResult }): JSX.Element {
-  const logo = engineLogo(result.engine)
   return (
     <span className="flex items-center gap-1.5 text-[12px] font-semibold text-[var(--cat-ink)]">
-      {logo && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={logo} alt="" className="h-3.5 w-3.5" />
-      )}
+      <EngineLogo name={result.engineLabel} size={18} />
       {result.engineLabel}
     </span>
   )
@@ -48,26 +54,63 @@ function ResultMeta({ result }: { result: PromptEngineResult }): JSX.Element {
   )
 }
 
-function ResultCard({ result }: { result: PromptEngineResult }): JSX.Element {
+/** Preview of the answer plus a trigger that opens the full response dialog. */
+function ResultBody({
+  result,
+  onOpen,
+}: {
+  result: PromptEngineResult
+  onOpen: () => void
+}): JSX.Element {
+  if (!result.snippet) {
+    return (
+      <p className="text-[12px] text-[var(--cat-ink-3)]">No answer text captured for this run.</p>
+    )
+  }
   return (
-    <div className="flex flex-col gap-2 rounded-md border border-[var(--cat-border)] bg-[var(--cat-content)] p-3">
+    <>
+      <div className="max-h-[6.5rem] overflow-hidden">
+        <ResponseText text={result.snippet} />
+      </div>
+      <button
+        type="button"
+        onClick={onOpen}
+        className="inline-flex w-fit items-center gap-1 text-[11px] font-semibold text-[var(--cat-ink-2)] transition-colors hover:text-[var(--cat-ink)]"
+      >
+        <Maximize2 size={11} />
+        View full response
+      </button>
+    </>
+  )
+}
+
+function ResultCard({ result }: { result: PromptEngineResult }): JSX.Element {
+  const [open, setOpen] = useState(false)
+  const cited = result.mentioned
+  return (
+    <div
+      className="flex flex-col gap-2 rounded-md border p-3"
+      style={{
+        borderColor: cited ? GREEN_INK : 'var(--cat-border)',
+        background: cited ? GREEN_TINT : 'var(--cat-content)',
+      }}
+    >
       <div className="flex items-center gap-2">
         <EngineBadge result={result} />
         <ResultMeta result={result} />
       </div>
-      <p className="line-clamp-4 text-[12px] leading-relaxed text-[var(--cat-ink-2)]">
-        {result.snippet || 'No answer text captured for this run.'}
-      </p>
+      <ResultBody result={result} onOpen={() => setOpen(true)} />
       {result.checkedAt && (
         <p className="text-[10px] text-[var(--cat-ink-3)]">
           Checked {formatTaskDate(result.checkedAt)}
         </p>
       )}
+      {open && <ResponseDialog result={result} onClose={() => setOpen(false)} />}
     </div>
   )
 }
 
-/** The expanded body of a prompt row — each engine's latest answer. */
+/** The expanded body of a prompt row — each engine's latest answer, cited first. */
 export function PromptResultsPanel({ results }: { results: PromptEngineResult[] }): JSX.Element {
   if (results.length === 0) {
     return (
@@ -77,9 +120,10 @@ export function PromptResultsPanel({ results }: { results: PromptEngineResult[] 
       </p>
     )
   }
+  const ordered = [...results].sort((a, b) => Number(b.mentioned) - Number(a.mentioned))
   return (
     <div className="grid grid-cols-1 gap-2 px-4 pb-3.5 md:grid-cols-2">
-      {results.map(result => (
+      {ordered.map(result => (
         <ResultCard key={result.id} result={result} />
       ))}
     </div>

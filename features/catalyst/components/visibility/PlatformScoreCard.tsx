@@ -1,18 +1,17 @@
 import { MoreHorizontal } from 'lucide-react'
 
+import { EngineLogo } from '@/features/catalyst/components/EngineLogo'
 import { BarMeter } from '@/features/catalyst/components/visibility/BarMeter'
 import { MetricDelta } from '@/features/catalyst/components/visibility/MetricDelta'
 import { scoreColor } from '@/features/catalyst/visibility-data'
 import type { PlatformVis, SubStat } from '@/hooks/useVisibility'
 
 function Head({ platform }: { platform: PlatformVis }): JSX.Element {
-  const { icon: Icon, name, score, badge } = platform
+  const { name, badge } = platform
   return (
     <div className="flex items-center justify-between">
       <span className="flex items-center gap-2">
-        <span className="grid h-7 w-7 place-items-center rounded-md bg-[var(--cat-hover)]">
-          <Icon size={14} style={{ color: scoreColor(score) }} />
-        </span>
+        <EngineLogo name={name} size={28} />
         <span className="text-[14px] font-semibold text-[var(--cat-ink)]">{name}</span>
         {badge && (
           <span

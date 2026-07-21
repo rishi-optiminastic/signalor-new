@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { useOnboardingStore } from '@/stores/useOnboardingStore'
 
 import { AUTH_FIELD } from './field-styles'
+import { savePendingAccountType } from './pending-account-type'
 
 const ROLE_OPTIONS = [
   'Founder / CEO',
@@ -37,6 +38,8 @@ export function OrgDetailsForm(): JSX.Element {
     setUserName(trimmedName)
     setUserRole(role)
     setCompanyInfo(trimmedAgency, '')
+    // Carry the agency details through a possible Google OAuth redirect.
+    savePendingAccountType({ accountType: 'agency', agencyName: trimmedAgency, role })
     setStep('auth-method')
   }
 

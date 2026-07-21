@@ -3,12 +3,10 @@
 import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 
+import { ONBOARDING_INPUT_CLASS } from '@/components/onboarding/input-class'
 import { useSession } from '@/lib/auth-client'
 import { createOrganization } from '@/services/onboarding.service'
 import { useOnboardingWizardStore } from '@/stores/useOnboardingWizardStore'
-
-const INPUT_CLASS =
-  'shadow-input h-[38px] w-full rounded-md border border-neutral-200 bg-white px-3 text-[13px] text-foreground outline-none transition placeholder:text-muted-foreground/55 focus:border-primary focus:ring-2 focus:ring-ring/50 focus:ring-offset-2 focus:ring-offset-white disabled:opacity-60'
 
 const PLATFORM_COPY: Record<string, { title: string; sub: string; placeholder: string }> = {
   shopify: {
@@ -87,7 +85,7 @@ export function UrlStep(): JSX.Element {
         value={value}
         onChange={e => setValue(e.target.value)}
         disabled={loading}
-        className={INPUT_CLASS}
+        className={ONBOARDING_INPUT_CLASS}
       />
 
       {error && (

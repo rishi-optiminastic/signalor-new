@@ -27,6 +27,10 @@ export interface ActiveProject {
   isLoading: boolean
   /** No completed run exists yet for the active org. */
   hasData: boolean
+  /** The orgs list fetch has resolved successfully (safe to act on emptiness). */
+  orgsResolved: boolean
+  /** The active org's runs fetch has resolved successfully. */
+  runsResolved: boolean
   select: (orgId: number) => void
 }
 
@@ -85,6 +89,8 @@ export function useActiveProject(): ActiveProject {
     orgSlug: activeOrg?.slug,
     isLoading: orgsQuery.isLoading || runsQuery.isLoading,
     hasData: run?.status === 'complete',
+    orgsResolved: orgsQuery.isSuccess,
+    runsResolved: runsQuery.isSuccess,
     select: setActiveOrgId,
   }
 }

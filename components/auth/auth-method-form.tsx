@@ -72,20 +72,20 @@ export function AuthMethodForm(): JSX.Element {
 
   return (
     <div className="space-y-5">
-      <button
-        type="button"
-        onClick={() =>
-          setStep(
-            authMode === 'sign-up' && accountType === 'agency' ? 'org-details' : 'account-type',
-          )
-        }
-        className="text-muted-foreground hover:text-foreground -mt-1 flex items-center gap-1 text-[11px] font-medium transition-colors"
-      >
-        <ArrowLeft className="h-3 w-3" />
-        Back
-      </button>
+      {authMode === 'sign-up' && (
+        <button
+          type="button"
+          onClick={() => setStep(accountType === 'agency' ? 'org-details' : 'account-type')}
+          className="text-muted-foreground hover:text-foreground -mt-1 flex items-center gap-1 text-[11px] font-medium transition-colors"
+        >
+          <ArrowLeft className="h-3 w-3" />
+          Back
+        </button>
+      )}
 
-      <GoogleButton />
+      {/* Sign-ups land on onboarding so the stashed account type is persisted and
+          the brand gets created; sign-ins go straight to the dashboard. */}
+      <GoogleButton callbackUrl={isSignUp ? '/onboarding' : '/dashboard'} />
 
       <div className="flex items-center gap-3">
         <span className="bg-border h-px flex-1" />

@@ -1,9 +1,9 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { Eye, Gauge, MessageSquareText, Zap } from 'lucide-react'
+import { Crosshair, Eye, Gauge, MessageSquareText, Quote, Zap } from 'lucide-react'
 
-import { BLUE, BRAND, GREEN, YELLOW } from '@/features/catalyst/constants'
+import { BLUE, BRAND, BRAND_STRONG, GREEN, PURPLE, YELLOW } from '@/features/catalyst/constants'
 import { engineLabel } from '@/features/catalyst/engine-logos'
 import type { PromptEngineResult, TrackedPrompt } from '@/features/catalyst/prompt-tracker-data'
 import type { StatCard } from '@/features/catalyst/tasks-data'
@@ -42,17 +42,28 @@ function toTracked(prompt: PromptTrack): TrackedPrompt {
   }
 }
 
-function buildStats(prompts: TrackedPrompt[]): StatCard[] {
+/**
+ * Header stat cards for a set of tracked prompts. Pure over its input so it can
+ * be recomputed client-side against a date-filtered subset.
+ */
+export function buildPromptStats(prompts: TrackedPrompt[]): StatCard[] {
   const count = prompts.length || 1
   const avgScore = Math.round(prompts.reduce((a, p) => a + p.score, 0) / count)
   const avgVis = Math.round(prompts.reduce((a, p) => a + p.visibility, 0) / count)
   const strong = prompts.filter(p => p.score >= 70).length
+  const cited = prompts.filter(p => p.cited).length
   const totalRuns = prompts.reduce((a, p) => a + p.runs, 0)
+  const positioned = prompts.filter(p => p.avgPosition !== null)
+  const avgPos = positioned.length
+    ? (positioned.reduce((a, p) => a + (p.avgPosition ?? 0), 0) / positioned.length).toFixed(1)
+    : '—'
   return [
     { icon: Gauge, color: BRAND, label: 'Avg Score', value: String(avgScore) },
     { icon: Eye, color: BLUE, label: 'Visibility', value: `${avgVis}%` },
     { icon: Zap, color: GREEN, label: 'Strong Prompts', value: `${strong} / ${prompts.length}` },
-    { icon: MessageSquareText, color: YELLOW, label: 'Total Runs', value: String(totalRuns) },
+    { icon: Quote, color: PURPLE, label: 'Cited', value: `${cited} / ${prompts.length}` },
+    { icon: Crosshair, color: YELLOW, label: 'Avg Position', value: avgPos },
+    { icon: MessageSquareText, color: BRAND_STRONG, label: 'Total Runs', value: String(totalRuns) },
   ]
 }
 
@@ -84,7 +95,7 @@ export function usePrompts(slug: string | undefined): UsePromptsResult {
       const prompts = (await getPrompts(slug as string)).map(toTracked)
       return {
         prompts,
-        stats: buildStats(prompts),
+        stats: buildPromptStats(prompts),
         hasPending: prompts.some(p => p.results.length === 0),
         hasCustomPrompt: prompts.some(p => p.isCustom),
       }

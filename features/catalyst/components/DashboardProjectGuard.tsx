@@ -1,13 +1,11 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
 import { Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, type ReactNode } from 'react'
 
-import { getOrganizations } from '@/lib/api/organizations'
+import { useActiveProject, type ActiveProject } from '@/hooks/useActiveProject'
 import { useSession } from '@/lib/auth-client'
-import { queryKeys } from '@/lib/query-keys'
 import { routes } from '@/lib/routes'
 
 function GuardSpinner(): JSX.Element {
@@ -19,32 +17,46 @@ function GuardSpinner(): JSX.Element {
 }
 
 /**
- * Sends an authenticated user with no brand/project to onboarding. The dashboard
- * is only meaningful once a brand exists and an analysis has run; signing in with
- * zero projects should resume onboarding (brand → url → connect → launch), not
- * land on an empty dashboard. Only redirects on a confirmed-empty fetch so a
- * transient backend error never bounces a real user out of the dashboard.
+ * Confirmed-empty onboarding gate: no project at all, or an active project that
+ * has never launched an analysis (zero runs). Only true once the relevant fetch
+ * has resolved, so a transient error never redirects a real user.
+ */
+function needsOnboarding(p: ActiveProject): boolean {
+  if (!p.email) return false
+  const noProject = p.orgsResolved && p.projects.length === 0
+  const notLaunched =
+    p.orgsResolved && Boolean(p.activeOrg) && p.runsResolved && p.run === undefined
+  return noProject || notLaunched
+}
+
+/**
+ * Keeps the dashboard behind a real, analyzed project. The dashboard is only
+ * meaningful once a brand exists AND its first analysis has run, so both of
+ * these send the user back to onboarding:
+ *
+ *  - No project at all (never started onboarding).
+ *  - A project exists but has never launched an analysis (abandoned the wizard
+ *    after the URL step, which is what creates the org). Without this, that user
+ *    lands on a permanently empty dashboard. Re-entering onboarding is safe: the
+ *    backend dedupes the org on a 409, so no duplicate brand is created.
+ *
+ * A pending or failed run still counts as launched — the dashboard shows their
+ * progress. Only redirects on a *confirmed* empty fetch, so a transient backend
+ * error never bounces a real user out.
  */
 export function DashboardProjectGuard({ children }: { children: ReactNode }): JSX.Element {
   const router = useRouter()
-  const { data: session, isPending } = useSession()
-  const email = session?.user?.email ?? undefined
-
-  const orgsQuery = useQuery({
-    queryKey: queryKeys.catalyst.orgs(email ?? ''),
-    queryFn: () => getOrganizations(email as string),
-    enabled: Boolean(email),
-  })
-
-  const noProjects = orgsQuery.isSuccess && orgsQuery.data.length === 0
+  const { isPending } = useSession()
+  const project = useActiveProject()
+  const redirect = needsOnboarding(project)
 
   useEffect(() => {
-    if (noProjects) router.replace(routes.onboarding)
-  }, [noProjects, router])
+    if (redirect) router.replace(routes.onboarding)
+  }, [redirect, router])
 
   // Middleware guards auth; if we somehow have no email, defer to the page.
-  if (!email) return isPending ? <GuardSpinner /> : <>{children}</>
-  // Hold the empty dashboard back until we know a project exists (or we redirect).
-  if (orgsQuery.isLoading || noProjects) return <GuardSpinner />
+  if (!project.email) return isPending ? <GuardSpinner /> : <>{children}</>
+  // Hold the dashboard back until we know a launched project exists (or redirect).
+  if (project.isLoading || redirect) return <GuardSpinner />
   return <>{children}</>
 }

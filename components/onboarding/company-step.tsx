@@ -3,12 +3,10 @@
 import { ArrowRight } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 
+import { ONBOARDING_INPUT_CLASS } from '@/components/onboarding/input-class'
 import { useOnboardingWizardStore } from '@/stores/useOnboardingWizardStore'
 
-const INPUT_CLASS =
-  'shadow-input h-[38px] w-full rounded-md border border-neutral-200 bg-white px-3 text-[13px] text-foreground outline-none transition placeholder:text-muted-foreground/55 focus:border-primary focus:ring-2 focus:ring-ring/50 focus:ring-offset-2 focus:ring-offset-white disabled:opacity-60'
-
-/** Step 1: company name. */
+/** Step 1: brand name. */
 export function CompanyStep(): JSX.Element {
   const { companyName, setCompanyName, setStep } = useOnboardingWizardStore()
   const [name, setName] = useState(companyName)
@@ -22,17 +20,17 @@ export function CompanyStep(): JSX.Element {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-3.5">
-      <div className="space-y-1.5">
-        <label htmlFor="company" className="text-foreground text-[15px] font-medium">
-          Company name
+      <div className="space-y-2">
+        <label htmlFor="brand" className="text-foreground text-[15px] font-medium">
+          Brand name
         </label>
         <input
-          id="company"
+          id="brand"
           autoFocus
           placeholder="Acme Inc."
           value={name}
           onChange={e => setName(e.target.value)}
-          className={INPUT_CLASS}
+          className={ONBOARDING_INPUT_CLASS}
         />
       </div>
       <button

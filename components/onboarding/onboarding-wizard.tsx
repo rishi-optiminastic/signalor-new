@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useEffect } from 'react'
 
 import { OnboardingStepper } from '@/components/auth/onboarding-stepper'
+import { usePersistPendingAccountType } from '@/components/auth/use-persist-pending-account-type'
 import { routes } from '@/lib/routes'
 import {
   useOnboardingWizardStore,
@@ -20,7 +21,7 @@ import { PromptsStep } from './prompts-step'
 import { UrlStep } from './url-step'
 
 const STEP_HEADER: Record<WizardStep, { title: string; description: string }> = {
-  company: { title: 'Company details', description: 'Tell us about your organization.' },
+  company: { title: 'Brand details', description: 'Tell us about your brand.' },
   platform: { title: "Where's your site built?", description: 'Pick your platform to connect.' },
   url: { title: 'Your website', description: 'Enter your site URL to start analysis.' },
   install: { title: 'Connect your site', description: 'Install SignalorAI to enable auto-fixes.' },
@@ -43,6 +44,9 @@ const STEP_COMPONENTS: Record<WizardStep, () => JSX.Element> = {
 export function OnboardingWizard(): JSX.Element {
   const step = useOnboardingWizardStore(s => s.step)
   const reset = useOnboardingWizardStore(s => s.reset)
+
+  // Persist the account type carried through a Google OAuth redirect (if any).
+  usePersistPendingAccountType()
 
   // Start clean on mount so a refresh doesn't strand the user mid-flow.
   useEffect(() => {

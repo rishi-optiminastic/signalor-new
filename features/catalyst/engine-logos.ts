@@ -7,10 +7,26 @@ const ENGINE_LOGOS: Record<string, string> = {
   gemini: '/logos/gemini.svg',
   google: '/logos/google.svg',
   perplexity: '/logos/perplexity.svg',
+  bing: '/logos/bing.svg',
+  deepseek: '/logos/deepseek.svg',
+  grok: '/logos/grok.svg',
+  llama: '/logos/llama.svg',
 }
 
+/**
+ * Resolves a logo from either an engine key ("llama") or a display label
+ * ("Meta Llama") — callers legitimately hold one or the other. Falls back
+ * through de-spacing and the last word so labelled variants still match.
+ */
 export function engineLogo(name: string): string | null {
-  return ENGINE_LOGOS[name.trim().toLowerCase()] ?? null
+  const key = name.trim().toLowerCase()
+  if (ENGINE_LOGOS[key]) return ENGINE_LOGOS[key]
+
+  const squashed = key.replace(/[^a-z0-9]/g, '')
+  if (ENGINE_LOGOS[squashed]) return ENGINE_LOGOS[squashed]
+
+  const lastWord = key.split(/\s+/).pop() ?? ''
+  return ENGINE_LOGOS[lastWord] ?? null
 }
 
 const ENGINE_LABELS: Record<string, string> = {

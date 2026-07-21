@@ -3,6 +3,7 @@
 import { ArrowRight, Building2, Check, Users } from 'lucide-react'
 import { useState } from 'react'
 
+import { savePendingAccountType } from '@/components/auth/pending-account-type'
 import { cn } from '@/lib/utils'
 import { useOnboardingStore, type AccountType } from '@/stores/useOnboardingStore'
 
@@ -38,6 +39,9 @@ export function AccountTypeForm(): JSX.Element {
 
   const handleContinue = (): void => {
     setAccountType(selected)
+    // Stash the choice so it survives a Google OAuth redirect (which wipes the
+    // in-memory store). Persisted to the backend on onboarding entry.
+    if (authMode === 'sign-up') savePendingAccountType({ accountType: selected })
     // Agencies fill in their name / agency / role before choosing an auth method.
     setStep(authMode === 'sign-up' && selected === 'agency' ? 'org-details' : 'auth-method')
   }

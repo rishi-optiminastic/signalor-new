@@ -41,7 +41,7 @@ export function GlobalBar(): JSX.Element {
         <span className="hidden lg:block">
           <FeedbackPopover />
         </span>
-        <Link href="#" aria-label="Help & docs" className={`hidden lg:grid ${ICON_TILE}`}>
+        <Link href="/help" aria-label="Help & docs" className={`hidden lg:grid ${ICON_TILE}`}>
           <HelpCircle size={17} strokeWidth={1.8} />
         </Link>
         <button type="button" aria-label="Notifications" className={`relative ${ICON_TILE}`}>

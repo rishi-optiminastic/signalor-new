@@ -21,9 +21,13 @@ interface OnboardingFlowProps {
   mode: AuthMode
 }
 
+// Sign-in goes straight to the auth method — account type only matters at sign-up.
 // Agency sign-ups insert an org-details step (name / agency / role) before auth.
 function stepOrder(mode: AuthMode, accountType: AccountType): OnboardingStep[] {
-  if (mode === 'sign-up' && accountType === 'agency') {
+  if (mode === 'sign-in') {
+    return ['auth-method', 'otp-verify']
+  }
+  if (accountType === 'agency') {
     return ['account-type', 'org-details', 'auth-method', 'otp-verify']
   }
   return ['account-type', 'auth-method', 'otp-verify']
@@ -74,11 +78,12 @@ export function OnboardingFlow({ mode }: OnboardingFlowProps): JSX.Element {
   const setAuthMode = useOnboardingStore(s => s.setAuthMode)
   const setStep = useOnboardingStore(s => s.setStep)
 
-  // Initialise the flow once on mount — always open on the account-type choice.
+  // Initialise the flow once on mount. Sign-in opens straight on the auth method;
+  // sign-up starts with the account-type choice.
   useEffect(() => {
     reset()
     setAuthMode(mode)
-    setStep('account-type')
+    setStep(mode === 'sign-in' ? 'auth-method' : 'account-type')
   }, [mode, reset, setAuthMode, setStep])
 
   if (step === 'complete') {
