@@ -24,7 +24,7 @@ export function VisitorsChannelsCard(): JSX.Element {
   }))
 
   return (
-    <Card>
+    <Card className="h-full">
       <CardHead title="Share of Voice" action="Details" />
       <Metric
         value={data ? `${data.avgSov}%` : '—'}
@@ -32,8 +32,12 @@ export function VisitorsChannelsCard(): JSX.Element {
         badge={data ? `${data.mentionPct}%` : '—'}
       />
       <ChannelLegend segments={segments} />
-      <ChannelTable rows={rows} />
-      <button className="mt-3 h-[38px] w-full rounded-md border border-[var(--cat-border)] text-[13px] font-semibold text-[var(--cat-ink)] transition-colors hover:bg-[var(--cat-hover)]">
+      {/* Scrollable so the long engine list doesn't make this card taller than
+          the chart cards beside it — all three align to one row height. */}
+      <div className="min-h-0 flex-1 overflow-y-auto">
+        <ChannelTable rows={rows} />
+      </div>
+      <button className="mt-3 h-[38px] w-full shrink-0 rounded-md border border-[var(--cat-border)] text-[13px] font-semibold text-[var(--cat-ink)] transition-colors hover:bg-[var(--cat-hover)]">
         View reports
       </button>
     </Card>
