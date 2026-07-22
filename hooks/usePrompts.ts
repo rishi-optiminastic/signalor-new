@@ -13,6 +13,12 @@ import { queryKeys } from '@/lib/query-keys'
 const PENDING_REFETCH_MS = 15000
 
 function toEngineResult(result: PromptResult): PromptEngineResult {
+  const citations = (result.citations ?? []).map(c => ({
+    url: c.url,
+    domain: c.domain,
+    isBrand: c.is_brand,
+    isCompetitor: c.is_competitor,
+  }))
   return {
     id: result.id,
     engine: result.engine,
@@ -22,10 +28,13 @@ function toEngineResult(result: PromptResult): PromptEngineResult {
     position: result.rank_position ?? null,
     snippet: result.response_text ?? '',
     checkedAt: result.checked_at ?? '',
+    citations,
+    brandCited: citations.some(c => c.isBrand),
   }
 }
 
 function toTracked(prompt: PromptTrack): TrackedPrompt {
+  const results = prompt.results.map(toEngineResult)
   return {
     id: prompt.id,
     prompt: prompt.prompt_text,
@@ -35,10 +44,13 @@ function toTracked(prompt: PromptTrack): TrackedPrompt {
     score: Math.round(prompt.score ?? 0),
     visibility: Math.round(prompt.visibility_pct ?? 0),
     avgPosition: prompt.avg_position ?? null,
-    cited: (prompt.mentions ?? 0) > 0,
+    // "Cited" = the brand's own domain was cited as a source by some engine — the
+    // real citation signal. NOT `mentions > 0` (any name-drop), which flagged
+    // nearly every prompt as cited.
+    cited: results.some(r => r.brandCited),
     mentions: prompt.mentions ?? 0,
     runs: prompt.total_runs ?? 0,
-    results: prompt.results.map(toEngineResult),
+    results,
   }
 }
 

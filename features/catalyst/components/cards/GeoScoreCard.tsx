@@ -11,7 +11,7 @@ import { LineChart } from '@/features/catalyst/components/LineChart'
 import { RangeTabs, type Range } from '@/features/catalyst/components/RangeTabs'
 import { useActiveProject } from '@/hooks/useActiveProject'
 import { useBrandPath } from '@/hooks/useBrandPath'
-import { useGeoScore } from '@/hooks/useGeoScore'
+import { scoreReason, useGeoScore } from '@/hooks/useGeoScore'
 
 export function GeoScoreCard(): JSX.Element {
   const { slug } = useActiveProject()
@@ -26,6 +26,11 @@ export function GeoScoreCard(): JSX.Element {
         <AnimatedScore value={data?.score} />
         <Badge positive={data?.positive ?? true}>{data ? data.delta : '—'}</Badge>
       </div>
+      {data && (
+        <p className="mt-1.5 text-[12px] leading-relaxed text-[var(--cat-ink-2)]">
+          {scoreReason(data)}
+        </p>
+      )}
       <RangeTabs value={range} onChange={setRange} />
       <LineChart data={data?.points ?? []} />
       <div className="mt-3 flex flex-col gap-2.5">

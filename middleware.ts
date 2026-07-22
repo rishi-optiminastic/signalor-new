@@ -2,7 +2,19 @@ import { getSessionCookie } from 'better-auth/cookies'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
-const protectedRoutes = ['/dashboard']
+// Every authenticated app route, so an unauthenticated user is bounced before
+// the page loads. This is defense-in-depth UX only — a session cookie's mere
+// presence is checked here, NOT its signature; real access control is enforced
+// by the backend on every data request.
+const protectedRoutes = [
+  '/dashboard',
+  '/creator-dashboard',
+  '/onboarding',
+  '/loading',
+  '/payments',
+  '/profile',
+  '/settings',
+]
 const authRoutes = ['/sign-in', '/sign-up']
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {

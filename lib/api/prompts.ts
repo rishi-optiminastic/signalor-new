@@ -7,7 +7,23 @@ import { apiDelete, apiGet, apiPost } from './client'
  * Backed by `runs/s/<slug>/prompts/` (list, create, recheck, soft-delete).
  */
 
-/** One engine's answer to a tracked prompt (response text capped server-side). */
+/** A source the engine cited in its answer. `is_brand` marks the tracked brand's
+ *  own domain — the real "was the brand cited?" signal (vs merely name-mentioned). */
+export const promptCitationSchema = z
+  .object({
+    id: z.number().optional(),
+    url: z.string().optional().default(''),
+    domain: z.string().optional().default(''),
+    title: z.string().nullable().optional(),
+    is_brand: z.boolean().optional().default(false),
+    is_competitor: z.boolean().optional().default(false),
+  })
+  .passthrough()
+export type PromptCitation = z.infer<typeof promptCitationSchema>
+
+/** One engine's answer to a tracked prompt. In the LIST payload `response_text`
+ *  is capped to 500 chars server-side; the per-result detail endpoint returns it
+ *  in full (see `getPromptResult`). */
 export const promptResultSchema = z
   .object({
     id: z.number(),
@@ -17,6 +33,7 @@ export const promptResultSchema = z
     sentiment: z.string().nullable().optional(),
     rank_position: z.number().nullable().optional(),
     checked_at: z.string().nullable().optional(),
+    citations: z.array(promptCitationSchema).optional().default([]),
   })
   .passthrough()
 export type PromptResult = z.infer<typeof promptResultSchema>
@@ -50,6 +67,18 @@ export async function getPrompts(slug: string): Promise<PromptTrack[]> {
 export async function addPrompt(slug: string, promptText: string): Promise<PromptTrack> {
   return promptTrackSchema.parse(
     await apiPost<unknown>(`/api/analyzer/runs/s/${slug}/prompts/`, { prompt_text: promptText }),
+  )
+}
+
+/** GET runs/s/<slug>/prompts/<trackId>/results/<resultId>/ → one engine result with
+ *  the FULL (uncapped) response text. Used to show the complete answer in the dialog. */
+export async function getPromptResult(
+  slug: string,
+  trackId: number,
+  resultId: number,
+): Promise<PromptResult> {
+  return promptResultSchema.parse(
+    await apiGet<unknown>(`/api/analyzer/runs/s/${slug}/prompts/${trackId}/results/${resultId}/`),
   )
 }
 

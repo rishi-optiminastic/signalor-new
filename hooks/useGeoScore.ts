@@ -35,10 +35,33 @@ export interface EngineShare {
 
 export interface GeoScore {
   score: number
+  /** Previous analysis's score, for the "why did it change" reason. */
+  previous: number
   delta: string
   positive: boolean
   points: number[]
   engines: EngineShare[]
+  totalPrompts: number
+  totalMentions: number
+}
+
+/**
+ * A one-line, data-backed explanation of the score movement (up or down) built
+ * from the current vs previous score and this period's mention coverage. Deeper
+ * pillar-level attribution needs the backend to expose the previous run's pillar
+ * scores; this is the honest "why" from data already on the card.
+ */
+export function scoreReason(d: GeoScore): string {
+  const diff = d.score - d.previous
+  const top = d.engines[0]
+  const strongest = top ? ` Strongest on ${top.name} (${top.value}).` : ''
+  const coverage = `${d.totalMentions} of ${d.totalPrompts} AI answers`
+  if (diff === 0)
+    return `No change from ${d.previous} last analysis — mentioned in ${coverage}.${strongest}`
+  if (diff > 0) {
+    return `Up ${diff} from ${d.previous}: more AI answers cited you (now ${coverage}).${strongest}`
+  }
+  return `Down ${Math.abs(diff)} from ${d.previous}: fewer AI answers cited you (now ${coverage}).${strongest}`
 }
 
 function engineIcon(engine: string): LucideIcon {
@@ -63,10 +86,13 @@ function adaptEngines(sov: SovEngine[]): EngineShare[] {
 function adapt(series: VisibilitySeries, sov: SovEngine[]): GeoScore {
   return {
     score: Math.round(series.current),
+    previous: Math.round(series.previous),
     delta: `${Math.abs(series.delta_pct).toFixed(1)}%`,
     positive: series.direction === 'up',
     points: series.points.map(p => p.score),
     engines: adaptEngines(sov).slice(0, 3),
+    totalPrompts: sov.reduce((sum, e) => sum + e.total, 0),
+    totalMentions: sov.reduce((sum, e) => sum + e.mentioned, 0),
   }
 }
 
@@ -92,19 +118,13 @@ export function useGeoScore(slug: string | undefined, range: Range): UseGeoScore
   return { data: query.data, isLoading: query.isLoading, isError: query.isError }
 }
 
-export interface GeoDetail extends GeoScore {
-  previous: number
-  totalPrompts: number
-  totalMentions: number
-}
+/** Same shape as GeoScore, but with every engine (not just the top 3). */
+export type GeoDetail = GeoScore
 
 function adaptDetail(series: VisibilitySeries, sov: SovEngine[]): GeoDetail {
   return {
     ...adapt(series, sov),
     engines: adaptEngines(sov),
-    previous: Math.round(series.previous),
-    totalPrompts: sov.reduce((sum, e) => sum + e.total, 0),
-    totalMentions: sov.reduce((sum, e) => sum + e.mentioned, 0),
   }
 }
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { Check } from 'lucide-react'
+import { AlertTriangle, Check } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
@@ -117,8 +117,29 @@ function DoneCard(): JSX.Element {
   )
 }
 
+function FailedCard(): JSX.Element {
+  return (
+    <div className="mt-8 flex flex-col items-center text-center">
+      <span className="grid h-12 w-12 place-items-center rounded-full bg-amber-100 text-amber-600">
+        <AlertTriangle className="h-6 w-6" />
+      </span>
+      <p className="text-foreground mt-4 text-[15px] font-semibold">Analysis didn&apos;t finish</p>
+      <p className="mt-1 max-w-[320px] text-[12.5px] text-neutral-500">
+        It stalled before completing — usually a hiccup on our side. Your brand is saved; just start
+        it again from the dashboard.
+      </p>
+      <Link
+        href={routes.dashboard}
+        className="auth-cta-btn mt-4 flex h-10 w-full items-center justify-center rounded-md text-[15px] font-medium text-white"
+      >
+        Back to dashboard
+      </Link>
+    </div>
+  )
+}
+
 export default function LoadingPage(): JSX.Element {
-  const { progress, done, status } = useAnalysisProgress()
+  const { progress, done, failed, status } = useAnalysisProgress()
   const step = activeStepFor(status, progress, done)
 
   return (
@@ -139,7 +160,7 @@ export default function LoadingPage(): JSX.Element {
             <span className="text-[28px] text-neutral-300">%</span>
           </span>
           <span className="pb-1 text-[13px] text-neutral-400">
-            {done ? 'complete' : 'usually done in a minute or two'}
+            {failed ? 'stalled' : done ? 'complete' : 'usually done in a minute or two'}
           </span>
         </div>
 
@@ -147,22 +168,28 @@ export default function LoadingPage(): JSX.Element {
           <TickBar value={progress} ticks={44} showValue={false} />
         </div>
 
-        <ol className="mt-7 border-t border-neutral-200/70 pt-4">
-          {STEPS.map((s, i) => (
-            <StepRow
-              key={s.label}
-              label={s.label}
-              state={i < step ? 'done' : i === step ? 'active' : 'next'}
-            />
-          ))}
-        </ol>
+        {failed ? (
+          <FailedCard />
+        ) : (
+          <>
+            <ol className="mt-7 border-t border-neutral-200/70 pt-4">
+              {STEPS.map((s, i) => (
+                <StepRow
+                  key={s.label}
+                  label={s.label}
+                  state={i < step ? 'done' : i === step ? 'active' : 'next'}
+                />
+              ))}
+            </ol>
 
-        {done ? <DoneCard /> : <Ticker step={step} />}
+            {done ? <DoneCard /> : <Ticker step={step} />}
 
-        {!done && (
-          <p className="mt-8 text-[11.5px] text-neutral-400">
-            Safe to keep this tab open — we&apos;ll take you to your report automatically.
-          </p>
+            {!done && (
+              <p className="mt-8 text-[11.5px] text-neutral-400">
+                Safe to keep this tab open — we&apos;ll take you to your report automatically.
+              </p>
+            )}
+          </>
         )}
       </div>
     </main>

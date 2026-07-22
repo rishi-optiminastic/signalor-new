@@ -11,6 +11,7 @@ import { scoreColor } from '@/features/catalyst/visibility-data'
 
 export interface PromptRowProps {
   item: TrackedPrompt
+  slug: string
   busy: boolean
   onRecheck: (trackId: number) => void
   onRemove: (trackId: number) => void
@@ -131,7 +132,7 @@ function RowNumbers({ item }: { item: TrackedPrompt }): JSX.Element {
 
 /** One tracked prompt. The header row toggles the per-engine answers panel. */
 export function PromptRow(props: PromptRowProps): JSX.Element {
-  const { item } = props
+  const { item, slug } = props
   const [open, setOpen] = useState(false)
   return (
     <div>
@@ -158,7 +159,7 @@ export function PromptRow(props: PromptRowProps): JSX.Element {
         className={`grid transition-[grid-template-rows] duration-200 ease-out ${open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
       >
         <div className="min-h-0 overflow-hidden">
-          <PromptResultsPanel results={item.results} />
+          <PromptResultsPanel results={item.results} slug={slug} trackId={item.id} />
         </div>
       </div>
     </div>

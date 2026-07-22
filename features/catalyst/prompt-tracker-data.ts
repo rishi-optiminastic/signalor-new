@@ -1,3 +1,11 @@
+/** A source cited in an engine's answer. */
+export interface Citation {
+  url: string
+  domain: string
+  isBrand: boolean
+  isCompetitor: boolean
+}
+
 /** One engine's answer, adapted for the expandable result panel. */
 export interface PromptEngineResult {
   id: number
@@ -10,6 +18,10 @@ export interface PromptEngineResult {
   position: number | null
   snippet: string
   checkedAt: string
+  citations: Citation[]
+  /** True when the brand's own domain was cited as a source (real citation, not
+   *  just a name-mention). Drives the "Cited" state. */
+  brandCited: boolean
 }
 
 /** UI shape a PromptRow renders — adapted from the API by `usePrompts`. */
