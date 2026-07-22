@@ -4,8 +4,9 @@ import { EngineLogo } from '@/features/catalyst/components/EngineLogo'
 import { MultiLineChart } from '@/features/catalyst/components/insights/MultiLineChart'
 import { useInsights, type TrendSeries } from '@/hooks/useInsights'
 
-/** Half the chart's default 180 viewBox height — a compact strip above the table. */
-const CHART_HEIGHT = 90
+/** Compact strip above the table — trimmed so the flat, low-value lines don't
+ *  sit under a tall band of empty chart. */
+const CHART_HEIGHT = 72
 
 type TrendState = 'loading' | 'error' | 'empty' | 'ready'
 
@@ -43,11 +44,11 @@ function padForLine(
 /** Per-model legend with each engine's most recent mention rate. */
 function TrendLegend({ series }: { series: TrendSeries[] }): JSX.Element {
   return (
-    <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
       {series.map(s => (
         <span
           key={s.key}
-          className="inline-flex items-center gap-1.5 text-[12px] text-[var(--cat-ink-2)]"
+          className="inline-flex items-center gap-1 text-[12px] text-[var(--cat-ink-2)]"
         >
           <span className="h-2 w-2 shrink-0 rounded-sm" style={{ background: s.color }} />
           <EngineLogo name={s.label} size={16} />
@@ -86,8 +87,8 @@ export function CitationTrendCard({ slug }: { slug: string | undefined }): JSX.E
   const state = trendState({ isLoading, isError }, series.length, weeks.length)
 
   return (
-    <div className="cat-rise mb-3 rounded-md border border-[var(--cat-border)] bg-[var(--cat-card)] p-4">
-      <div className="mb-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+    <div className="cat-rise mb-3 rounded-md border border-[var(--cat-border)] bg-[var(--cat-card)] p-3.5">
+      <div className="mb-2 flex flex-wrap items-start justify-between gap-x-4 gap-y-1.5">
         <div className="min-w-0">
           <h3 className="text-[13px] font-semibold text-[var(--cat-ink)]">Citations by model</h3>
           <p className="text-[11px] text-[var(--cat-ink-3)]">

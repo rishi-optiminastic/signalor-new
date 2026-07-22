@@ -14,10 +14,12 @@ export function UserRetentionCard(): JSX.Element {
   const { data } = usePrompts(slug)
 
   const prompts = data?.prompts ?? []
+  // Coverage = per-prompt VISIBILITY (share of runs that mentioned the brand),
+  // not p.score — score is 0 for every prompt, which left the heatmap blank.
   const avg = prompts.length
-    ? Math.round(prompts.reduce((a, p) => a + p.score, 0) / prompts.length)
+    ? Math.round(prompts.reduce((a, p) => a + p.visibility, 0) / prompts.length)
     : 0
-  const intensities = prompts.map(p => p.score / 100)
+  const intensities = prompts.map(p => p.visibility / 100)
 
   return (
     <Card>

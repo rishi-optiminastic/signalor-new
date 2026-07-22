@@ -11,6 +11,7 @@ import { NewPromptForm } from '@/features/catalyst/components/prompt-tracker/New
 import {
   ALL_DATES,
   matchesDateFilter,
+  PromptDateFilter,
   type DateFilter,
 } from '@/features/catalyst/components/prompt-tracker/PromptDateFilter'
 import { PromptRow } from '@/features/catalyst/components/prompt-tracker/PromptRow'
@@ -38,9 +39,17 @@ function filterByDate(prompts: TrackedPrompt[], filter: DateFilter): TrackedProm
   })
 }
 
-function TrackerHeader({ onNewPrompt }: { onNewPrompt: () => void }): JSX.Element {
+interface HeaderProps {
+  onNewPrompt: () => void
+  filter: DateFilter
+  onFilterChange: (filter: DateFilter) => void
+}
+
+function TrackerHeader({ onNewPrompt, filter, onFilterChange }: HeaderProps): JSX.Element {
   return (
-    <div className="cat-rise mb-4 flex flex-wrap items-center gap-3">
+    // relative z-40 keeps the date filter's popover above the stat cards below,
+    // which sit in their own transformed (cat-stagger) stacking context.
+    <div className="cat-rise relative z-40 mb-4 flex flex-wrap items-center gap-3">
       <div className="min-w-0">
         <h1 className="text-[19px] font-bold tracking-tight text-[var(--cat-ink)]">
           Prompt Tracker
@@ -49,7 +58,8 @@ function TrackerHeader({ onNewPrompt }: { onNewPrompt: () => void }): JSX.Elemen
           Watch how AI engines answer the prompts that matter to your category
         </p>
       </div>
-      <div className="ml-auto">
+      <div className="ml-auto flex items-center gap-2">
+        <PromptDateFilter filter={filter} onChange={onFilterChange} />
         <PrimaryButton icon={Plus} onClick={onNewPrompt}>
           New prompt
         </PrimaryButton>
@@ -103,16 +113,12 @@ function PromptList({ prompts, slug, busyId, onRecheck, onRemove }: ListProps): 
 interface BodyProps extends ListProps {
   allCount: number
   stats: StatCard[]
-  filter: DateFilter
-  onFilterChange: (filter: DateFilter) => void
 }
 
 function PromptBody({
   prompts,
   allCount,
   stats,
-  filter,
-  onFilterChange,
   slug,
   busyId,
   onRecheck,
@@ -121,12 +127,7 @@ function PromptBody({
   const hasPending = prompts.some(p => p.results.length === 0)
   return (
     <>
-      <PromptToolbar
-        filter={filter}
-        onFilterChange={onFilterChange}
-        shown={prompts.length}
-        total={allCount}
-      />
+      <PromptToolbar shown={prompts.length} total={allCount} />
       <StatGrid stats={stats} />
       <CitationTrendCard slug={slug} />
       {/* <PromptInsights prompts={prompts} /> */}
@@ -160,7 +161,11 @@ export function PromptTrackerView(): JSX.Element {
 
   return (
     <div className="w-full">
-      <TrackerHeader onNewPrompt={() => setComposing(c => !c)} />
+      <TrackerHeader
+        onNewPrompt={() => setComposing(c => !c)}
+        filter={filter}
+        onFilterChange={setFilter}
+      />
       {composing && (
         <NewPromptForm isAdding={isAdding} onSubmit={add} onClose={() => setComposing(false)} />
       )}
@@ -176,8 +181,6 @@ export function PromptTrackerView(): JSX.Element {
             prompts={filtered}
             allCount={data.prompts.length}
             stats={stats}
-            filter={filter}
-            onFilterChange={setFilter}
             slug={slug ?? ''}
             busyId={busyId}
             onRecheck={recheck}

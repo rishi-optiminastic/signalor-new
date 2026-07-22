@@ -112,7 +112,7 @@ interface PopoverProps {
 function FilterPopover({ mode, filter, onMode, onPick }: PopoverProps): JSX.Element {
   return (
     <div
-      className="absolute right-0 z-30 mt-1.5 rounded-lg border border-[var(--cat-border)] bg-[var(--cat-card)] p-2.5 shadow-xl"
+      className="absolute right-0 z-50 mt-1.5 rounded-lg border border-[var(--cat-border)] bg-[var(--cat-card)] p-2.5 shadow-xl"
       style={CALENDAR_STYLE}
     >
       <ModeTabs mode={mode} onMode={onMode} />
