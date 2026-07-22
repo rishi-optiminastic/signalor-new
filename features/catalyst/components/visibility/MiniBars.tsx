@@ -12,7 +12,9 @@ export function MiniBars({ bars, color }: MiniBarsProps): JSX.Element {
   return (
     <div className="flex items-end gap-1.5">
       {bars.map(bar => (
-        <div key={bar.name} className="flex flex-1 flex-col items-center gap-1.5">
+        // min-w-0 lets each column shrink below its content so many engines (up
+        // to 9) fit instead of overflowing the card and clipping the last bars.
+        <div key={bar.name} className="flex min-w-0 flex-1 flex-col items-center gap-1.5">
           <div className="flex h-12 w-full items-end">
             <div
               className="w-full rounded-t-sm"
@@ -23,7 +25,7 @@ export function MiniBars({ bars, color }: MiniBarsProps): JSX.Element {
               }}
             />
           </div>
-          <span className="flex w-full items-center justify-center gap-1 text-[9px] text-[var(--cat-ink-3)]">
+          <span className="flex w-full min-w-0 items-center justify-center gap-1 text-[9px] text-[var(--cat-ink-3)]">
             <EngineLogo name={bar.name} size={13} color={color} />
             <span className="truncate">{bar.name}</span>
           </span>

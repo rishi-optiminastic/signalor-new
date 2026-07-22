@@ -1,6 +1,7 @@
 'use client'
 
-import { X } from 'lucide-react'
+import { useQuery } from '@tanstack/react-query'
+import { Loader2, X } from 'lucide-react'
 import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 
@@ -8,13 +9,21 @@ import { EngineLogo } from '@/features/catalyst/components/EngineLogo'
 import { ResponseText } from '@/features/catalyst/components/prompt-tracker/ResponseText'
 import type { PromptEngineResult } from '@/features/catalyst/prompt-tracker-data'
 import { formatTaskDate } from '@/features/catalyst/tasks-data'
+import { getPromptResult } from '@/lib/api/prompts'
+import { queryKeys } from '@/lib/query-keys'
 
 interface ResponseDialogProps {
   result: PromptEngineResult
+  /** Slug + track id needed to fetch the FULL (uncapped) response on open. */
+  slug: string
+  trackId: number
   onClose: () => void
 }
 
-function DialogHeader({ result, onClose }: ResponseDialogProps): JSX.Element {
+function DialogHeader({
+  result,
+  onClose,
+}: Pick<ResponseDialogProps, 'result' | 'onClose'>): JSX.Element {
   return (
     <div className="flex items-start justify-between gap-3 border-b border-[var(--cat-border)] p-4">
       <div className="flex items-center gap-2">
@@ -48,7 +57,36 @@ function DialogHeader({ result, onClose }: ResponseDialogProps): JSX.Element {
  * `position: fixed` children. Without the portal the overlay anchors to the row
  * and gets clipped by its `overflow-hidden` instead of covering the viewport.
  */
-function DialogPanel({ result, onClose }: ResponseDialogProps): JSX.Element {
+function DialogBody({ result, slug, trackId }: Omit<ResponseDialogProps, 'onClose'>): JSX.Element {
+  // The list payload caps response_text at 500 chars; fetch the full answer here.
+  // Fall back to the capped snippet while it loads (and if the fetch fails).
+  const { data, isLoading } = useQuery({
+    queryKey: queryKeys.catalyst.promptResult(slug, trackId, result.id),
+    enabled: Boolean(slug),
+    queryFn: () => getPromptResult(slug, trackId, result.id),
+    staleTime: 5 * 60_000,
+  })
+  const fullText = data?.response_text ?? result.snippet
+
+  if (!fullText) {
+    return (
+      <p className="text-[12px] text-[var(--cat-ink-3)]">No answer text captured for this run.</p>
+    )
+  }
+  return (
+    <>
+      <ResponseText text={fullText} />
+      {isLoading && !data && (
+        <p className="mt-3 flex items-center gap-1.5 text-[11px] text-[var(--cat-ink-3)]">
+          <Loader2 size={12} className="animate-spin" />
+          Loading full response…
+        </p>
+      )}
+    </>
+  )
+}
+
+function DialogPanel({ result, slug, trackId, onClose }: ResponseDialogProps): JSX.Element {
   return (
     <div
       role="dialog"
@@ -63,20 +101,19 @@ function DialogPanel({ result, onClose }: ResponseDialogProps): JSX.Element {
       >
         <DialogHeader result={result} onClose={onClose} />
         <div className="min-h-0 flex-1 overflow-y-auto p-4">
-          {result.snippet ? (
-            <ResponseText text={result.snippet} />
-          ) : (
-            <p className="text-[12px] text-[var(--cat-ink-3)]">
-              No answer text captured for this run.
-            </p>
-          )}
+          <DialogBody result={result} slug={slug} trackId={trackId} />
         </div>
       </div>
     </div>
   )
 }
 
-export function ResponseDialog({ result, onClose }: ResponseDialogProps): JSX.Element | null {
+export function ResponseDialog({
+  result,
+  slug,
+  trackId,
+  onClose,
+}: ResponseDialogProps): JSX.Element | null {
   useEffect(() => {
     function onKey(e: KeyboardEvent): void {
       if (e.key === 'Escape') onClose()
@@ -93,5 +130,8 @@ export function ResponseDialog({ result, onClose }: ResponseDialogProps): JSX.El
   // Only ever rendered from a click handler, so this is a pure SSR guard.
   if (typeof document === 'undefined') return null
 
-  return createPortal(<DialogPanel result={result} onClose={onClose} />, document.body)
+  return createPortal(
+    <DialogPanel result={result} slug={slug} trackId={trackId} onClose={onClose} />,
+    document.body,
+  )
 }

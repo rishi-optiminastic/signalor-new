@@ -54,6 +54,12 @@ function ResultMeta({ result }: { result: PromptEngineResult }): JSX.Element {
   )
 }
 
+interface CardProps {
+  result: PromptEngineResult
+  slug: string
+  trackId: number
+}
+
 /** Preview of the answer plus a trigger that opens the full response dialog. */
 function ResultBody({
   result,
@@ -84,9 +90,10 @@ function ResultBody({
   )
 }
 
-function ResultCard({ result }: { result: PromptEngineResult }): JSX.Element {
+function ResultCard({ result, slug, trackId }: CardProps): JSX.Element {
   const [open, setOpen] = useState(false)
-  const cited = result.mentioned
+  // Tint by real citation (brand's domain cited), not a mere name-mention.
+  const cited = result.brandCited
   return (
     <div
       className="flex flex-col gap-2 rounded-md border p-3"
@@ -105,13 +112,28 @@ function ResultCard({ result }: { result: PromptEngineResult }): JSX.Element {
           Checked {formatTaskDate(result.checkedAt)}
         </p>
       )}
-      {open && <ResponseDialog result={result} onClose={() => setOpen(false)} />}
+      {open && (
+        <ResponseDialog
+          result={result}
+          slug={slug}
+          trackId={trackId}
+          onClose={() => setOpen(false)}
+        />
+      )}
     </div>
   )
 }
 
 /** The expanded body of a prompt row — each engine's latest answer, cited first. */
-export function PromptResultsPanel({ results }: { results: PromptEngineResult[] }): JSX.Element {
+export function PromptResultsPanel({
+  results,
+  slug,
+  trackId,
+}: {
+  results: PromptEngineResult[]
+  slug: string
+  trackId: number
+}): JSX.Element {
   if (results.length === 0) {
     return (
       <p className="px-4 pb-3.5 text-[12px] text-[var(--cat-ink-3)]">
@@ -120,11 +142,15 @@ export function PromptResultsPanel({ results }: { results: PromptEngineResult[] 
       </p>
     )
   }
-  const ordered = [...results].sort((a, b) => Number(b.mentioned) - Number(a.mentioned))
+  // Show engines that cited the brand first, then merely-mentioned, then the rest.
+  const ordered = [...results].sort(
+    (a, b) =>
+      Number(b.brandCited) - Number(a.brandCited) || Number(b.mentioned) - Number(a.mentioned),
+  )
   return (
     <div className="grid grid-cols-1 gap-2 px-4 pb-3.5 md:grid-cols-2">
       {ordered.map(result => (
-        <ResultCard key={result.id} result={result} />
+        <ResultCard key={result.id} result={result} slug={slug} trackId={trackId} />
       ))}
     </div>
   )
