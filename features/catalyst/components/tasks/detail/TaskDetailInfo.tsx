@@ -4,7 +4,12 @@ import { TaskTypeIcon } from '@/features/catalyst/components/agent/TaskTypeIcon'
 import { TickBar } from '@/features/catalyst/components/brands/BrandBits'
 import { Card } from '@/features/catalyst/components/Card'
 import { CardHead } from '@/features/catalyst/components/CardHead'
-import { formatTaskDate, TASK_TYPE_LABEL, taskTypesOf } from '@/features/catalyst/tasks-data'
+import {
+  formatEffort,
+  formatTaskDate,
+  TASK_TYPE_LABEL,
+  taskTypesOf,
+} from '@/features/catalyst/tasks-data'
 import { useActiveProject } from '@/hooks/useActiveProject'
 import { GEO_PILLARS, usePillars } from '@/hooks/usePillars'
 import type { TaskDetail } from '@/hooks/useTaskDetail'
@@ -13,6 +18,10 @@ const KIND_LABEL: Record<string, string> = {
   auto: 'Auto-fixable',
   draft: 'AI draft',
   open: 'Manual',
+}
+
+function capitalize(word: string): string {
+  return word ? word[0].toUpperCase() + word.slice(1) : word
 }
 
 function InfoRow({ label, value }: { label: string; value: string }): JSX.Element {
@@ -77,7 +86,60 @@ function AutoFixRow({ available }: { available: boolean }): JSX.Element {
   )
 }
 
-/** The task's metadata sidebar: types, pillar context, execution and ownership. */
+/** The analyzer finding code that keys the auto-fix, as a copyable mono chip. */
+function FindingCodeRow({ code }: { code: string }): JSX.Element {
+  return (
+    <div className="flex items-center justify-between gap-3 text-[13px]">
+      <span className="shrink-0 text-[var(--cat-ink-3)]">Finding</span>
+      <span className="truncate rounded-sm bg-[var(--cat-hover)] px-1.5 py-0.5 font-mono text-[11px] text-[var(--cat-ink-2)]">
+        {code}
+      </span>
+    </div>
+  )
+}
+
+function executionLabel(task: TaskDetail): string {
+  if (!task.planAction) return 'Manual'
+  return KIND_LABEL[task.planAction.kind] ?? 'Manual'
+}
+
+/** When the task was identified and its scoring (priority / impact / effort). */
+function ScoringRows({ task }: { task: TaskDetail }): JSX.Element {
+  return (
+    <>
+      <InfoRow label="Identified" value={task.createdAt ? formatTaskDate(task.createdAt) : '—'} />
+      <InfoRow label="Priority" value={capitalize(task.priority) || '—'} />
+      <InfoRow label="Score impact" value={task.impact > 0 ? `+${task.impact}` : '—'} />
+      <InfoRow label="Effort" value={capitalize(formatEffort(task.effort)) || '—'} />
+    </>
+  )
+}
+
+/** Pillar, execution, the finding it maps to, and ownership. */
+function ContextRows({
+  task,
+  pillarLabel,
+}: {
+  task: TaskDetail
+  pillarLabel?: string
+}): JSX.Element {
+  return (
+    <>
+      <InfoRow label="Pillar" value={pillarLabel ?? (task.pillar || '—')} />
+      <InfoRow label="Group" value={task.group || '—'} />
+      {task.category && <InfoRow label="Category" value={capitalize(task.category)} />}
+      <InfoRow label="Execution" value={executionLabel(task)} />
+      <AutoFixRow available={task.canAutoFix} />
+      {task.findingCode && <FindingCodeRow code={task.findingCode} />}
+      <InfoRow label="Plan rank" value={task.rank > 0 ? `#${task.rank}` : '—'} />
+      <InfoRow label="Top fix" value={task.isTopFix ? 'Yes' : 'No'} />
+      <InfoRow label="Assignee" value={task.assigneeEmail || 'Unassigned'} />
+    </>
+  )
+}
+
+/** The task's metadata sidebar: when it was identified, its scoring, pillar
+ *  context, execution, the finding it maps to, and ownership. */
 export function TaskDetailInfo({ task }: { task: TaskDetail }): JSX.Element {
   const pillarLabel = GEO_PILLARS.find(p => String(p.key) === `${task.pillar}_score`)?.label
   return (
@@ -85,18 +147,9 @@ export function TaskDetailInfo({ task }: { task: TaskDetail }): JSX.Element {
       <CardHead title="Details" />
       <div className="flex flex-col gap-2.5">
         <TypeChips task={task} />
+        <ScoringRows task={task} />
         <PillarScoreRow pillar={task.pillar} />
-        <InfoRow label="Pillar" value={pillarLabel ?? (task.pillar || '—')} />
-        <InfoRow label="Group" value={task.group || '—'} />
-        <InfoRow
-          label="Execution"
-          value={task.planAction ? (KIND_LABEL[task.planAction.kind] ?? 'Manual') : 'Manual'}
-        />
-        <AutoFixRow available={task.canAutoFix} />
-        <InfoRow label="Plan rank" value={task.rank > 0 ? `#${task.rank}` : '—'} />
-        <InfoRow label="Top fix" value={task.isTopFix ? 'Yes' : 'No'} />
-        <InfoRow label="Assignee" value={task.assigneeEmail || 'Unassigned'} />
-        <InfoRow label="Created" value={formatTaskDate(task.createdAt)} />
+        <ContextRows task={task} pillarLabel={pillarLabel} />
       </div>
     </Card>
   )

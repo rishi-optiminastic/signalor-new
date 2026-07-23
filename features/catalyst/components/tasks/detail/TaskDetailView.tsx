@@ -7,12 +7,12 @@ import { TransitionLink } from '@/components/TransitionLink'
 import { ActionCtaButton } from '@/features/catalyst/components/agent/ActionCtaButton'
 import { TaskTypeIcon } from '@/features/catalyst/components/agent/TaskTypeIcon'
 import { DataState } from '@/features/catalyst/components/DataState'
-import { TaskAutoFixButton } from '@/features/catalyst/components/tasks/detail/TaskAutoFixButton'
-import { TaskDescriptionCard } from '@/features/catalyst/components/tasks/detail/TaskDescriptionCard'
+import { TaskAutoFixPanel } from '@/features/catalyst/components/tasks/detail/TaskAutoFixPanel'
+import { TaskDescriptionBody } from '@/features/catalyst/components/tasks/detail/TaskDescriptionCard'
 import { TaskDetailInfo } from '@/features/catalyst/components/tasks/detail/TaskDetailInfo'
 import { TaskDetailStats } from '@/features/catalyst/components/tasks/detail/TaskDetailStats'
-import { TaskFixGuide } from '@/features/catalyst/components/tasks/detail/TaskFixGuide'
-import { TaskFixResultCard } from '@/features/catalyst/components/tasks/detail/TaskFixResultCard'
+import { TaskFixGuideBody } from '@/features/catalyst/components/tasks/detail/TaskFixGuide'
+import { TaskSection } from '@/features/catalyst/components/tasks/detail/TaskSection'
 import { TaskShareMenu } from '@/features/catalyst/components/tasks/detail/TaskShareMenu'
 import { formatStatus, TASK_TYPE_LABEL, taskTypeOf } from '@/features/catalyst/tasks-data'
 import { useAgentMutations } from '@/hooks/useAgentPlan'
@@ -67,12 +67,7 @@ function CompleteButton({ task }: { task: TaskDetail }): JSX.Element | null {
   )
 }
 
-interface DetailHeaderProps {
-  task: TaskDetail
-  fix: TaskAutoFix
-}
-
-function DetailHeader({ task, fix }: DetailHeaderProps): JSX.Element {
+function DetailHeader({ task }: { task: TaskDetail }): JSX.Element {
   return (
     <div className="flex flex-wrap items-center gap-3">
       <div className="min-w-0 flex-1">
@@ -91,9 +86,34 @@ function DetailHeader({ task, fix }: DetailHeaderProps): JSX.Element {
       <div className="flex shrink-0 items-center gap-2">
         <StatusPill status={task.status} />
         <TaskShareMenu task={task} />
-        <TaskAutoFixButton fix={fix} />
         {task.planAction && <ActionCtaButton action={task.planAction} />}
         <CompleteButton task={task} />
+      </div>
+    </div>
+  )
+}
+
+/** Sentry-issue body: collapsible detail on the left, the auto-fix panel (Seer
+ *  position) and rich metadata on the right sidebar. */
+function TaskBody({ task, fix }: { task: TaskDetail; fix: TaskAutoFix }): JSX.Element {
+  return (
+    <div className="cat-stagger flex flex-col gap-2">
+      <TaskDetailStats task={task} />
+      <div className="grid grid-cols-1 items-start gap-2 xl:grid-cols-3">
+        <div className="flex flex-col gap-2 xl:col-span-2">
+          <TaskSection title="Why this matters">
+            <TaskDescriptionBody task={task} />
+          </TaskSection>
+          {task.actionGuide && (
+            <TaskSection title="How to fix it">
+              <TaskFixGuideBody guide={task.actionGuide} />
+            </TaskSection>
+          )}
+        </div>
+        <div className="flex flex-col gap-2">
+          <TaskAutoFixPanel fix={fix} />
+          <TaskDetailInfo task={task} />
+        </div>
       </div>
     </div>
   )
@@ -111,7 +131,7 @@ export function TaskDetailView(): JSX.Element {
       {/* z-20: the cat-rise transform creates a stacking context, so without an
           explicit z-index the header's dropdowns paint under the body cards. */}
       <div className="cat-rise relative z-20 shrink-0 border-b border-[var(--cat-border)] pb-4">
-        {task ? <DetailHeader task={task} fix={fix} /> : <BackLink />}
+        {task ? <DetailHeader task={task} /> : <BackLink />}
       </div>
       <div className="mt-3 min-h-0 flex-1 overflow-y-auto pr-0.5">
         <DataState
@@ -121,22 +141,7 @@ export function TaskDetailView(): JSX.Element {
           emptyTitle="Task not found"
           emptyHint="This task does not exist for your account. It may have been removed when the plan was refreshed."
         >
-          {task && (
-            <div className="cat-stagger flex flex-col gap-2">
-              <TaskDetailStats task={task} />
-              {/* Auto-fix is the hero of this page (Sentry Seer-style): full-width
-                  and above the details, so the fix flow reads top-to-bottom before
-                  the supporting context. It renders nothing until a fix is active. */}
-              <TaskFixResultCard fix={fix} />
-              <div className="grid grid-cols-1 items-start gap-2 xl:grid-cols-3">
-                <div className="flex flex-col gap-2 xl:col-span-2">
-                  <TaskDescriptionCard task={task} />
-                  {task.actionGuide && <TaskFixGuide guide={task.actionGuide} />}
-                </div>
-                <TaskDetailInfo task={task} />
-              </div>
-            </div>
-          )}
+          {task && <TaskBody task={task} fix={fix} />}
         </DataState>
       </div>
     </>

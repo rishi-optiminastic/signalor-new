@@ -3,9 +3,6 @@
 import { Check, Copy } from 'lucide-react'
 import { useState } from 'react'
 
-import { Card } from '@/features/catalyst/components/Card'
-import { CardHead } from '@/features/catalyst/components/CardHead'
-
 interface Segment {
   type: 'step' | 'text' | 'code' | 'bullet'
   text: string
@@ -80,17 +77,15 @@ function SegmentBlock({ segment }: { segment: Segment }): JSX.Element {
   return <p className="text-[13px] leading-relaxed text-[var(--cat-ink-2)]">{segment.text}</p>
 }
 
-/** Step-by-step "how to fix it" instructions from the source recommendation. */
-export function TaskFixGuide({ guide }: { guide: string }): JSX.Element {
+/** Step-by-step "how to fix it" content (rendered inside a TaskSection accordion),
+ *  parsed from the source recommendation's free-text action guide. */
+export function TaskFixGuideBody({ guide }: { guide: string }): JSX.Element {
   const segments = parseGuide(guide)
   return (
-    <Card>
-      <CardHead title="How to fix it" />
-      <div className="flex flex-col gap-2">
-        {segments.map((segment, i) => (
-          <SegmentBlock key={i} segment={segment} />
-        ))}
-      </div>
-    </Card>
+    <div className="flex flex-col gap-2">
+      {segments.map((segment, i) => (
+        <SegmentBlock key={i} segment={segment} />
+      ))}
+    </div>
   )
 }

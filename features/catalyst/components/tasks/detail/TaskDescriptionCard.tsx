@@ -1,14 +1,12 @@
 import { TrendingUp } from 'lucide-react'
 
-import { Card } from '@/features/catalyst/components/Card'
-import { CardHead } from '@/features/catalyst/components/CardHead'
 import type { TaskDetail } from '@/hooks/useTaskDetail'
 
-/** What the task is and why it matters, with the analyzer's impact estimate. */
-export function TaskDescriptionCard({ task }: { task: TaskDetail }): JSX.Element {
+/** "Why this matters" content (rendered inside a TaskSection accordion): the
+ *  task description plus the analyzer's impact estimate. */
+export function TaskDescriptionBody({ task }: { task: TaskDetail }): JSX.Element {
   return (
-    <Card>
-      <CardHead title="Why this matters" />
+    <>
       <p className="text-[13px] leading-relaxed whitespace-pre-line text-[var(--cat-ink-2)]">
         {task.description || 'No description was generated for this task.'}
       </p>
@@ -18,6 +16,6 @@ export function TaskDescriptionCard({ task }: { task: TaskDetail }): JSX.Element
           {task.impactNote}
         </p>
       )}
-    </Card>
+    </>
   )
 }
