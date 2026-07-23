@@ -31,6 +31,7 @@ export function BrandFavicon({ domain, name, color, size = 40 }: BrandFaviconPro
       className="grid shrink-0 place-items-center overflow-hidden rounded-md border border-[var(--cat-border)] bg-white"
       style={{ width: size, height: size }}
     >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={`https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=64`}
         alt=""

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import { deleteAccount, DELETE_ACCOUNT_CONFIRM } from '@/lib/api/account'
+import { ApiError } from '@/lib/api/client'
 import { authClient, signOut } from '@/lib/auth-client'
 import { routes } from '@/lib/routes'
 
@@ -33,8 +34,14 @@ export function DangerZone({ email }: DangerZoneProps): JSX.Element {
       await authClient.deleteUser().catch(() => {})
       await signOut().catch(() => {})
       router.push(routes.home)
-    } catch {
-      setError('Could not delete your account. Please try again.')
+    } catch (err) {
+      // Surface the backend's real reason (auth required, a blocking record, …)
+      // instead of a dead-end "try again" the user can do nothing with.
+      const message =
+        err instanceof ApiError && err.message
+          ? err.message
+          : 'Could not delete your account. Please try again.'
+      setError(message)
       setBusy(false)
     }
   }

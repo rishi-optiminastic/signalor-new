@@ -3,11 +3,13 @@
 import { TickBar } from '@/features/catalyst/components/brands/BrandBits'
 import { Card } from '@/features/catalyst/components/Card'
 import { CardHead } from '@/features/catalyst/components/CardHead'
-import { Metric } from '@/features/catalyst/components/Metric'
+import { EngineLogo } from '@/features/catalyst/components/EngineLogo'
+import { GaugeRing } from '@/features/catalyst/components/visibility/GaugeRing'
+import { BRAND } from '@/features/catalyst/constants'
 import { useActiveProject } from '@/hooks/useActiveProject'
 import { useBrandPath } from '@/hooks/useBrandPath'
 import { useCitations } from '@/hooks/useCitations'
-import { useOverview } from '@/hooks/useOverview'
+import { useOverview, type OverviewEngine, type OverviewStats } from '@/hooks/useOverview'
 
 interface SourceRow {
   label: string
@@ -28,18 +30,58 @@ function buildSources(brand: number, competitor: number, other: number): SourceR
 
 function SourceMeterRow({ row }: { row: SourceRow }): JSX.Element {
   return (
-    <div className="flex items-center gap-2.5 py-[7px]">
-      <span className="w-[86px] shrink-0 truncate text-[13px] font-medium text-[var(--cat-ink)]">
+    <div className="flex items-center gap-2.5 py-[5px]">
+      <span className="w-[86px] shrink-0 truncate text-[12px] font-medium text-[var(--cat-ink)]">
         {row.label}
       </span>
       <span className="min-w-0 flex-1">
-        <TickBar value={row.pct} ticks={16} showValue={false} />
+        <TickBar value={row.pct} ticks={14} showValue={false} />
       </span>
-      <span className="w-14 shrink-0 text-right text-[13px] text-[var(--cat-ink-2)] tabular-nums">
+      <span className="w-12 shrink-0 text-right text-[12px] text-[var(--cat-ink-2)] tabular-nums">
         {row.count.toLocaleString('en-US')}
       </span>
     </div>
   )
+}
+
+interface CoverageProps {
+  pct: number
+  cited: number
+  total: number
+  engines: OverviewEngine[]
+}
+
+function CoverageSummary({ pct, cited, total, engines }: CoverageProps): JSX.Element {
+  return (
+    <div className="mt-2 flex items-center gap-4">
+      <GaugeRing value={pct} size={96} stroke={9} color={BRAND}>
+        <span className="text-[20px] font-bold tracking-tight text-[var(--cat-ink)]">{pct}%</span>
+      </GaugeRing>
+      <div className="min-w-0">
+        <p className="text-[15px] font-semibold text-[var(--cat-ink)]">
+          Cited in <span className="tabular-nums">{cited.toLocaleString('en-US')}</span> of{' '}
+          <span className="tabular-nums">{total.toLocaleString('en-US')}</span>
+        </p>
+        <p className="text-[13px] text-[var(--cat-ink-3)]">answers</p>
+        {engines.length > 0 && (
+          <div className="mt-2 flex items-center gap-1.5">
+            {engines.map(e => (
+              <EngineLogo key={e.key} name={e.name} size={22} />
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function deriveCoverage(overview: OverviewStats | undefined): CoverageProps {
+  return {
+    pct: overview?.citationPct ?? 0,
+    cited: overview?.cited ?? 0,
+    total: overview?.total ?? 0,
+    engines: (overview?.engines ?? []).slice(0, 3),
+  }
 }
 
 export function AiCitationCard(): JSX.Element {
@@ -48,31 +90,29 @@ export function AiCitationCard(): JSX.Element {
   const overview = useOverview(slug).data
   const citations = useCitations(slug).data
 
+  const coverage = deriveCoverage(overview)
   const sources = citations
     ? buildSources(citations.brand, citations.competitor, citations.other)
     : []
 
   return (
     <Card>
-      <CardHead title="Citation Coverage" action="Details" href={brandPath('visibility')} />
-      <Metric
-        value={overview ? `${overview.citationPct}%` : '—'}
-        positive={(overview?.cited ?? 0) > 0}
-        badge={overview ? `${overview.cited} of ${overview.total} answers` : '—'}
-      />
-      <p className="mt-1 text-[12px] text-[var(--cat-ink-3)]">
-        Share of AI answers that cite your brand.
-      </p>
-      <div className="mt-3.5 border-t border-[var(--cat-border)] pt-3">
-        <p className="mb-1 text-[11px] font-semibold tracking-wide text-[var(--cat-ink-3)] uppercase">
-          Citation sources
+      <div className="mb-1">
+        <CardHead title="Citation Coverage" action="Report" href={brandPath('visibility')} />
+        <p className="-mt-0.5 text-[12px] text-[var(--cat-ink-3)]">
+          % of AI answers that cite your brand
         </p>
-        {sources.length > 0 ? (
-          sources.map(row => <SourceMeterRow key={row.label} row={row} />)
-        ) : (
-          <p className="py-4 text-center text-[12px] text-[var(--cat-ink-3)]">No citations yet.</p>
-        )}
       </div>
+
+      <CoverageSummary {...coverage} />
+
+      {sources.length > 0 && (
+        <div className="mt-3 border-t border-[var(--cat-border)] pt-2">
+          {sources.map(row => (
+            <SourceMeterRow key={row.label} row={row} />
+          ))}
+        </div>
+      )}
     </Card>
   )
 }

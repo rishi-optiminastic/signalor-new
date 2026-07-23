@@ -1,0 +1,119 @@
+'use client'
+
+import { ArrowRight, ExternalLink, Link2, MessageSquare, Star } from 'lucide-react'
+
+import { TransitionLink } from '@/components/TransitionLink'
+import { Card } from '@/features/catalyst/components/Card'
+import { CardHead } from '@/features/catalyst/components/CardHead'
+import { GREEN, YELLOW } from '@/features/catalyst/constants'
+import { useActiveProject } from '@/hooks/useActiveProject'
+import { useBrandPath } from '@/hooks/useBrandPath'
+import { useOpportunities, type Opportunity } from '@/hooks/useOpportunities'
+
+const ENGAGE_CLASS =
+  'inline-flex items-center gap-1.5 rounded-md border border-[var(--cat-border)] px-2.5 py-1 text-[12px] font-medium text-[var(--cat-ink)] transition-colors hover:bg-[var(--cat-hover)]'
+
+/** Category → its glyph, rendered as an element (not a component alias). */
+function CategoryGlyph({ category }: { category: string }): JSX.Element {
+  const c = category.toLowerCase()
+  if (c === 'community' || c === 'forum') return <MessageSquare size={16} strokeWidth={2} />
+  if (c === 'directory' || c === 'review') return <Star size={16} strokeWidth={2} />
+  return <Link2 size={16} strokeWidth={2} />
+}
+
+function impactTone(impact: Opportunity['impact']): { text: string; bg: string } {
+  if (impact === 'High impact') return { text: GREEN, bg: 'rgba(47,190,126,0.12)' }
+  if (impact === 'Med impact') return { text: YELLOW, bg: 'rgba(246,185,59,0.14)' }
+  return { text: 'var(--cat-ink-2)', bg: 'var(--cat-hover)' }
+}
+
+function EngageButton({
+  opp,
+  backlinksHref,
+}: {
+  opp: Opportunity
+  backlinksHref: string
+}): JSX.Element {
+  if (opp.submitUrl) {
+    return (
+      <a href={opp.submitUrl} target="_blank" rel="noopener noreferrer" className={ENGAGE_CLASS}>
+        <ExternalLink size={13} /> Engage
+      </a>
+    )
+  }
+  return (
+    <TransitionLink href={backlinksHref} className={ENGAGE_CLASS}>
+      <MessageSquare size={13} /> Engage
+    </TransitionLink>
+  )
+}
+
+function OpportunityRow({ opp }: { opp: Opportunity }): JSX.Element {
+  const tone = impactTone(opp.impact)
+  const backlinksHref = useBrandPath()('backlinks')
+  return (
+    <div className="rounded-md border border-[var(--cat-border)] bg-[var(--cat-card)] p-2.5 transition-colors hover:bg-[var(--cat-hover)]">
+      <div className="flex items-start justify-between gap-2">
+        <div className="flex min-w-0 items-start gap-2.5">
+          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-[var(--cat-hover)] text-[var(--cat-ink-2)]">
+            <CategoryGlyph category={opp.category} />
+          </span>
+          <div className="min-w-0">
+            <p className="truncate text-[13px] font-medium text-[var(--cat-ink)]">{opp.name}</p>
+            <p className="mt-0.5 line-clamp-1 text-[12px] text-[var(--cat-ink-3)]">
+              {opp.rationale || opp.description || opp.category || 'Awaiting engagement'}
+            </p>
+          </div>
+        </div>
+        <span
+          className="shrink-0 rounded-full px-2 py-0.5 text-[11px] font-semibold"
+          style={{ color: tone.text, background: tone.bg }}
+        >
+          {opp.impact}
+        </span>
+      </div>
+      <div className="mt-2 flex items-center justify-end">
+        <EngageButton opp={opp} backlinksHref={backlinksHref} />
+      </div>
+    </div>
+  )
+}
+
+/** "Engagement Opportunities" — placements to pursue to lift AI visibility. */
+export function EngagementOpportunitiesCard(): JSX.Element {
+  const { slug } = useActiveProject()
+  const brandPath = useBrandPath()
+  const { data } = useOpportunities(slug)
+
+  const rows = (data ?? []).slice(0, 3)
+
+  return (
+    <Card>
+      <div className="mb-1">
+        <CardHead title="Engagement Opportunities" />
+        <p className="-mt-0.5 text-[12px] text-[var(--cat-ink-3)]">
+          Engage here to boost your AI visibility
+        </p>
+      </div>
+
+      {rows.length === 0 ? (
+        <div className="grid flex-1 place-items-center py-8 text-center text-[13px] text-[var(--cat-ink-3)]">
+          No opportunities yet — run an analysis to generate them.
+        </div>
+      ) : (
+        <div className="mt-1 flex flex-col gap-2">
+          {rows.map(o => (
+            <OpportunityRow key={o.id || o.name} opp={o} />
+          ))}
+        </div>
+      )}
+
+      <TransitionLink
+        href={brandPath('backlinks')}
+        className="mt-2 flex items-center justify-center gap-1.5 rounded-md border border-[var(--cat-border)] py-1.5 text-[12px] font-medium text-[var(--cat-ink-2)] transition-colors hover:bg-[var(--cat-hover)] hover:text-[var(--cat-ink)]"
+      >
+        View all opportunities <ArrowRight size={13} />
+      </TransitionLink>
+    </Card>
+  )
+}

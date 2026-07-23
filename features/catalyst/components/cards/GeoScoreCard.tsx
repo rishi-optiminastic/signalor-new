@@ -2,14 +2,14 @@
 
 import { ArrowRight, Info } from 'lucide-react'
 import Link from 'next/link'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 
 import { Badge } from '@/features/catalyst/components/Badge'
 import { Card } from '@/features/catalyst/components/Card'
 import { AnimatedScore } from '@/features/catalyst/components/cards/AnimatedScore'
 import { GeoRankTable, type RankItem } from '@/features/catalyst/components/cards/GeoRankTable'
 import { GeoTrendLine } from '@/features/catalyst/components/cards/GeoTrendLine'
-import { RangeTabs, type Range } from '@/features/catalyst/components/RangeTabs'
+import { useOverviewFilters } from '@/features/catalyst/components/overview/OverviewFilters'
 import { GREEN, NEG } from '@/features/catalyst/constants'
 import { useActiveProject } from '@/hooks/useActiveProject'
 import { useBrandPath } from '@/hooks/useBrandPath'
@@ -93,7 +93,7 @@ function ScoreRow({ data }: { data: GeoScore | undefined }): JSX.Element {
 export function GeoScoreCard(): JSX.Element {
   const { slug } = useActiveProject()
   const brandPath = useBrandPath()
-  const [range, setRange] = useState<Range>('1W')
+  const { range } = useOverviewFilters()
   const { data } = useGeoScore(slug, range)
   const matrix = useCompetitorMatrix(slug)
 
@@ -104,10 +104,9 @@ export function GeoScoreCard(): JSX.Element {
   const yourRank = ranking.find(item => item.isBrand)?.rank ?? null
 
   return (
-    <Card>
+    <Card className="sm:col-span-2">
       <CardHeader rank={yourRank} />
       <ScoreRow data={data} />
-      <RangeTabs value={range} onChange={setRange} />
       <GeoTrendLine data={data?.points ?? []} />
       <div className="mt-3">
         <GeoRankTable items={ranking} />
