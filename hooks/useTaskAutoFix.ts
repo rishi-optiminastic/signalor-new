@@ -9,7 +9,13 @@ import { useAutoFix, type FixPlatform } from '@/hooks/useAutoFix'
 import type { TaskDetail } from '@/hooks/useTaskDetail'
 import { applyAutoFix, type AutoFixResult } from '@/lib/api/autofix'
 import { ApiError } from '@/lib/api/client'
-import { getGithubJobs, requestGithubFix, type GithubJob } from '@/lib/api/github'
+import {
+  getGithubJobs,
+  isJobInFlight,
+  latestJobForFinding,
+  requestGithubFix,
+  type GithubJob,
+} from '@/lib/api/github'
 
 export type FixPhase = 'idle' | 'working' | 'done' | 'manual' | 'failed'
 
@@ -77,28 +83,54 @@ function announceJob(job: GithubJob, toastId: string): void {
   }
 }
 
-/** Polls the run's fix jobs while one is in flight and announces transitions. */
-function useGithubJob(
-  slug: string | undefined,
+/** Resolve a task's job: the one just started this session (by id), else the
+ *  newest job for its finding code — the latter is what makes it resume on refresh. */
+function selectJob(
+  jobs: GithubJob[] | undefined,
   jobId: number | null,
-  toastId: string,
+  findingCode: string,
 ): GithubJob | null {
+  if (!jobs) return null
+  if (jobId !== null) {
+    const byId = jobs.find(j => j.id === jobId)
+    if (byId) return byId
+  }
+  return latestJobForFinding(jobs, findingCode)
+}
+
+interface UseGithubJobArgs {
+  slug: string | undefined
+  jobId: number | null
+  findingCode: string
+  toastId: string
+}
+
+/** The run's fix job for this target, hydrated from the backend on mount (so it
+ *  survives refresh), polled while in flight, and announcing transitions. */
+function useGithubJob({ slug, jobId, findingCode, toastId }: UseGithubJobArgs): GithubJob | null {
   const jobsQuery = useQuery({
+    // Enabled on slug alone (not a session jobId) so an already-running/open job
+    // re-hydrates after a refresh.
     queryKey: ['catalyst', 'github-fix-jobs', slug ?? ''],
-    enabled: Boolean(slug && jobId !== null),
+    enabled: Boolean(slug),
     queryFn: () => getGithubJobs(slug as string),
     refetchInterval: q => {
-      const jobs = q.state.data as GithubJob[] | undefined
-      const job = jobs?.find(j => j.id === jobId)
-      return !job || job.status === 'pending' || job.status === 'running' ? POLL_MS : false
+      const job = selectJob(q.state.data as GithubJob[] | undefined, jobId, findingCode)
+      return isJobInFlight(job) ? POLL_MS : false
     },
   })
-  const job = jobId === null ? null : (jobsQuery.data?.find(j => j.id === jobId) ?? null)
+  const job = selectJob(jobsQuery.data, jobId, findingCode)
 
   const announcedRef = useRef('')
   useEffect(() => {
     if (!job) return
     const key = `${job.id}:${job.status}`
+    // Seed on the first observation (a refresh-hydrated job) without a toast; only
+    // announce genuine transitions that happen during this session.
+    if (announcedRef.current === '') {
+      announcedRef.current = key
+      return
+    }
     if (key === announcedRef.current) return
     announcedRef.current = key
     announceJob(job, toastId)
@@ -183,7 +215,7 @@ async function startCmsFix(args: StartCmsArgs): Promise<void> {
  * progress through sonner toasts, and exposes the integration's proof —
  * the PR number/url and diff, or the CMS apply result. One fix at a time.
  */
-export function useAutoFixFlow(): AutoFixFlow {
+export function useAutoFixFlow(hydrateFindingCode = ''): AutoFixFlow {
   const { slug, email, activeOrg } = useActiveProject()
   const { platform, connected } = useAutoFix({ slug, email, orgId: activeOrg?.id })
   const [active, setActive] = useState<AutoFixTarget | null>(null)
@@ -191,7 +223,14 @@ export function useAutoFixFlow(): AutoFixFlow {
   const [requested, setRequested] = useState(false)
   const [cmsPhase, setCmsPhase] = useState<FixPhase>('idle')
   const [result, setResult] = useState<AutoFixResult | null>(null)
-  const job = useGithubJob(slug, jobId, `autofix-${active?.key ?? 'none'}`)
+  // `hydrateFindingCode` (the fixed target's code, e.g. a task) lets an in-flight
+  // or completed job re-hydrate on refresh even before `start` runs this session.
+  const job = useGithubJob({
+    slug,
+    jobId,
+    findingCode: active?.findingCode || hydrateFindingCode,
+    toastId: `autofix-${active?.key ?? 'none'}`,
+  })
   const siteUrl = activeOrg?.url ?? ''
   const orgId = activeOrg?.id
 
@@ -248,7 +287,8 @@ export function useAutoFixFlow(): AutoFixFlow {
 
 /** Task-page adapter over the shared flow — one fixed target, the task itself. */
 export function useTaskAutoFix(task: TaskDetail | undefined): TaskAutoFix {
-  const flow = useAutoFixFlow()
+  // Pass the task's finding code so the fix state + PR resume after a refresh.
+  const flow = useAutoFixFlow(task?.findingCode ?? '')
   return {
     connected: flow.connected,
     platform: flow.platform,

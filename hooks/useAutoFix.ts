@@ -1,13 +1,20 @@
 'use client'
 
-import { useCallback, useState } from 'react'
-
 import { useQuery } from '@tanstack/react-query'
+import { useCallback, useState } from 'react'
 
 import { applyAutoFix } from '@/lib/api/autofix'
 import { ApiError } from '@/lib/api/client'
-import { getGithubStatus, requestGithubFix } from '@/lib/api/github'
+import {
+  getGithubStatus,
+  isJobInFlight,
+  latestJobForFinding,
+  requestGithubFix,
+  type GithubJob,
+} from '@/lib/api/github'
 import { getIntegrationStatus } from '@/lib/api/integrations'
+
+const POLL_MS = 4000
 
 /** Which write path applies for the run's platform. */
 export type FixPlatform = 'nextjs' | 'wordpress' | 'shopify' | 'none'
@@ -25,6 +32,9 @@ export type FixOutcome =
 export interface FixState {
   outcome: FixOutcome
   message: string
+  /** Present when a GitHub PR exists for the item — lets the control link to it. */
+  prUrl?: string
+  prNumber?: number | null
 }
 
 export interface FixTarget {
@@ -42,7 +52,10 @@ export interface UseAutoFix {
   platform: FixPlatform
   connected: boolean
   isLoading: boolean
-  stateFor: (recId: number) => FixState
+  /** Fix state for a recommendation. `findingCode` lets it read the persisted
+   *  GitHub job (so the state + PR survive a refresh), falling back to the
+   *  in-session optimistic state before the job appears. */
+  stateFor: (recId: number, findingCode: string) => FixState
   runFix: (target: FixTarget) => Promise<void>
 }
 
@@ -52,6 +65,22 @@ function errMessage(error: unknown): string {
   if (error instanceof ApiError) return error.message
   if (error instanceof Error) return error.message
   return 'Auto-fix failed. Please try again.'
+}
+
+/** Persisted GitHub job → fix state (the source of truth after a refresh). */
+function jobToState(job: GithubJob): FixState {
+  if (job.status === 'pending' || job.status === 'running') {
+    return { outcome: 'running', message: 'Fix in progress…' }
+  }
+  if (job.status === 'failed') {
+    return { outcome: 'failed', message: job.error_message || 'Fix failed' }
+  }
+  return {
+    outcome: 'pr',
+    message: job.status === 'merged' ? 'PR merged' : 'PR opened',
+    prUrl: job.pr_url,
+    prNumber: job.pr_number,
+  }
 }
 
 /**
@@ -66,6 +95,9 @@ export function useAutoFix({ slug, email, orgId }: UseAutoFixArgs): UseAutoFix {
     queryKey: ['github-run-status', slug],
     enabled: Boolean(slug),
     queryFn: () => getGithubStatus(slug as string),
+    // Keep the fix jobs fresh while any is still being worked, so the table
+    // updates live and reflects the PR the moment it opens.
+    refetchInterval: q => (q.state.data?.jobs.some(isJobInFlight) ? POLL_MS : false),
   })
   const integrationsQuery = useQuery({
     queryKey: ['integration-status', email, orgId],
@@ -78,6 +110,7 @@ export function useAutoFix({ slug, email, orgId }: UseAutoFixArgs): UseAutoFix {
     i => i.is_active && (i.provider === 'wordpress' || i.provider === 'shopify'),
   )
   const githubConnected = githubQuery.data?.connected ?? false
+  const jobs = githubQuery.data?.jobs ?? []
   const platform: FixPlatform = cms
     ? (cms.provider as 'wordpress' | 'shopify')
     : githubConnected
@@ -112,7 +145,13 @@ export function useAutoFix({ slug, email, orgId }: UseAutoFixArgs): UseAutoFix {
     platform,
     connected,
     isLoading: githubQuery.isLoading || integrationsQuery.isLoading,
-    stateFor: recId => states[recId] ?? IDLE,
+    // A persisted GitHub job (matched by finding code) is the truth and survives
+    // refresh; the local optimistic state only fills the gap before it appears
+    // (and carries CMS outcomes, which have no job).
+    stateFor: (recId, findingCode) => {
+      const job = latestJobForFinding(jobs, findingCode)
+      return job ? jobToState(job) : (states[recId] ?? IDLE)
+    },
     runFix,
   }
 }
@@ -132,7 +171,10 @@ async function runCmsFix({ slug, email, orgId, target, setState }: RunCmsArgs): 
     if (result?.status === 'success' || result?.status === 'verified') {
       setState(target.id, { outcome: 'applied', message: result.message || 'Fix applied' })
     } else if (result?.status === 'manual') {
-      setState(target.id, { outcome: 'manual', message: result.message || 'Apply this fix manually' })
+      setState(target.id, {
+        outcome: 'manual',
+        message: result.message || 'Apply this fix manually',
+      })
     } else {
       setState(target.id, { outcome: 'failed', message: result?.message || 'Fix failed' })
     }
@@ -156,7 +198,8 @@ async function runGithubFix({ slug, target, setState, refetch }: RunGithubArgs):
   setState(target.id, { outcome: 'running', message: 'Opening PR…' })
   try {
     await requestGithubFix(slug, [target.findingCode])
-    setState(target.id, { outcome: 'pr', message: 'PR opening — check GitHub' })
+    // The job now exists; refetch so the derived (persisted) state takes over and
+    // surfaces the PR — no need to hold an optimistic 'pr' with no url.
     refetch()
   } catch (error) {
     setState(target.id, { outcome: 'failed', message: errMessage(error) })

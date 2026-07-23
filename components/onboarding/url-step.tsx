@@ -4,37 +4,21 @@ import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 
 import { ONBOARDING_INPUT_CLASS } from '@/components/onboarding/input-class'
+import { SiteFavicon } from '@/components/onboarding/site-favicon'
 import { useSession } from '@/lib/auth-client'
+import { cn } from '@/lib/utils'
 import { createOrganization } from '@/services/onboarding.service'
 import { useOnboardingWizardStore } from '@/stores/useOnboardingWizardStore'
 
-const PLATFORM_COPY: Record<string, { title: string; sub: string; placeholder: string }> = {
-  shopify: {
-    title: 'Connect your Shopify store',
-    sub: 'Enter your store domain to start GEO analysis and enable auto-fixes.',
-    placeholder: 'your-store.myshopify.com',
-  },
-  wordpress: {
-    title: 'Enter your WordPress URL',
-    sub: "We'll connect your site via the SignalorAI plugin after verifying your URL.",
-    placeholder: 'yoursite.com',
-  },
-  webflow: {
-    title: 'Enter your Webflow URL',
-    sub: "We'll run GEO analysis directly — no plugin required for Webflow.",
-    placeholder: 'yoursite.com',
-  },
-  framer: {
-    title: 'Enter your Framer site URL',
-    sub: "We'll verify your site before connecting via the Framer plugin.",
-    placeholder: 'yoursite.com',
-  },
-  nextjs: {
-    title: 'Enter your Next.js site URL',
-    sub: "We'll verify your site before generating your SDK API key.",
-    placeholder: 'yoursite.com',
-  },
+// Per-platform input placeholder (title/subtitle come from the wizard header).
+const PLATFORM_PLACEHOLDER: Record<string, string> = {
+  shopify: 'your-store.myshopify.com',
+  wordpress: 'yoursite.com',
+  webflow: 'yoursite.com',
+  framer: 'yoursite.com',
+  nextjs: 'yoursite.com',
 }
+const DEFAULT_PLACEHOLDER = 'yoursite.com'
 
 /** Step 3: capture the site URL and create the organization. */
 export function UrlStep(): JSX.Element {
@@ -45,7 +29,7 @@ export function UrlStep(): JSX.Element {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const copy = PLATFORM_COPY[platform]
+  const placeholder = PLATFORM_PLACEHOLDER[platform] ?? DEFAULT_PLACEHOLDER
 
   const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault()
@@ -74,19 +58,20 @@ export function UrlStep(): JSX.Element {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="text-center">
-        <p className="text-foreground text-sm font-semibold">{copy.title}</p>
-        <p className="mt-1 text-xs leading-relaxed font-light text-neutral-400">{copy.sub}</p>
+      {/* The wizard header already shows the step title/subtitle — no inner heading. */}
+      <div className="relative">
+        <span className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2">
+          <SiteFavicon value={value} />
+        </span>
+        <input
+          autoFocus
+          placeholder={placeholder}
+          value={value}
+          onChange={e => setValue(e.target.value)}
+          disabled={loading}
+          className={cn(ONBOARDING_INPUT_CLASS, 'pl-9')}
+        />
       </div>
-
-      <input
-        autoFocus
-        placeholder={copy.placeholder}
-        value={value}
-        onChange={e => setValue(e.target.value)}
-        disabled={loading}
-        className={ONBOARDING_INPUT_CLASS}
-      />
 
       {error && (
         <p className="border-destructive/20 bg-destructive/5 text-destructive rounded-md border px-3 py-2 text-xs font-medium">

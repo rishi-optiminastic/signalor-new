@@ -1,10 +1,22 @@
 'use client'
 
-import { ExternalLink, GitPullRequest, Loader2 } from 'lucide-react'
+import {
+  AlertTriangle,
+  Check,
+  ClipboardList,
+  ExternalLink,
+  FileCode2,
+  GitPullRequest,
+  Loader2,
+  Search,
+} from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
+import type { ReactNode } from 'react'
 
 import { Card } from '@/features/catalyst/components/Card'
 import { CardHead } from '@/features/catalyst/components/CardHead'
 import { Delta } from '@/features/catalyst/components/Delta'
+import { BRAND } from '@/features/catalyst/constants'
 import type { AutoFixProofState } from '@/hooks/useTaskAutoFix'
 import type { AutoFixResult } from '@/lib/api/autofix'
 import type { GithubJob } from '@/lib/api/github'
@@ -45,61 +57,172 @@ function JobScore({ job }: { job: GithubJob }): JSX.Element | null {
   if (job.score_before === null || job.score_after === null) return null
   const diff = Math.round(job.score_after - job.score_before)
   return (
-    <p className="flex items-center gap-2 text-[12px] text-[var(--cat-ink-2)]">
+    <p className="mt-1 flex items-center gap-2 text-[12px] text-[var(--cat-ink-2)]">
       Score {Math.round(job.score_before)} → {Math.round(job.score_after)}
       {diff !== 0 && <Delta positive={diff > 0}>{`${Math.abs(diff)} pts`}</Delta>}
     </p>
   )
 }
 
-function JobHeader({ job }: { job: GithubJob }): JSX.Element {
-  const working = job.status === 'pending' || job.status === 'running'
+// ── Stepped "Seer-style" flow for a GitHub fix job ────────────────────────────
+
+type StepState = 'done' | 'active' | 'pending' | 'error'
+
+const STEP_BASE = 'grid h-6 w-6 shrink-0 place-items-center rounded-full'
+
+function StepIcon({ state, icon: Icon }: { state: StepState; icon: LucideIcon }): JSX.Element {
+  if (state === 'done') {
+    return (
+      <span className={`${STEP_BASE} text-white`} style={{ background: BRAND }}>
+        <Check size={13} strokeWidth={3} />
+      </span>
+    )
+  }
+  if (state === 'active') {
+    return (
+      <span className={`${STEP_BASE} border-2`} style={{ borderColor: BRAND, color: BRAND }}>
+        <Loader2 size={12} className="animate-spin" />
+      </span>
+    )
+  }
+  if (state === 'error') {
+    return (
+      <span className={`${STEP_BASE} bg-[#FDECEC] text-[#E5484D]`}>
+        <AlertTriangle size={13} />
+      </span>
+    )
+  }
   return (
-    <div className="flex items-center gap-2">
-      <GitPullRequest size={15} className="text-[var(--cat-ink-2)]" />
-      <span className="text-[13px] font-semibold text-[var(--cat-ink)]">
-        {job.pr_number ? `Pull request #${job.pr_number}` : 'Fix job'}
-      </span>
-      <span className="ml-auto">
-        {working ? (
-          <span className="inline-flex items-center gap-1.5 text-[12px] text-[var(--cat-ink-2)]">
-            <Loader2 size={13} className="animate-spin" /> Writing the fix…
-          </span>
-        ) : (
-          <Pill tone={job.status}>{job.status === 'open' ? 'PR open' : job.status}</Pill>
-        )}
-      </span>
+    <span className={`${STEP_BASE} border-2 border-[var(--cat-border)] text-[var(--cat-ink-3)]`}>
+      <Icon size={12} />
+    </span>
+  )
+}
+
+interface FlowStepProps {
+  icon: LucideIcon
+  title: string
+  state: StepState
+  last?: boolean
+  children: ReactNode
+}
+
+function FlowStep({ icon, title, state, last, children }: FlowStepProps): JSX.Element {
+  return (
+    <div className="flex gap-3">
+      <div className="flex flex-col items-center">
+        <StepIcon state={state} icon={icon} />
+        {!last && <span className="my-1 w-px flex-1 bg-[var(--cat-border)]" />}
+      </div>
+      <div className={`min-w-0 flex-1 ${last ? '' : 'pb-4'}`}>
+        <p
+          className={`text-[13px] font-semibold ${state === 'pending' ? 'text-[var(--cat-ink-3)]' : 'text-[var(--cat-ink)]'}`}
+        >
+          {title}
+        </p>
+        <div className="mt-1 text-[12px] leading-relaxed text-[var(--cat-ink-2)]">{children}</div>
+      </div>
     </div>
   )
 }
 
-function GithubProof({ job }: { job: GithubJob }): JSX.Element {
+function FindingChips({ codes }: { codes: string[] }): JSX.Element {
   return (
-    <>
-      <JobHeader job={job} />
-      {job.files_changed.length > 0 && (
-        <div className="flex flex-col gap-1.5">
-          {job.files_changed.map(file => (
-            <p key={file.path} className="text-[12px] text-[var(--cat-ink-3)]">
-              <span className="mr-2 rounded-sm bg-[var(--cat-hover)] px-1.5 py-0.5 font-mono text-[11px] text-[var(--cat-ink-2)]">
-                {file.path}
-              </span>
-              {file.summary}
-            </p>
-          ))}
-        </div>
-      )}
-      {job.reasoning && (
-        <p className="line-clamp-4 text-[12px] leading-relaxed text-[var(--cat-ink-3)]">
-          {job.reasoning}
-        </p>
-      )}
-      {job.error_message && <p className="text-[12px] text-[#E5484D]">{job.error_message}</p>}
-      <JobScore job={job} />
-      {job.pr_url && <ExternalAction href={job.pr_url}>View pull request</ExternalAction>}
-    </>
+    <div className="flex flex-wrap gap-1.5">
+      {codes.map(c => (
+        <span
+          key={c}
+          className="rounded-sm bg-[var(--cat-hover)] px-1.5 py-0.5 font-mono text-[11px] text-[var(--cat-ink-2)]"
+        >
+          {c}
+        </span>
+      ))}
+    </div>
   )
 }
+
+function FilesChanged({ files }: { files: GithubJob['files_changed'] }): JSX.Element {
+  return (
+    <div className="flex flex-col gap-1.5">
+      <span className="text-[var(--cat-ink-3)]">
+        {files.length} file{files.length > 1 ? 's' : ''} changed
+      </span>
+      {files.map(f => (
+        <p key={f.path}>
+          <span className="mr-2 rounded-sm bg-[var(--cat-hover)] px-1.5 py-0.5 font-mono text-[11px] text-[var(--cat-ink-2)]">
+            {f.path}
+          </span>
+          <span className="text-[var(--cat-ink-3)]">{f.summary}</span>
+        </p>
+      ))}
+    </div>
+  )
+}
+
+function PrDetails({ job }: { job: GithubJob }): JSX.Element {
+  return (
+    <div className="flex flex-col gap-2">
+      <span className="inline-flex items-center gap-2 text-[var(--cat-ink)]">
+        #{job.pr_number}
+        <Pill tone={job.status}>{job.status === 'open' ? 'PR open' : job.status}</Pill>
+      </span>
+      <ExternalAction href={job.pr_url}>View pull request</ExternalAction>
+    </div>
+  )
+}
+
+/** done wins, then error, then active-while-working, else pending. */
+function stepState(done: boolean, active: boolean, failed: boolean): StepState {
+  if (done) return 'done'
+  if (failed) return 'error'
+  return active ? 'active' : 'pending'
+}
+
+function ChangesStepContent({ job, failed }: { job: GithubJob; failed: boolean }): JSX.Element {
+  if (job.files_changed.length > 0) return <FilesChanged files={job.files_changed} />
+  if (failed) return <>—</>
+  return <>Writing the changes…</>
+}
+
+function PrStepContent({ job, failed }: { job: GithubJob; failed: boolean }): JSX.Element {
+  if (job.pr_url) return <PrDetails job={job} />
+  if (failed)
+    return <span className="text-[#E5484D]">{job.error_message || 'The fix failed.'}</span>
+  if (job.files_changed.length > 0) return <>Opening a pull request…</>
+  return <>Waiting to open a pull request…</>
+}
+
+function AutoFixFlow({ job }: { job: GithubJob }): JSX.Element {
+  const failed = job.status === 'failed'
+  const hasPlan = Boolean(job.reasoning)
+  const hasChanges = job.files_changed.length > 0
+  const planState = stepState(hasPlan, true, failed)
+  const changeState = stepState(hasChanges, hasPlan, failed)
+  const prState = stepState(Boolean(job.pr_url), hasChanges, failed)
+  return (
+    <div className="flex flex-col">
+      <FlowStep icon={Search} title="Root cause" state="done">
+        {job.finding_codes.length ? (
+          <FindingChips codes={job.finding_codes} />
+        ) : (
+          'Analysing the flagged issue…'
+        )}
+      </FlowStep>
+      <FlowStep icon={ClipboardList} title="Plan" state={planState}>
+        {job.reasoning || (failed ? 'Could not produce a plan.' : 'Working out the fix…')}
+      </FlowStep>
+      <FlowStep icon={FileCode2} title="Code changes" state={changeState}>
+        <ChangesStepContent job={job} failed={failed} />
+      </FlowStep>
+      <FlowStep icon={GitPullRequest} title="Pull request" state={prState} last>
+        <PrStepContent job={job} failed={failed} />
+      </FlowStep>
+      <JobScore job={job} />
+    </div>
+  )
+}
+
+// ── CMS (Shopify / Woo / WordPress) apply proof ──────────────────────────────
 
 /** Pill tone + label for a CMS apply result. */
 function cmsBadge(result: AutoFixResult | null): { tone: string; label: string } {
@@ -161,7 +284,7 @@ function RequestingRow(): JSX.Element {
 
 function Proof({ fix }: { fix: AutoFixProofState }): JSX.Element {
   if (fix.platform !== 'nextjs') return <CmsProof fix={fix} />
-  if (fix.job) return <GithubProof job={fix.job} />
+  if (fix.job) return <AutoFixFlow job={fix.job} />
   return <RequestingRow />
 }
 
@@ -172,7 +295,7 @@ export function TaskFixResultCard({ fix }: { fix: AutoFixProofState }): JSX.Elem
   return (
     <Card>
       <CardHead title="Auto-fix" />
-      <div className="flex flex-col gap-2.5">
+      <div className="mt-1 flex flex-col gap-2.5">
         <Proof fix={fix} />
       </div>
     </Card>
