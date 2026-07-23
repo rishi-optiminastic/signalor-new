@@ -32,6 +32,10 @@ export interface TaskDetail {
   canAutoFix: boolean
   /** Analyzer finding code (e.g. "no_jsonld") — keys the GitHub PR auto-fix. */
   findingCode: string
+  /** ISO timestamp of the last successful live-site verification, or ''. */
+  verifiedAt: string
+  /** Result of the last verification re-crawl (why it did / didn't pass). */
+  verificationMessage: string
 }
 
 function findPlanAction(plan: AgentPlan | undefined, id: number): AgentAction | null {
@@ -96,6 +100,8 @@ function buildDetail({ id, planAction, raw, rec }: BuildDetailInput): TaskDetail
     category: rec?.category ?? '',
     canAutoFix: Boolean(rec?.can_auto_fix || rec?.code_fixable),
     findingCode: rec?.finding_code ?? '',
+    verifiedAt: raw?.verified_at ?? '',
+    verificationMessage: raw?.verification_message ?? '',
   }
 }
 

@@ -38,3 +38,22 @@ export async function assignAction(
 export async function updateActionStatus(actionId: number, status: string): Promise<void> {
   await apiPost<unknown>(`/api/analyzer/actions/${actionId}/`, { status })
 }
+
+const verifyActionSchema = z.object({
+  verified: z.boolean(),
+  message: z.string().optional().default(''),
+  status: z.string().optional().default(''),
+  verified_at: z.string().nullable().optional(),
+})
+export type VerifyActionResult = z.infer<typeof verifyActionSchema>
+
+/**
+ * POST /api/analyzer/actions/<id>/verify/ → re-crawl the live site and confirm
+ * the task's finding is actually resolved. On a pass the backend flips the task
+ * to `verified`; either way it returns the human-readable reason.
+ */
+export async function verifyAction(actionId: number): Promise<VerifyActionResult> {
+  return verifyActionSchema.parse(
+    await apiPost<unknown>(`/api/analyzer/actions/${actionId}/verify/`, {}),
+  )
+}

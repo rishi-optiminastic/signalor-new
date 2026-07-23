@@ -1,5 +1,7 @@
 'use client'
 
+import { BadgeCheck } from 'lucide-react'
+
 import { TaskTypeIcon } from '@/features/catalyst/components/agent/TaskTypeIcon'
 import { TickBar } from '@/features/catalyst/components/brands/BrandBits'
 import { Card } from '@/features/catalyst/components/Card'
@@ -138,6 +140,29 @@ function ContextRows({
   )
 }
 
+/** The live-site verification result: when it last passed + why it did/didn't. */
+function VerificationNote({ task }: { task: TaskDetail }): JSX.Element | null {
+  if (!task.verifiedAt && !task.verificationMessage) return null
+  return (
+    <div className="mt-1 border-t border-[var(--cat-border-soft)] pt-2.5">
+      {task.verifiedAt && (
+        <div className="flex items-center justify-between gap-3 text-[13px]">
+          <span className="shrink-0 text-[var(--cat-ink-3)]">Verified</span>
+          <span className="inline-flex items-center gap-1.5 font-medium text-[#1e8a5c]">
+            <BadgeCheck size={13} />
+            {formatTaskDate(task.verifiedAt)}
+          </span>
+        </div>
+      )}
+      {task.verificationMessage && (
+        <p className="mt-1.5 text-[12px] leading-relaxed text-[var(--cat-ink-3)]">
+          {task.verificationMessage}
+        </p>
+      )}
+    </div>
+  )
+}
+
 /** The task's metadata sidebar: when it was identified, its scoring, pillar
  *  context, execution, the finding it maps to, and ownership. */
 export function TaskDetailInfo({ task }: { task: TaskDetail }): JSX.Element {
@@ -150,6 +175,7 @@ export function TaskDetailInfo({ task }: { task: TaskDetail }): JSX.Element {
         <ScoringRows task={task} />
         <PillarScoreRow pillar={task.pillar} />
         <ContextRows task={task} pillarLabel={pillarLabel} />
+        <VerificationNote task={task} />
       </div>
     </Card>
   )

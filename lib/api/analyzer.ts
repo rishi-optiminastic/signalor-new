@@ -388,6 +388,8 @@ export const userActionSchema = z.object({
   status: z.string().optional().default(''),
   assignee_email: z.string().optional().default(''),
   score_improvement: z.number().nullable().optional(),
+  verified_at: z.string().nullable().optional(),
+  verification_message: z.string().optional().default(''),
   created_at: z.string().optional().default(''),
   // FK to the Recommendation this task was materialised from — lets the Tasks
   // table trigger the same auto-fix (looked up by recommendation id).

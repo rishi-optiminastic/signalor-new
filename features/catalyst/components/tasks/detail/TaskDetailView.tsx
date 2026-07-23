@@ -1,6 +1,6 @@
 'use client'
 
-import { Check, ChevronLeft } from 'lucide-react'
+import { BadgeCheck, Check, ChevronLeft, Loader2 } from 'lucide-react'
 import { useParams } from 'next/navigation'
 
 import { TransitionLink } from '@/components/TransitionLink'
@@ -19,6 +19,7 @@ import { useAgentMutations } from '@/hooks/useAgentPlan'
 import { useBrandPath } from '@/hooks/useBrandPath'
 import { useTaskAutoFix, type TaskAutoFix } from '@/hooks/useTaskAutoFix'
 import { useTaskDetail, type TaskDetail } from '@/hooks/useTaskDetail'
+import { useTaskVerify } from '@/hooks/useTaskVerify'
 
 function BackLink(): JSX.Element {
   const brandPath = useBrandPath()
@@ -47,6 +48,23 @@ function StatusPill({ status }: { status: string }): JSX.Element {
     >
       {formatStatus(status)}
     </span>
+  )
+}
+
+function VerifyButton({ task }: { task: TaskDetail }): JSX.Element | null {
+  const { verify, verifying } = useTaskVerify(task.id)
+  if (task.status === 'verified') return null
+  return (
+    <button
+      type="button"
+      disabled={verifying}
+      onClick={verify}
+      title="Re-crawl your live site and confirm this fix is actually done"
+      className="inline-flex h-8 items-center gap-1.5 rounded-md border border-[var(--cat-border)] bg-[var(--cat-card)] px-3 text-[12px] font-medium text-[var(--cat-ink-2)] transition-colors hover:bg-[var(--cat-hover)] disabled:opacity-60"
+    >
+      {verifying ? <Loader2 size={13} className="animate-spin" /> : <BadgeCheck size={13} />}
+      {verifying ? 'Verifying…' : 'Verify'}
+    </button>
   )
 }
 
@@ -87,6 +105,7 @@ function DetailHeader({ task }: { task: TaskDetail }): JSX.Element {
         <StatusPill status={task.status} />
         <TaskShareMenu task={task} />
         {task.planAction && <ActionCtaButton action={task.planAction} />}
+        <VerifyButton task={task} />
         <CompleteButton task={task} />
       </div>
     </div>
