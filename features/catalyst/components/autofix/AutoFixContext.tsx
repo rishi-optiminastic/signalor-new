@@ -41,7 +41,7 @@ export function AutoFixProvider({ children }: { children: ReactNode }): JSX.Elem
         const info = fixMap.get(recommendationId)
         if (!info || !info.auto) return null
         return {
-          state: autofix.stateFor(recommendationId),
+          state: autofix.stateFor(recommendationId, info.findingCode),
           onFix: () => {
             void autofix.runFix({ id: recommendationId, findingCode: info.findingCode })
           },

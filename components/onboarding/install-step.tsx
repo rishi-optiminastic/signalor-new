@@ -1,111 +1,12 @@
 'use client'
 
-import { useMutation, useQuery } from '@tanstack/react-query'
-import {
-  ArrowLeft,
-  ArrowRight,
-  CheckCircle2,
-  ExternalLink,
-  Github,
-  Globe,
-  Loader2,
-} from 'lucide-react'
-import { useEffect } from 'react'
+import { ArrowLeft, ArrowRight, ExternalLink, Globe } from 'lucide-react'
 
-import { getOrgGithubInstallUrl, getOrgGithubStatus } from '@/lib/api/github'
+import { GithubConnector } from '@/components/onboarding/github-connector'
 import { useSession } from '@/lib/auth-client'
 import { useOnboardingWizardStore, type Platform } from '@/stores/useOnboardingWizardStore'
 
 const CARD = 'shadow-input rounded-xl border border-black/8 bg-white p-5'
-
-/** Next.js → connect the GitHub App so SignalorAI can open fix PRs on the repo. */
-function GithubConnector({ email }: { email: string }): JSX.Element {
-  const setAppInstalled = useOnboardingWizardStore(s => s.setAppInstalled)
-
-  const status = useQuery({
-    queryKey: ['onboarding-github', email],
-    queryFn: () => getOrgGithubStatus(email),
-    enabled: Boolean(email),
-    refetchInterval: q => (q.state.data?.connected ? false : 4000),
-  })
-
-  const connected = status.data?.connected ?? false
-
-  useEffect(() => {
-    if (connected) setAppInstalled(true)
-  }, [connected, setAppInstalled])
-
-  const connect = useMutation({
-    mutationFn: () => getOrgGithubInstallUrl(email),
-    onSuccess: url => {
-      window.location.href = url
-    },
-  })
-
-  if (status.isLoading) {
-    return (
-      <div className={`${CARD} flex items-center justify-center gap-2 py-6`}>
-        <Loader2 className="h-4 w-4 animate-spin text-[var(--cat-ink-3)]" />
-        <span className="text-xs text-neutral-500">Checking GitHub connection…</span>
-      </div>
-    )
-  }
-
-  if (connected) {
-    return (
-      <div className={`${CARD} flex items-start gap-3`}>
-        <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#047857]" />
-        <div>
-          <p className="text-foreground text-[13px] font-semibold">GitHub repo connected</p>
-          <p className="mt-0.5 text-xs text-neutral-500">
-            {status.data?.repo_full_name || 'SignalorAI can now open fix PRs on your repo.'}
-          </p>
-        </div>
-      </div>
-    )
-  }
-
-  const notConfigured = Boolean(status.data && !status.data.configured)
-
-  return (
-    <div className={`${CARD} space-y-3`}>
-      <div className="flex items-start gap-3">
-        <Github className="text-foreground mt-0.5 h-5 w-5 shrink-0" />
-        <div>
-          <p className="text-foreground text-[13px] font-semibold">Connect your GitHub repo</p>
-          <p className="mt-0.5 text-xs leading-relaxed text-neutral-500">
-            Install the SignalorAI GitHub App so it can open fix PRs (schema, llms.txt, robots,
-            canonical) on your Next.js repo.
-          </p>
-        </div>
-      </div>
-      {notConfigured ? (
-        <p className="rounded-md bg-neutral-50 px-3 py-2 text-[11px] text-neutral-500">
-          GitHub connect isn’t enabled on this server yet — you can skip for now.
-        </p>
-      ) : (
-        <button
-          type="button"
-          onClick={() => connect.mutate()}
-          disabled={connect.isPending}
-          className="auth-cta-btn flex h-10 w-full items-center justify-center gap-2 rounded-md text-[13px] font-medium text-white disabled:opacity-60"
-        >
-          {connect.isPending ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            <Github className="h-4 w-4" />
-          )}
-          Connect GitHub
-        </button>
-      )}
-      {connect.isError && (
-        <p className="text-xs font-medium text-[#E5484D]">
-          Couldn’t start the GitHub connection. You can skip and connect later.
-        </p>
-      )}
-    </div>
-  )
-}
 
 const PLUGIN_LINK: Partial<Record<Platform, { label: string; href: string }>> = {
   shopify: { label: 'Connect Shopify', href: '/integration/shopify' },

@@ -34,6 +34,14 @@ export async function getOrgGithubInstallUrl(email: string): Promise<string> {
   return z.object({ install_url: z.string() }).parse(data).install_url
 }
 
+/** POST /api/github/disconnect/?email= → unlink the org's GitHub App installation
+ *  (deactivates it) so the user can reconnect a different repo. */
+export async function disconnectOrgGithub(email: string): Promise<void> {
+  await apiPost<unknown>('/api/github/disconnect/', undefined, {
+    params: { email: normalizeEmail(email) },
+  })
+}
+
 // ─── Run-scoped GitHub Auto-Fix (opens one fix PR per finding on the repo) ─────
 
 export const githubJobSchema = z.object({
@@ -100,4 +108,25 @@ export async function requestGithubFix(
 export async function getGithubJobs(slug: string): Promise<GithubJob[]> {
   const data = await apiGet<unknown>(`${runBase(slug)}/jobs/`)
   return z.object({ jobs: z.array(githubJobSchema) }).parse(data).jobs
+}
+
+/**
+ * The newest fix job whose `finding_codes` include `findingCode`, or null.
+ * This is the durable link between a task/recommendation and its GitHub fix job:
+ * no job id is stored on the task, so the finding code is the join. Matching this
+ * way (rather than a session-remembered job id) is what lets the fix state and PR
+ * resume after a page refresh.
+ */
+export function latestJobForFinding(jobs: GithubJob[], findingCode: string): GithubJob | null {
+  if (!findingCode) return null
+  let best: GithubJob | null = null
+  for (const job of jobs) {
+    if (job.finding_codes.includes(findingCode) && (!best || job.id > best.id)) best = job
+  }
+  return best
+}
+
+/** True while a job is still being worked (so pollers keep polling). */
+export function isJobInFlight(job: GithubJob | null | undefined): boolean {
+  return job?.status === 'pending' || job?.status === 'running'
 }

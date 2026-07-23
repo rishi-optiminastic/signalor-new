@@ -95,7 +95,7 @@ export function RecommendationsView(): JSX.Element {
                 <RecRow
                   key={r.id}
                   item={r}
-                  state={autofix.stateFor(r.id)}
+                  state={autofix.stateFor(r.id, r.findingCode)}
                   onFix={() => {
                     void autofix.runFix({ id: r.id, findingCode: r.findingCode })
                   }}
