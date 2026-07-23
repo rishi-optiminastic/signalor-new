@@ -1,45 +1,57 @@
 'use client'
 
+import { TickBar } from '@/features/catalyst/components/brands/BrandBits'
 import { Card } from '@/features/catalyst/components/Card'
 import { CardHead } from '@/features/catalyst/components/CardHead'
-import { ChannelLegend, type ChannelSegment } from '@/features/catalyst/components/ChannelLegend'
-import { ChannelTable, type ChannelTableRow } from '@/features/catalyst/components/ChannelTable'
+import { EngineLogo } from '@/features/catalyst/components/EngineLogo'
 import { Metric } from '@/features/catalyst/components/Metric'
 import { useActiveProject } from '@/hooks/useActiveProject'
-import { useOverview } from '@/hooks/useOverview'
+import { useBrandPath } from '@/hooks/useBrandPath'
+import { useOverview, type OverviewEngine } from '@/hooks/useOverview'
+
+/** One engine's share of voice: logo, name, a segmented meter, and the share. */
+function SovRow({ engine }: { engine: OverviewEngine }): JSX.Element {
+  return (
+    <div className="flex items-center gap-2.5 py-[7px]">
+      <EngineLogo name={engine.name} size={18} color={engine.color} />
+      <span className="w-[82px] shrink-0 truncate text-[13px] font-medium text-[var(--cat-ink)]">
+        {engine.name}
+      </span>
+      <span className="min-w-0 flex-1">
+        <TickBar value={engine.sovPct} ticks={16} showValue={false} />
+      </span>
+      <span className="w-9 shrink-0 text-right text-[13px] font-semibold text-[var(--cat-ink)] tabular-nums">
+        {engine.sovPct}%
+      </span>
+    </div>
+  )
+}
 
 export function VisitorsChannelsCard(): JSX.Element {
   const { slug } = useActiveProject()
+  const brandPath = useBrandPath()
   const { data } = useOverview(slug)
-
-  const segments: ChannelSegment[] = (data?.engines ?? [])
-    .slice(0, 3)
-    .map(e => ({ label: e.name, color: e.color, weight: e.sovPct }))
-
-  const rows: ChannelTableRow[] = (data?.engines ?? []).map(e => ({
-    name: e.name,
-    color: e.color,
-    percent: `${e.sovPct}%`,
-    total: String(e.mentioned),
-  }))
+  const engines = data?.engines ?? []
 
   return (
     <Card className="h-full">
-      <CardHead title="Share of Voice" action="Details" />
+      <CardHead title="Share of Voice" action="Details" href={brandPath('competitors')} />
       <Metric
         value={data ? `${data.avgSov}%` : '—'}
         positive={data?.positive ?? true}
-        badge={data ? `${data.mentionPct}%` : '—'}
+        badge={data ? `${data.mentionPct}% mention rate` : '—'}
       />
-      <ChannelLegend segments={segments} />
-      {/* Scrollable so the long engine list doesn't make this card taller than
-          the chart cards beside it — all three align to one row height. */}
-      <div className="min-h-0 flex-1 overflow-y-auto">
-        <ChannelTable rows={rows} />
+      {/* Scrollable so a long engine list never makes this card taller than the
+          chart cards beside it — all three align to one row height. */}
+      <div className="mt-3 min-h-0 flex-1 overflow-y-auto">
+        {engines.length > 0 ? (
+          engines.map(engine => <SovRow key={engine.key} engine={engine} />)
+        ) : (
+          <p className="py-6 text-center text-[12px] text-[var(--cat-ink-3)]">
+            No share-of-voice data yet.
+          </p>
+        )}
       </div>
-      <button className="mt-3 h-[38px] w-full shrink-0 rounded-md border border-[var(--cat-border)] text-[13px] font-semibold text-[var(--cat-ink)] transition-colors hover:bg-[var(--cat-hover)]">
-        View reports
-      </button>
     </Card>
   )
 }
