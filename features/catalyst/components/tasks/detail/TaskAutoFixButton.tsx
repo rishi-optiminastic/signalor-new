@@ -2,6 +2,7 @@
 
 import { ExternalLink, Loader2, Plug, Zap } from 'lucide-react'
 
+import { GithubMark } from '@/components/GithubMark'
 import { TransitionLink } from '@/components/TransitionLink'
 import { PrimaryButton } from '@/features/catalyst/components/PrimaryButton'
 import { useBrandPath } from '@/hooks/useBrandPath'
@@ -29,14 +30,16 @@ function WorkingBadge(): JSX.Element {
   )
 }
 
-/** After success: a proof link — the opened PR, or the live page for CMS pushes. */
+/** After success: a proof link — the opened PR (GitHub), or the live page for CMS. */
 function DoneLink({ fix }: { fix: TaskAutoFix }): JSX.Element | null {
   const href = fix.job?.pr_url || fix.siteUrl
   if (!href) return null
+  const isPr = Boolean(fix.job?.pr_number)
   return (
     <a href={href} target="_blank" rel="noreferrer" className={OUTLINE}>
-      {fix.job?.pr_number ? `View PR #${fix.job.pr_number}` : 'View change'}
-      <ExternalLink size={12} />
+      {isPr ? <GithubMark size={13} /> : null}
+      {isPr ? `View PR #${fix.job?.pr_number}` : 'View change'}
+      {isPr ? null : <ExternalLink size={12} />}
     </a>
   )
 }

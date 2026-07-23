@@ -6,7 +6,6 @@ import { AutoFixControl } from '@/features/catalyst/components/autofix/AutoFixCo
 import { AssigneeStack } from '@/features/catalyst/components/tasks/AssigneeStack'
 import { PriorityTag } from '@/features/catalyst/components/tasks/PriorityTag'
 import { ProgressCell } from '@/features/catalyst/components/tasks/ProgressCell'
-import { ProjectTag } from '@/features/catalyst/components/tasks/ProjectTag'
 import type { TaskItem } from '@/features/catalyst/tasks-data'
 import { useBrandPath } from '@/hooks/useBrandPath'
 
@@ -115,16 +114,15 @@ export function TaskRow(props: TaskRowProps): JSX.Element {
       <td className="py-2.5 pr-3 pl-1">
         <TaskNameCell row={row} done={done} busy={props.busy} onToggleDone={props.onToggleDone} />
       </td>
-      <td className="px-3 py-2.5">
-        <ProjectTag project={row.project} />
-      </td>
-      <td className="max-w-[220px] px-3 py-2.5">
+      <td className="hidden max-w-[240px] px-3 py-2.5 xl:table-cell">
         <span className="block truncate text-[var(--cat-ink-2)]">{row.description}</span>
       </td>
       <td className="px-3 py-2.5" onClick={e => e.stopPropagation()}>
         <AssigneeCell {...props} />
       </td>
-      <td className="px-3 py-2.5 whitespace-nowrap text-[var(--cat-ink-2)]">{row.due}</td>
+      <td className="hidden px-3 py-2.5 whitespace-nowrap text-[var(--cat-ink-2)] lg:table-cell">
+        {row.due}
+      </td>
       <td className="px-3 py-2.5">
         <PriorityTag priority={row.priority} />
       </td>

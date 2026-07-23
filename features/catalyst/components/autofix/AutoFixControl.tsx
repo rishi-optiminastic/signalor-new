@@ -1,5 +1,6 @@
-import { Check, GitPullRequest, Loader2, Zap } from 'lucide-react'
+import { Check, Loader2, Zap } from 'lucide-react'
 
+import { GithubMark } from '@/components/GithubMark'
 import type { FixOutcome, FixState } from '@/hooks/useAutoFix'
 
 export interface AutoFixControlProps {
@@ -32,7 +33,7 @@ function PrState({ state }: { state: FixState }): JSX.Element {
       title={state.message}
       className={OUTLINE_BTN}
     >
-      <GitPullRequest size={13} />
+      <GithubMark size={13} />
       View PR{state.prNumber ? ` #${state.prNumber}` : ''}
     </a>
   )

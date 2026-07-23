@@ -3,6 +3,7 @@
 import {
   AlertTriangle,
   Check,
+  ChevronDown,
   ClipboardList,
   ExternalLink,
   FileCode2,
@@ -11,8 +12,9 @@ import {
   Search,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
-import type { ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 
+import { GithubMark } from '@/components/GithubMark'
 import { Card } from '@/features/catalyst/components/Card'
 import { CardHead } from '@/features/catalyst/components/CardHead'
 import { Delta } from '@/features/catalyst/components/Delta'
@@ -39,7 +41,16 @@ function Pill({ tone, children }: { tone: string; children: string }): JSX.Eleme
   )
 }
 
-function ExternalAction({ href, children }: { href: string; children: string }): JSX.Element {
+function ExternalAction({
+  href,
+  icon,
+  children,
+}: {
+  href: string
+  /** Leading icon (e.g. the GitHub mark for a PR); defaults to a trailing arrow. */
+  icon?: ReactNode
+  children: string
+}): JSX.Element {
   return (
     <a
       href={href}
@@ -47,8 +58,9 @@ function ExternalAction({ href, children }: { href: string; children: string }):
       rel="noreferrer"
       className="inline-flex items-center gap-1.5 self-start rounded-md border border-[var(--cat-border)] px-3 py-1.5 text-[12px] font-medium text-[var(--cat-ink)] transition-colors hover:bg-[var(--cat-hover)]"
     >
+      {icon}
       {children}
-      <ExternalLink size={12} />
+      {icon ? null : <ExternalLink size={12} />}
     </a>
   )
 }
@@ -104,10 +116,56 @@ interface FlowStepProps {
   title: string
   state: StepState
   last?: boolean
+  /** Make the step's content collapsible (for long content like the plan). */
+  collapsible?: boolean
+  defaultOpen?: boolean
   children: ReactNode
 }
 
-function FlowStep({ icon, title, state, last, children }: FlowStepProps): JSX.Element {
+function stepTitleClass(state: StepState): string {
+  const tone = state === 'pending' ? 'text-[var(--cat-ink-3)]' : 'text-[var(--cat-ink)]'
+  return `text-[13px] font-semibold ${tone}`
+}
+
+/** A step's title — a plain label, or a chevron toggle when collapsible. */
+function StepTitle({
+  title,
+  state,
+  open,
+  onToggle,
+}: {
+  title: string
+  state: StepState
+  open?: boolean
+  onToggle?: () => void
+}): JSX.Element {
+  if (!onToggle) return <p className={stepTitleClass(state)}>{title}</p>
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      aria-expanded={open}
+      className="flex w-full items-center gap-1.5 text-left"
+    >
+      <span className={stepTitleClass(state)}>{title}</span>
+      <ChevronDown
+        size={13}
+        className={`text-[var(--cat-ink-3)] transition-transform ${open ? '' : '-rotate-90'}`}
+      />
+    </button>
+  )
+}
+
+function FlowStep({
+  icon,
+  title,
+  state,
+  last,
+  collapsible = false,
+  defaultOpen = true,
+  children,
+}: FlowStepProps): JSX.Element {
+  const [open, setOpen] = useState(defaultOpen)
   return (
     <div className="flex gap-3">
       <div className="flex flex-col items-center">
@@ -115,12 +173,15 @@ function FlowStep({ icon, title, state, last, children }: FlowStepProps): JSX.El
         {!last && <span className="my-1 w-px flex-1 bg-[var(--cat-border)]" />}
       </div>
       <div className={`min-w-0 flex-1 ${last ? '' : 'pb-4'}`}>
-        <p
-          className={`text-[13px] font-semibold ${state === 'pending' ? 'text-[var(--cat-ink-3)]' : 'text-[var(--cat-ink)]'}`}
-        >
-          {title}
-        </p>
-        <div className="mt-1 text-[12px] leading-relaxed text-[var(--cat-ink-2)]">{children}</div>
+        <StepTitle
+          title={title}
+          state={state}
+          open={open}
+          onToggle={collapsible ? () => setOpen(o => !o) : undefined}
+        />
+        {(!collapsible || open) && (
+          <div className="mt-1 text-[12px] leading-relaxed text-[var(--cat-ink-2)]">{children}</div>
+        )}
       </div>
     </div>
   )
@@ -163,10 +224,12 @@ function PrDetails({ job }: { job: GithubJob }): JSX.Element {
   return (
     <div className="flex flex-col gap-2">
       <span className="inline-flex items-center gap-2 text-[var(--cat-ink)]">
-        #{job.pr_number}
+        <GithubMark size={13} />#{job.pr_number}
         <Pill tone={job.status}>{job.status === 'open' ? 'PR open' : job.status}</Pill>
       </span>
-      <ExternalAction href={job.pr_url}>View pull request</ExternalAction>
+      <ExternalAction href={job.pr_url} icon={<GithubMark size={12} />}>
+        View pull request
+      </ExternalAction>
     </div>
   )
 }
@@ -208,10 +271,21 @@ function AutoFixFlow({ job }: { job: GithubJob }): JSX.Element {
           'Analysing the flagged issue…'
         )}
       </FlowStep>
-      <FlowStep icon={ClipboardList} title="Plan" state={planState}>
+      <FlowStep
+        icon={ClipboardList}
+        title="Plan"
+        state={planState}
+        collapsible={Boolean(job.reasoning)}
+        defaultOpen={false}
+      >
         {job.reasoning || (failed ? 'Could not produce a plan.' : 'Working out the fix…')}
       </FlowStep>
-      <FlowStep icon={FileCode2} title="Code changes" state={changeState}>
+      <FlowStep
+        icon={FileCode2}
+        title="Code changes"
+        state={changeState}
+        collapsible={job.files_changed.length > 0}
+      >
         <ChangesStepContent job={job} failed={failed} />
       </FlowStep>
       <FlowStep icon={GitPullRequest} title="Pull request" state={prState} last>

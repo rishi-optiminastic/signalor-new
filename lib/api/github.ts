@@ -130,3 +130,24 @@ export function latestJobForFinding(jobs: GithubJob[], findingCode: string): Git
 export function isJobInFlight(job: GithubJob | null | undefined): boolean {
   return job?.status === 'pending' || job?.status === 'running'
 }
+
+// Signals that a fix failed because of the GitHub *connection* (the App was
+// uninstalled, its repo access revoked, or its token can't be minted) rather than
+// the agent's work — so the fix is the ground-truth health check for the install.
+const INTEGRATION_ERROR_PATTERNS = [
+  /installation token/i,
+  /installation access token/i,
+  /mint\b/i,
+  /not found/i,
+  /\b40[13]\b/, // 401 unauthorized / 403 forbidden / 404 not found
+  /not installed|uninstalled|suspended|revoked/i,
+  /bad credentials/i,
+  /app.*not.*authoriz/i,
+]
+
+/** Whether a fix job's error is an integration/auth problem (needs a reconnect)
+ *  rather than an agent failure — used to guide the user before they retry. */
+export function isGithubIntegrationError(message: string | null | undefined): boolean {
+  if (!message) return false
+  return INTEGRATION_ERROR_PATTERNS.some(pattern => pattern.test(message))
+}
