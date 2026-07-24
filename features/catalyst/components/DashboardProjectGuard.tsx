@@ -17,16 +17,24 @@ function GuardSpinner(): JSX.Element {
 }
 
 /**
- * Confirmed-empty onboarding gate: no project at all, or an active project that
+ * Confirmed-empty onboarding gate: no project at all, or a *lone* project that
  * has never launched an analysis (zero runs). Only true once the relevant fetch
  * has resolved, so a transient error never redirects a real user.
  */
 function needsOnboarding(p: ActiveProject): boolean {
   if (!p.email) return false
   const noProject = p.orgsResolved && p.projects.length === 0
-  const notLaunched =
-    p.orgsResolved && Boolean(p.activeOrg) && p.runsResolved && p.run === undefined
-  return noProject || notLaunched
+  // The "abandoned the wizard" heuristic only holds for a single-brand user.
+  // A user with several brands must NEVER be bounced to onboarding just because
+  // the *active* one has no runs yet — they'd loop back here after each analysis
+  // whenever the active org resolves to a freshly-created (still-empty) brand.
+  const loneUnlaunched =
+    p.orgsResolved &&
+    p.projects.length === 1 &&
+    Boolean(p.activeOrg) &&
+    p.runsResolved &&
+    p.run === undefined
+  return noProject || loneUnlaunched
 }
 
 /**

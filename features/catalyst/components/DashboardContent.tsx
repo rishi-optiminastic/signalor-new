@@ -30,11 +30,13 @@ export function DashboardContent(): JSX.Element {
         <DashboardGreeting />
         <AiAssistantPanel />
 
-        {/* Three equal columns; each column stacks its own cards (masonry). */}
+        {/* Three equal columns; each column stacks its own cards (masonry).
+            Kept to three cards per column so the column heights stay balanced. */}
         <div className="cat-stagger grid grid-cols-1 items-start gap-2 sm:grid-cols-2 xl:grid-cols-3">
           <div className="flex flex-col gap-2">
             <GeoScoreCard />
             <VisibilityTrendCard />
+            <ConversionRateCard />
           </div>
           <div className="flex flex-col gap-2">
             <AiCitationCard />
@@ -44,13 +46,12 @@ export function DashboardContent(): JSX.Element {
           <div className="flex flex-col gap-2">
             <EngagementOpportunitiesCard />
             <VisibilityBreakdownCard />
-            <ConversionRateCard />
+            <UserRetentionCard />
           </div>
         </div>
 
-        {/* Extended, width-hungry cards sit full-width below the main columns. */}
-        <div className="grid grid-cols-1 items-start gap-2 sm:grid-cols-2 xl:grid-cols-3">
-          <UserRetentionCard />
+        {/* Wide, table/map cards span the full width and stack cleanly below. */}
+        <div className="flex flex-col gap-2">
           <CompetitorHeatmapCard />
           <WorldPresenceCard />
         </div>

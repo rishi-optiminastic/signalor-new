@@ -16,6 +16,8 @@ export const githubOrgStatusSchema = z.object({
   configured: z.boolean().optional().default(false),
   connected: z.boolean().optional().default(false),
   repo_full_name: z.string().optional().default(''),
+  /** Every repo the install granted — the user picks which one fixes target. */
+  repositories: z.array(z.string()).optional().default([]),
 })
 export type GithubOrgStatus = z.infer<typeof githubOrgStatusSchema>
 
@@ -39,6 +41,15 @@ export async function getOrgGithubInstallUrl(email: string): Promise<string> {
 export async function disconnectOrgGithub(email: string): Promise<void> {
   await apiPost<unknown>('/api/github/disconnect/', undefined, {
     params: { email: normalizeEmail(email) },
+  })
+}
+
+/** POST /api/github/select-repo/ → choose which granted repo fixes target (used
+ *  when the App was installed on "all repositories" and we can't guess). */
+export async function selectOrgGithubRepo(email: string, repoFullName: string): Promise<void> {
+  await apiPost<unknown>('/api/github/select-repo/', {
+    email: normalizeEmail(email),
+    repo_full_name: repoFullName,
   })
 }
 

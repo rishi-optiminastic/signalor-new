@@ -3,7 +3,12 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { disconnectOrgGithub, getOrgGithubInstallUrl, getOrgGithubStatus } from '@/lib/api/github'
+import {
+  disconnectOrgGithub,
+  getOrgGithubInstallUrl,
+  getOrgGithubStatus,
+  selectOrgGithubRepo,
+} from '@/lib/api/github'
 
 // How often to check whether the user closed the GitHub popup themselves.
 const POPUP_POLL_MS = 700
@@ -31,6 +36,11 @@ export interface OrgGithubConnection {
   loading: boolean
   connected: boolean
   repo: string
+  /** Every repo the install granted — lets the user pick which one fixes target. */
+  repositories: string[]
+  /** Switch which granted repo auto-fix PRs open against. */
+  selectRepo: (repoFullName: string) => void
+  selectingRepo: boolean
   /** The server has no GitHub App configured — the flow can't run here. */
   notConfigured: boolean
   connecting: boolean
@@ -117,10 +127,18 @@ export function useOrgGithubConnection({
     },
   })
 
+  const selectRepoMutation = useMutation({
+    mutationFn: (repo: string) => selectOrgGithubRepo(email, repo),
+    onSuccess: () => void status.refetch(),
+  })
+
   return {
     loading: status.isLoading,
     connected,
     repo: status.data?.repo_full_name ?? '',
+    repositories: status.data?.repositories ?? [],
+    selectRepo: (repo: string) => selectRepoMutation.mutate(repo),
+    selectingRepo: selectRepoMutation.isPending,
     notConfigured: Boolean(status.data && !status.data.configured),
     connecting: connecting || mutation.isPending,
     error: mutation.isError,

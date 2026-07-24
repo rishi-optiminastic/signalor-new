@@ -8,6 +8,7 @@ import { useSession } from '@/lib/auth-client'
 import { routes } from '@/lib/routes'
 import { hasActiveSubscription, launchAnalysis } from '@/services/onboarding.service'
 import { useOnboardingWizardStore } from '@/stores/useOnboardingWizardStore'
+import { useProjectStore } from '@/stores/useProjectStore'
 
 const PILLARS = ['Content', 'Schema', 'E-E-A-T', 'Technical', 'Entity', 'AI Visibility']
 
@@ -25,6 +26,7 @@ export function LaunchStep(): JSX.Element {
     analyticsConnected,
     setStep,
   } = useOnboardingWizardStore()
+  const setActiveOrgId = useProjectStore(s => s.setActiveOrgId)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
@@ -58,6 +60,11 @@ export function LaunchStep(): JSX.Element {
         setError(result.error ?? 'Failed to launch. Please try again.')
         return
       }
+      // Make the brand just created the dashboard's active project, so when the
+      // analysis finishes the dashboard opens THIS brand (which owns the fresh
+      // run) rather than a stale/default one — otherwise the guard can bounce a
+      // multi-brand user back to onboarding.
+      if (orgId) setActiveOrgId(orgId)
       // Hand off to the analysing screen, which polls the run and lands on the
       // dashboard when the first analysis completes.
       router.push(routes.loading)
