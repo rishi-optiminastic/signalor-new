@@ -1,13 +1,12 @@
 'use client'
 
-import { Info } from 'lucide-react'
-
 import { Card } from '@/features/catalyst/components/Card'
 import { CardHead } from '@/features/catalyst/components/CardHead'
 import { Heatmap } from '@/features/catalyst/components/Heatmap'
 import { Metric } from '@/features/catalyst/components/Metric'
 import { useActiveProject } from '@/hooks/useActiveProject'
 import { usePrompts } from '@/hooks/usePrompts'
+import { Info } from '@/lib/icons'
 
 export function UserRetentionCard(): JSX.Element {
   const { slug } = useActiveProject()

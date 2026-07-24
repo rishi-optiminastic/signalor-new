@@ -1,9 +1,9 @@
-import { ArrowRight, Settings, Users } from 'lucide-react'
 import Link from 'next/link'
 
 import type { Brand } from '@/features/catalyst/brands-data'
 import { StatusPill, TickBar } from '@/features/catalyst/components/brands/BrandBits'
 import { scoreColor } from '@/features/catalyst/visibility-data'
+import { ArrowRight, Settings, Users } from '@/lib/icons'
 
 const AVATAR = 'conic-gradient(from 210deg at 50% 50%, #F2A79E, #e04a3d, #b9382d, #F2A79E)'
 const LABEL = 'text-[10px] font-medium uppercase tracking-wide text-[var(--cat-ink-3)]'

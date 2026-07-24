@@ -1,5 +1,6 @@
-import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
+
+import { ArrowRight } from '@/lib/icons'
 
 interface AnnouncementBarProps {
   /** Tailwind classes for the wrapper's spacing; overrides the default bottom margin. */

@@ -1,7 +1,5 @@
 'use client'
 
-import { ArrowRight } from 'lucide-react'
-
 import { TransitionLink } from '@/components/TransitionLink'
 import { Card } from '@/features/catalyst/components/Card'
 import { CardHead } from '@/features/catalyst/components/CardHead'
@@ -9,6 +7,7 @@ import { BLUE, BRAND, GREEN, PURPLE, YELLOW } from '@/features/catalyst/constant
 import { useActiveProject } from '@/hooks/useActiveProject'
 import { useBrandPath } from '@/hooks/useBrandPath'
 import { usePillars, type Pillar } from '@/hooks/usePillars'
+import { ArrowRight } from '@/lib/icons'
 
 const PILLAR_COLORS = [BRAND, BLUE, GREEN, YELLOW, PURPLE, '#EC4899']
 const SIZE = 128

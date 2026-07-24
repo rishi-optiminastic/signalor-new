@@ -1,5 +1,4 @@
-import { Activity, FolderKanban, MessageSquare } from 'lucide-react'
-
+import { Activity, FolderKanban, MessageSquare } from '@/lib/icons'
 import type { AccountOverview } from '@/services/account.service'
 
 import { TickBar } from './tick-bar'

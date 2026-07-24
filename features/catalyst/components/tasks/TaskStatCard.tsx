@@ -1,6 +1,5 @@
-import { MoreVertical } from 'lucide-react'
-
 import type { StatCard } from '@/features/catalyst/tasks-data'
+import { MoreVertical } from '@/lib/icons'
 
 interface TaskStatCardProps {
   stat: StatCard

@@ -1,6 +1,5 @@
-import type { LucideIcon } from 'lucide-react'
-
 import { GREEN, NEG, YELLOW } from '@/features/catalyst/constants'
+import type { LucideIcon } from '@/lib/icons'
 
 export type Priority = 'High' | 'Medium' | 'Low'
 

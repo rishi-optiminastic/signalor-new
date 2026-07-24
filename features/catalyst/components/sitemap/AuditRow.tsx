@@ -1,9 +1,9 @@
-import { ChevronRight } from 'lucide-react'
 import type { ReactNode } from 'react'
 
 import { GREEN } from '@/features/catalyst/constants'
 import { ttfbColor, WARN_COLOR } from '@/features/catalyst/sitemap-data'
 import type { AuditRow as Row } from '@/features/catalyst/sitemap-data'
+import { ChevronRight } from '@/lib/icons'
 
 function TwoLine({ main, sub }: { main: string; sub: string }): JSX.Element {
   return (

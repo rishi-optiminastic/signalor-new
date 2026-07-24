@@ -1,7 +1,5 @@
 'use client'
 
-import { UserRound } from 'lucide-react'
-
 import { Card } from '@/features/catalyst/components/Card'
 import { CardHead } from '@/features/catalyst/components/CardHead'
 import { BrandFavicon } from '@/features/catalyst/components/competitors/BrandFavicon'
@@ -10,6 +8,7 @@ import { engineLabel, engineLogo } from '@/features/catalyst/engine-logos'
 import { useActiveProject } from '@/hooks/useActiveProject'
 import { useBrandPath } from '@/hooks/useBrandPath'
 import { useCompetitorMatrix, type MatrixRow } from '@/hooks/useCompetitorMatrix'
+import { UserRound } from '@/lib/icons'
 
 /** 0.12–0.8 alpha over the data green, scaled to the table's hottest cell. */
 function heatBackground(value: number, max: number): string {

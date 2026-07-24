@@ -1,5 +1,5 @@
-import type { LucideIcon } from 'lucide-react'
-import { Gauge, Swords, Wrench } from 'lucide-react'
+import type { LucideIcon } from '@/lib/icons'
+import { Gauge, Swords, Wrench } from '@/lib/icons'
 
 export interface AgentSuggestion {
   icon: LucideIcon

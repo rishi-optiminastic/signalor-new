@@ -1,7 +1,6 @@
 'use client'
 
-import { Maximize2, Minimize2, X } from 'lucide-react'
-
+import { Maximize2, Minimize2, X } from '@/lib/icons'
 import { useAgentChat } from '@/stores/useAgentChat'
 
 const GHOST =

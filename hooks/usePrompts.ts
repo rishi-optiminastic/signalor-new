@@ -1,13 +1,13 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { Crosshair, Eye, Gauge, MessageSquareText, Quote, Zap } from 'lucide-react'
 
 import { BLUE, BRAND, BRAND_STRONG, GREEN, PURPLE, YELLOW } from '@/features/catalyst/constants'
 import { engineLabel } from '@/features/catalyst/engine-logos'
 import type { PromptEngineResult, TrackedPrompt } from '@/features/catalyst/prompt-tracker-data'
 import type { StatCard } from '@/features/catalyst/tasks-data'
 import { getPrompts, type PromptResult, type PromptTrack } from '@/lib/api/prompts'
+import { Crosshair, Eye, Gauge, MessageSquareText, Quote, Zap } from '@/lib/icons'
 import { queryKeys } from '@/lib/query-keys'
 
 const PENDING_REFETCH_MS = 15000

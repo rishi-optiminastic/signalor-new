@@ -1,9 +1,8 @@
-import { FileText, Globe, Layout } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
-
 import { ActionRow } from '@/features/catalyst/components/agent/ActionRow'
 import { AgentSectionPanel } from '@/features/catalyst/components/agent/AgentSectionPanel'
 import type { AgentAction } from '@/lib/api/agent'
+import type { LucideIcon } from '@/lib/icons'
+import { FileText, Globe, Layout } from '@/lib/icons'
 
 const GROUP_ICON: Record<string, LucideIcon> = {
   Content: FileText,

@@ -1,7 +1,6 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { Loader2, X } from 'lucide-react'
 import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 
@@ -10,6 +9,7 @@ import { ResponseText } from '@/features/catalyst/components/prompt-tracker/Resp
 import type { PromptEngineResult } from '@/features/catalyst/prompt-tracker-data'
 import { formatTaskDate } from '@/features/catalyst/tasks-data'
 import { getPromptResult } from '@/lib/api/prompts'
+import { Loader2, X } from '@/lib/icons'
 import { queryKeys } from '@/lib/query-keys'
 
 interface ResponseDialogProps {

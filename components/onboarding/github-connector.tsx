@@ -1,9 +1,8 @@
 'use client'
 
-import { CheckCircle2, Loader2, Unlink2 } from 'lucide-react'
-
 import { GithubMark } from '@/components/GithubMark'
 import { useOrgGithubConnection } from '@/hooks/useOrgGithubConnection'
+import { CheckCircle2, Loader2, Unlink2 } from '@/lib/icons'
 import { useOnboardingWizardStore } from '@/stores/useOnboardingWizardStore'
 
 const CARD = 'shadow-input rounded-xl border border-black/8 bg-white p-5'

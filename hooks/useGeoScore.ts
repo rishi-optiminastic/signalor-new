@@ -1,8 +1,6 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { Bot, Globe, MessageSquare, Search, Sparkles } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
 
 import { RANGE_DAYS, type Range } from '@/features/catalyst/components/RangeTabs'
 import { engineLabel } from '@/features/catalyst/engine-logos'
@@ -12,6 +10,8 @@ import {
   type SovEngine,
   type VisibilitySeries,
 } from '@/lib/api/analyzer'
+import type { LucideIcon } from '@/lib/icons'
+import { Bot, Globe, MessageSquare, Search, Sparkles } from '@/lib/icons'
 
 const ENGINE_ICONS: Record<string, LucideIcon> = {
   chatgpt: MessageSquare,
@@ -53,15 +53,19 @@ export interface GeoScore {
  */
 export function scoreReason(d: GeoScore): string {
   const diff = d.score - d.previous
-  const top = d.engines[0]
+  // Only a genuinely non-zero engine can be "strongest" — never "Strongest on X (0%)".
+  const top = d.engines.find(e => e.pct > 0)
   const strongest = top ? ` Strongest on ${top.name} (${top.value}).` : ''
-  const coverage = `${d.totalMentions} of ${d.totalPrompts} AI answers`
-  if (diff === 0)
-    return `No change from ${d.previous} last analysis — mentioned in ${coverage}.${strongest}`
-  if (diff > 0) {
-    return `Up ${diff} from ${d.previous}: more AI answers cited you (now ${coverage}).${strongest}`
-  }
-  return `Down ${Math.abs(diff)} from ${d.previous}: fewer AI answers cited you (now ${coverage}).${strongest}`
+  // Don't claim citations that don't exist: distinguish "cited" from "not cited yet".
+  const coverage =
+    d.totalMentions > 0
+      ? ` Cited in ${d.totalMentions} of ${d.totalPrompts} AI answers.`
+      : d.totalPrompts > 0
+        ? ` Not cited in any of ${d.totalPrompts} tracked answers yet.`
+        : ''
+  if (diff === 0) return `No change from ${d.previous} last analysis.${coverage}${strongest}`
+  if (diff > 0) return `Up ${diff} from ${d.previous} last analysis.${coverage}${strongest}`
+  return `Down ${Math.abs(diff)} from ${d.previous} last analysis.${coverage}${strongest}`
 }
 
 function engineIcon(engine: string): LucideIcon {

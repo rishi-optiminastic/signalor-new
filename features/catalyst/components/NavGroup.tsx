@@ -1,23 +1,22 @@
 'use client'
 
-import { ChevronDown } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
+import type { TablerIcon } from '@tabler/icons-react'
 import { useParams, usePathname } from 'next/navigation'
 import { useState } from 'react'
 
 import { NavItem, resolveHref } from '@/features/catalyst/components/NavItem'
-import { BRAND_STRONG } from '@/features/catalyst/constants'
 import type { NavEntry } from '@/features/catalyst/constants'
+import { ChevronDown } from '@/lib/icons'
 
 interface NavGroupProps {
-  icon: LucideIcon
+  icon: TablerIcon
   label: string
   items: NavEntry[]
   collapsed: boolean
 }
 
 interface GroupButtonProps {
-  icon: LucideIcon
+  icon: TablerIcon
   label: string
   active: boolean
   open: boolean
@@ -25,15 +24,19 @@ interface GroupButtonProps {
 }
 
 function GroupButton({ icon: Icon, label, active, open, onToggle }: GroupButtonProps): JSX.Element {
+  // A group whose child page is active reads bold-ink (the active child itself
+  // gets the white card); otherwise it's muted with the same white-pill hover.
+  const stateClass = active
+    ? 'font-semibold text-[var(--cat-ink)]'
+    : 'text-[var(--cat-ink-2)] hover:bg-[var(--cat-card)] hover:text-[var(--cat-ink)]'
   return (
     <button
       type="button"
       onClick={onToggle}
       aria-expanded={open}
-      className="flex w-full items-center gap-3 rounded-md px-2.5 py-2 text-[14px] font-medium transition-colors hover:bg-[var(--cat-hover)] focus-visible:ring-2 focus-visible:ring-[rgba(224,74,61,0.4)] focus-visible:outline-none"
-      style={{ color: active ? BRAND_STRONG : 'var(--cat-ink-2)' }}
+      className={`flex w-full items-center gap-3 rounded-lg border border-transparent px-2.5 py-2 text-[14px] font-medium transition-colors focus-visible:ring-2 focus-visible:ring-[rgba(224,74,61,0.4)] focus-visible:outline-none ${stateClass}`}
     >
-      <Icon size={18} strokeWidth={1.8} className="shrink-0" />
+      <Icon size={18} className="shrink-0" />
       {label}
       <ChevronDown
         size={15}

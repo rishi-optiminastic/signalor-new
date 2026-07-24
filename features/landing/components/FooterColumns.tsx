@@ -1,9 +1,9 @@
-import { ExternalLink } from 'lucide-react'
 import Link from 'next/link'
 
 import { SignalorMark } from '@/components/SignalorMark'
 import { FOOTER_COLUMNS, SOCIAL } from '@/features/landing/footer-data'
 import type { FooterColumn, FooterLink } from '@/features/landing/footer-data'
+import { ExternalLink } from '@/lib/icons'
 
 const LINK_CLS =
   'inline-flex items-center gap-1 text-[14px] text-[#6b6b6b] transition-colors hover:text-[#171717]'

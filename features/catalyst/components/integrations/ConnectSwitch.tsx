@@ -1,6 +1,6 @@
 'use client'
 
-import { Loader2 } from 'lucide-react'
+import { Loader2 } from '@/lib/icons'
 
 interface ConnectSwitchProps {
   /** Live connection state from the server — this component owns no state. */

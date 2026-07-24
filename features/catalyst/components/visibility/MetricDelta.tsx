@@ -1,6 +1,5 @@
-import { ArrowDownRight, ArrowUpRight } from 'lucide-react'
-
 import { GREEN, NEG } from '@/features/catalyst/constants'
+import { ArrowDownRight, ArrowUpRight } from '@/lib/icons'
 
 interface MetricDeltaProps {
   value: string

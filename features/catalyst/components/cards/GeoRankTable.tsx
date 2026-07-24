@@ -1,10 +1,10 @@
 'use client'
 
-import { Globe } from 'lucide-react'
 import { useState } from 'react'
 
 import { EngineLogo } from '@/features/catalyst/components/EngineLogo'
 import { engineLabel } from '@/features/catalyst/engine-logos'
+import { Globe } from '@/lib/icons'
 
 export interface RankItem {
   rank: number

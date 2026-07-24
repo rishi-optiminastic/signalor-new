@@ -1,7 +1,5 @@
 'use client'
 
-import { RefreshCw, Store } from 'lucide-react'
-
 import { TransitionLink } from '@/components/TransitionLink'
 import { DataState } from '@/features/catalyst/components/DataState'
 import { PrimaryButton } from '@/features/catalyst/components/PrimaryButton'
@@ -14,6 +12,7 @@ import { useActiveProject } from '@/hooks/useActiveProject'
 import { useBrandPath } from '@/hooks/useBrandPath'
 import { useShopping } from '@/hooks/useShopping'
 import type { ShoppingReadiness } from '@/lib/api/shopping'
+import { RefreshCw, Store } from '@/lib/icons'
 
 function ConnectPrompt(): JSX.Element {
   const brandPath = useBrandPath()

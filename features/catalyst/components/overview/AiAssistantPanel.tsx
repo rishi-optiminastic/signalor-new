@@ -1,6 +1,5 @@
 'use client'
 
-import { ChevronDown, Sparkles } from 'lucide-react'
 import { useState } from 'react'
 
 import { TransitionLink } from '@/components/TransitionLink'
@@ -8,6 +7,7 @@ import { ActionCtaButton } from '@/features/catalyst/components/agent/ActionCtaB
 import { useAgentPlan } from '@/hooks/useAgentPlan'
 import { useBrandPath } from '@/hooks/useBrandPath'
 import type { AgentAction, AgentPlan } from '@/lib/api/agent'
+import { ChevronDown, Sparkles } from '@/lib/icons'
 
 const MAX_SUGGESTIONS = 4
 const PRIORITY_ORDER: Record<string, number> = { critical: 0, high: 1, medium: 2, low: 3 }

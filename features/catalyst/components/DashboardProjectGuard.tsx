@@ -1,11 +1,11 @@
 'use client'
 
-import { Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, type ReactNode } from 'react'
 
 import { useActiveProject, type ActiveProject } from '@/hooks/useActiveProject'
 import { useSession } from '@/lib/auth-client'
+import { Loader2 } from '@/lib/icons'
 import { routes } from '@/lib/routes'
 
 function GuardSpinner(): JSX.Element {

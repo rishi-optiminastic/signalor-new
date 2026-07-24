@@ -1,9 +1,8 @@
 'use client'
 
-import { Gift, ShoppingBag, Sparkles } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
-
 import { BRAND } from '@/features/catalyst/constants'
+import { Gift, ShoppingBag, Sparkles } from '@/lib/icons'
+import type { LucideIcon } from '@/lib/icons'
 
 export type BacklinkTab = 'auto' | 'free' | 'paid'
 

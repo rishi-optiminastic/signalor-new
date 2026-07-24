@@ -1,8 +1,8 @@
-import { Settings2 } from 'lucide-react'
 import Link from 'next/link'
 
 import { ConnectSwitch } from '@/features/catalyst/components/integrations/ConnectSwitch'
 import type { IntegrationWithStatus } from '@/features/catalyst/integrations-data'
+import { Settings2 } from '@/lib/icons'
 
 interface IntegrationCardProps {
   item: IntegrationWithStatus

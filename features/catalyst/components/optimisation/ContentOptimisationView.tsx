@@ -1,6 +1,5 @@
 'use client'
 
-import { Zap } from 'lucide-react'
 import Link from 'next/link'
 import { useState, type ReactNode } from 'react'
 
@@ -15,6 +14,7 @@ import type { PreviewElement } from '@/features/site/lib/api/content-optimisatio
 import { useActiveProject } from '@/hooks/useActiveProject'
 import { useBrandPath } from '@/hooks/useBrandPath'
 import { useContentOptimisation, type ContentOptimisation } from '@/hooks/useContentOptimisation'
+import { Zap } from '@/lib/icons'
 
 interface PreviewFields {
   previewImage: string

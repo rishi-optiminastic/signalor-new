@@ -1,5 +1,5 @@
-import { Asterisk, Bot, Code2, Compass, Copy, Sparkles } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
+import { Asterisk, Bot, Code2, Compass, Copy, Sparkles } from '@/lib/icons'
+import type { LucideIcon } from '@/lib/icons'
 
 interface GraphNode {
   x: number

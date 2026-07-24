@@ -1,6 +1,5 @@
 'use client'
 
-import { ChevronLeft } from 'lucide-react'
 import { useParams } from 'next/navigation'
 
 import { TransitionLink } from '@/components/TransitionLink'
@@ -14,6 +13,7 @@ import { useActiveProject } from '@/hooks/useActiveProject'
 import { useBrandPath } from '@/hooks/useBrandPath'
 import { useCompetitorDetail } from '@/hooks/useCompetitorDetail'
 import type { Competitor } from '@/lib/api/analyzer'
+import { ChevronLeft } from '@/lib/icons'
 
 function BackLink(): JSX.Element {
   const brandPath = useBrandPath()

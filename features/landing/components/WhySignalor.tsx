@@ -1,7 +1,7 @@
-import { ArrowRight, Gauge, Layers, Link2, ListChecks, Sparkles } from 'lucide-react'
 import Link from 'next/link'
 
 import { ScreenHR } from '@/components/ui/intersection-diamonds'
+import { ArrowRight, Gauge, Layers, Link2, ListChecks, Sparkles } from '@/lib/icons'
 
 const FEATURE_ROWS = [
   {

@@ -1,10 +1,9 @@
-import { MessageSquare } from 'lucide-react'
-
 import { MetricDelta } from '@/features/catalyst/components/visibility/MetricDelta'
 import { Sparkline } from '@/features/catalyst/components/visibility/Sparkline'
 import { VisCardHead } from '@/features/catalyst/components/visibility/VisCardHead'
 import { BRAND } from '@/features/catalyst/constants'
 import type { MentionsVis } from '@/hooks/useVisibility'
+import { MessageSquare } from '@/lib/icons'
 
 export function MentionsCard({ data }: { data: MentionsVis }): JSX.Element {
   return (

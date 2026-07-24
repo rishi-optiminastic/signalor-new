@@ -1,9 +1,9 @@
 'use client'
 
 import { BorderBeam } from 'border-beam'
-import { Sparkles } from 'lucide-react'
 
 import { CONTROL_RING } from '@/features/catalyst/components/control-styles'
+import { Sparkles } from '@/lib/icons'
 import { useAgentChat } from '@/stores/useAgentChat'
 
 /** Matches the button's `rounded-md` (~8px) so the beam hugs the edge. */

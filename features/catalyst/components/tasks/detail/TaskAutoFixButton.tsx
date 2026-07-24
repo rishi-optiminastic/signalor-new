@@ -1,12 +1,11 @@
 'use client'
 
-import { ExternalLink, Loader2, Plug, Zap } from 'lucide-react'
-
 import { GithubMark } from '@/components/GithubMark'
 import { TransitionLink } from '@/components/TransitionLink'
 import { PrimaryButton } from '@/features/catalyst/components/PrimaryButton'
 import { useBrandPath } from '@/hooks/useBrandPath'
 import type { TaskAutoFix } from '@/hooks/useTaskAutoFix'
+import { ExternalLink, Loader2, Plug, Zap } from '@/lib/icons'
 
 const OUTLINE =
   'inline-flex h-8 items-center gap-1.5 rounded-md border border-[var(--cat-border)] px-3 text-[12px] font-medium text-[var(--cat-ink-2)] transition-colors hover:bg-[var(--cat-hover)]'

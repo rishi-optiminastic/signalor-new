@@ -1,6 +1,5 @@
 'use client'
 
-import { ChevronDown } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
@@ -9,6 +8,7 @@ import {
   ProductPanel,
   ResourcesPanel,
 } from '@/features/landing/components/MegaPanels'
+import { ChevronDown } from '@/lib/icons'
 
 type MenuKey = 'product' | 'pricing' | 'resources'
 

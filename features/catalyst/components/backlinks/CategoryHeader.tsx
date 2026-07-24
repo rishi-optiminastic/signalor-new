@@ -1,8 +1,7 @@
 'use client'
 
-import { ChevronRight } from 'lucide-react'
-
 import type { SiteMeta } from '@/features/catalyst/backlinks-data'
+import { ChevronRight } from '@/lib/icons'
 
 interface CategoryHeaderProps {
   site: SiteMeta

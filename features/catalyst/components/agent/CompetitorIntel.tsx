@@ -1,10 +1,9 @@
 'use client'
 
-import { Eye } from 'lucide-react'
-
 import { AgentSectionPanel } from '@/features/catalyst/components/agent/AgentSectionPanel'
 import { useAgentCompetitors } from '@/hooks/useAgentCompetitors'
 import type { Competitor } from '@/lib/api/analyzer'
+import { Eye } from '@/lib/icons'
 
 function hostOf(url: string): string {
   try {

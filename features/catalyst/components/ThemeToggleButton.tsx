@@ -1,6 +1,6 @@
 'use client'
 
-import { Moon, Sun } from 'lucide-react'
+import { IconMoonFilled, IconSunFilled } from '@tabler/icons-react'
 
 import { useCatalystTheme } from '@/features/catalyst/components/CatalystThemeProvider'
 import { ICON_TILE } from '@/features/catalyst/components/control-styles'
@@ -15,7 +15,7 @@ export function ThemeToggleButton(): JSX.Element {
       aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
       className={ICON_TILE}
     >
-      {dark ? <Sun size={17} strokeWidth={1.8} /> : <Moon size={17} strokeWidth={1.8} />}
+      {dark ? <IconSunFilled size={17} /> : <IconMoonFilled size={17} />}
     </button>
   )
 }

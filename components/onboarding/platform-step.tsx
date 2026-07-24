@@ -1,8 +1,8 @@
 'use client'
 
-import { ArrowLeft, ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 
+import { ArrowLeft, ArrowRight } from '@/lib/icons'
 import { useOnboardingWizardStore, type Platform } from '@/stores/useOnboardingWizardStore'
 
 interface PlatformOption {

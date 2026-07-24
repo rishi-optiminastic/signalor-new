@@ -1,10 +1,10 @@
 'use client'
 
-import { ArrowLeft, Loader2, Rocket } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import { useSession } from '@/lib/auth-client'
+import { ArrowLeft, Loader2, Rocket } from '@/lib/icons'
 import { routes } from '@/lib/routes'
 import { hasActiveSubscription, launchAnalysis } from '@/services/onboarding.service'
 import { useOnboardingWizardStore } from '@/stores/useOnboardingWizardStore'

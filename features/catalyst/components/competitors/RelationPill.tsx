@@ -1,7 +1,6 @@
-import { ChevronDown, UserRound } from 'lucide-react'
-
 import { RELATION_META } from '@/features/catalyst/competitors-data'
 import type { Relation } from '@/features/catalyst/competitors-data'
+import { ChevronDown, UserRound } from '@/lib/icons'
 
 export function RelationPill({ relation }: { relation: Relation }): JSX.Element {
   const meta = RELATION_META[relation]

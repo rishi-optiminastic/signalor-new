@@ -1,6 +1,5 @@
 'use client'
 
-import { ChevronDown, Loader2, RefreshCw, Trash2 } from 'lucide-react'
 import { useState } from 'react'
 
 import { TickBar } from '@/features/catalyst/components/brands/BrandBits'
@@ -8,6 +7,7 @@ import { EngineLogo } from '@/features/catalyst/components/EngineLogo'
 import { PromptResultsPanel } from '@/features/catalyst/components/prompt-tracker/PromptResultsPanel'
 import type { TrackedPrompt } from '@/features/catalyst/prompt-tracker-data'
 import { scoreColor } from '@/features/catalyst/visibility-data'
+import { ChevronDown, Loader2, RefreshCw, Trash2 } from '@/lib/icons'
 
 export interface PromptRowProps {
   item: TrackedPrompt

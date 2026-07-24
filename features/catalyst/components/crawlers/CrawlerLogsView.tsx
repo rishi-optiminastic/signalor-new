@@ -1,7 +1,5 @@
 'use client'
 
-import { Loader2 } from 'lucide-react'
-
 import { Card } from '@/features/catalyst/components/Card'
 import { CardHead } from '@/features/catalyst/components/CardHead'
 import { CrawlerActivityChart } from '@/features/catalyst/components/crawlers/CrawlerActivityChart'
@@ -13,6 +11,7 @@ import { CrawlerSetupCard } from '@/features/catalyst/components/crawlers/Crawle
 import { DataState } from '@/features/catalyst/components/DataState'
 import { useActiveProject } from '@/hooks/useActiveProject'
 import { useCrawlerLogs, type CrawlerLogsData } from '@/hooks/useCrawlerLogs'
+import { Loader2 } from '@/lib/icons'
 
 function LegendDot({ color, children }: { color: string; children: string }): JSX.Element {
   return (

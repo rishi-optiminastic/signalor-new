@@ -1,7 +1,8 @@
 'use client'
 
-import { Globe } from 'lucide-react'
 import { useEffect, useState } from 'react'
+
+import { Globe } from '@/lib/icons'
 
 /** Best-effort hostname from a partially-typed URL, or '' if it isn't a domain yet. */
 function domainFromInput(value: string): string {

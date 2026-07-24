@@ -1,6 +1,5 @@
-import type { LucideIcon } from 'lucide-react'
-
 import { GREEN, NEG, YELLOW } from '@/features/catalyst/constants'
+import type { LucideIcon } from '@/lib/icons'
 
 /* Amber used for "warn" severity + the AI-readiness bars. */
 export const WARN_COLOR = '#C2703D'

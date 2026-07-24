@@ -1,6 +1,5 @@
-import { Download } from 'lucide-react'
-
 import { formatDate, formatMoney } from '@/lib/format'
+import { Download } from '@/lib/icons'
 import type { AccountInvoice } from '@/services/account.service'
 
 import { SectionCard } from './section-card'

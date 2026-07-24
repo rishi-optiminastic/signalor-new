@@ -1,6 +1,5 @@
-import { ChevronDown, Plus, Search } from 'lucide-react'
-
 import { PrimaryButton } from '@/features/catalyst/components/PrimaryButton'
+import { ChevronDown, Plus, Search } from '@/lib/icons'
 
 const DROP =
   'inline-flex h-[34px] items-center gap-1.5 rounded-md border border-[var(--cat-border)] bg-[var(--cat-card)] px-3 text-[13px] font-medium text-[var(--cat-ink)] transition-colors hover:bg-[var(--cat-hover)]'

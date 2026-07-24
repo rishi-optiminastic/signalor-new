@@ -1,7 +1,6 @@
-import { Flag } from 'lucide-react'
-
 import { PRIORITY_COLOR } from '@/features/catalyst/tasks-data'
 import type { Priority } from '@/features/catalyst/tasks-data'
+import { Flag } from '@/lib/icons'
 
 interface PriorityTagProps {
   priority: Priority

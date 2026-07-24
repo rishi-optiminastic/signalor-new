@@ -1,13 +1,13 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { Bot, Globe2, Link2, Quote, TrendingUp } from 'lucide-react'
 
 import { BLUE, BRAND, GREEN, YELLOW } from '@/features/catalyst/constants'
 import { engineLabel } from '@/features/catalyst/engine-logos'
 import type { StatCard } from '@/features/catalyst/tasks-data'
 import { getCitations, getTopSources, type Citations, type TopSources } from '@/lib/api/analyzer'
 import { getCitationTrend, type CitationTrendPoint } from '@/lib/api/insights'
+import { Bot, Globe2, Link2, Quote, TrendingUp } from '@/lib/icons'
 
 const SERIES_COLORS = [BRAND, BLUE, '#8B5CF6', YELLOW, GREEN, '#0EA5A4']
 const MAX_SERIES = 5

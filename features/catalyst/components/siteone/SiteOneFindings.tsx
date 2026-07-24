@@ -1,10 +1,9 @@
 'use client'
 
-import { ShieldAlert } from 'lucide-react'
-
 import { AgentSectionPanel } from '@/features/catalyst/components/agent/AgentSectionPanel'
 import { BLUE, NEG, YELLOW } from '@/features/catalyst/constants'
 import type { SiteOneFinding } from '@/lib/api/siteone'
+import { ShieldAlert } from '@/lib/icons'
 
 interface SiteOneFindingsProps {
   findings: SiteOneFinding[]

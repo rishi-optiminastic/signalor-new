@@ -1,9 +1,9 @@
-import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import type { ReactNode } from 'react'
 
 import type { Brand } from '@/features/catalyst/brands-data'
 import { MembersTable } from '@/features/catalyst/components/brands/MembersTable'
+import { ArrowLeft } from '@/lib/icons'
 
 const INPUT =
   'h-9 w-full rounded-md border border-[var(--cat-border)] bg-[var(--cat-card)] px-3 text-[13px] text-[var(--cat-ink)] outline-none'

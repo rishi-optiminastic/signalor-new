@@ -3,11 +3,11 @@
 import 'react-day-picker/style.css'
 
 import { endOfDay, format, isSameDay, isWithinInterval, startOfDay } from 'date-fns'
-import { CalendarDays, ChevronDown } from 'lucide-react'
 import { type CSSProperties, useEffect, useRef, useState } from 'react'
 import { DayPicker, type DateRange } from 'react-day-picker'
 
 import { CONTROL_CHIP } from '@/features/catalyst/components/control-styles'
+import { CalendarDays, ChevronDown } from '@/lib/icons'
 
 /** How the prompt list is filtered by check date. */
 export type DateFilter =

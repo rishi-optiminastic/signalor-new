@@ -1,8 +1,8 @@
 'use client'
 
-import { Check } from 'lucide-react'
 import Link from 'next/link'
 
+import { Check } from '@/lib/icons'
 import { routes } from '@/lib/routes'
 import { useOnboardingStore } from '@/stores/useOnboardingStore'
 

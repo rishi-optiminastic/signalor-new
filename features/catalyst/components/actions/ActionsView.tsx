@@ -1,7 +1,11 @@
 'use client'
 
-import { ListChecks, Sparkles, Telescope } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
+import {
+  IconBinocularsFilled,
+  IconSparklesFilled,
+  IconSquareRoundedCheckFilled,
+  type TablerIcon,
+} from '@tabler/icons-react'
 import { useSearchParams } from 'next/navigation'
 
 import { TransitionLink } from '@/components/TransitionLink'
@@ -16,10 +20,10 @@ import { useBrandPath } from '@/hooks/useBrandPath'
 
 type TabKey = 'plan' | 'tasks' | 'intel'
 
-const TABS: { key: TabKey; label: string; icon: LucideIcon }[] = [
-  { key: 'plan', label: "Today's Plan", icon: Sparkles },
-  { key: 'tasks', label: 'All Tasks', icon: ListChecks },
-  { key: 'intel', label: 'Market Intel', icon: Telescope },
+const TABS: { key: TabKey; label: string; icon: TablerIcon }[] = [
+  { key: 'plan', label: "Today's Plan", icon: IconSparklesFilled },
+  { key: 'tasks', label: 'All Tasks', icon: IconSquareRoundedCheckFilled },
+  { key: 'intel', label: 'Market Intel', icon: IconBinocularsFilled },
 ]
 
 function NoRun(): JSX.Element {

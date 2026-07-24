@@ -1,7 +1,6 @@
-import { Globe, Gauge, Link2, Rocket } from 'lucide-react'
-
 import { ScreenHR } from '@/components/ui/intersection-diamonds'
 import { HOW_IT_WORKS_STEPS, type HowItWorksStep } from '@/features/landing/how-it-works-data'
+import { Globe, Gauge, Link2, Rocket } from '@/lib/icons'
 
 export function HowItWorks(): JSX.Element {
   return (

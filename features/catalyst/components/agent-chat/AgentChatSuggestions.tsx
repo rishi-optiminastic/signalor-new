@@ -1,8 +1,7 @@
 'use client'
 
-import { ChevronRight } from 'lucide-react'
-
 import { AGENT_SUGGESTIONS } from '@/features/catalyst/components/agent-chat/suggestions'
+import { ChevronRight } from '@/lib/icons'
 
 /** Static starter-prompt pills. Inert for now (no conversation backend). */
 export function AgentChatSuggestions(): JSX.Element {

@@ -1,9 +1,8 @@
 'use client'
 
-import { ArrowLeft, ArrowRight, ExternalLink, Globe } from 'lucide-react'
-
 import { GithubConnector } from '@/components/onboarding/github-connector'
 import { useSession } from '@/lib/auth-client'
+import { ArrowLeft, ArrowRight, ExternalLink, Globe } from '@/lib/icons'
 import { useOnboardingWizardStore, type Platform } from '@/stores/useOnboardingWizardStore'
 
 const CARD = 'shadow-input rounded-xl border border-black/8 bg-white p-5'

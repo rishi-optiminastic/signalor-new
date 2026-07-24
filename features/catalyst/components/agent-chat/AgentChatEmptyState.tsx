@@ -1,8 +1,7 @@
 'use client'
 
-import { Sparkles } from 'lucide-react'
-
 import { AgentChatSuggestions } from '@/features/catalyst/components/agent-chat/AgentChatSuggestions'
+import { Sparkles } from '@/lib/icons'
 
 /** Faint dotted field behind the intro, echoing the empty-canvas look. */
 const DOT_FIELD = 'radial-gradient(var(--cat-border) 1px, transparent 1px) 0 0 / 16px 16px'

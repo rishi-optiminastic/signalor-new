@@ -1,6 +1,5 @@
 'use client'
 
-import { BadgeCheck, XCircle } from 'lucide-react'
 import { useState } from 'react'
 
 import { DataState } from '@/features/catalyst/components/DataState'
@@ -8,6 +7,7 @@ import { PrimaryButton } from '@/features/catalyst/components/PrimaryButton'
 import { useActiveProject } from '@/hooks/useActiveProject'
 import { useBrandProfile, useBrandProfileMutations } from '@/hooks/useBrandProfile'
 import type { BrandProfile, BrandProfileSections, ReviewDecision } from '@/lib/api/brand-profile'
+import { BadgeCheck, XCircle } from '@/lib/icons'
 
 const EDITABLE = [
   'identity',

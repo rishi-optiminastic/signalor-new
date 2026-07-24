@@ -1,9 +1,8 @@
 'use client'
 
-import { Check, Loader2, Unlink2 } from 'lucide-react'
-
 import { GithubMark } from '@/components/GithubMark'
 import type { OrgGithubConnection } from '@/hooks/useOrgGithubConnection'
+import { Check, Loader2, Unlink2 } from '@/lib/icons'
 
 const CARD_BASE =
   'group relative flex flex-col rounded-md border p-3.5 transition-all duration-200 hover:-translate-y-px hover:shadow-[0_4px_14px_rgba(16,24,40,.07)]'

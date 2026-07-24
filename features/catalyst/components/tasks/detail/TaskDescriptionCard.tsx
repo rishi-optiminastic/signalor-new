@@ -1,6 +1,5 @@
-import { TrendingUp } from 'lucide-react'
-
 import type { TaskDetail } from '@/hooks/useTaskDetail'
+import { TrendingUp } from '@/lib/icons'
 
 /** "Why this matters" content (rendered inside a TaskSection accordion): the
  *  task description plus the analyzer's impact estimate. */

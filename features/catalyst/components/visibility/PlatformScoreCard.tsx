@@ -1,10 +1,9 @@
-import { MoreHorizontal } from 'lucide-react'
-
 import { EngineLogo } from '@/features/catalyst/components/EngineLogo'
 import { BarMeter } from '@/features/catalyst/components/visibility/BarMeter'
 import { MetricDelta } from '@/features/catalyst/components/visibility/MetricDelta'
 import { scoreColor } from '@/features/catalyst/visibility-data'
 import type { PlatformVis, SubStat } from '@/hooks/useVisibility'
+import { MoreHorizontal } from '@/lib/icons'
 
 function Head({ platform }: { platform: PlatformVis }): JSX.Element {
   const { name, badge } = platform

@@ -1,6 +1,5 @@
 'use client'
 
-import { Check, ChevronDown, Copy, ExternalLink } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
 import {
@@ -10,6 +9,7 @@ import {
 import { engineLogo } from '@/features/catalyst/engine-logos'
 import { useActiveProject } from '@/hooks/useActiveProject'
 import type { TaskDetail } from '@/hooks/useTaskDetail'
+import { Check, ChevronDown, Copy, ExternalLink } from '@/lib/icons'
 
 interface ItemProps {
   icon: React.ReactNode

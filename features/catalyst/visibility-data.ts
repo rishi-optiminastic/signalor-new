@@ -1,7 +1,6 @@
-import { Globe, MessageSquare, Search } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
-
 import { GREEN, NEG, YELLOW } from '@/features/catalyst/constants'
+import { Globe, MessageSquare, Search } from '@/lib/icons'
+import type { LucideIcon } from '@/lib/icons'
 
 /** Score → semantic hue: ≥70 green, ≥40 amber, else red. */
 export function scoreColor(value: number): string {

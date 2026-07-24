@@ -1,7 +1,6 @@
-import { Check, Loader2, Zap } from 'lucide-react'
-
 import { GithubMark } from '@/components/GithubMark'
 import type { FixOutcome, FixState } from '@/hooks/useAutoFix'
+import { Check, Loader2, Zap } from '@/lib/icons'
 
 export interface AutoFixControlProps {
   state: FixState

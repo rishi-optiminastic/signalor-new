@@ -1,6 +1,5 @@
-import { ArrowRight } from 'lucide-react'
-
 import { WARMUP, WARMUP_DAYS } from '@/features/catalyst/reddit-data'
+import { ArrowRight } from '@/lib/icons'
 
 export function TodayTaskCard(): JSX.Element {
   const today = WARMUP_DAYS[WARMUP.currentDay - 1]

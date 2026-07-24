@@ -1,9 +1,9 @@
 'use client'
 
-import { ArrowRight, Building2, Check, Users } from 'lucide-react'
 import { useState } from 'react'
 
 import { savePendingAccountType } from '@/components/auth/pending-account-type'
+import { ArrowRight, Building2, Check, Users } from '@/lib/icons'
 import { cn } from '@/lib/utils'
 import { useOnboardingStore, type AccountType } from '@/stores/useOnboardingStore'
 

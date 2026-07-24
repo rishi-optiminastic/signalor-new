@@ -1,7 +1,6 @@
-import { ChevronsUpDown } from 'lucide-react'
-
 import { AutoBacklinkRow } from '@/features/catalyst/components/backlinks/AutoBacklinkRow'
 import type { AutoBacklink } from '@/lib/api/backlinks'
+import { ChevronsUpDown } from '@/lib/icons'
 
 const COLS = ['Title', 'Status', 'Backlink', 'Published', 'Link', '']
 

@@ -1,17 +1,5 @@
 'use client'
 
-import {
-  AlertTriangle,
-  Check,
-  ChevronDown,
-  ClipboardList,
-  ExternalLink,
-  FileCode2,
-  GitPullRequest,
-  Loader2,
-  Search,
-} from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 
 import { GithubMark } from '@/components/GithubMark'
@@ -22,6 +10,18 @@ import { BRAND } from '@/features/catalyst/constants'
 import type { AutoFixProofState } from '@/hooks/useTaskAutoFix'
 import type { AutoFixResult } from '@/lib/api/autofix'
 import type { GithubJob } from '@/lib/api/github'
+import type { LucideIcon } from '@/lib/icons'
+import {
+  AlertTriangle,
+  Check,
+  ChevronDown,
+  ClipboardList,
+  ExternalLink,
+  FileCode2,
+  GitPullRequest,
+  Loader2,
+  Search,
+} from '@/lib/icons'
 
 const PILL_TONE: Record<string, string> = {
   open: 'bg-[rgba(246,185,59,0.15)] text-[#a06f0a]',

@@ -1,9 +1,9 @@
-import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
 import { AnnouncementBar } from '@/features/landing/components/AnnouncementBar'
 import { Sparkle } from '@/features/landing/components/Sparkle'
+import { ArrowRight } from '@/lib/icons'
 
 function HeroCtas(): JSX.Element {
   return (

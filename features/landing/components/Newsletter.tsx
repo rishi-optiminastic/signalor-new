@@ -1,7 +1,8 @@
 'use client'
 
-import { Check, Mail } from 'lucide-react'
 import { useState } from 'react'
+
+import { Check, Mail } from '@/lib/icons'
 
 export function Newsletter(): JSX.Element {
   const [submitted, setSubmitted] = useState(false)

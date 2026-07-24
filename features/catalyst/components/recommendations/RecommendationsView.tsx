@@ -1,7 +1,5 @@
 'use client'
 
-import { Check } from 'lucide-react'
-
 import { AutoFixControl } from '@/features/catalyst/components/autofix/AutoFixControl'
 import { DashHeader, DashStatRow } from '@/features/catalyst/components/dash/DashStat'
 import { DataState } from '@/features/catalyst/components/DataState'
@@ -9,6 +7,7 @@ import { PRIORITY_STYLE, type Recommendation } from '@/features/catalyst/recomme
 import { useActiveProject } from '@/hooks/useActiveProject'
 import { useAutoFix, type FixState } from '@/hooks/useAutoFix'
 import { useRecommendations } from '@/hooks/useRecommendations'
+import { Check } from '@/lib/icons'
 
 interface RecActionProps {
   item: Recommendation

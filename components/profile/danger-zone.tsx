@@ -1,12 +1,12 @@
 'use client'
 
-import { Loader2, LogOut, Trash2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import { deleteAccount, DELETE_ACCOUNT_CONFIRM } from '@/lib/api/account'
 import { ApiError } from '@/lib/api/client'
 import { authClient, signOut } from '@/lib/auth-client'
+import { Loader2, LogOut, Trash2 } from '@/lib/icons'
 import { routes } from '@/lib/routes'
 
 interface DangerZoneProps {
@@ -35,12 +35,14 @@ export function DangerZone({ email }: DangerZoneProps): JSX.Element {
       await signOut().catch(() => {})
       router.push(routes.home)
     } catch (err) {
-      // Surface the backend's real reason (auth required, a blocking record, …)
-      // instead of a dead-end "try again" the user can do nothing with.
-      const message =
-        err instanceof ApiError && err.message
-          ? err.message
-          : 'Could not delete your account. Please try again.'
+      // Surface the backend's exact reason (the `detail` carries the failing
+      // record/constraint) so a blocking row is diagnosable, not a dead end.
+      let message = 'Could not delete your account. Please try again.'
+      if (err instanceof ApiError) {
+        const body = err.data as { error?: unknown; detail?: unknown } | null
+        const detail = body && typeof body.detail === 'string' ? body.detail : ''
+        message = detail || err.message || message
+      }
       setError(message)
       setBusy(false)
     }

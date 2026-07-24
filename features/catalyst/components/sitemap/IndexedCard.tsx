@@ -1,6 +1,5 @@
-import { CheckCircle2 } from 'lucide-react'
-
 import { GREEN } from '@/features/catalyst/constants'
+import { CheckCircle2 } from '@/lib/icons'
 
 export interface IndexedInfo {
   value: number

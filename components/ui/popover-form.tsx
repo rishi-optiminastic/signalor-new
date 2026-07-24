@@ -1,9 +1,10 @@
 'use client'
 
-import { ChevronUp, Loader } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useRef } from 'react'
 import type { ReactNode, RefObject } from 'react'
+
+import { ChevronUp, Loader } from '@/lib/icons'
 
 type PopoverFormProps = {
   open: boolean

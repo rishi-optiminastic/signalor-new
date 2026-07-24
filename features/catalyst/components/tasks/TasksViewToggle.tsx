@@ -1,7 +1,6 @@
 'use client'
 
-import { LayoutGrid, List } from 'lucide-react'
-
+import { LayoutGrid, List } from '@/lib/icons'
 import { useTasksViewStore } from '@/stores/useTasksViewStore'
 
 function cls(active: boolean): string {

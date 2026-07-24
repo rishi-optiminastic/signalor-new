@@ -1,6 +1,5 @@
-import { MessageCircle } from 'lucide-react'
-
 import { WARMUP } from '@/features/catalyst/reddit-data'
+import { MessageCircle } from '@/lib/icons'
 
 export function RedditHeader(): JSX.Element {
   return (

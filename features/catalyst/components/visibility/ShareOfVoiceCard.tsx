@@ -1,10 +1,9 @@
-import { TrendingUp } from 'lucide-react'
-
 import { MetricDelta } from '@/features/catalyst/components/visibility/MetricDelta'
 import { MiniBars } from '@/features/catalyst/components/visibility/MiniBars'
 import { VisCardHead } from '@/features/catalyst/components/visibility/VisCardHead'
 import { BRAND } from '@/features/catalyst/constants'
 import type { SovBar, SovMeta } from '@/hooks/useVisibility'
+import { TrendingUp } from '@/lib/icons'
 
 export function ShareOfVoiceCard({ sov, meta }: { sov: SovBar[]; meta: SovMeta }): JSX.Element {
   return (

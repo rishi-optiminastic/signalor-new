@@ -1,6 +1,5 @@
-import { Sparkles } from 'lucide-react'
-
 import { ScreenHR, GridDividerDiamonds } from '@/components/ui/intersection-diamonds'
+import { Sparkles } from '@/lib/icons'
 
 export function FeaturesGrid(): JSX.Element {
   return (

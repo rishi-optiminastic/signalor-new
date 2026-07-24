@@ -1,8 +1,8 @@
 'use client'
 
-import { ArrowLeft, ArrowRight, ChevronDown } from 'lucide-react'
 import { useState } from 'react'
 
+import { ArrowLeft, ArrowRight, ChevronDown } from '@/lib/icons'
 import { useOnboardingStore } from '@/stores/useOnboardingStore'
 
 import { AUTH_FIELD } from './field-styles'

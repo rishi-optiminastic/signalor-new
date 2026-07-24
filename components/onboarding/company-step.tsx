@@ -1,9 +1,9 @@
 'use client'
 
-import { ArrowRight } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 
 import { ONBOARDING_INPUT_CLASS } from '@/components/onboarding/input-class'
+import { ArrowRight } from '@/lib/icons'
 import { useOnboardingWizardStore } from '@/stores/useOnboardingWizardStore'
 
 /** Step 1: brand name. */

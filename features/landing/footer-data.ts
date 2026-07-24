@@ -1,5 +1,5 @@
-import { Github, Linkedin, Twitter } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
+import { Github, Linkedin, Twitter } from '@/lib/icons'
+import type { LucideIcon } from '@/lib/icons'
 
 export interface FooterLink {
   href: string

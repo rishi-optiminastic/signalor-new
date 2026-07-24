@@ -1,9 +1,9 @@
 'use client'
 
-import { ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 
 import { useSession } from '@/lib/auth-client'
+import { ChevronRight } from '@/lib/icons'
 
 function initials(name: string): string {
   const parts = name.trim().split(/\s+/)
