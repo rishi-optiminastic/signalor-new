@@ -54,13 +54,7 @@ function Footer({ gh }: { gh: OrgGithubConnection }): JSX.Element | null {
   if (!gh.connected) return null
   return (
     <div className="mt-2.5 flex items-center justify-between gap-2">
-      {gh.repo ? (
-        <span className="truncate rounded-sm bg-[var(--cat-hover)] px-1.5 py-0.5 font-mono text-[11px] text-[var(--cat-ink-2)]">
-          {gh.repo}
-        </span>
-      ) : (
-        <span />
-      )}
+      <RepoPicker gh={gh} />
       <button
         type="button"
         onClick={gh.unlink}
@@ -76,6 +70,37 @@ function Footer({ gh }: { gh: OrgGithubConnection }): JSX.Element | null {
         Disconnect
       </button>
     </div>
+  )
+}
+
+/** When the App granted several repos, let the user pick which one fixes target;
+ *  otherwise just show the single connected repo. */
+function RepoPicker({ gh }: { gh: OrgGithubConnection }): JSX.Element {
+  if (gh.repositories.length <= 1) {
+    if (!gh.repo) return <span className="min-w-0 flex-1" />
+    return (
+      <span className="min-w-0 flex-1 truncate rounded-sm bg-[var(--cat-hover)] px-1.5 py-0.5 font-mono text-[11px] text-[var(--cat-ink-2)]">
+        {gh.repo}
+      </span>
+    )
+  }
+  return (
+    <label className="flex min-w-0 flex-1 items-center gap-1.5">
+      <span className="shrink-0 text-[11px] text-[var(--cat-ink-3)]">Repo</span>
+      <select
+        value={gh.repo}
+        disabled={gh.selectingRepo}
+        onChange={e => gh.selectRepo(e.target.value)}
+        aria-label="Repository for auto-fix PRs"
+        className="min-w-0 flex-1 truncate rounded-md border border-[var(--cat-border)] bg-[var(--cat-card)] px-1.5 py-1 font-mono text-[11px] text-[var(--cat-ink-2)] outline-none disabled:opacity-60"
+      >
+        {gh.repositories.map(repo => (
+          <option key={repo} value={repo}>
+            {repo}
+          </option>
+        ))}
+      </select>
+    </label>
   )
 }
 
