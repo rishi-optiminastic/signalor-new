@@ -26,31 +26,35 @@ export function DashboardContent(): JSX.Element {
 
   return (
     <OverviewFiltersProvider>
-      <section className="cat-stagger grid min-h-0 flex-1 auto-rows-min grid-cols-1 gap-2 overflow-y-auto pr-0.5 sm:grid-cols-2 xl:grid-cols-3">
+      <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto pr-0.5">
         <DashboardGreeting />
         <AiAssistantPanel />
 
-        {/* Row 1 — hero visibility + ranking, engagement opportunities */}
-        <GeoScoreCard />
-        <EngagementOpportunitiesCard />
+        {/* Three equal columns; each column stacks its own cards (masonry). */}
+        <div className="cat-stagger grid grid-cols-1 items-start gap-2 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="flex flex-col gap-2">
+            <GeoScoreCard />
+            <VisibilityTrendCard />
+          </div>
+          <div className="flex flex-col gap-2">
+            <AiCitationCard />
+            <VisitorsChannelsCard />
+            <TopSourcesCard />
+          </div>
+          <div className="flex flex-col gap-2">
+            <EngagementOpportunitiesCard />
+            <VisibilityBreakdownCard />
+            <ConversionRateCard />
+          </div>
+        </div>
 
-        {/* Row 2 — score trend, weighted breakdown */}
-        <VisibilityTrendCard />
-        <VisibilityBreakdownCard />
-
-        {/* Row 3 — citation coverage, share of voice, recommendation rate */}
-        <AiCitationCard />
-        <VisitorsChannelsCard />
-        <ConversionRateCard />
-
-        {/* Row 4 — top AI sources, prompt coverage */}
-        <TopSourcesCard />
-        <UserRetentionCard />
-
-        {/* Extended — competitor matrix + geographic presence */}
-        <CompetitorHeatmapCard />
-        <WorldPresenceCard />
-      </section>
+        {/* Extended, width-hungry cards sit full-width below the main columns. */}
+        <div className="grid grid-cols-1 items-start gap-2 sm:grid-cols-2 xl:grid-cols-3">
+          <UserRetentionCard />
+          <CompetitorHeatmapCard />
+          <WorldPresenceCard />
+        </div>
+      </div>
     </OverviewFiltersProvider>
   )
 }

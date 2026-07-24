@@ -104,7 +104,7 @@ export function GeoScoreCard(): JSX.Element {
   const yourRank = ranking.find(item => item.isBrand)?.rank ?? null
 
   return (
-    <Card className="sm:col-span-2">
+    <Card>
       <CardHeader rank={yourRank} />
       <ScoreRow data={data} />
       <GeoTrendLine data={data?.points ?? []} />

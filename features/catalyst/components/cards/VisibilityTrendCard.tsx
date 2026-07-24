@@ -17,7 +17,7 @@ export function VisibilityTrendCard(): JSX.Element {
   const points = data?.points ?? []
 
   return (
-    <Card className="sm:col-span-2">
+    <Card>
       <div className="flex items-start justify-between">
         <div>
           <CardHead title="Visibility Score Trend" />

@@ -2,7 +2,7 @@
 
 import { AlertTriangle, Check } from 'lucide-react'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 
 import { TickBar } from '@/features/catalyst/components/brands/BrandBits'
 import { useAnalysisProgress } from '@/hooks/useAnalysisProgress'
@@ -37,6 +37,8 @@ const STEPS = [
   },
 ]
 
+type StepState = 'done' | 'active' | 'next'
+
 /** Map the run's raw status (+ progress inside long phases) to the active step. */
 function activeStepFor(status: string, progress: number, done: boolean): number {
   if (done) return STEPS.length
@@ -45,40 +47,54 @@ function activeStepFor(status: string, progress: number, done: boolean): number 
   return 0
 }
 
-function StepRow({
-  label,
-  state,
-}: {
+function StepDot({ state }: { state: StepState }): JSX.Element {
+  if (state === 'done') {
+    return (
+      <span className="bg-primary grid h-[18px] w-[18px] shrink-0 place-items-center rounded-full text-white">
+        <Check className="h-3 w-3" strokeWidth={3} />
+      </span>
+    )
+  }
+  if (state === 'active') {
+    return (
+      <span className="border-primary grid h-[18px] w-[18px] shrink-0 place-items-center rounded-full border-2 bg-white">
+        <span className="bg-primary h-1.5 w-1.5 animate-pulse rounded-full" />
+      </span>
+    )
+  }
+  return <span className="h-[18px] w-[18px] shrink-0 rounded-full border-2 border-neutral-200" />
+}
+
+function labelClass(state: StepState): string {
+  if (state === 'active') return 'text-foreground text-[13.5px] font-semibold'
+  if (state === 'done') return 'text-[13.5px] text-neutral-500'
+  return 'text-[13.5px] text-neutral-400'
+}
+
+interface StepRowProps {
   label: string
-  state: 'done' | 'active' | 'next'
-}): JSX.Element {
+  state: StepState
+  last: boolean
+  children?: ReactNode
+}
+
+/** One timeline step: a dot, a rail down to the next step, and its label — with
+ *  the live sub-status tucked right under the active one. */
+function StepRow({ label, state, last, children }: StepRowProps): JSX.Element {
   return (
-    <li className="flex items-center gap-3 py-[7px]">
-      <span
-        className={`grid h-[18px] w-[18px] shrink-0 place-items-center rounded-full ${
-          state === 'done'
-            ? 'bg-primary text-white'
-            : state === 'active'
-              ? 'border-primary border-2'
-              : 'border-2 border-neutral-200'
-        }`}
-      >
-        {state === 'done' && <Check className="h-3 w-3" strokeWidth={3} />}
-        {state === 'active' && (
-          <span className="bg-primary h-1.5 w-1.5 animate-pulse rounded-full" />
+    <li className="flex gap-3">
+      <div className="flex flex-col items-center">
+        <StepDot state={state} />
+        {!last && (
+          <span
+            className={`my-1 w-px flex-1 ${state === 'done' ? 'bg-primary/30' : 'bg-neutral-200'}`}
+          />
         )}
-      </span>
-      <span
-        className={`text-[13.5px] ${
-          state === 'active'
-            ? 'text-foreground font-medium'
-            : state === 'done'
-              ? 'text-neutral-500'
-              : 'text-neutral-400'
-        }`}
-      >
-        {label}
-      </span>
+      </div>
+      <div className={`min-w-0 flex-1 ${last ? '' : 'pb-4'}`}>
+        <span className={labelClass(state)}>{label}</span>
+        {children}
+      </div>
     </li>
   )
 }
@@ -94,7 +110,7 @@ function Ticker({ step }: { step: number }): JSX.Element | null {
   }, [step, lines.length])
   if (lines.length === 0) return null
   return (
-    <p className="mt-4 text-[12px] text-neutral-400" aria-live="polite">
+    <p className="mt-1 text-[12px] text-neutral-400" aria-live="polite">
       {lines[i]}…
     </p>
   )
@@ -102,7 +118,7 @@ function Ticker({ step }: { step: number }): JSX.Element | null {
 
 function DoneCard(): JSX.Element {
   return (
-    <div className="mt-8 flex flex-col items-center">
+    <div className="mt-7 flex flex-col items-center border-t border-neutral-200/70 pt-6">
       <span className="bg-primary/10 text-primary grid h-12 w-12 place-items-center rounded-full">
         <Check className="h-6 w-6" />
       </span>
@@ -119,7 +135,7 @@ function DoneCard(): JSX.Element {
 
 function FailedCard(): JSX.Element {
   return (
-    <div className="mt-8 flex flex-col items-center text-center">
+    <div className="mt-7 flex flex-col items-center border-t border-neutral-200/70 pt-6 text-center">
       <span className="grid h-12 w-12 place-items-center rounded-full bg-amber-100 text-amber-600">
         <AlertTriangle className="h-6 w-6" />
       </span>
@@ -138,54 +154,63 @@ function FailedCard(): JSX.Element {
   )
 }
 
-export default function LoadingPage(): JSX.Element {
-  const { progress, done, failed, status } = useAnalysisProgress()
-  const step = activeStepFor(status, progress, done)
-
+function ProgressHeader({ progress, caption }: { progress: number; caption: string }): JSX.Element {
   return (
-    <main className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden bg-[#fbfaf8] px-6 font-sans">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-40 left-1/2 h-[420px] w-[560px] -translate-x-1/2 rounded-full opacity-[0.07]"
-        style={{ background: 'radial-gradient(closest-side, #e04a3d, transparent 70%)' }}
-      />
-      <div className="relative z-10 w-full max-w-[420px]">
+    <>
+      <div className="flex items-center gap-2">
+        <span className="bg-primary h-2 w-2 animate-pulse rounded-full" />
         <p className="text-[11px] font-semibold tracking-[0.18em] text-neutral-400 uppercase">
           SignalorAI · GEO analysis
         </p>
+      </div>
+      <div className="mt-4 flex items-baseline gap-3">
+        <span className="text-foreground text-[52px] leading-none font-bold tracking-tight tabular-nums">
+          {progress}
+          <span className="text-[26px] text-neutral-300">%</span>
+        </span>
+        <span className="pb-1 text-[13px] text-neutral-400">{caption}</span>
+      </div>
+      <div className="mt-5">
+        <TickBar value={progress} ticks={44} showValue={false} />
+      </div>
+    </>
+  )
+}
 
-        <div className="mt-3 flex items-baseline gap-3">
-          <span className="text-foreground text-[56px] leading-none font-bold tracking-tight tabular-nums">
-            {progress}
-            <span className="text-[28px] text-neutral-300">%</span>
-          </span>
-          <span className="pb-1 text-[13px] text-neutral-400">
-            {failed ? 'stalled' : done ? 'complete' : 'usually done in a minute or two'}
-          </span>
-        </div>
+export default function LoadingPage(): JSX.Element {
+  const { progress, done, failed, status } = useAnalysisProgress()
+  const step = activeStepFor(status, progress, done)
+  const caption = failed ? 'stalled' : done ? 'complete' : 'usually done in a minute or two'
 
-        <div className="mt-5">
-          <TickBar value={progress} ticks={44} showValue={false} />
-        </div>
+  return (
+    <main className="flex min-h-svh flex-col items-center justify-center bg-[#fbfaf8] px-6 py-10 font-sans">
+      <div className="w-full max-w-[440px] rounded-2xl border border-black/[0.07] bg-white p-8 shadow-[0_1px_2px_rgba(16,24,40,0.04),0_10px_30px_rgba(16,24,40,0.06)]">
+        <ProgressHeader progress={progress} caption={caption} />
 
         {failed ? (
           <FailedCard />
         ) : (
           <>
-            <ol className="mt-7 border-t border-neutral-200/70 pt-4">
-              {STEPS.map((s, i) => (
-                <StepRow
-                  key={s.label}
-                  label={s.label}
-                  state={i < step ? 'done' : i === step ? 'active' : 'next'}
-                />
-              ))}
+            <ol className="mt-7 flex flex-col border-t border-neutral-200/70 pt-5">
+              {STEPS.map((s, i) => {
+                const state: StepState = i < step ? 'done' : i === step ? 'active' : 'next'
+                return (
+                  <StepRow
+                    key={s.label}
+                    label={s.label}
+                    state={state}
+                    last={i === STEPS.length - 1}
+                  >
+                    {state === 'active' && !done && <Ticker step={step} />}
+                  </StepRow>
+                )
+              })}
             </ol>
 
-            {done ? <DoneCard /> : <Ticker step={step} />}
-
-            {!done && (
-              <p className="mt-8 text-[11.5px] text-neutral-400">
+            {done ? (
+              <DoneCard />
+            ) : (
+              <p className="mt-6 border-t border-neutral-200/70 pt-4 text-[11.5px] text-neutral-400">
                 Safe to keep this tab open — we&apos;ll take you to your report automatically.
               </p>
             )}

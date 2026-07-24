@@ -106,7 +106,7 @@ export function TopSourcesCard(): JSX.Element {
   )
 
   return (
-    <Card className="sm:col-span-2">
+    <Card>
       <div className="mb-1">
         <CardHead
           title="Top Performing AI Sources"
