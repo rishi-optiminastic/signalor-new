@@ -1,7 +1,6 @@
-import { Quote } from 'lucide-react'
-
 import { ScreenHR } from '@/components/ui/intersection-diamonds'
 import { TESTIMONIALS, type Testimonial } from '@/features/landing/testimonials-data'
+import { Quote } from '@/lib/icons'
 import { cn } from '@/lib/utils'
 
 const TINT_CLASSES: Record<Testimonial['tint'], { dot: string; avatar: string; quote: string }> = {

@@ -1,6 +1,5 @@
-import { BarChart3, Search } from 'lucide-react'
-
 import { PrimaryButton } from '@/features/catalyst/components/PrimaryButton'
+import { BarChart3, Search } from '@/lib/icons'
 
 export function VisibilityHeader(): JSX.Element {
   return (

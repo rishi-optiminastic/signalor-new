@@ -1,6 +1,5 @@
-import { Plus } from 'lucide-react'
-
 import { formatDate } from '@/lib/format'
+import { Plus } from '@/lib/icons'
 import type { AccountProject } from '@/services/account.service'
 
 import { DeleteProjectButton } from './delete-project-button'

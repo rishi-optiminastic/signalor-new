@@ -1,11 +1,11 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { Check, Loader2 } from 'lucide-react'
 import { useState } from 'react'
 
 import { PrimaryButton } from '@/features/catalyst/components/PrimaryButton'
 import { getGAProperties, selectGAProperty, syncGA, type GAProperty } from '@/lib/api/integrations'
+import { Check, Loader2 } from '@/lib/icons'
 
 interface PropertyOptionProps {
   property: GAProperty

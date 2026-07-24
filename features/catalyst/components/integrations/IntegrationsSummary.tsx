@@ -1,6 +1,5 @@
-import { Blocks } from 'lucide-react'
-
 import { TickBar } from '@/features/catalyst/components/brands/BrandBits'
+import { Blocks } from '@/lib/icons'
 
 interface IntegrationsSummaryProps {
   connected: number

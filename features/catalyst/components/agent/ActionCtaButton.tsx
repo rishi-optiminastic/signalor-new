@@ -1,10 +1,9 @@
 'use client'
 
-import { ArrowRight, Check, Loader2, PenLine, Zap } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
-
 import { useAgentMutations } from '@/hooks/useAgentPlan'
 import type { AgentAction } from '@/lib/api/agent'
+import { ArrowRight, Check, Loader2, PenLine, Zap } from '@/lib/icons'
+import type { LucideIcon } from '@/lib/icons'
 
 const KIND_CTA: Record<AgentAction['kind'], { label: string; icon: LucideIcon }> = {
   auto: { label: 'Start', icon: Zap },

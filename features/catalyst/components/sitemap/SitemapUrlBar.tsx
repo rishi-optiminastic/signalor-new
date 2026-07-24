@@ -1,7 +1,6 @@
-import { Layers, Play } from 'lucide-react'
-
 import { PrimaryButton } from '@/features/catalyst/components/PrimaryButton'
 import { BRAND, BRAND_SOFT } from '@/features/catalyst/constants'
+import { Layers, Play } from '@/lib/icons'
 
 export function SitemapUrlBar({ url }: { url: string }): JSX.Element {
   return (

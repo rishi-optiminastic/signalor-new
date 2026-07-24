@@ -1,7 +1,6 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { FileCheck2, FileClock, FileText, Flag } from 'lucide-react'
 
 import { BLUE, BRAND, GREEN, NEG, YELLOW } from '@/features/catalyst/constants'
 import { formatTaskDate } from '@/features/catalyst/tasks-data'
@@ -14,6 +13,7 @@ import type {
 } from '@/features/catalyst/tasks-data'
 import { getActions, type UserAction } from '@/lib/api/analyzer'
 import { syncActions } from '@/lib/api/tasks'
+import { FileCheck2, FileClock, FileText, Flag } from '@/lib/icons'
 
 function priorityOf(points: number | null | undefined): Priority {
   const p = points ?? 0

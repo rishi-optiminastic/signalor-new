@@ -1,10 +1,10 @@
 'use client'
 
-import { Check, Loader2, Trash2, X } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import { deleteOrganization } from '@/lib/api/organizations'
+import { Check, Loader2, Trash2, X } from '@/lib/icons'
 
 interface DeleteProjectButtonProps {
   id: number

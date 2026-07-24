@@ -1,15 +1,5 @@
 'use client'
 
-import {
-  Calendar,
-  Check,
-  ChevronDown,
-  Download,
-  Loader2,
-  RotateCw,
-  SlidersHorizontal,
-} from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 
 import { CONTROL_CHIP, CONTROL_RING } from '@/features/catalyst/components/control-styles'
@@ -28,6 +18,16 @@ import { useActiveProject } from '@/hooks/useActiveProject'
 import { useAnalysisCooldown } from '@/hooks/useAnalysisCooldown'
 import { useNewAnalysis } from '@/hooks/useNewAnalysis'
 import { useOverview, type OverviewStats } from '@/hooks/useOverview'
+import type { LucideIcon } from '@/lib/icons'
+import {
+  Calendar,
+  Check,
+  ChevronDown,
+  Download,
+  Loader2,
+  RotateCw,
+  SlidersHorizontal,
+} from '@/lib/icons'
 
 const PANEL = `absolute right-0 z-50 mt-2 min-w-[190px] rounded-md bg-[var(--cat-card)] p-1 shadow-lg ${CONTROL_RING}`
 

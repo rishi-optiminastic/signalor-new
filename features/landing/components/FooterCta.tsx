@@ -1,8 +1,8 @@
-import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
 import { Sparkle } from '@/features/landing/components/Sparkle'
+import { ArrowRight } from '@/lib/icons'
 
 const GLOW = 'radial-gradient(60% 120% at 50% 0%, rgba(224,74,61,0.10), rgba(224,74,61,0) 70%)'
 

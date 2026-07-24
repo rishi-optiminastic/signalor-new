@@ -1,8 +1,5 @@
 'use client'
 
-import { AlertTriangle, ClipboardList, GitPullRequest, Plug, RotateCw, Search } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
-
 import { TransitionLink } from '@/components/TransitionLink'
 import { Card } from '@/features/catalyst/components/Card'
 import { CardHead } from '@/features/catalyst/components/CardHead'
@@ -11,6 +8,8 @@ import { TaskFixResultCard } from '@/features/catalyst/components/tasks/detail/T
 import { useBrandPath } from '@/hooks/useBrandPath'
 import type { TaskAutoFix } from '@/hooks/useTaskAutoFix'
 import { isGithubIntegrationError } from '@/lib/api/github'
+import type { LucideIcon } from '@/lib/icons'
+import { AlertTriangle, ClipboardList, GitPullRequest, Plug, RotateCw, Search } from '@/lib/icons'
 
 const STEPS: { icon: LucideIcon; text: string }[] = [
   { icon: Search, text: 'Find the root cause of this issue' },

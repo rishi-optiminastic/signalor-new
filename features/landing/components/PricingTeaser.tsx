@@ -1,7 +1,7 @@
-import { ArrowRight, Check } from 'lucide-react'
 import Link from 'next/link'
 
 import { ScreenHR } from '@/components/ui/intersection-diamonds'
+import { ArrowRight, Check } from '@/lib/icons'
 import { cn } from '@/lib/utils'
 
 type TeaserPlan = {

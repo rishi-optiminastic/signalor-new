@@ -1,6 +1,5 @@
 'use client'
 
-import { Search } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import type {
@@ -15,6 +14,7 @@ import { SearchResults } from '@/features/catalyst/components/SearchResults'
 import { searchIndex } from '@/features/catalyst/search-data'
 import type { SearchItem } from '@/features/catalyst/search-data'
 import { useBrandPath } from '@/hooks/useBrandPath'
+import { Search } from '@/lib/icons'
 
 /** ⌘K to focus, Esc + outside-click to close. */
 function useSearchShortcuts(

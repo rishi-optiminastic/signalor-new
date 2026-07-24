@@ -1,10 +1,9 @@
-import { ExternalLink } from 'lucide-react'
-
 import { TickBar } from '@/features/catalyst/components/brands/BrandBits'
 import { Card } from '@/features/catalyst/components/Card'
 import { CardHead } from '@/features/catalyst/components/CardHead'
 import { scoreColor } from '@/features/catalyst/visibility-data'
 import type { ShoppingProduct, ShoppingReadiness } from '@/lib/api/shopping'
+import { ExternalLink } from '@/lib/icons'
 
 const ISSUE_SHORT: Record<string, string> = {
   thin_description: 'Thin copy',

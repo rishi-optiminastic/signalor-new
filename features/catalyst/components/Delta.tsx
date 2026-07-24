@@ -1,7 +1,7 @@
-import { ArrowDownRight, ArrowUpRight } from 'lucide-react'
 import type { ReactNode } from 'react'
 
 import { GREEN, NEG } from '@/features/catalyst/constants'
+import { ArrowDownRight, ArrowUpRight } from '@/lib/icons'
 
 interface DeltaProps {
   positive: boolean

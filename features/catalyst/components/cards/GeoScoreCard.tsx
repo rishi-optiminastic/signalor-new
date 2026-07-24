@@ -1,6 +1,5 @@
 'use client'
 
-import { ArrowRight, Info } from 'lucide-react'
 import Link from 'next/link'
 import { useMemo } from 'react'
 
@@ -15,6 +14,7 @@ import { useActiveProject } from '@/hooks/useActiveProject'
 import { useBrandPath } from '@/hooks/useBrandPath'
 import { useCompetitorMatrix, type MatrixRow } from '@/hooks/useCompetitorMatrix'
 import { scoreReason, useGeoScore, type GeoScore } from '@/hooks/useGeoScore'
+import { ArrowRight, Info } from '@/lib/icons'
 
 /** Mean visibility across the engines a brand was checked on (0–100). */
 function rowVisibility(cells: Record<string, number>): number {

@@ -1,10 +1,9 @@
-import { Eye } from 'lucide-react'
-
 import { BarMeter } from '@/features/catalyst/components/visibility/BarMeter'
 import { MetricDelta } from '@/features/catalyst/components/visibility/MetricDelta'
 import { VisCardHead } from '@/features/catalyst/components/visibility/VisCardHead'
 import { BRAND } from '@/features/catalyst/constants'
 import type { OverallVis } from '@/hooks/useVisibility'
+import { Eye } from '@/lib/icons'
 
 export function OverallVisibilityCard({ data }: { data: OverallVis }): JSX.Element {
   return (

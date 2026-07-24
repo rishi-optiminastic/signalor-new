@@ -1,11 +1,11 @@
 'use client'
 
-import { ArrowLeft, LogOut, Moon, Sun } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 import { useCatalystTheme } from '@/features/catalyst/components/CatalystThemeProvider'
 import { signOut } from '@/lib/auth-client'
+import { ArrowLeft, LogOut, Moon, Sun } from '@/lib/icons'
 import { routes } from '@/lib/routes'
 
 export function ProfileTopBar(): JSX.Element {

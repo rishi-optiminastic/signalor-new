@@ -1,11 +1,11 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { Gauge, Sparkles, Timer } from 'lucide-react'
 
 import { GREEN, NEG, YELLOW } from '@/features/catalyst/constants'
 import type { AuditFilter, AuditRow, Vital } from '@/features/catalyst/sitemap-data'
 import { getSitemap, type SitemapAudit, type SitemapPage } from '@/lib/api/analyzer'
+import { Gauge, Sparkles, Timer } from '@/lib/icons'
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 

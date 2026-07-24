@@ -1,8 +1,7 @@
 'use client'
 
-import { Moon, Sun } from 'lucide-react'
-
 import { useCatalystTheme } from '@/features/catalyst/components/CatalystThemeProvider'
+import { Moon, Sun } from '@/lib/icons'
 
 export function ThemeToggle(): JSX.Element {
   const { dark, toggle } = useCatalystTheme()

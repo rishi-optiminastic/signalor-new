@@ -1,8 +1,7 @@
 'use client'
 
-import { PanelLeft } from 'lucide-react'
-
 import { ICON_TILE } from '@/features/catalyst/components/control-styles'
+import { PanelLeft } from '@/lib/icons'
 import { useUiStore } from '@/stores/useUiStore'
 
 /** Collapse/expand the desktop sidebar rail — lives in the top bar (desktop only). */

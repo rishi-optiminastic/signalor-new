@@ -1,9 +1,8 @@
-import { CalendarClock, CheckCircle2, Gauge, Inbox, ListTodo, TrendingUp } from 'lucide-react'
-
 import { TaskStatCard } from '@/features/catalyst/components/tasks/TaskStatCard'
 import { BLUE, BRAND, GREEN, YELLOW } from '@/features/catalyst/constants'
 import type { StatCard } from '@/features/catalyst/tasks-data'
 import type { AgentPlan } from '@/lib/api/agent'
+import { CalendarClock, CheckCircle2, Gauge, Inbox, ListTodo, TrendingUp } from '@/lib/icons'
 
 function shortDate(iso: string | null): string {
   if (!iso) return '—'

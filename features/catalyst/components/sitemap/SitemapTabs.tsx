@@ -1,6 +1,5 @@
-import { Map, Radio } from 'lucide-react'
-
 import { BRAND } from '@/features/catalyst/constants'
+import { Map, Radio } from '@/lib/icons'
 
 export function SitemapTabs(): JSX.Element {
   return (

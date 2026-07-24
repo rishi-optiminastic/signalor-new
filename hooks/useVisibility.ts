@@ -1,8 +1,6 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { Bot, Globe, MessageSquare, Search, Sparkles } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
 
 import {
   getAiRecommendationSummary,
@@ -12,6 +10,8 @@ import {
   type SovEngine,
   type VisibilitySeries,
 } from '@/lib/api/analyzer'
+import { Bot, Globe, MessageSquare, Search, Sparkles } from '@/lib/icons'
+import type { LucideIcon } from '@/lib/icons'
 import { queryKeys } from '@/lib/query-keys'
 
 export interface OverallVis {

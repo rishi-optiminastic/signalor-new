@@ -1,6 +1,5 @@
-import { ArrowUpRight, CreditCard } from 'lucide-react'
-
 import { formatDate, formatMoney } from '@/lib/format'
+import { ArrowUpRight, CreditCard } from '@/lib/icons'
 import type { AccountOverview } from '@/services/account.service'
 
 import { SectionCard } from './section-card'

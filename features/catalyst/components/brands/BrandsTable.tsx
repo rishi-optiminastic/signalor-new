@@ -1,9 +1,9 @@
-import { Settings } from 'lucide-react'
 import Link from 'next/link'
 
 import type { Brand } from '@/features/catalyst/brands-data'
 import { BrandIdentity, StatusPill, TickBar } from '@/features/catalyst/components/brands/BrandBits'
 import { scoreColor } from '@/features/catalyst/visibility-data'
+import { Settings } from '@/lib/icons'
 
 const TH =
   'px-4 py-2.5 text-left text-[11px] font-semibold uppercase tracking-wider text-[var(--cat-ink-3)]'

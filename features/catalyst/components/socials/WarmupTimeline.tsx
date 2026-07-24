@@ -1,7 +1,6 @@
-import { Check, Lock } from 'lucide-react'
-
 import { WARMUP_DAYS } from '@/features/catalyst/reddit-data'
 import type { RoadDay } from '@/features/catalyst/reddit-data'
+import { Check, Lock } from '@/lib/icons'
 
 const NODE =
   'relative z-10 grid h-7 w-7 place-items-center rounded-full ring-4 ring-[var(--cat-card)]'

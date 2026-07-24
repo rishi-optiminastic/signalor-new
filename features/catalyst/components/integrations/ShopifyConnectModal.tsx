@@ -1,13 +1,13 @@
 'use client'
 
 import { useQueryClient } from '@tanstack/react-query'
-import { ExternalLink, Loader2, X } from 'lucide-react'
 import { useState } from 'react'
 
 import { PrimaryButton } from '@/features/catalyst/components/PrimaryButton'
 import { ApiError } from '@/lib/api/client'
 import { connectShopifyCustomApp, getShopifyAuthUrl } from '@/lib/api/integrations'
 import { useSession } from '@/lib/auth-client'
+import { ExternalLink, Loader2, X } from '@/lib/icons'
 
 interface ShopifyConnectModalProps {
   onClose: () => void

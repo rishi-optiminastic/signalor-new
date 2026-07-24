@@ -1,6 +1,5 @@
 'use client'
 
-import { BadgeCheck, Check, ChevronLeft, Loader2 } from 'lucide-react'
 import { useParams } from 'next/navigation'
 
 import { TransitionLink } from '@/components/TransitionLink'
@@ -20,6 +19,7 @@ import { useBrandPath } from '@/hooks/useBrandPath'
 import { useTaskAutoFix, type TaskAutoFix } from '@/hooks/useTaskAutoFix'
 import { useTaskDetail, type TaskDetail } from '@/hooks/useTaskDetail'
 import { useTaskVerify } from '@/hooks/useTaskVerify'
+import { BadgeCheck, Check, ChevronLeft, Loader2 } from '@/lib/icons'
 
 function BackLink(): JSX.Element {
   const brandPath = useBrandPath()

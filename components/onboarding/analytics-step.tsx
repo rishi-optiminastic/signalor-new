@@ -1,12 +1,12 @@
 'use client'
 
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { ArrowLeft, CheckCircle2, ExternalLink, Loader2 } from 'lucide-react'
 import Image from 'next/image'
 import { useEffect } from 'react'
 
 import { getGAAuthUrl, getIntegrationStatus } from '@/lib/api/integrations'
 import { useSession } from '@/lib/auth-client'
+import { ArrowLeft, CheckCircle2, ExternalLink, Loader2 } from '@/lib/icons'
 import { useOnboardingWizardStore } from '@/stores/useOnboardingWizardStore'
 
 const ANALYTICS_FEATURES = [

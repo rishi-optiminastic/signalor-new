@@ -6,8 +6,10 @@ import { useEffect } from 'react'
 import { SidebarContent } from '@/features/catalyst/components/SidebarContent'
 import { useUiStore } from '@/stores/useUiStore'
 
+// Subtly tinted panel so the active nav item's white card lifts off it (the
+// reference look). Uses surface tokens, so it inverts correctly in dark mode.
 const BASE =
-  'flex-none flex-col overflow-hidden rounded-md border border-[var(--cat-border)] bg-[var(--cat-card)] p-3 shadow-[0_1px_2px_rgba(16,24,40,.05)]'
+  'flex-none flex-col overflow-hidden rounded-md border border-[var(--cat-border)] bg-[var(--cat-hover)] p-3 shadow-[0_1px_2px_rgba(16,24,40,.05)]'
 
 export function Sidebar(): JSX.Element {
   const collapsed = useUiStore(s => s.collapsed)

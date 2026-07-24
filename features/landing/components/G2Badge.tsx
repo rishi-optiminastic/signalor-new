@@ -1,4 +1,4 @@
-import { Star } from 'lucide-react'
+import { Star } from '@/lib/icons'
 
 /** G2 social-proof badge: mark + 4.7 stars + caption. */
 export function G2Badge(): JSX.Element {

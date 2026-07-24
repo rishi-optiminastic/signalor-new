@@ -1,7 +1,6 @@
-import { ChevronsUpDown } from 'lucide-react'
-
 import { TaskRow } from '@/features/catalyst/components/tasks/TaskRow'
 import type { TaskItem } from '@/features/catalyst/tasks-data'
+import { ChevronsUpDown } from '@/lib/icons'
 
 // Project is dropped — the dashboard is scoped to one brand, so it was the same
 // value on every row. Description and Due Date collapse on narrower widths so the

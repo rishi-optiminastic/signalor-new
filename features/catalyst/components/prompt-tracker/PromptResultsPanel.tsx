@@ -1,6 +1,5 @@
 'use client'
 
-import { Maximize2 } from 'lucide-react'
 import { useState } from 'react'
 
 import { EngineLogo } from '@/features/catalyst/components/EngineLogo'
@@ -8,6 +7,7 @@ import { ResponseDialog } from '@/features/catalyst/components/prompt-tracker/Re
 import { ResponseText } from '@/features/catalyst/components/prompt-tracker/ResponseText'
 import type { PromptEngineResult } from '@/features/catalyst/prompt-tracker-data'
 import { formatTaskDate } from '@/features/catalyst/tasks-data'
+import { Maximize2 } from '@/lib/icons'
 
 const GREEN_TINT = 'rgba(47,190,126,0.12)'
 const GREEN_INK = '#2FBE7E'

@@ -1,14 +1,13 @@
 'use client'
 
-import { ChevronRight } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
+import type { TablerIcon } from '@tabler/icons-react'
 import { useParams, usePathname } from 'next/navigation'
 
 import { TransitionLink } from '@/components/TransitionLink'
-import { BRAND, BRAND_SOFT, BRAND_STRONG } from '@/features/catalyst/constants'
+import { BRAND } from '@/features/catalyst/constants'
 
 interface NavItemProps {
-  icon: LucideIcon
+  icon: TablerIcon
   /** Brand-relative sub-path (e.g. 'tasks', '' for overview) or an absolute
    *  path starting with '/' for account-level pages (e.g. '/dashboard/team'). */
   href: string
@@ -26,19 +25,16 @@ export function resolveHref(href: string, slug: string | undefined): string {
   return href ? `/dashboard/${slug}/${href}` : `/dashboard/${slug}`
 }
 
-function Trailing({ active, badge }: { active: boolean; badge?: number }): JSX.Element | null {
-  if (active) return <ChevronRight size={15} className="ml-auto text-[var(--cat-ink-3)]" />
-  if (badge) {
-    return (
-      <span
-        className="ml-auto grid h-[18px] min-w-[18px] place-items-center rounded-sm px-1 text-[10px] font-semibold text-white"
-        style={{ background: BRAND }}
-      >
-        {badge}
-      </span>
-    )
-  }
-  return null
+function Trailing({ badge }: { badge?: number }): JSX.Element | null {
+  if (!badge) return null
+  return (
+    <span
+      className="ml-auto grid h-[18px] min-w-[18px] place-items-center rounded-sm px-1 text-[10px] font-semibold text-white"
+      style={{ background: BRAND }}
+    >
+      {badge}
+    </span>
+  )
 }
 
 function isActive(pathname: string, href: string, isIndex: boolean): boolean {
@@ -50,14 +46,12 @@ function isActive(pathname: string, href: string, isIndex: boolean): boolean {
 
 function NavRight({
   collapsed,
-  active,
   badge,
 }: {
   collapsed?: boolean
-  active: boolean
   badge?: number
 }): JSX.Element | null {
-  if (!collapsed) return <Trailing active={active} badge={badge} />
+  if (!collapsed) return <Trailing badge={badge} />
   if (!badge) return null
   return (
     <span
@@ -82,26 +76,22 @@ export function NavItem({
   const active =
     isActive(pathname, fullHref, href === '') ||
     (alsoMatch ?? []).some(sub => isActive(pathname, resolveHref(sub, slug), false))
-  const style = active
-    ? { background: BRAND_SOFT, color: BRAND_STRONG }
-    : { color: 'var(--cat-ink-2)' }
+  // Reference-style selection: the active row lifts to an elevated white card;
+  // inactive rows are muted and reveal a white pill on hover. All via surface
+  // tokens so it stays correct in dark mode.
+  const stateClass = active
+    ? 'border-[var(--cat-border-soft)] bg-[var(--cat-card)] font-semibold text-[var(--cat-ink)] shadow-[0_1px_2px_rgba(16,24,40,.06)]'
+    : 'border-transparent text-[var(--cat-ink-2)] hover:bg-[var(--cat-card)] hover:text-[var(--cat-ink)]'
 
   return (
     <TransitionLink
       href={fullHref}
       title={collapsed ? label : undefined}
-      className={`relative flex items-center rounded-md py-2 text-[14px] font-medium transition-colors hover:bg-[var(--cat-hover)] focus-visible:ring-2 focus-visible:ring-[rgba(224,74,61,0.4)] focus-visible:outline-none ${collapsed ? 'justify-center px-0' : 'gap-3 px-2.5'}`}
-      style={style}
+      className={`ring-foreground/10 relative flex items-center rounded-md border py-2 text-[14px] font-medium transition-colors focus-visible:ring-2 focus-visible:ring-[rgba(224,74,61,0.4)] focus-visible:outline-none ${collapsed ? 'justify-center px-0' : 'gap-3 px-2.5'} ${stateClass}`}
     >
-      {active && (
-        <span
-          className="absolute top-1/2 left-0 h-5 w-[3px] -translate-y-1/2 rounded-r"
-          style={{ background: BRAND }}
-        />
-      )}
-      <Icon size={18} strokeWidth={1.8} className="shrink-0" />
+      <Icon size={18} className="shrink-0" />
       {!collapsed && label}
-      <NavRight collapsed={collapsed} active={active} badge={badge} />
+      <NavRight collapsed={collapsed} badge={badge} />
     </TransitionLink>
   )
 }

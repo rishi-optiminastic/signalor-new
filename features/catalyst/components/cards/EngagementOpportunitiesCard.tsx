@@ -1,7 +1,5 @@
 'use client'
 
-import { ArrowRight, ExternalLink, Link2, MessageSquare, Star } from 'lucide-react'
-
 import { TransitionLink } from '@/components/TransitionLink'
 import { Card } from '@/features/catalyst/components/Card'
 import { CardHead } from '@/features/catalyst/components/CardHead'
@@ -9,6 +7,7 @@ import { GREEN, YELLOW } from '@/features/catalyst/constants'
 import { useActiveProject } from '@/hooks/useActiveProject'
 import { useBrandPath } from '@/hooks/useBrandPath'
 import { useOpportunities, type Opportunity } from '@/hooks/useOpportunities'
+import { ArrowRight, ExternalLink, Link2, MessageSquare, Star } from '@/lib/icons'
 
 const ENGAGE_CLASS =
   'inline-flex items-center gap-1.5 rounded-md border border-[var(--cat-border)] px-2.5 py-1 text-[12px] font-medium text-[var(--cat-ink)] transition-colors hover:bg-[var(--cat-hover)]'

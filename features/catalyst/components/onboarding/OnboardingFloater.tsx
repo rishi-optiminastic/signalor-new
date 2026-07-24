@@ -1,6 +1,5 @@
 'use client'
 
-import { Check, ChevronRight, ListChecks, Minus, PartyPopper } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -9,6 +8,7 @@ import { useActiveProject } from '@/hooks/useActiveProject'
 import { useDraggableFloater, type DragHandle } from '@/hooks/useDraggableFloater'
 import { useMounted } from '@/hooks/useMounted'
 import { useOnboardingSteps, type OnboardingStep } from '@/hooks/useOnboardingSteps'
+import { Check, ChevronRight, ListChecks, Minus, PartyPopper } from '@/lib/icons'
 
 const DISMISS_KEY = 'signalor.onboarding.dismissed'
 const OPEN_KEY = 'signalor.onboarding.open'

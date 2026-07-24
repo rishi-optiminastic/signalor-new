@@ -1,12 +1,11 @@
 'use client'
 
-import { BarChart3, Loader2 } from 'lucide-react'
-
 import { TransitionLink } from '@/components/TransitionLink'
 import { Card } from '@/features/catalyst/components/Card'
 import { CardHead } from '@/features/catalyst/components/CardHead'
 import { useBrandPath } from '@/hooks/useBrandPath'
 import { useGaData } from '@/hooks/useGaData'
+import { BarChart3, Loader2 } from '@/lib/icons'
 
 function Tile({ label, value }: { label: string; value: string }): JSX.Element {
   return (

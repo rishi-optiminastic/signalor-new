@@ -1,7 +1,5 @@
 'use client'
 
-import { ChevronRight, Plus } from 'lucide-react'
-
 import { TransitionLink } from '@/components/TransitionLink'
 import type { Competitor, Relation } from '@/features/catalyst/competitors-data'
 import { BrandFavicon } from '@/features/catalyst/components/competitors/BrandFavicon'
@@ -10,6 +8,7 @@ import { GaugeRing } from '@/features/catalyst/components/visibility/GaugeRing'
 import { BRAND, BRAND_SOFT } from '@/features/catalyst/constants'
 import { scoreColor, scoreStatus } from '@/features/catalyst/visibility-data'
 import { useBrandPath } from '@/hooks/useBrandPath'
+import { ChevronRight, Plus } from '@/lib/icons'
 
 function Identity({ competitor }: { competitor: Competitor }): JSX.Element {
   const { id, name, initial, color, domain, relation } = competitor

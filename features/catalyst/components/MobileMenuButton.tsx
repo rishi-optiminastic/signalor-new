@@ -1,8 +1,7 @@
 'use client'
 
-import { Menu } from 'lucide-react'
-
 import { ICON_TILE } from '@/features/catalyst/components/control-styles'
+import { Menu } from '@/lib/icons'
 import { useUiStore } from '@/stores/useUiStore'
 
 /** Hamburger that opens the sidebar drawer — mobile only. */

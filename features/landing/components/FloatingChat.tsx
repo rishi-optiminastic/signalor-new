@@ -1,4 +1,4 @@
-import { MessageCircle } from 'lucide-react'
+import { MessageCircle } from '@/lib/icons'
 
 /** Floating support-chat launcher (bottom-right). */
 export function FloatingChat(): JSX.Element {

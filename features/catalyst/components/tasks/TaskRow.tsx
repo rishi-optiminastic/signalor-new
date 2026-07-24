@@ -1,5 +1,3 @@
-import { Check, GripVertical } from 'lucide-react'
-
 import { useViewTransitionNavigate } from '@/components/providers/view-transition-provider'
 import { useTaskFix } from '@/features/catalyst/components/autofix/AutoFixContext'
 import { AutoFixControl } from '@/features/catalyst/components/autofix/AutoFixControl'
@@ -8,6 +6,7 @@ import { PriorityTag } from '@/features/catalyst/components/tasks/PriorityTag'
 import { ProgressCell } from '@/features/catalyst/components/tasks/ProgressCell'
 import type { TaskItem } from '@/features/catalyst/tasks-data'
 import { useBrandPath } from '@/hooks/useBrandPath'
+import { Check, GripVertical } from '@/lib/icons'
 
 export interface TaskRowProps {
   row: TaskItem

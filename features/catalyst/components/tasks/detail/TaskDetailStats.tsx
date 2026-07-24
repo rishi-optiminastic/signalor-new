@@ -1,9 +1,8 @@
-import { Flag, Gauge, Timer, TrendingUp } from 'lucide-react'
-
 import { TaskStatCard } from '@/features/catalyst/components/tasks/TaskStatCard'
 import { BLUE, BRAND, GREEN, NEG, YELLOW } from '@/features/catalyst/constants'
 import { formatEffort, formatStatus, type StatCard } from '@/features/catalyst/tasks-data'
 import type { TaskDetail } from '@/hooks/useTaskDetail'
+import { Flag, Gauge, Timer, TrendingUp } from '@/lib/icons'
 
 const PRIORITY_HUE: Record<string, string> = {
   critical: NEG,

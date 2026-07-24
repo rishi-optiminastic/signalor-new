@@ -1,9 +1,9 @@
 'use client'
 
-import { ChevronDown } from 'lucide-react'
 import { useState } from 'react'
 
 import { CornerDiamonds } from '@/components/ui/intersection-diamonds'
+import { ChevronDown } from '@/lib/icons'
 import { cn } from '@/lib/utils'
 
 type FaqItem = { question: string; answer: string }

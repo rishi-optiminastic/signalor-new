@@ -1,6 +1,5 @@
 'use client'
 
-import { MessageSquare } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 import type { FormEvent, KeyboardEvent } from 'react'
 
@@ -11,6 +10,7 @@ import {
   PopoverFormSuccess,
 } from '@/components/ui/popover-form'
 import { ICON_TILE } from '@/features/catalyst/components/control-styles'
+import { MessageSquare } from '@/lib/icons'
 
 /** How long the success state holds before the popover closes itself. */
 const SUCCESS_DISMISS_MS = 2400

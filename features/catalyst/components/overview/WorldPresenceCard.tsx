@@ -1,6 +1,5 @@
 'use client'
 
-import { Globe, Loader2, MoreHorizontal } from 'lucide-react'
 import Link from 'next/link'
 
 import { TickBar } from '@/features/catalyst/components/brands/BrandBits'
@@ -9,6 +8,7 @@ import { WorldMap } from '@/features/catalyst/components/overview/WorldMap'
 import { BRAND } from '@/features/catalyst/constants'
 import { useBrandPath } from '@/hooks/useBrandPath'
 import { useWorldPresence, type WorldMarker } from '@/hooks/useWorldPresence'
+import { Globe, Loader2, MoreHorizontal } from '@/lib/icons'
 
 function Header(): JSX.Element {
   return (

@@ -1,6 +1,5 @@
 'use client'
 
-import { Loader2, Plus } from 'lucide-react'
 import { useMemo, useState } from 'react'
 
 import { DataState } from '@/features/catalyst/components/DataState'
@@ -22,6 +21,7 @@ import type { StatCard } from '@/features/catalyst/tasks-data'
 import { useActiveProject } from '@/hooks/useActiveProject'
 import { usePromptMutations } from '@/hooks/usePromptMutations'
 import { buildPromptStats, usePrompts } from '@/hooks/usePrompts'
+import { Loader2, Plus } from '@/lib/icons'
 
 /** Most recent engine-check timestamp across a prompt's results (0 if none yet). */
 function latestCheck(prompt: TrackedPrompt): number {

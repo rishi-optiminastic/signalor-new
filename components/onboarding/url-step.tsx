@@ -1,11 +1,11 @@
 'use client'
 
-import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 
 import { ONBOARDING_INPUT_CLASS } from '@/components/onboarding/input-class'
 import { SiteFavicon } from '@/components/onboarding/site-favicon'
 import { useSession } from '@/lib/auth-client'
+import { ArrowLeft, ArrowRight, Loader2 } from '@/lib/icons'
 import { cn } from '@/lib/utils'
 import { createOrganization } from '@/services/onboarding.service'
 import { useOnboardingWizardStore } from '@/stores/useOnboardingWizardStore'

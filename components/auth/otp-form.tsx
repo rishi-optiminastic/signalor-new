@@ -1,10 +1,10 @@
 'use client'
 
-import { ArrowLeft, Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState, type FormEvent } from 'react'
 
 import { authClient } from '@/lib/auth-client'
+import { ArrowLeft, Loader2 } from '@/lib/icons'
 import { routes } from '@/lib/routes'
 import { persistAccountType, sendVerificationOtp, verifyOtp } from '@/services/onboarding.service'
 import { useOnboardingStore } from '@/stores/useOnboardingStore'

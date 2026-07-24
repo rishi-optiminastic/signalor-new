@@ -1,6 +1,6 @@
 'use client'
 
-import { ArrowUp, Paperclip } from 'lucide-react'
+import { ArrowUp, Paperclip } from '@/lib/icons'
 
 const GHOST =
   'grid h-7 w-7 place-items-center rounded-md text-[var(--cat-ink-3)] transition-colors hover:bg-[var(--cat-hover)] hover:text-[var(--cat-ink)]'

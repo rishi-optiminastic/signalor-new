@@ -1,11 +1,11 @@
 'use client'
 
-import { LayoutGrid, List, Plus, Search } from 'lucide-react'
 import { useState } from 'react'
 
 import { DataState } from '@/features/catalyst/components/DataState'
 import { PrimaryButton } from '@/features/catalyst/components/PrimaryButton'
 import { useBrands } from '@/hooks/useBrands'
+import { LayoutGrid, List, Plus, Search } from '@/lib/icons'
 
 import { BrandCard } from './BrandCard'
 import { BrandsTable } from './BrandsTable'

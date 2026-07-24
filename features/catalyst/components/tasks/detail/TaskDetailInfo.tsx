@@ -1,7 +1,5 @@
 'use client'
 
-import { BadgeCheck } from 'lucide-react'
-
 import { TaskTypeIcon } from '@/features/catalyst/components/agent/TaskTypeIcon'
 import { TickBar } from '@/features/catalyst/components/brands/BrandBits'
 import { Card } from '@/features/catalyst/components/Card'
@@ -15,6 +13,7 @@ import {
 import { useActiveProject } from '@/hooks/useActiveProject'
 import { GEO_PILLARS, usePillars } from '@/hooks/usePillars'
 import type { TaskDetail } from '@/hooks/useTaskDetail'
+import { BadgeCheck } from '@/lib/icons'
 
 const KIND_LABEL: Record<string, string> = {
   auto: 'Auto-fixable',

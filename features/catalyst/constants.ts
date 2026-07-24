@@ -1,21 +1,21 @@
 import {
-  BadgeCheck,
-  Blocks,
-  Eye,
-  Facebook,
-  Footprints,
-  Instagram,
-  LayoutGrid,
-  Link2,
-  ListChecks,
-  MessageCircle,
-  PenLine,
-  Radar,
-  Search,
-  Store,
-  Users,
-} from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
+  IconAppsFilled,
+  IconBugFilled,
+  IconChartPieFilled,
+  IconEyeFilled,
+  IconLayoutGridFilled,
+  IconLinkFilled,
+  IconMessageCircleFilled,
+  IconPencilFilled,
+  IconRosetteDiscountCheckFilled,
+  IconShoppingCartFilled,
+  IconSquareRoundedCheckFilled,
+  IconUsersGroup,
+} from '@tabler/icons-react'
+import type { TablerIcon } from '@tabler/icons-react'
+
+import { Facebook, Instagram, Search, Store } from '@/lib/icons'
+import type { LucideIcon } from '@/lib/icons'
 
 /* ------------------------------------------------------------------ tokens */
 /* Brand pulled from the auth (sign-in / sign-up) theme: --primary #e04a3d,
@@ -34,7 +34,7 @@ export const NEG_BG = '#FDECEC'
 
 /* -------------------------------------------------------------------- types */
 export interface NavEntry {
-  icon: LucideIcon
+  icon: TablerIcon
   label: string
   href: string
   badge?: number
@@ -76,30 +76,44 @@ export interface TableRow {
 /* --------------------------------------------------------------------- data */
 export const MAIN_NAV: NavEntry[] = [
   // Pillars + GEO detail pages are Overview drill-downs, so Overview stays lit.
-  { icon: LayoutGrid, label: 'Overview', href: '', alsoMatch: ['pillars', 'geo'] },
+  { icon: IconLayoutGridFilled, label: 'Overview', href: '', alsoMatch: ['pillars', 'geo'] },
 ]
 
 // Visibility now hosts Prompt Tracking, Sitemap and Analytics as in-page tabs
 // (see MonitoringTabs), so they are no longer separate sidebar entries.
 export const MONITORING_NAV: NavEntry[] = [
-  { icon: Eye, label: 'Visibility', href: 'visibility' },
-  { icon: Radar, label: '360 Insights', href: 'insights' },
-  { icon: Footprints, label: 'Crawler Logs', href: 'crawlers' },
-  { icon: Users, label: 'Competitors', href: 'competitors' },
-  { icon: BadgeCheck, label: 'Brand Profile', href: 'brand-profile' },
+  { icon: IconEyeFilled, label: 'Visibility', href: 'visibility' },
+  { icon: IconChartPieFilled, label: '360 Insights', href: 'insights' },
+  { icon: IconBugFilled, label: 'Crawler Logs', href: 'crawlers' },
+  { icon: IconUsersGroup, label: 'Competitors', href: 'competitors' },
+  { icon: IconRosetteDiscountCheckFilled, label: 'Brand Profile', href: 'brand-profile' },
 ]
+
+// Actions (the plan + tasks board) stays a top-level entry so its open-task
+// badge is always visible — it's the core "do the work" surface.
+export const ACTIONS_NAV: NavEntry = {
+  icon: IconSquareRoundedCheckFilled,
+  label: 'Actions',
+  href: 'actions',
+  alsoMatch: ['tasks', 'agent'],
+}
 
 export const OPTIMIZATION_NAV: NavEntry[] = [
-  // One surface for the Growth Agent plan + the Tasks board (old routes redirect).
-  { icon: ListChecks, label: 'Actions', href: 'actions', alsoMatch: ['tasks', 'agent'] },
-  { icon: PenLine, label: 'Content', href: 'optimisation' },
-  { icon: Store, label: 'Shopping', href: 'shopping' },
-  { icon: Link2, label: 'Backlinks', href: 'backlinks' },
-  { icon: Blocks, label: 'Integrations', href: 'integrations' },
+  { icon: IconPencilFilled, label: 'Content', href: 'optimisation' },
+  { icon: IconShoppingCartFilled, label: 'Shopping', href: 'shopping' },
+  { icon: IconLinkFilled, label: 'Backlinks', href: 'backlinks' },
 ]
 
+// Integrations stands alone at the top level (it's the connect-your-stack hub,
+// not an optimisation surface).
+export const INTEGRATIONS_NAV: NavEntry = {
+  icon: IconAppsFilled,
+  label: 'Integrations',
+  href: 'integrations',
+}
+
 export const SOCIALS_NAV: NavEntry[] = [
-  { icon: MessageCircle, label: 'Reddit', href: 'socials/reddit' },
+  { icon: IconMessageCircleFilled, label: 'Reddit', href: 'socials/reddit' },
 ]
 
 export const SALES_LINE: number[] = [

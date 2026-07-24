@@ -1,6 +1,5 @@
 'use client'
 
-import { Building2, Check, ChevronsUpDown, Plus } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
@@ -8,6 +7,7 @@ import { useEffect, useRef, useState } from 'react'
 import { domainOf } from '@/features/catalyst/competitors-data'
 import { BrandFavicon } from '@/features/catalyst/components/competitors/BrandFavicon'
 import { useActiveProject } from '@/hooks/useActiveProject'
+import { Building2, Check, ChevronsUpDown, Plus } from '@/lib/icons'
 
 const LOGO_BG = 'conic-gradient(from 210deg at 50% 50%, #F2A79E, #e04a3d, #b9382d, #F2A79E)'
 

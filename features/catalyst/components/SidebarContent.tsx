@@ -1,45 +1,60 @@
 'use client'
 
-import { Share2, X } from 'lucide-react'
+import {
+  IconAffiliateFilled,
+  IconHelpCircleFilled,
+  IconMoonFilled,
+  IconRadarFilled,
+  IconSparklesFilled,
+  IconSunFilled,
+} from '@tabler/icons-react'
+import Link from 'next/link'
 
+import { useCatalystTheme } from '@/features/catalyst/components/CatalystThemeProvider'
 import { NavGroup } from '@/features/catalyst/components/NavGroup'
 import { NavItem } from '@/features/catalyst/components/NavItem'
 import { SidebarLogo } from '@/features/catalyst/components/SidebarLogo'
+import { SidebarPlanCard } from '@/features/catalyst/components/SidebarPlanCard'
 import { SidebarUser } from '@/features/catalyst/components/SidebarUser'
 import { WorkspaceSwitcher } from '@/features/catalyst/components/WorkspaceSwitcher'
 import {
+  ACTIONS_NAV,
+  INTEGRATIONS_NAV,
   MAIN_NAV,
   MONITORING_NAV,
   OPTIMIZATION_NAV,
   SOCIALS_NAV,
-  type NavEntry,
 } from '@/features/catalyst/constants'
 import { useTaskCount } from '@/hooks/useTaskCount'
+import { X } from '@/lib/icons'
 
-const SECTION =
-  'mt-4 mb-1.5 px-2 text-[11px] font-semibold tracking-wider text-[var(--cat-ink-3)] uppercase'
+const FOOTER_ROW =
+  'flex w-full items-center gap-3 rounded-lg px-2.5 py-1.5 text-[13px] font-medium text-[var(--cat-ink-2)] transition-colors hover:bg-[var(--cat-card)] hover:text-[var(--cat-ink)]'
 
-function NavSection({
-  title,
-  items,
-  collapsed,
-}: {
-  title: string
-  items: NavEntry[]
-  collapsed: boolean
-}): JSX.Element {
+function DarkModeToggle(): JSX.Element {
+  const { dark, toggle } = useCatalystTheme()
+  return (
+    <button type="button" onClick={toggle} className={FOOTER_ROW}>
+      {dark ? <IconSunFilled size={17} /> : <IconMoonFilled size={17} />}
+      {dark ? 'Light mode' : 'Dark mode'}
+    </button>
+  )
+}
+
+/** Plan card + utility links (dark mode, help), pinned above the user card. */
+function SidebarFooter({ collapsed }: { collapsed: boolean }): JSX.Element {
   return (
     <>
-      {collapsed ? (
-        <div className="mx-1 my-2 h-px bg-[var(--cat-border-soft)]" />
-      ) : (
-        <div className={SECTION}>{title}</div>
+      <SidebarPlanCard collapsed={collapsed} />
+      {!collapsed && (
+        <div className="mt-2 flex flex-col gap-0.5">
+          <DarkModeToggle />
+          <Link href="/help" className={FOOTER_ROW}>
+            <IconHelpCircleFilled size={17} />
+            Help
+          </Link>
+        </div>
       )}
-      <nav className="flex flex-col gap-0.5">
-        {items.map(item => (
-          <NavItem key={item.label} {...item} collapsed={collapsed} />
-        ))}
-      </nav>
     </>
   )
 }
@@ -49,13 +64,43 @@ interface SidebarContentProps {
   onClose?: () => void
 }
 
-/** The full inner sidebar — shared by the desktop rail and the mobile drawer. */
-export function SidebarContent({ collapsed, onClose }: SidebarContentProps): JSX.Element {
+/**
+ * The six consolidated nav entries — Overview, Actions, then Monitor / Optimize
+ * as collapsible groups, Integrations and Socials — so the rail reads at a glance
+ * instead of a long flat list. Each group auto-expands on one of its pages.
+ */
+function SidebarNav({ collapsed }: { collapsed: boolean }): JSX.Element {
   const taskCount = useTaskCount()
   // Real open-task count on the Actions item (hidden when 0), not a hardcoded badge.
-  const optimizationNav = OPTIMIZATION_NAV.map(item =>
-    item.href === 'actions' ? { ...item, badge: taskCount || undefined } : item,
+  const actionsNav = { ...ACTIONS_NAV, badge: taskCount || undefined }
+  return (
+    <div className="mt-2 -mr-1 flex min-h-0 flex-1 flex-col gap-0.5 overflow-x-hidden overflow-y-auto pr-1">
+      <NavItem {...MAIN_NAV[0]} collapsed={collapsed} />
+      <NavItem {...actionsNav} collapsed={collapsed} />
+      <NavGroup
+        icon={IconRadarFilled}
+        label="Monitor"
+        items={MONITORING_NAV}
+        collapsed={collapsed}
+      />
+      <NavGroup
+        icon={IconSparklesFilled}
+        label="Optimize"
+        items={OPTIMIZATION_NAV}
+        collapsed={collapsed}
+      />
+      <NavItem {...INTEGRATIONS_NAV} collapsed={collapsed} />
+      <NavGroup
+        icon={IconAffiliateFilled}
+        label="Socials"
+        items={SOCIALS_NAV}
+        collapsed={collapsed}
+      />
+    </div>
   )
+}
+
+export function SidebarContent({ collapsed, onClose }: SidebarContentProps): JSX.Element {
   return (
     <>
       <div className="flex items-center pb-0.5">
@@ -72,17 +117,8 @@ export function SidebarContent({ collapsed, onClose }: SidebarContentProps): JSX
         )}
       </div>
       <WorkspaceSwitcher collapsed={collapsed} />
-
-      <div className="mt-1 -mr-1 flex min-h-0 flex-1 flex-col overflow-x-hidden overflow-y-auto pr-1">
-        <NavSection title="Main" items={MAIN_NAV} collapsed={collapsed} />
-        <NavSection title="Monitoring" items={MONITORING_NAV} collapsed={collapsed} />
-        <NavSection title="Optimization" items={optimizationNav} collapsed={collapsed} />
-        {collapsed && <div className="mx-1 my-2 h-px bg-[var(--cat-border-soft)]" />}
-        <div className={collapsed ? '' : 'mt-1'}>
-          <NavGroup icon={Share2} label="Socials" items={SOCIALS_NAV} collapsed={collapsed} />
-        </div>
-      </div>
-
+      <SidebarNav collapsed={collapsed} />
+      <SidebarFooter collapsed={collapsed} />
       <SidebarUser collapsed={collapsed} />
     </>
   )

@@ -1,6 +1,6 @@
 'use client'
 
-import { AlertTriangle, Check } from 'lucide-react'
+import { AlertTriangle, Check } from '@/lib/icons'
 import Link from 'next/link'
 import { useEffect, useState, type ReactNode } from 'react'
 

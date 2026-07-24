@@ -1,6 +1,6 @@
 'use client'
 
-import { Bell, HelpCircle } from 'lucide-react'
+import { IconBellFilled, IconHelpCircleFilled } from '@tabler/icons-react'
 import Link from 'next/link'
 
 import { AgentChatTrigger } from '@/features/catalyst/components/agent-chat/AgentChatTrigger'
@@ -42,10 +42,10 @@ export function GlobalBar(): JSX.Element {
           <FeedbackPopover />
         </span>
         <Link href="/help" aria-label="Help & docs" className={`hidden lg:grid ${ICON_TILE}`}>
-          <HelpCircle size={17} strokeWidth={1.8} />
+          <IconHelpCircleFilled size={17} />
         </Link>
         <button type="button" aria-label="Notifications" className={`relative ${ICON_TILE}`}>
-          <Bell size={17} strokeWidth={1.8} />
+          <IconBellFilled size={17} />
           <span className="absolute top-2 right-2 h-1.5 w-1.5 rounded-full bg-[#e04a3d] ring-2 ring-[var(--cat-card)]" />
         </button>
         <span className="mx-1 h-5 w-px bg-[var(--cat-border)]" />

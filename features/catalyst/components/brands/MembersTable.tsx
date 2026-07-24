@@ -1,12 +1,12 @@
 'use client'
 
-import { Trash2, UserPlus } from 'lucide-react'
 import { useState } from 'react'
 
 import { ROLES, ROLE_STYLES } from '@/features/catalyst/brands-data'
 import { useAgencyMembers } from '@/hooks/useAgencyMembers'
 import { useAgencyRole } from '@/hooks/useAgencyRole'
 import { ApiError } from '@/lib/api/client'
+import { Trash2, UserPlus } from '@/lib/icons'
 
 interface DisplayRow {
   id: number | null // null = the owner (no membership row)

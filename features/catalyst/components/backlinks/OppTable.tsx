@@ -1,6 +1,5 @@
-import { ExternalLink } from 'lucide-react'
-
 import { STATUS_STYLE, type BacklinkOpp } from '@/features/catalyst/backlinks-data'
+import { ExternalLink } from '@/lib/icons'
 
 const TH =
   'px-4 py-2.5 text-left text-[11px] font-semibold uppercase tracking-wider text-[var(--cat-ink-3)]'

@@ -1,7 +1,6 @@
 'use client'
 
 import { useMutation } from '@tanstack/react-query'
-import { Check, Copy, Loader2, Sparkles } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 
@@ -9,6 +8,7 @@ import { Card } from '@/features/catalyst/components/Card'
 import { CardHead } from '@/features/catalyst/components/CardHead'
 import { PrimaryButton } from '@/features/catalyst/components/PrimaryButton'
 import { generateAnswerGapFaq, type AnswerGapFaq } from '@/lib/api/prompts'
+import { Check, Copy, Loader2, Sparkles } from '@/lib/icons'
 
 function toMarkdown(faq: AnswerGapFaq): string {
   return faq.items.map(i => `### ${i.question}\n\n${i.answer}`).join('\n\n')

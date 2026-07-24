@@ -1,11 +1,10 @@
 'use client'
 
-import { Check, Loader2, X, Zap } from 'lucide-react'
-
 import { TaskFixResultCard } from '@/features/catalyst/components/tasks/detail/TaskFixResultCard'
 import type { Recommendation } from '@/features/catalyst/recommendations-data'
 import { useRecommendations } from '@/hooks/useRecommendations'
 import { useAutoFixFlow, type AutoFixFlow } from '@/hooks/useTaskAutoFix'
+import { Check, Loader2, X, Zap } from '@/lib/icons'
 
 interface QuickFixesRailProps {
   slug: string

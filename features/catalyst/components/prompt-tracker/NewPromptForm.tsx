@@ -1,9 +1,9 @@
 'use client'
 
-import { Plus } from 'lucide-react'
 import { useState } from 'react'
 
 import { PrimaryButton } from '@/features/catalyst/components/PrimaryButton'
+import { Plus } from '@/lib/icons'
 
 const MAX_PROMPT_LENGTH = 2000
 

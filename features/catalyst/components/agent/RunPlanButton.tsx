@@ -1,9 +1,8 @@
 'use client'
 
-import { RefreshCw } from 'lucide-react'
-
 import { PrimaryButton } from '@/features/catalyst/components/PrimaryButton'
 import { useAgentMutations, useAgentPlan } from '@/hooks/useAgentPlan'
+import { RefreshCw } from '@/lib/icons'
 
 /** Whether refresh is locked and the label to show, from the next-allowed time. */
 function refreshState(availableAt: string | null): { locked: boolean; label: string } {

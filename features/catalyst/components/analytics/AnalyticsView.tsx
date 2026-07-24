@@ -1,6 +1,5 @@
 'use client'
 
-import { BarChart3, Loader2, Settings2 } from 'lucide-react'
 import Link from 'next/link'
 
 import { GaCountryList } from '@/features/catalyst/components/analytics/GaCountryList'
@@ -10,6 +9,7 @@ import { useBrandPath } from '@/hooks/useBrandPath'
 import { useGaData } from '@/hooks/useGaData'
 import { useIntegrations } from '@/hooks/useIntegrations'
 import type { GAData } from '@/lib/api/integrations'
+import { BarChart3, Loader2, Settings2 } from '@/lib/icons'
 
 const GA_PROPERTY_HREF = '/settings/integrations/google-analytics/property'
 

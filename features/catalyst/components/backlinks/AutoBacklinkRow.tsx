@@ -1,7 +1,6 @@
-import { ExternalLink, GripVertical, MoreHorizontal } from 'lucide-react'
-
 import { autoStatusStyle, formatPublished } from '@/features/catalyst/backlinks-data'
 import type { AutoBacklink } from '@/lib/api/backlinks'
+import { ExternalLink, GripVertical, MoreHorizontal } from '@/lib/icons'
 
 interface AutoBacklinkRowProps {
   row: AutoBacklink

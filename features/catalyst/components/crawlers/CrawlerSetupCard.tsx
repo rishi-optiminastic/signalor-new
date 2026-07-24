@@ -1,11 +1,11 @@
 'use client'
 
-import { Check, Copy } from 'lucide-react'
 import { useState } from 'react'
 
 import { Card } from '@/features/catalyst/components/Card'
 import { CardHead } from '@/features/catalyst/components/CardHead'
 import { config } from '@/lib/config'
+import { Check, Copy } from '@/lib/icons'
 
 function CopyChip({ label, text }: { label: string; text: string }): JSX.Element {
   const [copied, setCopied] = useState(false)

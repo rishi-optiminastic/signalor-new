@@ -1,9 +1,9 @@
 'use client'
 
-import { ArrowLeft, Loader2 } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { z } from 'zod'
 
+import { ArrowLeft, Loader2 } from '@/lib/icons'
 import { isWorkEmail } from '@/lib/work-email'
 import { checkOrganizationExists, sendVerificationOtp } from '@/services/onboarding.service'
 import { useOnboardingStore } from '@/stores/useOnboardingStore'

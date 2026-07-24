@@ -1,7 +1,13 @@
 'use client'
 
-import { BarChart3, Eye, Gauge, MessageSquareText, Network } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
+import {
+  IconChartAreaFilled,
+  IconEyeFilled,
+  IconGaugeFilled,
+  IconMessageFilled,
+  IconSitemapFilled,
+  type TablerIcon,
+} from '@tabler/icons-react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import type { ComponentType } from 'react'
@@ -16,16 +22,16 @@ import { useBrandPath } from '@/hooks/useBrandPath'
 interface MonitoringTab {
   key: string
   label: string
-  icon: LucideIcon
+  icon: TablerIcon
   View: ComponentType
 }
 
 const TABS: MonitoringTab[] = [
-  { key: 'visibility', label: 'Visibility', icon: Eye, View: VisibilityView },
-  { key: 'prompts', label: 'Prompt Tracking', icon: MessageSquareText, View: PromptTrackerView },
-  { key: 'sitemap', label: 'Sitemap', icon: Network, View: SitemapView },
-  { key: 'siteone', label: 'SiteOne', icon: Gauge, View: SiteOneView },
-  { key: 'analytics', label: 'Analytics', icon: BarChart3, View: AnalyticsView },
+  { key: 'visibility', label: 'Visibility', icon: IconEyeFilled, View: VisibilityView },
+  { key: 'prompts', label: 'Prompt Tracking', icon: IconMessageFilled, View: PromptTrackerView },
+  { key: 'sitemap', label: 'Sitemap', icon: IconSitemapFilled, View: SitemapView },
+  { key: 'siteone', label: 'SiteOne', icon: IconGaugeFilled, View: SiteOneView },
+  { key: 'analytics', label: 'Analytics', icon: IconChartAreaFilled, View: AnalyticsView },
 ]
 
 /** Tabbed Monitoring surface: Visibility hosts Prompt Tracking, Sitemap and

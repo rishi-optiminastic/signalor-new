@@ -1,8 +1,8 @@
 'use client'
 
-import { ArrowLeft, ArrowRight, Loader2, Pencil, Plus, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
+import { ArrowLeft, ArrowRight, Loader2, Pencil, Plus, X } from '@/lib/icons'
 import { suggestPrompts } from '@/services/onboarding.service'
 import { useOnboardingWizardStore } from '@/stores/useOnboardingWizardStore'
 

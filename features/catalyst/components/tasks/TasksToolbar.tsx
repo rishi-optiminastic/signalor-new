@@ -1,9 +1,8 @@
-import { Search } from 'lucide-react'
-
 import { TaskStatusTabs } from '@/features/catalyst/components/tasks/TaskStatusTabs'
 import { TasksViewToggle } from '@/features/catalyst/components/tasks/TasksViewToggle'
 import { TaskToolbarActions } from '@/features/catalyst/components/tasks/TaskToolbarActions'
 import type { StatusTab } from '@/features/catalyst/tasks-data'
+import { Search } from '@/lib/icons'
 
 export function TasksToolbar({ tabs }: { tabs: StatusTab[] }): JSX.Element {
   return (
